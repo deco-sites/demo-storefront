@@ -3,7 +3,6 @@
  *
  * Simple patterns (device, mobile) use framework mixins.
  * Complex loaders delegate to the section's own loader export.
- * Account sections use vtexAccountLoaders from @decocms/apps.
  */
 import {
   registerSectionLoaders,

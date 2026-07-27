@@ -31,10 +31,6 @@ async function action(
 
   const platform = usePlatform();
 
-  if (platform === "vtex") {
-    // TODO(consumer): call VTEX shipping simulator (sla simulation),
-    // map response to ShippingMethod[].
-  }
   if (platform === "shopify") {
     // TODO(consumer): create a draft cart with the line item(s),
     // run buyerIdentityUpdate with this postal code, read deliveryGroups.

@@ -1,5 +1,5 @@
 /**
- * Cache configuration for VTEX storefront.
+ * Cache configuration for this storefront.
  * Overrides default cache profiles from @decocms/blocks/sdk/cacheHeaders.
  */
 // import { setCacheProfile } from "@decocms/blocks/sdk/cacheHeaders";
