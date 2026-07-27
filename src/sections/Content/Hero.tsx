@@ -1,95 +1,116 @@
-import type { HTMLWidget, ImageWidget } from "~/types/widgets";
+import type { ImageWidget } from "~/types/widgets";
 import Image from "~/components/ui/Image";
+import { Link } from "@tanstack/react-router";
+import { clx } from "~/sdk/clx";
+import { useReveal } from "~/sdk/useReveal";
 
-export interface CTA {
-  id?: string;
+/** @titleBy label */
+export interface HeroCategory {
+  label: string;
   href: string;
-  text: string;
-  variant: "Normal" | "Reverse";
+  image: ImageWidget;
 }
 
 export interface Props {
-  title: HTMLWidget;
-  description: string;
-  image?: ImageWidget;
-  placement: "left" | "right";
-  cta: CTA[];
+  /** @title Background image (desktop) */
+  image: ImageWidget;
+  /** @title Background image (mobile) */
+  mobileImage?: ImageWidget;
+  /** @title Headline */
+  headline?: string;
+  /** @title Link */
+  href?: string;
+  /** @title Category tiles */
+  categories?: HeroCategory[];
+  /** @title Info bullets */
+  infoBullets?: string[];
 }
 
-const PLACEMENT = {
-  left: "flex-col text-left lg:flex-row-reverse",
-  right: "flex-col text-left lg:flex-row",
-};
+function CategoryTile({ label, href, image, index = 0 }: HeroCategory & { index?: number }) {
+  const ref = useReveal<HTMLAnchorElement>();
+  return (
+    <Link
+      ref={ref}
+      to={href}
+      preload="intent"
+      style={{ transitionDelay: `${Math.min(index, 4) * 60}ms` }}
+      className="reveal group relative flex aspect-[496/498] flex-1 items-end justify-start overflow-hidden rounded-sm p-4"
+    >
+      <Image
+        src={image}
+        alt={label}
+        width={496}
+        height={498}
+        className="absolute inset-0 size-full object-cover transition-transform duration-(--duration-slow) ease-(--ease-out-soft) group-hover:scale-105"
+        loading="lazy"
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/0 from-55% to-black/30" />
+      <span className="relative text-display font-medium text-white">{label}</span>
+    </Link>
+  );
+}
 
-export default function HeroFlats({
-  title = "Hero",
-  description = "Your description here",
+export default function Hero({
   image,
-  placement,
-  cta,
+  mobileImage,
+  headline,
+  href = "/",
+  categories = [],
+  infoBullets = [],
 }: Props) {
   return (
-    <div>
-      <div className="mx-auto flex flex-col items-center gap-8">
-        <div
-          className={`flex w-full xl:container mx-5 py-20 md:mx-10 xl:mx-auto z-10 ${
-            image
-              ? PLACEMENT[placement]
-              : "flex-col items-center justify-center text-center"
-          } lg:py-36 gap-12 md:gap-20 items-center`}
+    <div className="flex flex-col gap-2 px-3">
+      <div className="flex h-screen flex-col gap-2 pt-15 pb-3">
+        <Link
+          to={href}
+          preload="intent"
+          className="relative block min-h-0 w-full flex-1 overflow-hidden rounded-md"
         >
-          {image && (
-            <Image
-              width={640}
-              className="w-full lg:w-1/2 object-fit"
-              sizes="(max-width: 640px) 100vw, 30vw"
-              src={image}
-              alt={image}
-              decoding="async"
-              loading="lazy"
-            />
+          <Image
+            src={mobileImage ?? image}
+            alt={headline ?? ""}
+            width={720}
+            height={900}
+            className="absolute inset-0 size-full object-cover sm:hidden"
+            preload
+          />
+          <Image
+            src={image}
+            alt={headline ?? ""}
+            width={1488}
+            height={794}
+            className="absolute inset-0 hidden size-full object-cover sm:block"
+            preload
+          />
+
+          {headline && (
+            <div className="absolute inset-x-0 top-[40%] flex justify-center px-6 text-center">
+              <span className="text-display font-semibold text-white sm:text-[26px]">{headline}</span>
+            </div>
           )}
-          <div
-            className={`mx-6 lg:mx-auto lg:w-full space-y-4 gap-4 ${
-              image
-                ? "lg:w-1/2 lg:max-w-xl"
-                : "flex flex-col items-center justify-center lg:max-w-3xl"
-            }`}
-          >
-            <div
-              className="inline-block text-[80px] leading-[100%] font-medium tracking-[-2.4px]"
-              dangerouslySetInnerHTML={{
-                __html: title,
-              }}
-            >
-            </div>
-            <p className="text-zinc-400 text-base md:text-lg leading-[150%]">
-              {description}
-            </p>
-            <div className="flex flex-col items-center lg:items-start lg:flex-row gap-4">
-              {cta?.map((item) => (
-                <a
-                  key={item?.id}
-                  id={item?.id}
-                  href={item?.href}
-                  target={item?.href.includes("http") ? "_blank" : "_self"}
-                  className={`group relative overflow-hidden rounded-full hover:bg-gradient-to-r px-6 py-2 lg:px-8 lg:py-3 transition-all duration-300 ease-out ${
-                    item.variant === "Reverse"
-                      ? "bg-secondary text-white"
-                      : "bg-accent text-black"
-                  }`}
-                >
-                  <span className="ease absolute right-0 -mt-12 h-32 w-8 translate-x-12 rotate-12 bg-white opacity-10 transition-all duration-1000 group-hover:-translate-x-40">
-                  </span>
-                  <span className="relative font-medium lg:text-xl">
-                    {item?.text}
-                  </span>
-                </a>
-              ))}
-            </div>
+        </Link>
+
+        {infoBullets.length > 0 && (
+          <div className="frost flex items-center gap-6 overflow-x-auto rounded-sm px-3 py-3 sm:justify-between sm:overflow-visible">
+            {infoBullets.map((bullet) => (
+              <span
+                key={bullet}
+                className="shrink-0 text-sm font-normal tracking-[-0.12px] text-ink whitespace-nowrap"
+              >
+                • {bullet}
+              </span>
+            ))}
           </div>
-        </div>
+        )}
       </div>
+
+      {categories.length > 0 && (
+        <div className={clx("flex gap-3", "flex-row")}>
+          {categories.map((category, index) => (
+            <CategoryTile key={category.label} {...category} index={index} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

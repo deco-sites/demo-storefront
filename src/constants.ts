@@ -12,7 +12,11 @@ export const USER_ID = "user-json";
 
 export const WISHLIST_FORM_ID = "wishlist-form";
 
-export const HEADER_HEIGHT_MOBILE = "104px";
-export const NAVBAR_HEIGHT_MOBILE = "56px";
-export const HEADER_HEIGHT_DESKTOP = "176px";
-export const NAVBAR_HEIGHT_DESKTOP = "44px";
+// Floating glass header — a single compact bar on every breakpoint (see
+// src/sections/Header/Header.tsx). HEADER_HEIGHT is the space the page
+// reserves (spacer element); the visible bar itself is fixed inside it.
+export const HEADER_TOP_GAP = "12px";
+export const HEADER_BAR_HEIGHT_DESKTOP = "64px";
+export const HEADER_BAR_HEIGHT_MOBILE = "56px";
+export const HEADER_HEIGHT_DESKTOP = "76px";
+export const HEADER_HEIGHT_MOBILE = "68px";

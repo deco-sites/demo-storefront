@@ -33,8 +33,7 @@ registerSectionLoaders({
     const mod: any = await import("~/sections/Newsletter/Newsletter");
     return typeof mod.loader === "function" ? mod.loader(props, req) : props;
   },
-  "site/sections/Social/InstagramPosts.tsx": (props: any) =>
-    cachedInstagramLoader(props),
+  "site/sections/Social/InstagramPosts.tsx": (props: any) => cachedInstagramLoader(props),
   // SearchResult needs the request URL to rebase filter/sort/pagination links
   // (commerce loaders return URLs with the wrong origin/pathname).
   "site/sections/Product/SearchResult.tsx": async (props: any, req: Request) => {

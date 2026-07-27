@@ -4,10 +4,7 @@
  */
 import { useEffect, useId, useRef } from "react";
 import { Suggestion } from "@decocms/apps-commerce/types";
-import {
-  SEARCHBAR_INPUT_FORM_ID,
-  SEARCHBAR_POPUP_ID,
-} from "../../../constants";
+import { SEARCHBAR_INPUT_FORM_ID, SEARCHBAR_POPUP_ID } from "../../../constants";
 import { useComponent } from "../../../sections/Component";
 import Icon from "../../ui/Icon";
 import { Props as SuggestionProps } from "./Suggestions";
@@ -32,9 +29,10 @@ export interface SearchbarProps {
 
 const Suggestions = "./Suggestions.tsx";
 
-export default function Searchbar(
-  { placeholder = "What are you looking for?", loader }: SearchbarProps,
-) {
+export default function Searchbar({
+  placeholder = "What are you looking for?",
+  loader,
+}: SearchbarProps) {
   const slot = useId();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -42,9 +40,7 @@ export default function Searchbar(
     const onKey = (e: KeyboardEvent) => {
       const isK = e.key === "k" || e.key === "K";
       if (e.metaKey && isK) {
-        const popup = document.getElementById(
-          SEARCHBAR_POPUP_ID,
-        ) as HTMLInputElement | null;
+        const popup = document.getElementById(SEARCHBAR_POPUP_ID) as HTMLInputElement | null;
         if (popup) {
           popup.checked = true;
           inputRef.current?.focus();
@@ -72,16 +68,8 @@ export default function Searchbar(
   };
 
   return (
-    <div
-      className="w-full grid gap-8 px-4 py-6"
-      style={{ gridTemplateRows: "min-content auto" }}
-    >
-      <form
-        id={SEARCHBAR_INPUT_FORM_ID}
-        action={ACTION}
-        className="join"
-        onSubmit={onSubmit}
-      >
+    <div className="w-full grid gap-8 px-4 py-6" style={{ gridTemplateRows: "min-content auto" }}>
+      <form id={SEARCHBAR_INPUT_FORM_ID} action={ACTION} className="join" onSubmit={onSubmit}>
         <button
           type="submit"
           className="btn join-item btn-square no-animation"
@@ -101,9 +89,12 @@ export default function Searchbar(
           placeholder={placeholder}
           autoComplete="off"
           hx-target={`#${slot}`}
-          hx-post={loader && useComponent<SuggestionProps>(Suggestions, {
-            loader: asResolved(loader),
-          })}
+          hx-post={
+            loader &&
+            useComponent<SuggestionProps>(Suggestions, {
+              loader: asResolved(loader),
+            })
+          }
           hx-trigger={`input changed delay:300ms, ${NAME}`}
           hx-indicator={`#${SEARCHBAR_INPUT_FORM_ID}`}
           hx-swap="innerHTML"

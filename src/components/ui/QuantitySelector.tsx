@@ -1,9 +1,7 @@
 import React, { useId, useRef } from "react";
 import { clx } from "~/sdk/clx";
 
-function QuantitySelector(
-  { id, disabled, ...props }: React.JSX.IntrinsicElements["input"],
-) {
+function QuantitySelector({ id, disabled, ...props }: React.JSX.IntrinsicElements["input"]) {
   const fallbackId = useId();
   const inputId = id ?? fallbackId;
   const inputRef = useRef<HTMLInputElement>(null);

@@ -15,39 +15,39 @@ export interface Props {
   loader: Resolved<Suggestion | null>;
 }
 export const action = async (props: Props, req: Request, ctx: AppContext) => {
-  const { loader: { __resolveType, ...loaderProps } } = props as unknown as {
+  const {
+    loader: { __resolveType, ...loaderProps },
+  } = props as unknown as {
     loader: { __resolveType: string } & Record<string, unknown>;
   };
   const form = await req.formData();
   const query = `${form.get(NAME ?? "q")}`;
-  const suggestion = await ctx.invoke(__resolveType, {
+  const suggestion = (await ctx.invoke(__resolveType, {
     ...loaderProps,
     query,
-  }) as Suggestion | null;
+  })) as Suggestion | null;
   return { suggestion };
 };
 export const loader = async (props: Props, req: Request, ctx: AppContext) => {
-  const { loader: { __resolveType, ...loaderProps } } = props as unknown as {
+  const {
+    loader: { __resolveType, ...loaderProps },
+  } = props as unknown as {
     loader: { __resolveType: string } & Record<string, unknown>;
   };
   const query = new URL(req.url).searchParams.get(NAME ?? "q");
-  const suggestion = await ctx.invoke(__resolveType, {
+  const suggestion = (await ctx.invoke(__resolveType, {
     ...loaderProps,
     query,
-  }) as Suggestion | null;
+  })) as Suggestion | null;
   return { suggestion };
 };
-function Suggestions(
-  { suggestion }: ComponentProps<typeof loader, typeof action>,
-) {
+function Suggestions({ suggestion }: ComponentProps<typeof loader, typeof action>) {
   const { products, searches = [] } = suggestion ?? {};
   if (!products) return null;
   const hasProducts = Boolean(products.length);
   const hasTerms = Boolean(searches.length);
   return (
-    <div
-      className={clx(`overflow-y-scroll`, !hasProducts && !hasTerms && "hidden")}
-    >
+    <div className={clx(`overflow-y-scroll`, !hasProducts && !hasTerms && "hidden")}>
       <div className="gap-4 grid grid-cols-1 sm:grid-rows-1 sm:grid-cols-[150px_1fr]">
         <div className="flex flex-col gap-6">
           <span className="font-medium text-xl" role="heading" aria-level={3}>
@@ -57,10 +57,7 @@ function Suggestions(
             {searches.map(({ term }) => (
               <li>
                 {/* TODO @gimenes: use name and action from searchbar form */}
-                <a
-                  href={`${ACTION}?${NAME}=${term}`}
-                  className="flex gap-4 items-center"
-                >
+                <a href={`${ACTION}?${NAME}=${term}`} className="flex gap-4 items-center">
                   <span>
                     <Icon id="search" />
                   </span>
@@ -80,11 +77,7 @@ function Suggestions(
                 index={index}
                 className="carousel-item first:ml-4 last:mr-4 min-w-50 max-w-50"
               >
-                <ProductCard
-                  product={product}
-                  index={index}
-                  itemListName="Suggeestions"
-                />
+                <ProductCard product={product} index={index} itemListName="Suggeestions" />
               </Slider.Item>
             ))}
           </Slider>

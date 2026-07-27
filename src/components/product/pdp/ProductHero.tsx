@@ -4,21 +4,12 @@ import { mapProductToAnalyticsItem } from "@decocms/apps-commerce/utils/productT
 import { useRouterState } from "@tanstack/react-router";
 import { useSendEvent } from "../../../sdk/useSendEvent";
 import { clx } from "~/sdk/clx";
-import ProductActions, { type ActionsCopyConfig } from "./ProductActions";
 import ProductDescription from "./ProductDescription";
-import ProductDiscountBadge, {
-  type DiscountBadgeConfig,
-} from "./ProductDiscountBadge";
-import ProductGallery, {
-  filterImagesForVariant,
-  type GalleryConfig,
-} from "./ProductGallery";
-import ProductPrice from "./ProductPrice";
+import ProductGallery, { filterImagesForVariant, type GalleryConfig } from "./ProductGallery";
+import ProductInfoPanel from "./ProductInfoPanel";
 import ProductShipping from "./ProductShipping";
-import ProductTitle from "./ProductTitle";
-import ProductVariantSelector, {
-  type VariantSelectorConfig,
-} from "./ProductVariantSelector";
+import type { ActionsCopyConfig } from "./ProductActions";
+import type { VariantSelectorConfig } from "./ProductVariantSelector";
 
 export interface HeroCopyConfig extends ActionsCopyConfig {
   /**
@@ -32,38 +23,23 @@ export interface HeroCopyConfig extends ActionsCopyConfig {
 export interface Props {
   page: ProductDetailsPage;
   galleryConfig?: GalleryConfig;
-  discountBadgeConfig?: DiscountBadgeConfig;
   variantSelectorConfig?: VariantSelectorConfig;
   copy?: HeroCopyConfig;
 }
 
-export default function ProductHero({
-  page,
-  galleryConfig,
-  discountBadgeConfig,
-  variantSelectorConfig,
-  copy,
-}: Props) {
+export default function ProductHero({ page, galleryConfig, variantSelectorConfig, copy }: Props) {
   const isLoading = useRouterState({ select: (s) => s.isLoading });
 
   const { breadcrumbList, product } = page;
   const { offers, isVariantOf } = product;
 
-  const title = isVariantOf?.name ?? product.name ?? "";
-  const description = product.description || isVariantOf?.description;
-
   const { price = 0, listPrice, availability } = useOffer(offers);
   const isInStock = availability === "https://schema.org/InStock";
 
-  const percent = listPrice && price
-    ? Math.round(((listPrice - price) / listPrice) * 100)
-    : 0;
-
-  const hasValidVariants = isVariantOf?.hasVariant?.some(
-    (v) =>
-      v?.name?.toLowerCase() !== "title" &&
-      v?.name?.toLowerCase() !== "default title",
-  ) ?? false;
+  const hasValidVariants =
+    isVariantOf?.hasVariant?.some(
+      (v) => v?.name?.toLowerCase() !== "title" && v?.name?.toLowerCase() !== "default title",
+    ) ?? false;
 
   const analyticsBreadcrumb = {
     ...breadcrumbList,
@@ -92,60 +68,39 @@ export default function ProductHero({
 
   // Filter against the variant name (e.g. "Tote Bag — Yellow"), not the
   // parent family name in `title` — otherwise no per-variant filtering happens.
-  const images = filterImagesForVariant(
-    isVariantOf?.image ?? product.image ?? [],
-    product.name,
-  );
+  const images = filterImagesForVariant(isVariantOf?.image ?? product.image ?? [], product.name);
 
   return (
-    <div
-      {...viewItemEvent}
-      className={clx(
-        "container grid",
-        "grid-cols-1 gap-2 py-0",
-        "sm:grid-cols-5 sm:gap-6",
-      )}
-    >
-      <div className="sm:col-span-3">
-        <ProductGallery images={images} config={galleryConfig} />
-      </div>
-
-      <div className="sm:col-span-2 flex flex-col">
-        <ProductDiscountBadge
-          percent={percent}
-          config={discountBadgeConfig}
-          isLoading={isLoading}
-        />
-        <ProductTitle name={title} isLoading={isLoading} />
-        <ProductPrice
-          price={price}
-          listPrice={listPrice}
-          currencyCode={offers?.priceCurrency}
-          isLoading={isLoading}
-        />
-
-        {hasValidVariants ? (
-          <div className="mt-4 sm:mt-8">
-            <ProductVariantSelector
-              product={product}
-              config={variantSelectorConfig}
+    <div {...viewItemEvent} className="flex flex-col gap-8">
+      <div className={clx("flex h-screen flex-col gap-4", "sm:flex-row sm:items-stretch sm:gap-8")}>
+        <div className="order-2 w-full shrink-0 sm:order-1 sm:h-full sm:w-[380px]">
+          <div className="flex h-full items-center justify-center sm:sticky sm:top-24">
+            <ProductInfoPanel
+              page={page}
+              price={price}
+              listPrice={listPrice}
+              currencyCode={offers?.priceCurrency}
+              isLoading={isLoading}
+              hasValidVariants={hasValidVariants}
+              isInStock={isInStock}
+              analyticsItem={analyticsItem}
+              variantSelectorConfig={variantSelectorConfig}
+              copy={copy}
             />
           </div>
-        ) : null}
+        </div>
 
-        <ProductActions
-          product={product}
-          analyticsItem={analyticsItem}
-          isInStock={isInStock}
-          copy={copy}
-        />
+        <div className="order-1 min-h-0 w-full flex-1 sm:order-2 sm:h-full">
+          <ProductGallery images={images} config={galleryConfig} />
+        </div>
+      </div>
 
-        <ProductShipping />
-
+      <div className="flex flex-col gap-4 sm:w-[380px]">
         <ProductDescription
-          html={description}
+          html={product.description || isVariantOf?.description}
           label={copy?.descriptionLabel}
         />
+        <ProductShipping />
       </div>
     </div>
   );

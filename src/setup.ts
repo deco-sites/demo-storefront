@@ -14,10 +14,7 @@
 
 import "./cache-config";
 
-import {
-  registerCommerceLoaders,
-  applySectionConventions,
-} from "@decocms/blocks/cms";
+import { registerCommerceLoaders, applySectionConventions } from "@decocms/blocks/cms";
 import { createSiteSetup } from "@decocms/blocks/setup";
 import { createAdminSetup } from "@decocms/blocks-admin/setup";
 import { autoconfigApps, type AppRegistry } from "@decocms/blocks-admin/apps";
@@ -49,10 +46,7 @@ const APP_REGISTRY: AppRegistry = [
 createSiteSetup({
   sections: import.meta.glob("./sections/**/*.tsx") as Record<string, () => Promise<any>>,
   blocks: generatedBlocks,
-  productionOrigins: [
-    "https://www.demo-storefront.com.br",
-    "https://demo-storefront.com.br",
-  ],
+  productionOrigins: ["https://www.demo-storefront.com.br", "https://demo-storefront.com.br"],
   initPlatform: (blocks) => initShopifyFromBlocks(blocks),
   onResolveError: (error, resolveType, context) => {
     console.error(`[CMS-DEBUG] ${context} "${resolveType}" failed:`, error);
@@ -141,12 +135,12 @@ registerCommerceLoaders({
 // + `@decocms/apps/shopify/loaders/cart.getCart`), so no loader entry is
 // needed here for minicart.
 registerCommerceLoaders({
-  "site/loaders/user.ts":     async () => (await import("./loaders/user")).default(),
-  "site/loaders/user":        async () => (await import("./loaders/user")).default(),
+  "site/loaders/user.ts": async () => (await import("./loaders/user")).default(),
+  "site/loaders/user": async () => (await import("./loaders/user")).default(),
   "site/loaders/wishlist.ts": async () => (await import("./loaders/wishlist")).default(),
-  "site/loaders/wishlist":    async () => (await import("./loaders/wishlist")).default(),
-  "site/loaders/address.ts":  async () => (await import("./loaders/address")).default(),
-  "site/loaders/address":     async () => (await import("./loaders/address")).default(),
+  "site/loaders/wishlist": async () => (await import("./loaders/wishlist")).default(),
+  "site/loaders/address.ts": async () => (await import("./loaders/address")).default(),
+  "site/loaders/address": async () => (await import("./loaders/address")).default(),
 });
 
 // -- Site-local actions (registered via additive invoke handler registry) --

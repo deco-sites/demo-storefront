@@ -1,8 +1,6 @@
 import { type ImageWidget } from "~/types/widgets";
 import { Picture, Source } from "~/components/ui/Picture";
-import Section, {
-  type Props as SectionHeaderProps,
-} from "../../components/ui/Section";
+import Section, { type Props as SectionHeaderProps } from "../../components/ui/Section";
 import { type LoadingFallbackProps } from "~/types/deco";
 /**
  * @titleBy alt
@@ -26,18 +24,8 @@ function Banner({ mobile, desktop, alt, href }: Banner) {
   return (
     <a href={href} className="overflow-hidden">
       <Picture>
-        <Source
-          width={190}
-          height={190}
-          media="(max-width: 767px)"
-          src={mobile}
-        />
-        <Source
-          width={640}
-          height={420}
-          media="(min-width: 768px)"
-          src={desktop || mobile}
-        />
+        <Source width={190} height={190} media="(max-width: 767px)" src={mobile} />
+        <Source width={640} height={420} media="(min-width: 768px)" src={desktop || mobile} />
         <img
           width={640}
           className="w-full h-full object-cover"
@@ -102,12 +90,9 @@ function Gallery({
     </Section.Container>
   );
 }
-export const LoadingFallback = (
-  { title, cta }: LoadingFallbackProps<Props>,
-) => (
+export const LoadingFallback = ({ title, cta }: LoadingFallbackProps<Props>) => (
   <Section.Container>
     <Section.Header title={title} cta={cta} />
-
     <Section.Placeholder height="635px" />;
   </Section.Container>
 );

@@ -1,21 +1,16 @@
 import type { HTMLWidget, ImageWidget } from "~/types/widgets";
 import type { SiteNavigationElement } from "@decocms/apps-commerce/types";
-import Image from "~/components/ui/Image";
 import Alert from "../../components/header/Alert";
 import Bag from "../../components/header/Bag";
+import HeaderNav from "../../components/header/HeaderNav";
 import Menu from "../../components/header/Menu";
-import NavItem from "../../components/header/NavItem";
 import SignIn from "../../components/header/SignIn";
-import Searchbar, {
-  type SearchbarProps,
-} from "../../components/search/Searchbar/Form";
+import SearchTrigger from "../../components/header/SearchTrigger";
+import Searchbar, { type SearchbarProps } from "../../components/search/Searchbar/Form";
 import Drawer from "../../components/ui/Drawer";
 import Icon from "../../components/ui/Icon";
 import Modal from "../../components/ui/Modal";
 import {
-  HEADER_HEIGHT_DESKTOP,
-  HEADER_HEIGHT_MOBILE,
-  NAVBAR_HEIGHT_MOBILE,
   SEARCHBAR_DRAWER_ID,
   SEARCHBAR_POPUP_ID,
   SIDEMENU_CONTAINER_ID,
@@ -23,12 +18,14 @@ import {
 } from "../../constants";
 import { useDevice } from "@decocms/blocks/sdk/useDevice";
 import { type LoadingFallbackProps } from "~/types/deco";
+
 export interface Logo {
   src: ImageWidget;
   alt: string;
   width?: number;
   height?: number;
 }
+
 export interface SectionProps {
   alerts?: HTMLWidget[];
   /**
@@ -44,71 +41,53 @@ export interface SectionProps {
   /** @title Logo */
   logo: Logo;
   /**
+   * @title Shipping note
+   * @description Small promo line shown at the bottom of the mega menu
+   * @default "Frete grátis em compras acima de R$500."
+   */
+  shippingNote?: string;
+  /**
    * @description Usefull for lazy loading hidden elements, like hamburguer menus etc
    * @hide true */
   loading?: "eager" | "lazy";
 }
-type Props = Omit<SectionProps, "alert">;
-const Desktop = ({ navItems, logo, searchbar, loading }: Props) => (
+
+type Props = SectionProps;
+
+const MOBILE_ICON_LABEL_CLASS =
+  "tap-scale flex size-10 items-center justify-center rounded-sm text-ink transition-colors duration-(--duration-fast) hover:bg-white/60";
+
+const Desktop = ({ navItems, logo, searchbar, shippingNote, loading }: Props) => (
   <>
     <Modal id={SEARCHBAR_POPUP_ID}>
-      <div
-        className="absolute top-0 bg-base-100 container"
-        style={{ marginTop: HEADER_HEIGHT_MOBILE }}
-      >
-        {loading === "lazy"
-          ? (
-            <div className="flex justify-center items-center">
-              <span className="loading loading-spinner" />
-            </div>
-          )
-          : <Searchbar {...searchbar} />}
+      <div className="glass-strong modal-box max-w-2xl rounded-lg p-0 shadow-none">
+        {loading === "lazy" ? (
+          <div className="flex items-center justify-center p-10">
+            <span className="loading loading-spinner" />
+          </div>
+        ) : (
+          <Searchbar {...searchbar} />
+        )}
       </div>
     </Modal>
 
-    <div className="flex flex-col gap-4 pt-5 container border-b border-gray-300">
-      <div className="grid grid-cols-3 place-items-center">
-        <div className="place-self-start">
-          <a href="/" aria-label="Store logo">
-            <Image
-              src={logo.src}
-              alt={logo.alt}
-              width={logo.width || 100}
-              height={logo.height || 23}
-            />
-          </a>
-        </div>
+    <div className="flex items-center justify-between gap-3 px-3 pt-3 pb-2">
+      <SearchTrigger placeholder={searchbar?.placeholder} />
 
-        <label
-          htmlFor={SEARCHBAR_POPUP_ID}
-          className="input input-bordered flex items-center gap-2 w-full"
-          aria-label="search icon button"
-        >
-          <Icon id="search" />
-          <span className="text-base-400 truncate">
-            Search products, brands...
-          </span>
-        </label>
+      <HeaderNav
+        navItems={navItems ?? []}
+        logo={logo}
+        shippingNote={shippingNote ?? "Frete grátis em compras acima de R$500."}
+      />
 
-        <div className="flex gap-4 place-self-end items-center">
-          <SignIn variant="desktop" />
-          <Bag />
-        </div>
-      </div>
-
-      <div className="flex justify-between items-center">
-        <ul className="flex">
-          {navItems?.slice(0, 10).map((item, index) => (
-            <NavItem key={index} item={item} />
-          ))}
-        </ul>
-        <div>
-          {/* ship to */}
-        </div>
+      <div className="flex items-center gap-1.5">
+        <SignIn variant="desktop" />
+        <Bag />
       </div>
     </div>
   </>
 );
+
 const Mobile = ({ logo, searchbar, navItems, loading }: Props) => (
   <>
     <Drawer
@@ -116,13 +95,13 @@ const Mobile = ({ logo, searchbar, navItems, loading }: Props) => (
       aside={
         <Drawer.Aside title="Search" drawer={SEARCHBAR_DRAWER_ID}>
           <div className="w-screen overflow-y-auto">
-            {loading === "lazy"
-              ? (
-                <div className="h-full w-full flex items-center justify-center">
-                  <span className="loading loading-spinner" />
-                </div>
-              )
-              : <Searchbar {...searchbar} />}
+            {loading === "lazy" ? (
+              <div className="flex h-full w-full items-center justify-center">
+                <span className="loading loading-spinner" />
+              </div>
+            ) : (
+              <Searchbar {...searchbar} />
+            )}
           </div>
         </Drawer.Aside>
       }
@@ -131,97 +110,88 @@ const Mobile = ({ logo, searchbar, navItems, loading }: Props) => (
       id={SIDEMENU_DRAWER_ID}
       aside={
         <Drawer.Aside title="Menu" drawer={SIDEMENU_DRAWER_ID}>
-          {loading === "lazy"
-            ? (
-              <div
-                id={SIDEMENU_CONTAINER_ID}
-                className="h-full flex items-center justify-center"
-                style={{ minWidth: "100vw" }}
-              >
-                <span className="loading loading-spinner" />
-              </div>
-            )
-            : <Menu navItems={navItems ?? []} />}
+          {loading === "lazy" ? (
+            <div
+              id={SIDEMENU_CONTAINER_ID}
+              className="flex h-full items-center justify-center"
+              style={{ minWidth: "100vw" }}
+            >
+              <span className="loading loading-spinner" />
+            </div>
+          ) : (
+            <Menu navItems={navItems ?? []} />
+          )}
         </Drawer.Aside>
       }
     />
 
-    <div
-      className="grid place-items-center w-screen px-5 gap-4"
-      style={{
-        height: NAVBAR_HEIGHT_MOBILE,
-        gridTemplateColumns:
-          "min-content auto min-content min-content min-content",
-      }}
-    >
+    <div className="frost mx-3 mt-3 flex h-14 items-center justify-between gap-2 rounded-sm px-2">
       <label
         htmlFor={SIDEMENU_DRAWER_ID}
-        className="btn btn-square btn-sm btn-ghost"
-        aria-label="open menu"
+        aria-label="Open menu"
+        className={MOBILE_ICON_LABEL_CLASS}
       >
-        <Icon id="menu" />
+        <Icon id="menu" size={18} />
       </label>
 
       {logo && (
-        <a
-          href="/"
-          className="grow inline-flex items-center justify-center"
-          style={{ minHeight: NAVBAR_HEIGHT_MOBILE }}
-          aria-label="Store logo"
-        >
-          <Image
+        <a href="/" aria-label="Store logo" className="flex items-center">
+          <img
             src={logo.src}
             alt={logo.alt}
-            width={logo.width || 100}
-            height={logo.height || 13}
+            width={logo.width ? Math.min(logo.width, 88) : 88}
+            height={logo.height ?? 20}
+            className="h-5 w-auto object-contain"
           />
         </a>
       )}
 
-      <label
-        htmlFor={SEARCHBAR_DRAWER_ID}
-        className="btn btn-square btn-sm btn-ghost"
-        aria-label="search icon button"
-      >
-        <Icon id="search" />
-      </label>
-      <SignIn variant="mobile" />
-      <Bag />
+      <div className="flex items-center gap-1">
+        <label
+          htmlFor={SEARCHBAR_DRAWER_ID}
+          aria-label="Open search"
+          className={MOBILE_ICON_LABEL_CLASS}
+        >
+          <Icon id="search" size={18} />
+        </label>
+        <SignIn variant="mobile" />
+        <Bag size="sm" />
+      </div>
     </div>
   </>
 );
+
 function Header({
   alerts = [],
   logo = {
-    src:
-      "https://decoims.com/storefront-tanstack/3968031e-28b3-4593-8c7e-d54a706294a1/986b61d4-3847-4867-93c8-b550cb459cc7.png",
-    width: 100,
-    height: 16,
+    src: "https://decoims.com/decocms/e8c6326e-e009-4e3c-9787-b2fe25a1b993/deco-logo.png",
+    width: 67,
+    height: 28,
     alt: "Logo",
   },
   ...props
 }: Props) {
   const device = useDevice();
   return (
-    <header
-      style={{
-        height: device === "desktop"
-          ? HEADER_HEIGHT_DESKTOP
-          : HEADER_HEIGHT_MOBILE,
-      }}
-    >
-      <div className="bg-base-100 fixed w-full z-40">
-        {alerts.length > 0 && <Alert alerts={alerts} />}
-        {device === "desktop"
-          ? <Desktop logo={logo} {...props} />
-          : <Mobile logo={logo} {...props} />}
-      </div>
+    <header className="fixed top-0 inset-x-0 z-50">
+      {alerts.length > 0 && (
+        <div className="glass-strong flex h-8 items-center justify-center text-2xs">
+          <Alert alerts={alerts} />
+        </div>
+      )}
+      {device === "desktop" ? (
+        <Desktop logo={logo} {...props} />
+      ) : (
+        <Mobile logo={logo} {...props} />
+      )}
     </header>
   );
 }
+
 export const LoadingFallback = (props: LoadingFallbackProps<Props>) => (
-  <Header {...props as any} loading="lazy" />
+  <Header {...(props as any)} loading="lazy" />
 );
+
 export default Header;
 
 export const eager = true;

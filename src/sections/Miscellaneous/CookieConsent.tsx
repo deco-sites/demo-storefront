@@ -123,12 +123,7 @@ function CookieConsent({
       >
         <div className={clx("flex-auto flex flex-col gap-4", "sm:gap-2")}>
           <h3 className="text-xl">{title}</h3>
-          {text && (
-            <div
-              className="text-base"
-              dangerouslySetInnerHTML={{ __html: text }}
-            />
-          )}
+          {text && <div className="text-base" dangerouslySetInnerHTML={{ __html: text }} />}
 
           <a href={policy.link} className="text-sm link link-secondary">
             {policy.text}
@@ -139,11 +134,7 @@ function CookieConsent({
           <button type="button" className="btn" onClick={accept}>
             {buttons.allowText}
           </button>
-          <button
-            type="button"
-            className="btn btn-outline"
-            onClick={() => setVisible(false)}
-          >
+          <button type="button" className="btn btn-outline" onClick={() => setVisible(false)}>
             {buttons.cancelText}
           </button>
         </div>

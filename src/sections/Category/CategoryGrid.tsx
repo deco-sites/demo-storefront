@@ -1,13 +1,12 @@
 import type { ImageWidget } from "~/types/widgets";
 import Image from "~/components/ui/Image";
-import Section, {
-  type Props as SectionHeaderProps,
-} from "../../components/ui/Section";
+import Section, { type Props as SectionHeaderProps } from "../../components/ui/Section";
 import Slider from "../../components/ui/Slider";
 import { clx } from "~/sdk/clx";
-import { useDevice } from "@decocms/blocks/sdk/useDevice";
 import { type LoadingFallbackProps } from "~/types/deco";
 import { Link } from "@tanstack/react-router";
+import { useReveal } from "~/sdk/useReveal";
+
 /** @titleBy label */
 export interface Item {
   image: ImageWidget;
@@ -17,63 +16,60 @@ export interface Item {
 export interface Props extends SectionHeaderProps {
   items: Item[];
 }
-function Card({ image, href, label }: Item) {
+
+function Card({ image, href, label, index = 0 }: Item & { index?: number }) {
+  const ref = useReveal<HTMLAnchorElement>();
   return (
     <Link
+      ref={ref}
       to={href}
       preload="intent"
-      className="flex flex-col items-center justify-center gap-4"
+      style={{ transitionDelay: `${Math.min(index, 4) * 60}ms` }}
+      className="reveal group relative flex aspect-[3/4] w-40 shrink-0 items-end overflow-hidden rounded-sm sm:w-full"
     >
-      <div className="w-44 h-44 rounded-full bg-base-200 flex justify-center items-center border border-transparent hover:border-primary">
-        <Image
-          src={image}
-          alt={label}
-          width={100}
-          height={100}
-          loading="lazy"
-        />
-      </div>
-      <span className="font-medium text-sm">{label}</span>
+      <Image
+        src={image}
+        alt={label}
+        width={340}
+        height={453}
+        className="absolute inset-0 size-full object-cover transition-transform duration-(--duration-slow) ease-(--ease-out-soft) group-hover:scale-105"
+        loading="lazy"
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/0 from-55% to-black/30" />
+      <span className="relative p-4 text-sm font-medium text-white capitalize">{label}</span>
     </Link>
   );
 }
+
 function CategoryGrid({ title, cta, items }: Props) {
-  const device = useDevice();
   return (
     <Section.Container>
       <Section.Header title={title} cta={cta} />
 
-      {device === "desktop"
-        ? (
-          <div className="grid grid-cols-6 gap-10">
-            {items.map((i) => <Card key={i.label} {...i} />)}
-          </div>
-        )
-        : (
-          <Slider className="carousel carousel-center sm:carousel-end gap-5 w-full">
-            {items.map((i, index) => (
-              <Slider.Item
-                index={index}
-                className={clx(
-                  "carousel-item",
-                  "first:pl-5 first:sm:pl-0",
-                  "last:pr-5 last:sm:pr-0",
-                )}
-              >
-                <Card {...i} />
-              </Slider.Item>
-            ))}
-          </Slider>
-        )}
+      <div className="hidden gap-3 sm:grid sm:grid-cols-3 lg:grid-cols-6">
+        {items.map((i, index) => (
+          <Card key={i.label} {...i} index={index} />
+        ))}
+      </div>
+
+      <Slider className="carousel carousel-center gap-3 w-full sm:hidden">
+        {items.map((i, index) => (
+          <Slider.Item
+            key={i.label}
+            index={index}
+            className={clx("carousel-item", "first:pl-5", "last:pr-5")}
+          >
+            <Card {...i} />
+          </Slider.Item>
+        ))}
+      </Slider>
     </Section.Container>
   );
 }
-export const LoadingFallback = (
-  { title, cta }: LoadingFallbackProps<Props>,
-) => (
+export const LoadingFallback = ({ title, cta }: LoadingFallbackProps<Props>) => (
   <Section.Container>
     <Section.Header title={title} cta={cta} />
-    <Section.Placeholder height="212px" />;
+    <Section.Placeholder height="320px" />
   </Section.Container>
 );
 export default CategoryGrid;

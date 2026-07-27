@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Product } from "@decocms/apps-commerce/types";
+import { useReveal } from "~/sdk/useReveal";
 import { mapProductToAnalyticsItem } from "@decocms/apps-commerce/utils/productToAnalyticsItem";
 import { Link } from "@tanstack/react-router";
 import { clx } from "~/sdk/clx";
@@ -8,12 +9,12 @@ import { useSendEvent } from "../../../sdk/useSendEvent";
 import { useVariantPossibilities } from "@decocms/apps-commerce/sdk/useVariantPossibilities";
 import { relative } from "../../../sdk/url";
 import WishlistButton from "../../wishlist/WishlistButton";
+import Tag from "~/components/ui/Tag";
 import { filterImagesForVariant } from "../pdp/ProductGallery";
 import ProductCardImage from "./ProductCardImage";
 import ProductCardTitle from "./ProductCardTitle";
 import ProductCardPrice from "./ProductCardPrice";
 import ProductCardVariants from "./ProductCardVariants";
-import ProductCardActions from "./ProductCardActions";
 
 export interface Props {
   product: Product;
@@ -32,9 +33,7 @@ export interface Props {
   className?: string;
 }
 
-const WIDTH = 287;
-const HEIGHT = 287;
-const ASPECT_RATIO = `${WIDTH} / ${HEIGHT}`;
+const ASPECT_RATIO = "372 / 498";
 const SHOE_SIZE_VARIANT = "shoe size";
 
 export default function ProductCard({
@@ -57,18 +56,14 @@ export default function ProductCard({
   const relativeUrl = relative(url) ?? "/";
 
   const [selectedHref, setSelectedHref] = useState(relativeUrl);
-  const selectedVariant = hasVariant.find(
-    (v) => relative(v.url) === selectedHref,
-  ) ?? product;
+  const selectedVariant = hasVariant.find((v) => relative(v.url) === selectedHref) ?? product;
   const variantImages = filterImagesForVariant(
     isVariantOf?.image ?? selectedVariant.image ?? images ?? [],
     selectedVariant.name,
   );
   const [front, back] = variantImages.length ? variantImages : (images ?? []);
 
-  const percent = listPrice && price
-    ? Math.round(((listPrice - price) / listPrice) * 100)
-    : 0;
+  const percent = listPrice && price ? Math.round(((listPrice - price) / listPrice) * 100) : 0;
 
   const analyticsItem = mapProductToAnalyticsItem({
     product,
@@ -86,20 +81,21 @@ export default function ProductCard({
   });
 
   const firstAttr = firstSku?.[0];
-  const showVariants = variants.length > 1 &&
-    firstAttr?.toLowerCase() !== SHOE_SIZE_VARIANT;
+  const showVariants = variants.length > 1 && firstAttr?.toLowerCase() !== SHOE_SIZE_VARIANT;
+
+  const revealRef = useReveal<HTMLDivElement>();
 
   return (
     <div
       {...event}
-      className={clx("card card-compact group text-sm", className)}
+      ref={revealRef}
+      className={clx("reveal group relative flex shrink-0 flex-col gap-2", className)}
+      style={{
+        transitionDelay: `${Math.min(index ?? 0, 4) * 60}ms`,
+      }}
     >
-      <figure
-        className={clx(
-          "relative bg-base-200",
-          "rounded border border-transparent",
-          "group-hover:border-primary",
-        )}
+      <div
+        className="relative w-full overflow-hidden rounded-sm"
         style={{ aspectRatio: ASPECT_RATIO }}
       >
         {front && (
@@ -109,65 +105,48 @@ export default function ProductCard({
             frontAlt={front.alternateName}
             backUrl={back?.url}
             backAlt={back?.alternateName}
-            width={WIDTH}
-            height={HEIGHT}
+            width={372}
+            height={498}
             preload={preload}
             prefetch={prefetch}
             inStock={inStock}
           />
         )}
 
-        <div className="absolute top-0 left-0 w-full flex items-center justify-between">
-          <span
-            className={clx(
-              "text-sm/4 font-normal text-black bg-error/15 text-center rounded-badge px-2 py-1",
-              inStock && "opacity-0",
+        {(percent > 0 || !inStock) && (
+          <div className="absolute top-3 left-3 z-10">
+            <Tag>{!inStock ? "Esgotado" : `${percent}% off`}</Tag>
+          </div>
+        )}
+      </div>
+
+      <div className="frost flex flex-col rounded-sm p-3 transition-colors duration-(--duration-base) sm:p-4">
+        <Link to={selectedHref} preload={prefetch} className="min-w-0">
+          <ProductCardTitle title={title} />
+        </Link>
+
+        <div className="flex items-center justify-between gap-2">
+          <Link to={selectedHref} preload={prefetch} className="shrink-0">
+            <ProductCardPrice
+              price={price}
+              listPrice={listPrice}
+              currencyCode={offers?.priceCurrency}
+            />
+          </Link>
+
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+            {showVariants && firstAttr && (
+              <ProductCardVariants
+                attrName={firstAttr}
+                variants={variants as Array<readonly [string, string]>}
+                selectedHref={selectedHref}
+                onSelect={setSelectedHref}
+                className="hidden sm:flex"
+              />
             )}
-          >
-            Notify me
-          </span>
-          <span
-            className={clx(
-              "text-sm/4 font-normal text-black bg-primary/15 text-center rounded-badge px-2 py-1",
-              (percent < 1 || !inStock) && "opacity-0",
-            )}
-          >
-            {percent} % off
-          </span>
+            <WishlistButton item={analyticsItem} variant="icon" />
+          </div>
         </div>
-
-        <div className="absolute bottom-0 right-0">
-          <WishlistButton item={analyticsItem} variant="icon" />
-        </div>
-      </figure>
-
-      <Link to={selectedHref} preload={prefetch} className="pt-5">
-        <ProductCardTitle title={title} />
-        <ProductCardPrice
-          price={price}
-          listPrice={listPrice}
-          currencyCode={offers?.priceCurrency}
-        />
-      </Link>
-
-      {showVariants && firstAttr && (
-        <ProductCardVariants
-          attrName={firstAttr}
-          variants={variants as Array<readonly [string, string]>}
-          selectedHref={selectedHref}
-          onSelect={setSelectedHref}
-        />
-      )}
-
-      <div className="grow" />
-
-      <div>
-        <ProductCardActions
-          productID={selectedVariant.productID ?? product.productID}
-          href={selectedHref}
-          analyticsItem={analyticsItem}
-          inStock={inStock}
-        />
       </div>
     </div>
   );

@@ -1,70 +1,47 @@
-import { useId } from "react";
-import { clx } from "~/sdk/clx";
 import { relative } from "../../../sdk/url";
+import { ColorSwatchList } from "../ColorSwatch";
+import { clx } from "~/sdk/clx";
 
-const SWATCH_COLORS: Record<string, string | undefined> = {
-  White: "white",
-  Black: "black",
-  Gray: "gray",
-  Blue: "#99CCFF",
-  Green: "#aad1b5",
-  Yellow: "#F1E8B0",
-  DarkBlue: "#4E6E95",
-  LightBlue: "#bedae4",
-  DarkGreen: "#446746",
-  LightGreen: "#aad1b5",
-  DarkYellow: "#c6b343",
-  LightYellow: "#F1E8B0",
-};
-
-function Ring({ value, checked }: { value: string; checked: boolean }) {
-  const color = SWATCH_COLORS[value];
-  const base = clx(
-    "ring-2 ring-offset-2",
-    checked ? "ring-primary" : "ring-transparent",
-  );
-  if (color) {
-    return (
-      <span
-        style={{ backgroundColor: color }}
-        className={clx(
-          "block w-12 h-12 rounded-full border border-[#C9CFCF]",
-          base,
-        )}
-        aria-label={value}
-      />
-    );
-  }
-  return (
-    <span
-      className={clx(
-        "btn btn-ghost border-[#C9CFCF] hover:bg-base-200 hover:border-[#C9CFCF] w-12 h-12",
-        base,
-      )}
-    >
-      {value}
-    </span>
-  );
-}
+const isColorAttr = (name: string) => /color|cor(es)?/i.test(name);
 
 export interface Props {
   attrName: string;
   variants: Array<readonly [value: string, link: string]>;
   selectedHref: string;
   onSelect: (href: string) => void;
+  className?: string;
 }
 
+/**
+ * Hover/tap variant preview shown on the product card's glass info bar —
+ * color dots for color attributes (matches Figma's "Color list"), small
+ * text pills for anything else.
+ */
 export default function ProductCardVariants({
   attrName,
   variants,
   selectedHref,
   onSelect,
+  className,
 }: Props) {
-  const id = useId();
+  const entries = variants.map(([value, link]) => [value, relative(link) as string] as const);
+
+  if (isColorAttr(attrName)) {
+    return (
+      <ColorSwatchList
+        variants={entries}
+        selectedHref={selectedHref}
+        onSelect={onSelect}
+        size={10}
+        max={5}
+        className={className}
+      />
+    );
+  }
+
   return (
-    <ul className="flex items-center justify-start gap-2 pt-4 pb-1 pl-1 overflow-x-auto">
-      {variants.map(([value, link]) => {
-        const href = relative(link) as string;
+    <ul className={clx("flex items-center gap-1", className)}>
+      {entries.map(([value, href]) => {
         const checked = href === selectedHref;
         return (
           <li key={href}>
@@ -73,12 +50,14 @@ export default function ProductCardVariants({
               role="radio"
               aria-checked={checked}
               aria-label={`${attrName}: ${value}`}
-              name={`${id}-${attrName}`}
               onClick={() => onSelect(href)}
               onMouseEnter={() => onSelect(href)}
-              className="cursor-pointer"
+              className={clx(
+                "tap-scale rounded-xs px-1.5 py-0.5 text-2xs capitalize transition-colors duration-(--duration-fast)",
+                checked ? "bg-ink text-white" : "frost text-muted-soft",
+              )}
             >
-              <Ring value={value} checked={checked} />
+              {value}
             </button>
           </li>
         );

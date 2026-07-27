@@ -1,33 +1,26 @@
-import { Link } from "@tanstack/react-router";
-import { clx } from "~/sdk/clx";
 import { useUser } from "../../platform/user";
-import Icon from "../ui/Icon";
+import Button from "../ui/Button";
 
 interface Props {
   variant: "mobile" | "desktop";
 }
 
+/** The Figma "Action button" — plain text, no icon: "Account" or "Login". */
 function SignIn({ variant }: Props) {
   const { isAuthenticated } = useUser();
-  const className = clx(
-    "btn btn-sm font-thin btn-ghost no-animation",
-    variant === "mobile" && "btn-square",
-  );
 
   if (isAuthenticated) {
     return (
-      <Link to="/account" preload="intent" className={className} aria-label="Account">
-        <Icon id="account_circle" />
-        {variant === "desktop" && <span>My account</span>}
-      </Link>
+      <Button href="/account" size={variant === "desktop" ? "md" : "sm"}>
+        Account
+      </Button>
     );
   }
 
   return (
-    <Link to="/login" preload="intent" className={className} aria-label="Login">
-      <Icon id="account_circle" />
-      {variant === "desktop" && <span>Sign in</span>}
-    </Link>
+    <Button href="/login" size={variant === "desktop" ? "md" : "sm"}>
+      Login
+    </Button>
   );
 }
 

@@ -5,10 +5,7 @@ import {
   type AddressBookState,
   EMPTY_ADDRESS_BOOK,
 } from "../../platform/address/address.types";
-import {
-  readAddressCookie,
-  serializeAddressCookie,
-} from "../../platform/address/cookie";
+import { readAddressCookie, serializeAddressCookie } from "../../platform/address/cookie";
 
 export type AddressInput = Omit<Address, "id"> & { id?: string };
 
@@ -17,10 +14,7 @@ export type AddressOp =
   | { op: "remove"; id: string }
   | { op: "setDefault"; id: string };
 
-async function action(
-  props: AddressOp,
-  req?: Request,
-): Promise<AddressBookState> {
+async function action(props: AddressOp, req?: Request): Promise<AddressBookState> {
   const platform = usePlatform();
   if (platform === "vtex" || platform === "wake") {
     // TODO(consumer): wire the real platform address endpoints here.
@@ -34,9 +28,7 @@ async function action(
     const input = props.address;
     let savedId = input.id;
     if (input.id) {
-      addresses = addresses.map((a) =>
-        a.id === input.id ? { ...a, ...input, id: a.id } : a
-      );
+      addresses = addresses.map((a) => (a.id === input.id ? { ...a, ...input, id: a.id } : a));
     } else {
       savedId = crypto.randomUUID();
       const isFirst = addresses.length === 0;
@@ -61,10 +53,7 @@ async function action(
   }
 
   const next: AddressBookState = { addresses };
-  RequestContext.responseHeaders.append(
-    "Set-Cookie",
-    serializeAddressCookie(next),
-  );
+  RequestContext.responseHeaders.append("Set-Cookie", serializeAddressCookie(next));
   return next;
 }
 

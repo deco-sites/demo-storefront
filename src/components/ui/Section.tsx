@@ -1,6 +1,7 @@
 import React from "react";
 import { JSX } from "react";
 import { clx } from "~/sdk/clx";
+import Icon from "./Icon";
 
 export interface Props {
   /** @description Section title */
@@ -16,16 +17,15 @@ function Header({ title, cta }: Props) {
   }
 
   return (
-    <div
-      className={clx(
-        "flex justify-between items-center gap-2",
-        "px-5 sm:px-0",
-      )}
-    >
-      <span className="text-2xl sm:text-3xl font-semibold">{title}</span>
+    <div className={clx("flex items-end justify-between gap-2", "px-5 sm:px-0")}>
+      <span className="text-display font-medium text-ink">{title}</span>
       {cta && (
-        <a className="text-sm font-medium text-primary" href={cta}>
+        <a
+          className="tap-scale flex items-center gap-1 text-sm text-ink-soft transition-colors duration-(--duration-fast) hover:text-ink"
+          href={cta}
+        >
           See all
+          <Icon id="chevron-right" size={12} />
         </a>
       )}
     </div>
@@ -36,16 +36,8 @@ interface Tab {
   title: string;
 }
 
-function Tabbed(
-  { children }: {
-    children: JSX.Element;
-  },
-) {
-  return (
-    <>
-      {children}
-    </>
-  );
+function Tabbed({ children }: { children: JSX.Element }) {
+  return <>{children}</>;
 }
 
 function Container({ className: _class, ...props }: React.JSX.IntrinsicElements["div"]) {
@@ -53,16 +45,14 @@ function Container({ className: _class, ...props }: React.JSX.IntrinsicElements[
     <div
       {...props}
       className={clx(
-        "container flex flex-col gap-4 sm:gap-6 w-full py-5 sm:py-10",
+        "flex w-full flex-col gap-6 px-3 py-8 sm:py-14",
         _class?.toString(),
       )}
     />
   );
 }
 
-function Placeholder(
-  { height, className: _class }: { height: string; className?: string },
-) {
+function Placeholder({ height, className: _class }: { height: string; className?: string }) {
   return (
     <div
       style={{

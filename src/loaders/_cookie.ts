@@ -5,9 +5,7 @@ export const WISHLIST_COOKIE_TTL = 60 * 60 * 24 * 365;
 
 export function readWishlistCookie(req: Request): WishlistState {
   const header = req.headers.get("cookie") ?? "";
-  const match = header
-    .split(/;\s*/)
-    .find((c) => c.startsWith(`${WISHLIST_COOKIE}=`));
+  const match = header.split(/;\s*/).find((c) => c.startsWith(`${WISHLIST_COOKIE}=`));
   if (!match) return EMPTY_WISHLIST;
   try {
     const raw = decodeURIComponent(match.slice(WISHLIST_COOKIE.length + 1));
@@ -30,16 +28,12 @@ export const NEWSLETTER_COOKIE_TTL = 60 * 60 * 24 * 365;
 
 export function readNewsletterCookie(req: Request): string[] {
   const header = req.headers.get("cookie") ?? "";
-  const match = header
-    .split(/;\s*/)
-    .find((c) => c.startsWith(`${NEWSLETTER_COOKIE}=`));
+  const match = header.split(/;\s*/).find((c) => c.startsWith(`${NEWSLETTER_COOKIE}=`));
   if (!match) return [];
   try {
     const raw = decodeURIComponent(match.slice(NEWSLETTER_COOKIE.length + 1));
     const emails = JSON.parse(raw);
-    return Array.isArray(emails) && emails.every((x) => typeof x === "string")
-      ? emails
-      : [];
+    return Array.isArray(emails) && emails.every((x) => typeof x === "string") ? emails : [];
   } catch {
     return [];
   }

@@ -58,16 +58,14 @@ const decoWorker = createDecoWorkerEntry(serverEntry, {
     const cookies = getCookies(request.headers);
     const rawDevice = detectDevice(request.headers.get("user-agent") ?? "");
     // SegmentKey only splits mobile vs desktop — collapse tablet to mobile
-    const device: "mobile" | "desktop" =
-      rawDevice === "desktop" ? "desktop" : "mobile";
+    const device: "mobile" | "desktop" = rawDevice === "desktop" ? "desktop" : "mobile";
 
     // Region splits the cache so a RJ-cached response isn't served to SP
     // visitors when pages use the website/matchers/location.ts matcher.
     // Reads cf-region-code (Cloudflare adds this in prod) with request.cf
     // as a fallback for environments that drop the header.
     const cf = (request as unknown as { cf?: { regionCode?: string } }).cf;
-    const regionCode =
-      request.headers.get("cf-region-code") ?? cf?.regionCode ?? "";
+    const regionCode = request.headers.get("cf-region-code") ?? cf?.regionCode ?? "";
 
     return {
       device,

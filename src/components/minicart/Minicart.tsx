@@ -74,9 +74,7 @@ function CartLine({ item, currency }: { item: CartItem; currency: string }) {
         >
           {item.title}
         </a>
-        <div className="text-sm text-base-400">
-          {formatPrice(item.price.amount, currency)}
-        </div>
+        <div className="text-sm text-base-400">{formatPrice(item.price.amount, currency)}</div>
         <div className="flex items-center justify-between mt-1">
           <QuantityStepper item={item} />
           <button
@@ -98,10 +96,7 @@ function EmptyState() {
   return (
     <div className="flex flex-col gap-6 items-center justify-center grow">
       <span className="font-medium text-2xl">Your bag is empty</span>
-      <label
-        htmlFor={MINICART_DRAWER_ID}
-        className="btn btn-outline no-animation cursor-pointer"
-      >
+      <label htmlFor={MINICART_DRAWER_ID} className="btn btn-outline no-animation cursor-pointer">
         Choose products
       </label>
     </div>
@@ -122,10 +117,7 @@ function Footer({ cart }: { cart: CartState }) {
       </div>
       <div className="p-4">
         {cart.checkoutUrl ? (
-          <a
-            className="btn btn-primary w-full no-animation"
-            href={cart.checkoutUrl}
-          >
+          <a className="btn btn-primary w-full no-animation" href={cart.checkoutUrl}>
             Begin Checkout
           </a>
         ) : (

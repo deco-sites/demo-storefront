@@ -2,7 +2,7 @@
   "__resolveType": "shopify/loaders/ProductList.ts",
   "props": {
     "sort": "",
-    "query": "a",
+    "query": "",
     "count": 6
   },
   "filters": {

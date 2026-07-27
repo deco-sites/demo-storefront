@@ -1,9 +1,6 @@
 import { RequestContext } from "@decocms/blocks/sdk/requestContext";
 import { usePlatform } from "../apps/site";
-import {
-  type AddressBookState,
-  EMPTY_ADDRESS_BOOK,
-} from "../platform/address/address.types";
+import { type AddressBookState, EMPTY_ADDRESS_BOOK } from "../platform/address/address.types";
 import { readAddressCookie } from "../platform/address/cookie";
 
 async function loader(): Promise<AddressBookState> {

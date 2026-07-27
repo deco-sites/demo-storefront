@@ -1,8 +1,6 @@
 import { type ImageWidget } from "~/types/widgets";
 import Image from "~/components/ui/Image";
-import Section, {
-  type Props as SectionHeaderProps,
-} from "../../components/ui/Section";
+import Section, { type Props as SectionHeaderProps } from "../../components/ui/Section";
 
 export interface Image {
   image: ImageWidget;

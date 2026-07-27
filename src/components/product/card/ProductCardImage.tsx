@@ -48,11 +48,7 @@ export default function ProductCardImage({
         width={width}
         height={height}
         style={{ aspectRatio }}
-        className={clx(
-          "object-cover",
-          "rounded w-full",
-          "col-span-full row-span-full",
-        )}
+        className={clx("object-cover", "rounded w-full", "col-span-full row-span-full")}
         sizes="(max-width: 640px) 50vw, 20vw"
         preload={preload}
         loading={preload ? "eager" : "lazy"}

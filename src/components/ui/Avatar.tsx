@@ -12,38 +12,34 @@ interface Props {
 const colors: Record<string, Record<string, string>> = {
   "azul-clara": { backgroundColor: "#87CEFA" },
   "azul-marinho": { backgroundColor: "#000080" },
-  "branca": { backgroundColor: "#FFFFFF" },
-  "cinza": { backgroundColor: "#808080" },
+  branca: { backgroundColor: "#FFFFFF" },
+  cinza: { backgroundColor: "#808080" },
   "cinza-escura": { backgroundColor: "#A9A9A9" },
-  "laranja": { backgroundColor: "#FFA500" },
-  "marrom": { backgroundColor: "#A52A2A" },
-  "preta": { backgroundColor: "#161616" },
+  laranja: { backgroundColor: "#FFA500" },
+  marrom: { backgroundColor: "#A52A2A" },
+  preta: { backgroundColor: "#161616" },
   "verde-clara": { backgroundColor: "#90EE90" },
-  "vermelha": { backgroundColor: "#FF0000" },
+  vermelha: { backgroundColor: "#FF0000" },
 };
 
 const variants = {
-  active: "ring-base-content",
-  disabled: "line-through",
-  default: "ring-base-400",
+  active: "ring-2 ring-ink",
+  disabled: "line-through ring-1 ring-gray-200",
+  default: "ring-1 ring-gray-200",
 };
 
 function Avatar({ content, variant = "default" }: Props) {
   return (
-    <div className="avatar placeholder">
-      <div
-        className={clx(
-          "h-6 w-6",
-          "rounded-full",
-          "ring-1 ring-offset-2",
-          variants[variant],
-        )}
-        style={colors[content]}
-      >
-        <span className="uppercase">
-          {colors[content] ? "" : content.substring(0, 2)}
-        </span>
-      </div>
+    <div
+      className={clx(
+        "tap-scale flex size-7 items-center justify-center",
+        "rounded-full ring-offset-2 transition-shadow duration-(--duration-fast)",
+        "bg-gray-50 text-2xs text-ink-soft",
+        variants[variant],
+      )}
+      style={colors[content]}
+    >
+      <span className="uppercase">{colors[content] ? "" : content.substring(0, 2)}</span>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import Icon from "../../components/ui/Icon";
 import Section from "../../components/ui/Section";
+import Button from "../../components/ui/Button";
 import { invoke } from "../../runtime";
 import type { SubscribeNewsletterResult } from "../../actions/newsletter/subscribe";
 import { clx } from "~/sdk/clx";
@@ -93,11 +94,9 @@ async function subscribeNewsletter(email: string): Promise<void> {
 
 function Notice({ title, description }: NoticeProps) {
   return (
-    <div className="flex flex-col justify-center items-center sm:items-start gap-4">
-      <span className="text-3xl font-semibold text-center sm:text-start">
-        {title}
-      </span>
-      <span className="text-sm font-normal text-base-400 text-center sm:text-start">
+    <div className="flex flex-col items-center justify-center gap-3 sm:items-start">
+      <span className="text-display text-center font-medium text-ink sm:text-start">{title}</span>
+      <span className="text-center text-sm font-normal text-muted sm:text-start">
         {description}
       </span>
     </div>
@@ -116,23 +115,19 @@ export default function Newsletter({ notices, form }: Props) {
   if (subscribe.isSuccess || subscribe.isError) {
     const isSuccess = subscribe.isSuccess;
     return (
-      <Section.Container className="bg-base-200">
-        <div className="p-14 flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-10">
+      <Section.Container>
+        <div className="glass-strong flex flex-col items-center justify-center gap-5 rounded-md p-10 sm:flex-row sm:gap-10 sm:p-14">
           <Icon
-            size={80}
-            className={clx(isSuccess ? "text-success" : "text-error")}
+            size={64}
+            className={clx(isSuccess ? "text-ink" : "text-error")}
             id={isSuccess ? "check-circle" : "error"}
           />
-          <div className="flex flex-col items-center sm:items-start gap-4">
+          <div className="flex flex-col items-center gap-4 sm:items-start">
             <Notice {...(isSuccess ? success : failed)} />
             {subscribe.isError && (
-              <button
-                type="button"
-                className="btn btn-outline"
-                onClick={() => subscribe.reset()}
-              >
+              <Button variant="outline" onClick={() => subscribe.reset()}>
                 Try again
-              </button>
+              </Button>
             )}
           </div>
         </div>
@@ -141,8 +136,8 @@ export default function Newsletter({ notices, form }: Props) {
   }
 
   return (
-    <Section.Container className="bg-base-200">
-      <div className="p-14 grid grid-flow-row sm:grid-cols-2 gap-10 sm:gap-20 place-items-center">
+    <Section.Container>
+      <div className="glass-strong grid place-items-center gap-8 rounded-md p-10 sm:grid-cols-2 sm:gap-20 sm:p-14">
         <Notice {...empty} />
 
         <form
@@ -152,28 +147,20 @@ export default function Newsletter({ notices, form }: Props) {
             const email = `${data.get("email") ?? ""}`.trim();
             if (email) subscribe.mutate(email);
           }}
-          className="flex flex-col sm:flex-row gap-4 w-full"
+          className="flex w-full flex-col gap-3 sm:flex-row"
         >
           <input
             name="email"
             type="email"
             required
-            className="input input-bordered grow"
+            className="frost h-10 grow rounded-sm px-4 text-sm text-ink placeholder:text-muted-soft focus:outline-none"
             placeholder={placeholder}
             disabled={subscribe.isPending}
           />
 
-          <button
-            className="btn btn-primary"
-            type="submit"
-            disabled={subscribe.isPending}
-          >
-            {subscribe.isPending ? (
-              <span className="loading loading-spinner" />
-            ) : (
-              <span>{label}</span>
-            )}
-          </button>
+          <Button type="submit" variant="solid" size="md" disabled={subscribe.isPending}>
+            {subscribe.isPending ? <span className="loading loading-spinner loading-xs" /> : label}
+          </Button>
         </form>
       </div>
     </Section.Container>

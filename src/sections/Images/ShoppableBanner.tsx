@@ -81,12 +81,7 @@ function ShoppableBanner(props: Props) {
       <div className="card lg:card-side rounded grid grid-cols-1 lg:grid-cols-2">
         <figure className="relative">
           <Picture>
-            <Source
-              media="(max-width: 767px)"
-              src={image?.mobile}
-              width={150}
-              height={150}
-            />
+            <Source media="(max-width: 767px)" src={image?.mobile} width={150} height={150} />
             <Source
               media="(min-width: 768px)"
               src={image?.desktop ? image?.desktop : image?.mobile}
@@ -128,14 +123,12 @@ function ShoppableBanner(props: Props) {
           ))}
         </figure>
         <div className="flex flex-col justify-center gap-6 py-20 px-8 bg-neutral-content">
-          <h2 className={`card-title flex ${title?.layout?.position}`}>
-            {title?.content}
-          </h2>
-          <p className={`text-base-content ${text?.layout?.position}`}>
-            {text?.content}
-          </p>
+          <h2 className={`card-title flex ${title?.layout?.position}`}>{title?.content}</h2>
+          <p className={`text-base-content ${text?.layout?.position}`}>{text?.content}</p>
           <div className={`card-actions ${link?.layout?.position}`}>
-            <a className="underline" href={link?.href}>{link?.text}</a>
+            <a className="underline" href={link?.href}>
+              {link?.text}
+            </a>
           </div>
         </div>
       </div>
