@@ -3,8 +3,8 @@
  *
  * Turns nested property access into a typed RPC call to /deco/invoke.
  * Converts dot-notation paths to slash-separated keys:
- *   invoke.vtex.loaders.productList(props)
- *   → POST /deco/invoke/vtex/loaders/productList
+ *   invoke.shopify.loaders.productList(props)
+ *   → POST /deco/invoke/shopify/loaders/productList
  *
  * The .ts suffix variant is also tried if the primary key isn't found
  * (registered loaders may have ".ts" extensions in their keys).

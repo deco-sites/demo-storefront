@@ -7,7 +7,6 @@
       "dependencies": {
         "@decocms/apps-commerce": "^7.20.7",
         "@decocms/apps-shopify": "^7.20.7",
-        "@decocms/apps-vtex": "^7.20.7",
         "@decocms/blocks": "^7.20.7",
         "@decocms/blocks-admin": "^7.20.7",
         "@decocms/blocks-cli": "^7.20.7",
@@ -108,10 +107,6 @@
     "@decocms/apps-commerce": ["@decocms/apps-commerce@7.20.7", "", { "dependencies": { "@decocms/blocks": "7.20.7" }, "peerDependencies": { "react": "^19.0.0", "react-dom": "^19.0.0" } }, "sha512-jwBbPOfNaDcszDfkjsjz0uYxYtgtpGKgtgZmLqAQgb1RIK4+Sd+0l0odE33H5HQkRI/k6Y2jZAONOJbzJU5Hfg=="],
 
     "@decocms/apps-shopify": ["@decocms/apps-shopify@7.20.7", "", { "dependencies": { "@decocms/apps-commerce": "7.20.7", "@decocms/blocks": "7.20.7", "@decocms/tanstack": "7.20.7" }, "peerDependencies": { "react": "^19.0.0", "react-dom": "^19.0.0" } }, "sha512-G8XFoF7b1NHQuPcgG3Vedbe7HCZoq00TerIwKRra/jztmRk+ar/eko9kpIDGlx8m/ESy6YsFaqXN6fMmrJCxgQ=="],
-
-    "@decocms/apps-vtex": ["@decocms/apps-vtex@7.20.7", "", { "dependencies": { "@decocms/apps-commerce": "7.20.7", "@decocms/apps-website": "7.20.7", "@decocms/blocks": "7.20.7", "@decocms/tanstack": "7.20.7" }, "peerDependencies": { "react": "^19.0.0", "react-dom": "^19.0.0" } }, "sha512-xr8qz+wtZXPIGubgVz107kLuzjNv/nHRB+P1jEN4FkPZfEMGTV45rtZFOViZNJP21mas3/VhOJ+MqcdtgBi55A=="],
-
-    "@decocms/apps-website": ["@decocms/apps-website@7.20.7", "", { "dependencies": { "@decocms/apps-commerce": "7.20.7", "@decocms/blocks": "7.20.7" }, "peerDependencies": { "react": "^19.0.0", "react-dom": "^19.0.0" } }, "sha512-1LdWOfNGrg6TL4k5bXA+5+HYP+A2VQRLGtd9R2OMZ7q67ryC1k3bEUQ1/ML2gJLJrhd+45LxWK/Xa2tfVjgd9g=="],
 
     "@decocms/blocks": ["@decocms/blocks@7.20.7", "", { "dependencies": { "@opentelemetry/api": "^1.9.1", "@opentelemetry/semantic-conventions": "^1.41.1", "@tanstack/store": "^0.9.1", "clsx": "^2.1.1", "fast-json-patch": "^3.1.0", "tailwind-merge": "^3.3.1" }, "peerDependencies": { "react": "^19.0.0", "react-dom": "^19.0.0" } }, "sha512-4JjTRB5JnpQBiMGCm6Ac48ZAqX+vgbdmiqah2t4R/dCSU7wFv9v0IruVTEXKsfYVDkJInrtPjHXWtgVSGLKg/Q=="],
 

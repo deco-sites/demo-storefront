@@ -8,11 +8,6 @@ async function loader(
 ): Promise<WishlistState> {
   const platform = usePlatform();
 
-  if (platform === "vtex") {
-    // TODO(consumer): call the real VTEX wishlist loader, e.g.
-    //   const list = await invoke("vtex/loaders/wishlist.ts");
-    //   return { productIDs: list.map((i) => i.sku) };
-  }
   if (platform === "wake") {
     // TODO(consumer): wire wake wishlist endpoint here.
   }

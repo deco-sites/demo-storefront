@@ -9,9 +9,6 @@ import { readAddressCookie } from "../platform/address/cookie";
 async function loader(): Promise<AddressBookState> {
   const platform = usePlatform();
 
-  if (platform === "vtex") {
-    // TODO(consumer): call the real VTEX address-book loader.
-  }
   if (platform === "wake") {
     // TODO(consumer): wire the wake address endpoint here.
   }
