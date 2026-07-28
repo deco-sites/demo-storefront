@@ -17,7 +17,7 @@ function Header({ title, cta }: Props) {
   }
 
   return (
-    <div className={clx("flex items-end justify-between gap-2", "px-5 sm:px-0")}>
+    <div className="flex items-end justify-between gap-2">
       <span className="text-display font-medium text-ink">{title}</span>
       {cta && (
         <a

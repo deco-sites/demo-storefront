@@ -9,10 +9,39 @@
     },
     {
       "__resolveType": "site/sections/Content/Hero.tsx",
-      "image": "https://decoims.com/storefront-tanstack/934e6382-6dbc-4433-b053-b0f8608a58c1/1742560219550-1226ef79-c7e0-403c-b716-b6b9af3f2936.png",
-      "mobileImage": "https://decoims.com/storefront-tanstack/09bc3306-d5e8-45c6-a740-734f2c035c22/1742560222938-f7ea4cbe-7498-4e64-9205-c741753edfcc.png",
-      "headline": "NEW SEASON, UP TO 60% OFF",
-      "href": "/s?q=shoes&page=0",
+      "slides": [
+        {
+          "image": "https://decoims.com/storefront-tanstack/934e6382-6dbc-4433-b053-b0f8608a58c1/1742560219550-1226ef79-c7e0-403c-b716-b6b9af3f2936.png",
+          "mobileImage": "https://decoims.com/storefront-tanstack/09bc3306-d5e8-45c6-a740-734f2c035c22/1742560222938-f7ea4cbe-7498-4e64-9205-c741753edfcc.png",
+          "headline": "NEW SEASON, UP TO 60% OFF",
+          "href": "/s?q=shoes&page=0",
+          "product": {
+            "__resolveType": "site/loaders/productByHandle.ts",
+            "handle": "high-top-canvas-shoes"
+          }
+        },
+        {
+          "image": "https://decoims.com/storefront-tanstack/6d050cd7-e16b-4fd2-830d-021125c95c2b/1742560233015-cf96d47f-564f-40da-ad94-7acac5f39327.png",
+          "mobileImage": "https://decoims.com/storefront-tanstack/b7b14181-28c7-421c-9535-2cc0e3259bc9/1742560234608-4d5c3212-3f75-4d50-89f3-970815748b43.png",
+          "headline": "THE DENIM EDIT IS HERE",
+          "href": "/s?q=jeans",
+          "product": {
+            "__resolveType": "site/loaders/productByHandle.ts",
+            "handle": "woman-t-shirt"
+          }
+        },
+        {
+          "image": "https://decoims.com/storefront-tanstack/24f19e67-c8f4-4601-8c86-379a92747535/1742560227121-f6bea2b8-b248-4b42-9246-6e924a0acc8b.png",
+          "mobileImage": "https://decoims.com/storefront-tanstack/24f19e67-c8f4-4601-8c86-379a92747535/1742560227121-f6bea2b8-b248-4b42-9246-6e924a0acc8b.png",
+          "headline": "ACCESSORIES THAT FINISH THE LOOK",
+          "href": "/accessories",
+          "product": {
+            "__resolveType": "site/loaders/productByHandle.ts",
+            "handle": "winter-hat"
+          }
+        }
+      ],
+      "interval": 6,
       "categories": [
         {
           "label": "Women",

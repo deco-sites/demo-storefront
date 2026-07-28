@@ -5,15 +5,21 @@ import { useEffect, useRef } from "react";
  * fades/blurs/rises the element in once it scrolls into view, then
  * disconnects. Falls back to immediately-visible when IntersectionObserver
  * isn't available (rare) or `prefers-reduced-motion` handles the rest via CSS.
+ *
+ * Pass `disabled` for items inside a horizontally-scrolling carousel: an
+ * IntersectionObserver's target is clipped by scrollable ancestors, so cards
+ * past the carousel's initial scroll position never intersect and stay
+ * invisible until the user swipes — `disabled` skips the observer and reveals
+ * immediately instead.
  */
-export function useReveal<T extends HTMLElement>(threshold = 0.15) {
+export function useReveal<T extends HTMLElement>(threshold = 0.15, disabled = false) {
   const ref = useRef<T>(null);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
-    if (typeof IntersectionObserver === "undefined") {
+    if (disabled || typeof IntersectionObserver === "undefined") {
       el.setAttribute("data-revealed", "true");
       return;
     }
@@ -30,7 +36,7 @@ export function useReveal<T extends HTMLElement>(threshold = 0.15) {
     observer.observe(el);
 
     return () => observer.disconnect();
-  }, [threshold]);
+  }, [threshold, disabled]);
 
   return ref;
 }

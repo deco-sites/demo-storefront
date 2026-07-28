@@ -31,6 +31,8 @@ export interface Props {
   /** @description index of the product card in the list */
   index?: number;
   className?: string;
+  /** Skip the scroll-reveal animation — for cards inside a horizontal carousel */
+  disableReveal?: boolean;
 }
 
 const ASPECT_RATIO = "372 / 498";
@@ -43,6 +45,7 @@ export default function ProductCard({
   itemListName,
   index,
   className,
+  disableReveal,
 }: Props) {
   const { url, image: images, offers, isVariantOf } = product;
   const hasVariant = isVariantOf?.hasVariant ?? [];
@@ -83,13 +86,17 @@ export default function ProductCard({
   const firstAttr = firstSku?.[0];
   const showVariants = variants.length > 1 && firstAttr?.toLowerCase() !== SHOE_SIZE_VARIANT;
 
-  const revealRef = useReveal<HTMLDivElement>();
+  const revealRef = useReveal<HTMLDivElement>(0.15, disableReveal);
 
   return (
     <div
       {...event}
       ref={revealRef}
-      className={clx("reveal group relative flex shrink-0 flex-col gap-2", className)}
+      className={clx(
+        disableReveal ? "" : "reveal",
+        "group relative flex shrink-0 flex-col gap-2",
+        className,
+      )}
       style={{
         transitionDelay: `${Math.min(index ?? 0, 4) * 60}ms`,
       }}

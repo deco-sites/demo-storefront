@@ -26,19 +26,16 @@ function ProductSlider({ products, itemListName }: Props) {
           <Slider className="carousel carousel-center sm:carousel-end gap-3 w-full">
             {products?.map((product, index) => (
               <Slider.Item
+                key={product.productID ?? product.url ?? index}
                 index={index}
-                className={clx(
-                  "carousel-item",
-                  "sm:flex-1! sm:shrink! sm:max-w-[372px]!",
-                  "first:pl-5 first:sm:pl-0",
-                  "last:pr-5 last:sm:pr-0",
-                )}
+                className={clx("carousel-item", "sm:flex-1! sm:shrink! sm:max-w-[372px]!")}
               >
                 <ProductCard
                   index={index}
                   product={product}
                   itemListName={itemListName}
-                  className="w-[287px] sm:w-full sm:min-w-75"
+                  disableReveal
+                  className="w-[calc(100vw-80px)] sm:w-full sm:min-w-75"
                 />
               </Slider.Item>
             ))}
