@@ -95,7 +95,36 @@ const abTestedWorker = withABTesting(decoWorker, {
   kvBinding: "SITES_KV",
 });
 
+// Security: the framework (@decocms/tanstack workerEntry) stamps
+// `x-powered-by: deco@<version>` on every response for old-runtime parity
+// with partner tooling. That leaks the exact platform version (e.g.
+// deco@7.20.7) on every page, including error pages — making it trivial for
+// an attacker to target known vulnerabilities for that version. We strip the
+// header here, right before instrumentWorker, so OTel still wraps the
+// request/response cycle but nothing downstream leaks the version.
+function stripPoweredByHeader<T extends { fetch: (...args: never[]) => Promise<Response> | Response }>(
+  worker: T,
+): T {
+  return {
+    ...worker,
+    async fetch(...args: Parameters<T["fetch"]>) {
+      const response = await worker.fetch(...args);
+      if (!response.headers.has("x-powered-by")) return response;
+
+      // Headers on cached/replayed responses can be sealed — rebuild the
+      // response instead of mutating in place.
+      const headers = new Headers(response.headers);
+      headers.delete("x-powered-by");
+      return new Response(response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers,
+      });
+    },
+  } as T;
+}
+
 // instrumentWorker MUST be the outermost wrapper. It initialises the OTel
 // pipeline (metrics buffering, error log direct-POST) and reads
 // DECO_OTEL_METRICS_ENDPOINT + DECO_OTEL_LOGS_ENDPOINT from env at boot.
-export default instrumentWorker(abTestedWorker);
+export default instrumentWorker(stripPoweredByHeader(abTestedWorker));
