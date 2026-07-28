@@ -48,7 +48,7 @@ function Banner({ title, description, priceLabel, price, images, cta, visibility
               "max-w-full sm:max-w-[318px]",
             )}
           >
-            {title && <span className="text-display font-medium text-white">{title}</span>}
+            {title && <h2 className="text-display font-medium text-white">{title}</h2>}
 
             <div className="flex flex-col items-start gap-3">
               {description && (
