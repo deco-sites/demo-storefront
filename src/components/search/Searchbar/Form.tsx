@@ -4,7 +4,7 @@
  */
 import { useEffect, useId, useRef } from "react";
 import { Suggestion } from "@decocms/apps-commerce/types";
-import { SEARCHBAR_INPUT_FORM_ID, SEARCHBAR_POPUP_ID } from "../../../constants";
+import { SEARCHBAR_INPUT_FORM_ID, SIDEMENU_DRAWER_ID } from "../../../constants";
 import { useComponent } from "../../../sections/Component";
 import Icon from "../../ui/Icon";
 import { Props as SuggestionProps } from "./Suggestions";
@@ -40,9 +40,9 @@ export default function Searchbar({
     const onKey = (e: KeyboardEvent) => {
       const isK = e.key === "k" || e.key === "K";
       if (e.metaKey && isK) {
-        const popup = document.getElementById(SEARCHBAR_POPUP_ID) as HTMLInputElement | null;
-        if (popup) {
-          popup.checked = true;
+        const drawer = document.getElementById(SIDEMENU_DRAWER_ID) as HTMLInputElement | null;
+        if (drawer) {
+          drawer.checked = true;
           inputRef.current?.focus();
         }
       }
@@ -58,8 +58,7 @@ export default function Searchbar({
       // bootstrap), but @decocms/apps' ambient Window.DECO type only declares
       // `subscribe`. Cast through the real shape to dispatch programmatically.
       const events = window.DECO?.events as unknown as
-        | { dispatch?: (event: unknown) => void }
-        | undefined;
+        { dispatch?: (event: unknown) => void } | undefined;
       events?.dispatch?.({
         name: "search",
         params: { search_term: term },
@@ -104,13 +103,6 @@ export default function Searchbar({
           hx-indicator={`#${SEARCHBAR_INPUT_FORM_ID}`}
           hx-swap="innerHTML"
         />
-        <label
-          className="btn btn-ghost btn-square hidden shrink-0 sm:inline-flex no-animation"
-          htmlFor={SEARCHBAR_POPUP_ID}
-          aria-label="Toggle searchbar"
-        >
-          <Icon id="close" />
-        </label>
       </form>
 
       {/* Suggestions slot */}

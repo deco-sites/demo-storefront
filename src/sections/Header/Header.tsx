@@ -5,11 +5,10 @@ import Bag from "../../components/header/Bag";
 import HeaderNav from "../../components/header/HeaderNav";
 import Menu from "../../components/header/Menu";
 import SignIn from "../../components/header/SignIn";
-import Searchbar, { type SearchbarProps } from "../../components/search/Searchbar/Form";
+import { type SearchbarProps } from "../../components/search/Searchbar/Form";
 import Drawer from "../../components/ui/Drawer";
 import Icon from "../../components/ui/Icon";
-import Modal from "../../components/ui/Modal";
-import { SEARCHBAR_POPUP_ID, SIDEMENU_CONTAINER_ID, SIDEMENU_DRAWER_ID } from "../../constants";
+import { SIDEMENU_CONTAINER_ID, SIDEMENU_DRAWER_ID } from "../../constants";
 import { useDevice } from "@decocms/blocks/sdk/useDevice";
 import { type LoadingFallbackProps } from "~/types/deco";
 
@@ -51,24 +50,12 @@ type Props = SectionProps;
 const MOBILE_ICON_LABEL_CLASS =
   "tap-scale flex size-10 items-center justify-center rounded-sm text-ink transition-colors duration-(--duration-fast) hover:bg-white/60";
 
-const Desktop = ({ navItems, logo, searchbar, shippingNote, loading }: Props) => (
+const Desktop = ({ navItems, logo, shippingNote }: Props) => (
   <>
-    <Modal id={SEARCHBAR_POPUP_ID}>
-      <div className="glass-strong modal-box max-w-2xl rounded-lg p-0 shadow-none">
-        {loading === "lazy" ? (
-          <div className="flex items-center justify-center p-10">
-            <span className="loading loading-spinner" />
-          </div>
-        ) : (
-          <Searchbar {...searchbar} />
-        )}
-      </div>
-    </Modal>
-
     <div className="flex items-center justify-between gap-3 px-3 pt-3 pb-2">
       <label
-        htmlFor={SEARCHBAR_POPUP_ID}
-        aria-label="Open search"
+        htmlFor={SIDEMENU_DRAWER_ID}
+        aria-label="Open menu"
         className="frost tap-scale flex size-10 shrink-0 items-center justify-center rounded-sm text-ink transition-colors duration-(--duration-fast) hover:bg-glass-strong"
       >
         <Icon id="menu" size={18} />
@@ -88,27 +75,8 @@ const Desktop = ({ navItems, logo, searchbar, shippingNote, loading }: Props) =>
   </>
 );
 
-const Mobile = ({ logo, searchbar, navItems, loading }: Props) => (
+const Mobile = ({ logo }: Props) => (
   <>
-    <Drawer
-      id={SIDEMENU_DRAWER_ID}
-      aside={
-        <Drawer.Aside title="Menu" drawer={SIDEMENU_DRAWER_ID}>
-          {loading === "lazy" ? (
-            <div
-              id={SIDEMENU_CONTAINER_ID}
-              className="flex h-full items-center justify-center"
-              style={{ minWidth: "100vw" }}
-            >
-              <span className="loading loading-spinner" />
-            </div>
-          ) : (
-            <Menu navItems={navItems ?? []} searchbar={searchbar} />
-          )}
-        </Drawer.Aside>
-      }
-    />
-
     <div className="frost mx-3 mt-3 flex h-14 items-center justify-between gap-2 rounded-sm px-2">
       <label
         htmlFor={SIDEMENU_DRAWER_ID}
@@ -146,6 +114,9 @@ function Header({
     height: 28,
     alt: "Logo",
   },
+  navItems,
+  searchbar,
+  loading,
   ...props
 }: Props) {
   const device = useDevice();
@@ -156,10 +127,42 @@ function Header({
           <Alert alerts={alerts} />
         </div>
       )}
+
+      <Drawer
+        id={SIDEMENU_DRAWER_ID}
+        aside={
+          <Drawer.Aside title="Menu" drawer={SIDEMENU_DRAWER_ID}>
+            {loading === "lazy" ? (
+              <div
+                id={SIDEMENU_CONTAINER_ID}
+                className="flex h-full items-center justify-center"
+                style={{ minWidth: "100vw" }}
+              >
+                <span className="loading loading-spinner" />
+              </div>
+            ) : (
+              <Menu navItems={navItems ?? []} searchbar={searchbar} />
+            )}
+          </Drawer.Aside>
+        }
+      />
+
       {device === "desktop" ? (
-        <Desktop logo={logo} {...props} />
+        <Desktop
+          logo={logo}
+          navItems={navItems}
+          searchbar={searchbar}
+          loading={loading}
+          {...props}
+        />
       ) : (
-        <Mobile logo={logo} {...props} />
+        <Mobile
+          logo={logo}
+          navItems={navItems}
+          searchbar={searchbar}
+          loading={loading}
+          {...props}
+        />
       )}
     </header>
   );
