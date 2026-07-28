@@ -12,7 +12,7 @@
       "slides": [
         {
           "image": "https://decoims.com/demo-storefront/2026/07/57440993-8c68-4943-9084-1c947c1d0fd5-banner1.png?quality=original",
-          "mobileImage": "https://decoims.com/storefront-tanstack/09bc3306-d5e8-45c6-a740-734f2c035c22/1742560222938-f7ea4cbe-7498-4e64-9205-c741753edfcc.png",
+          "mobileImage": "https://decoims.com/demo-storefront/2026/07/611a7feb-6906-4d6e-9965-ca2bcf0e7081-banner1-mob.png",
           "headline": "NEW SEASON, UP TO 60% OFF",
           "href": "/s?q=shoes&page=0",
           "product": {
@@ -21,8 +21,8 @@
           }
         },
         {
-          "image": "https://decoims.com/storefront-tanstack/6d050cd7-e16b-4fd2-830d-021125c95c2b/1742560233015-cf96d47f-564f-40da-ad94-7acac5f39327.png",
-          "mobileImage": "https://decoims.com/storefront-tanstack/b7b14181-28c7-421c-9535-2cc0e3259bc9/1742560234608-4d5c3212-3f75-4d50-89f3-970815748b43.png",
+          "image": "https://decoims.com/demo-storefront/2026/07/ba0261c3-bee6-40bd-b7a4-ce12083c7be5-banner2.png",
+          "mobileImage": "https://decoims.com/demo-storefront/2026/07/9b92f808-9ae1-40ed-8a88-8a9929347647-banner2-mob.png",
           "headline": "THE DENIM EDIT IS HERE",
           "href": "/s?q=jeans",
           "product": {
@@ -31,8 +31,8 @@
           }
         },
         {
-          "image": "https://decoims.com/storefront-tanstack/24f19e67-c8f4-4601-8c86-379a92747535/1742560227121-f6bea2b8-b248-4b42-9246-6e924a0acc8b.png",
-          "mobileImage": "https://decoims.com/storefront-tanstack/24f19e67-c8f4-4601-8c86-379a92747535/1742560227121-f6bea2b8-b248-4b42-9246-6e924a0acc8b.png",
+          "image": "https://decoims.com/demo-storefront/2026/07/5a5dbcb8-eaaa-494f-8476-f32a029facf3-banner3.png",
+          "mobileImage": "https://decoims.com/demo-storefront/2026/07/62941bd2-b774-4445-8533-2ca6db199f15-banner3-mob.png",
           "headline": "ACCESSORIES THAT FINISH THE LOOK",
           "href": "/accessories",
           "product": {
