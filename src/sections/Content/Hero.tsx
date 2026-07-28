@@ -1,6 +1,7 @@
 import type { Product } from "@decocms/apps-commerce/types";
 import type { ImageWidget } from "~/types/widgets";
 import Image from "~/components/ui/Image";
+import { Picture, Source } from "~/components/ui/Picture";
 import { Link } from "@tanstack/react-router";
 import { clx } from "~/sdk/clx";
 import { useReveal } from "~/sdk/useReveal";
@@ -106,14 +107,14 @@ function HeroSlideNav({ product, index }: { product: Product; index: number }) {
       className={clx(
         "flex shrink-0 items-center overflow-hidden rounded-sm text-left",
         "transition-[background-color,padding,gap] duration-(--duration-slow) ease-(--ease-out-soft)",
-        "disabled:frost disabled:gap-3 disabled:p-2 disabled:pr-5",
+        "disabled:frost disabled:gap-2 disabled:p-1.5 disabled:pr-3 sm:disabled:gap-3 sm:disabled:p-2 sm:disabled:pr-5",
       )}
     >
       <div
         className={clx(
-          "size-24 shrink-0 overflow-hidden rounded-xs",
+          "size-14 shrink-0 overflow-hidden rounded-xs sm:size-24",
           "transition-[width,height,background-color] duration-(--duration-slow) ease-(--ease-out-soft)",
-          "group-disabled:size-20 group-disabled:bg-white",
+          "group-disabled:size-12 group-disabled:bg-white sm:group-disabled:size-20",
         )}
       >
         {img && (
@@ -128,10 +129,14 @@ function HeroSlideNav({ product, index }: { product: Product; index: number }) {
         )}
       </div>
       <div className="grid grid-cols-[0fr] transition-[grid-template-columns] duration-(--duration-slow) ease-(--ease-out-soft) group-disabled:grid-cols-[1fr]">
-        <div className="flex min-w-0 flex-col gap-1.5 overflow-hidden opacity-0 transition-opacity duration-(--duration-base) ease-(--ease-out-soft) group-disabled:opacity-100 group-disabled:delay-75">
-          <span className="text-2xs font-medium text-ink-soft whitespace-nowrap">Produto em destaque</span>
-          <hr className="w-28 border-t border-ink-soft/20" />
-          <span className="line-clamp-1 max-w-40 text-sm font-medium text-ink whitespace-nowrap">{title}</span>
+        <div className="flex min-w-0 flex-col gap-1 overflow-hidden opacity-0 transition-opacity duration-(--duration-base) ease-(--ease-out-soft) group-disabled:opacity-100 group-disabled:delay-75 sm:gap-1.5">
+          <span className="hidden text-2xs font-medium text-ink-soft whitespace-nowrap sm:inline">
+            Produto em destaque
+          </span>
+          <hr className="hidden w-28 border-t border-ink-soft/20 sm:block" />
+          <span className="line-clamp-1 max-w-28 text-xs font-medium text-ink whitespace-nowrap sm:max-w-40 sm:text-sm">
+            {title}
+          </span>
           <ProductCardPrice price={price} listPrice={listPrice} currencyCode={offers?.priceCurrency} />
         </div>
       </div>
@@ -139,23 +144,41 @@ function HeroSlideNav({ product, index }: { product: Product; index: number }) {
   );
 }
 
-/** Desktop-only slide: full-bleed image and an optional brand logo. */
-function DesktopSlide({ image, href = "/", logo, logoAlt }: HeroSlide) {
+/** Full-bleed slide: responsive image (desktop/mobile crop) and optional brand logo (desktop). */
+function HeroSlide({ image, mobileImage, href = "/", headline, logo, logoAlt, isLcp = false }: HeroSlide & { isLcp?: boolean }) {
   return (
     <div className="relative size-full shrink-0 overflow-hidden rounded-md">
       <Link to={href} preload="intent" className="absolute inset-0 block">
-        <Image
-          src={image}
-          alt={logoAlt ?? ""}
-          width={1488}
-          height={794}
-          className="size-full object-cover"
-          loading="lazy"
-        />
+        <Picture className="block size-full">
+          <Source
+            media="(max-width: 767px)"
+            src={mobileImage ?? image}
+            width={720}
+            height={900}
+            fetchPriority={isLcp ? "high" : undefined}
+          />
+          <Source
+            media="(min-width: 768px)"
+            src={image}
+            width={1488}
+            height={794}
+            fetchPriority={isLcp ? "high" : undefined}
+          />
+          <img
+            className="size-full object-cover"
+            src={image}
+            alt={logoAlt ?? headline ?? ""}
+            width={1488}
+            height={794}
+            decoding="async"
+            loading={isLcp ? "eager" : "lazy"}
+            {...(isLcp ? { fetchpriority: "high" } : {})}
+          />
+        </Picture>
       </Link>
 
       {logo && (
-        <div className="pointer-events-none absolute top-8 left-8">
+        <div className="pointer-events-none absolute top-8 left-8 hidden sm:block">
           <Image src={logo} alt={logoAlt ?? ""} width={160} height={64} className="h-10 w-auto object-contain" />
         </div>
       )}
@@ -172,35 +195,13 @@ export default function Hero({ slides, categories = [], infoBullets = [], interv
   return (
     <div className="flex flex-col gap-2 px-3">
       <div className="flex h-screen flex-col gap-2 pt-17 pb-3 sm:pt-15">
-        {/* Mobile: single full-screen hero photo + headline, unaffected by the desktop carousel. */}
-        <Link
-          to={first.href ?? "/"}
-          preload="intent"
-          className="relative block min-h-0 w-full flex-1 overflow-hidden rounded-md sm:hidden"
-        >
-          <Image
-            src={first.mobileImage ?? first.image}
-            alt={first.headline ?? ""}
-            width={720}
-            height={900}
-            className="absolute inset-0 size-full object-cover"
-            preload
-          />
-
-          {first.headline && (
-            <div className="absolute inset-x-0 top-[40%] flex justify-center px-6 text-center">
-              <span className="text-display font-semibold text-white">{first.headline}</span>
-            </div>
-          )}
-        </Link>
-
-        {/* Desktop: full carousel — each slide's own background, logo and featured products. */}
-        <div className="hidden min-h-0 sm:flex sm:flex-1 sm:flex-col">
+        {/* Carousel — each slide's own background (mobile/desktop crop), logo and featured products. */}
+        <div className="flex min-h-0 flex-1 flex-col">
           <div id={id} className="relative min-h-0 flex-1">
             <Slider className="carousel carousel-center h-full w-full">
               {slides.map((slide, index) => (
                 <Slider.Item key={slide.image} index={index} className="carousel-item h-full w-full">
-                  <DesktopSlide {...slide} />
+                  <HeroSlide {...slide} isLcp={index === 0} />
                 </Slider.Item>
               ))}
             </Slider>
@@ -210,7 +211,7 @@ export default function Hero({ slides, categories = [], infoBullets = [], interv
                 <div className="absolute inset-y-0 left-3 z-10 flex items-center">
                   <Slider.PrevButton
                     disabled={false}
-                    className="tap-scale frost flex size-10 items-center justify-center rounded-full text-ink"
+                    className="tap-scale frost flex size-8 items-center justify-center rounded-full text-ink sm:size-10"
                   >
                     <Icon id="chevron-right" className="rotate-180" size={18} />
                   </Slider.PrevButton>
@@ -218,12 +219,12 @@ export default function Hero({ slides, categories = [], infoBullets = [], interv
                 <div className="absolute inset-y-0 right-3 z-10 flex items-center">
                   <Slider.NextButton
                     disabled={false}
-                    className="tap-scale frost flex size-10 items-center justify-center rounded-full text-ink"
+                    className="tap-scale frost flex size-8 items-center justify-center rounded-full text-ink sm:size-10"
                   >
                     <Icon id="chevron-right" size={18} />
                   </Slider.NextButton>
                 </div>
-                <div className="absolute bottom-6 left-6 z-10 flex items-stretch gap-3">
+                <div className="absolute bottom-4 left-4 z-10 flex items-stretch gap-2 overflow-x-auto sm:bottom-6 sm:left-6 sm:gap-3 sm:overflow-visible">
                   {hasProductNav
                     ? slides.map(
                         (slide, index) =>
