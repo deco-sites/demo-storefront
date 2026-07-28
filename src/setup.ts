@@ -141,6 +141,10 @@ registerCommerceLoaders({
   "site/loaders/wishlist": async () => (await import("./loaders/wishlist")).default(),
   "site/loaders/address.ts": async () => (await import("./loaders/address")).default(),
   "site/loaders/address": async () => (await import("./loaders/address")).default(),
+  "site/loaders/productByHandle.ts": async (props: any) =>
+    (await import("./loaders/productByHandle")).default(props),
+  "site/loaders/productByHandle": async (props: any) =>
+    (await import("./loaders/productByHandle")).default(props),
 });
 
 // -- Site-local actions (registered via additive invoke handler registry) --

@@ -98,15 +98,17 @@ function Aside({
   return (
     <div
       data-aside
-      className="bg-base-100 grid grid-rows-[auto_1fr] h-full divide-y"
+      className="glass-strong grid grid-rows-[auto_1fr] h-full divide-y divide-ink-soft/10"
       style={{ maxWidth: "100vw" }}
     >
-      <div className="flex justify-between items-center">
-        <h1 className="px-4 py-3">
-          <span className="font-medium text-2xl">{title}</span>
-        </h1>
-        <label htmlFor={drawer} aria-label="X" className="btn btn-ghost">
-          <Icon id="close" />
+      <div className="flex items-center justify-between px-5 py-3.5">
+        <span className="text-lg font-medium text-ink">{title}</span>
+        <label
+          htmlFor={drawer}
+          aria-label="Close"
+          className="tap-scale flex size-10 items-center justify-center rounded-sm text-ink transition-colors duration-(--duration-fast) hover:bg-white/60"
+        >
+          <Icon id="close" size={18} />
         </label>
       </div>
       {children}

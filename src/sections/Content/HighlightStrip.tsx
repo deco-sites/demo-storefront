@@ -3,7 +3,6 @@ import Image from "~/components/ui/Image";
 import { Link } from "@tanstack/react-router";
 import Section, { type Props as SectionHeaderProps } from "../../components/ui/Section";
 import Slider from "../../components/ui/Slider";
-import { clx } from "~/sdk/clx";
 import { type LoadingFallbackProps } from "~/types/deco";
 import { useReveal } from "~/sdk/useReveal";
 
@@ -20,14 +19,14 @@ export interface Props extends SectionHeaderProps {
 }
 
 function Card({ image, href, eyebrow, label, index = 0 }: HighlightItem & { index?: number }) {
-  const ref = useReveal<HTMLAnchorElement>();
+  const ref = useReveal<HTMLAnchorElement>(0.15, true);
   return (
     <Link
       ref={ref}
       to={href}
       preload="intent"
       style={{ transitionDelay: `${Math.min(index, 4) * 60}ms` }}
-      className="reveal glass-strong flex w-[285px] shrink-0 items-start gap-3.5 rounded-xs p-2"
+      className="glass-strong flex w-[285px] shrink-0 items-start gap-3.5 rounded-xs p-2"
     >
       <div className="relative size-[102px] shrink-0 overflow-hidden rounded-xs">
         <Image
@@ -59,11 +58,7 @@ export default function HighlightStrip({ title, cta, items }: Props) {
 
       <Slider className="carousel carousel-center gap-1.5 w-full">
         {items.map((item, index) => (
-          <Slider.Item
-            key={item.href}
-            index={index}
-            className={clx("carousel-item", "first:pl-5 first:sm:pl-0", "last:pr-5 last:sm:pr-0")}
-          >
+          <Slider.Item key={item.href} index={index} className="carousel-item">
             <Card {...item} index={index} />
           </Slider.Item>
         ))}

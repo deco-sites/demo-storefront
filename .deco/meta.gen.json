@@ -132,6 +132,10 @@
           "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL2FkZHJlc3MudHM=",
           "namespace": "site"
         },
+        "site/loaders/productByHandle.ts": {
+          "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw==",
+          "namespace": "site"
+        },
         "site/loaders/user.ts": {
           "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3VzZXIudHM=",
           "namespace": "site"
@@ -242,6 +246,28 @@
               "site/loaders/address.ts"
             ],
             "default": "site/loaders/address.ts"
+          }
+        }
+      },
+      "c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw==": {
+        "title": "site/loaders/productByHandle.ts",
+        "type": "object",
+        "required": [
+          "__resolveType",
+          "handle"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "site/loaders/productByHandle.ts"
+            ],
+            "default": "site/loaders/productByHandle.ts"
+          },
+          "handle": {
+            "type": "string",
+            "title": "Product handle",
+            "description": "The product's URL handle/slug (e.g. \"high-top-canvas-shoes\") — pins an exact product instead of relying on a search query."
           }
         }
       },
@@ -1105,26 +1131,69 @@
       "c3JjL3NlY3Rpb25zL0NvbnRlbnQvSGVyby50c3g=@Props": {
         "type": "object",
         "properties": {
-          "image": {
-            "type": "string",
-            "title": "Background image (desktop)",
-            "format": "image-uri"
-          },
-          "mobileImage": {
-            "type": "string",
-            "nullable": true,
-            "title": "Background image (mobile)",
-            "format": "image-uri"
-          },
-          "headline": {
-            "type": "string",
-            "nullable": true,
-            "title": "Headline"
-          },
-          "href": {
-            "type": "string",
-            "nullable": true,
-            "title": "Link"
+          "slides": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "image": {
+                  "type": "string",
+                  "title": "Background image (desktop)",
+                  "format": "image-uri"
+                },
+                "mobileImage": {
+                  "type": "string",
+                  "nullable": true,
+                  "title": "Background image (mobile)",
+                  "format": "image-uri"
+                },
+                "href": {
+                  "type": "string",
+                  "nullable": true,
+                  "title": "Link"
+                },
+                "headline": {
+                  "type": "string",
+                  "nullable": true,
+                  "title": "Headline (shown on mobile only)"
+                },
+                "logo": {
+                  "type": "string",
+                  "nullable": true,
+                  "title": "Brand logo (desktop only)",
+                  "format": "image-uri"
+                },
+                "logoAlt": {
+                  "type": "string",
+                  "nullable": true,
+                  "title": "LogoAlt"
+                },
+                "product": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/Resolvable"
+                    },
+                    {
+                      "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                    },
+                    {
+                      "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
+                    },
+                    {
+                      "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
+                    }
+                  ],
+                  "title": "Product (desktop only)",
+                  "nullable": true,
+                  "description": "This slide's product — shown as a nav thumbnail below the banner; clicking another slide's thumbnail jumps to that banner."
+                }
+              },
+              "required": [
+                "image"
+              ],
+              "titleBy": "headline"
+            },
+            "title": "Banner slides"
           },
           "categories": {
             "type": "array",
@@ -1162,10 +1231,16 @@
             },
             "nullable": true,
             "title": "Info bullets"
+          },
+          "interval": {
+            "type": "number",
+            "nullable": true,
+            "title": "Autoplay interval (seconds)",
+            "description": "Leave empty to disable autoplay"
           }
         },
         "required": [
-          "image"
+          "slides"
         ]
       },
       "c2l0ZS9zZWN0aW9ucy9Db250ZW50L0hlcm8udHN4": {
@@ -3172,6 +3247,9 @@
                         "$ref": "#/definitions/Resolvable"
                       },
                       {
+                        "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                      },
+                      {
                         "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
                       },
                       {
@@ -4533,6 +4611,9 @@
                 "$ref": "#/definitions/Resolvable"
               },
               {
+                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+              },
+              {
                 "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
               },
               {
@@ -4608,6 +4689,9 @@
                   "anyOf": [
                     {
                       "$ref": "#/definitions/Resolvable"
+                    },
+                    {
+                      "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
                     },
                     {
                       "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
@@ -5471,6 +5555,9 @@
           },
           {
             "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL2FkZHJlc3MudHM="
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
           },
           {
             "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3VzZXIudHM="

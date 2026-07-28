@@ -5,7 +5,6 @@ import { clx } from "~/sdk/clx";
 import { useReveal } from "~/sdk/useReveal";
 import { useState } from "react";
 import { type LoadingFallbackProps } from "~/types/deco";
-import Slider from "~/components/ui/Slider";
 
 export interface PromoCard {
   /** @title Eyebrow label */
@@ -38,7 +37,7 @@ function Card({ label, headline, cta = "Shop Now", href, image, index = 0 }: Pro
       to={href}
       preload="intent"
       style={{ transitionDelay: `${Math.min(index, 4) * 60}ms` }}
-      className="reveal group relative grid aspect-square w-64 shrink-0 grid-rows-[auto_1fr_auto] items-center justify-center overflow-hidden rounded-sm p-4 text-center sm:w-full sm:flex-1"
+      className="reveal group relative grid aspect-square w-full shrink-0 grid-rows-[auto_1fr_auto] items-center justify-center overflow-hidden rounded-sm p-4 text-center sm:flex-1"
     >
       <Image
         src={image}
@@ -91,23 +90,11 @@ export default function PromoGrid({ title, tabs = [] }: Props) {
         </div>
       )}
 
-      <div className="hidden w-full gap-3 sm:flex">
+      <div className="flex w-full flex-col gap-3 sm:flex-row">
         {active.cards.map((card, index) => (
           <Card key={card.href} {...card} index={index} />
         ))}
       </div>
-
-      <Slider className="carousel carousel-center w-full gap-3 sm:hidden">
-        {active.cards.map((card, index) => (
-          <Slider.Item
-            key={card.href}
-            index={index}
-            className={clx("carousel-item", "first:pl-5", "last:pr-5")}
-          >
-            <Card {...card} index={index} />
-          </Slider.Item>
-        ))}
-      </Slider>
     </div>
   );
 }

@@ -17,15 +17,24 @@ export interface Props extends SectionHeaderProps {
   items: Item[];
 }
 
-function Card({ image, href, label, index = 0 }: Item & { index?: number }) {
-  const ref = useReveal<HTMLAnchorElement>();
+function Card({
+  image,
+  href,
+  label,
+  index = 0,
+  disableReveal,
+}: Item & { index?: number; disableReveal?: boolean }) {
+  const ref = useReveal<HTMLAnchorElement>(0.15, disableReveal);
   return (
     <Link
       ref={ref}
       to={href}
       preload="intent"
       style={{ transitionDelay: `${Math.min(index, 4) * 60}ms` }}
-      className="reveal group relative flex aspect-[3/4] w-40 shrink-0 items-end overflow-hidden rounded-sm sm:w-full"
+      className={clx(
+        disableReveal ? "" : "reveal",
+        "group relative flex aspect-[3/4] w-56 shrink-0 items-end overflow-hidden rounded-sm sm:w-full",
+      )}
     >
       <Image
         src={image}
@@ -54,12 +63,8 @@ function CategoryGrid({ title, cta, items }: Props) {
 
       <Slider className="carousel carousel-center gap-3 w-full sm:hidden">
         {items.map((i, index) => (
-          <Slider.Item
-            key={i.label}
-            index={index}
-            className={clx("carousel-item", "first:pl-5", "last:pr-5")}
-          >
-            <Card {...i} />
+          <Slider.Item key={i.label} index={index} className="carousel-item">
+            <Card {...i} disableReveal />
           </Slider.Item>
         ))}
       </Slider>

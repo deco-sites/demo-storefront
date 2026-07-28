@@ -1,7 +1,6 @@
 import Image from "~/components/ui/Image";
 import Section, { type Props as SectionHeaderProps } from "../../components/ui/Section";
 import Slider from "../../components/ui/Slider";
-import { clx } from "~/sdk/clx";
 import { type SectionProps } from "~/types/deco";
 import { type LoadingFallbackProps } from "~/types/deco";
 export interface Data {
@@ -99,10 +98,7 @@ function InstagramPosts({
 
       <Slider className="carousel carousel-center sm:carousel-end gap-5 sm:gap-10 w-full">
         {posts.map((item, index) => (
-          <Slider.Item
-            index={index}
-            className={clx("carousel-item", "first:pl-5 first:sm:pl-0", "last:pr-5 last:sm:pr-0")}
-          >
+          <Slider.Item index={index} className="carousel-item">
             <a href={item.permalink} target="_blank">
               {item.media_type === "IMAGE" ? (
                 <Image

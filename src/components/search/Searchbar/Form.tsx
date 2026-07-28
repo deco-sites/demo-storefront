@@ -69,10 +69,15 @@ export default function Searchbar({
 
   return (
     <div className="w-full grid gap-8 px-4 py-6" style={{ gridTemplateRows: "min-content auto" }}>
-      <form id={SEARCHBAR_INPUT_FORM_ID} action={ACTION} className="join" onSubmit={onSubmit}>
+      <form
+        id={SEARCHBAR_INPUT_FORM_ID}
+        action={ACTION}
+        className="flex items-center gap-3"
+        onSubmit={onSubmit}
+      >
         <button
           type="submit"
-          className="btn join-item btn-square no-animation"
+          className="btn btn-ghost btn-square no-animation shrink-0"
           aria-label="Search"
           form={SEARCHBAR_INPUT_FORM_ID}
           tabIndex={-1}
@@ -84,7 +89,7 @@ export default function Searchbar({
           ref={inputRef}
           autoFocus
           tabIndex={0}
-          className="input input-bordered join-item grow"
+          className="grow border-0 border-b border-ink/15 bg-transparent pb-2 text-base text-ink outline-none placeholder:text-muted focus:border-ink/40"
           name={NAME}
           placeholder={placeholder}
           autoComplete="off"
@@ -100,7 +105,7 @@ export default function Searchbar({
           hx-swap="innerHTML"
         />
         <label
-          className="join-item btn btn-ghost btn-square hidden sm:inline-flex no-animation"
+          className="btn btn-ghost btn-square hidden shrink-0 sm:inline-flex no-animation"
           htmlFor={SEARCHBAR_POPUP_ID}
           aria-label="Toggle searchbar"
         >

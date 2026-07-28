@@ -7,15 +7,15 @@ export interface Props {
 
 function MenuItem({ item }: { item: SiteNavigationElement }) {
   return (
-    <div className="collapse collapse-plus">
+    <div className="collapse collapse-arrow">
       <input type="checkbox" />
-      <div className="collapse-title px-0 text-lg font-medium text-ink-soft capitalize">
+      <div className="collapse-title min-h-0 px-0 py-4 text-lg font-medium text-ink capitalize">
         {item.name}
       </div>
       <div className="collapse-content px-0">
-        <ul className="flex flex-col gap-3 pb-2">
+        <ul className="flex flex-col gap-3 pb-3">
           <li>
-            <a className="text-sm text-muted underline" href={item.url}>
+            <a className="text-sm text-ink-soft underline" href={item.url}>
               Ver todos
             </a>
           </li>
@@ -32,11 +32,8 @@ function MenuItem({ item }: { item: SiteNavigationElement }) {
 
 function Menu({ navItems = [] }: Props) {
   return (
-    <div
-      className="glass-strong flex h-full flex-col overflow-y-auto"
-      style={{ minWidth: "100vw" }}
-    >
-      <ul className="flex grow flex-col divide-y divide-gray-200 px-5">
+    <div className="flex h-full flex-col overflow-y-auto" style={{ minWidth: "100vw" }}>
+      <ul className="flex grow flex-col divide-y divide-ink-soft/10 px-5">
         {navItems.map((item) => (
           <li key={item.url ?? item.name}>
             <MenuItem item={item} />
@@ -44,7 +41,7 @@ function Menu({ navItems = [] }: Props) {
         ))}
       </ul>
 
-      <ul className="flex flex-col gap-1 border-t border-gray-200 py-4">
+      <ul className="flex flex-col gap-1 border-t border-ink-soft/10 py-4">
         {[
           { href: "/wishlist", icon: "favorite" as const, label: "Lista de desejos" },
           { href: "https://www.deco.cx", icon: "home_pin" as const, label: "Nossas lojas" },
@@ -52,7 +49,10 @@ function Menu({ navItems = [] }: Props) {
           { href: "/account", icon: "account_circle" as const, label: "Minha conta" },
         ].map(({ href, icon, label }) => (
           <li key={label}>
-            <a className="flex items-center gap-3 px-5 py-2.5 text-sm text-ink-soft" href={href}>
+            <a
+              className="tap-scale flex items-center gap-3 px-5 py-2.5 text-sm text-ink transition-colors duration-(--duration-fast) hover:bg-white/60"
+              href={href}
+            >
               <Icon id={icon} size={18} />
               <span>{label}</span>
             </a>
