@@ -44,19 +44,19 @@
       "interval": 6,
       "categories": [
         {
-          "label": "Women",
-          "href": "/women",
-          "image": "https://decoims.com/storefront-tanstack/24f19e67-c8f4-4601-8c86-379a92747535/1742560227121-f6bea2b8-b248-4b42-9246-6e924a0acc8b.png"
+          "label": "Shirts",
+          "href": "/shirts",
+          "image": "https://decoims.com/demo-storefront/2026/07/dcd77bbd-4969-4186-aaaa-d8bc9e4b84c1-chatgpt-image-jul-27-2026-06_54_44-pm.png"
         },
         {
-          "label": "Men",
-          "href": "/men",
-          "image": "https://decoims.com/storefront-tanstack/5ad15dbc-205a-4546-9801-5d18ed393caa/1742560225714-38c33c9f-14a1-4048-973b-dc2a75caf1fa.png"
+          "label": "Accessories",
+          "href": "/accessories",
+          "image": "https://decoims.com/demo-storefront/2026/07/543e04d2-011d-4cc2-8875-46a1a08bef3d-accessories.png"
         },
         {
           "label": "Stickers",
           "href": "/stickers",
-          "image": "https://decoims.com/storefront-tanstack/adfa8d1d-9a08-427b-ab0a-32dec0cc8fc3/1742560228502-1b0ecaa2-9a13-4de2-bf17-5196948ed128.png"
+          "image": "https://decoims.com/demo-storefront/2026/07/6df3a538-085e-4243-93a8-0b961b99ae26-stickers.png"
         }
       ],
       "infoBullets": [
@@ -113,7 +113,7 @@
     },
     {
       "__resolveType": "site/sections/Images/Banner.tsx",
-      "title": "Denim Edit",
+      "title": "Capybara Helper",
       "cta": {
         "label": "Shop now",
         "href": "/s?q=jeans"
