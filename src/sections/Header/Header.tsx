@@ -5,17 +5,11 @@ import Bag from "../../components/header/Bag";
 import HeaderNav from "../../components/header/HeaderNav";
 import Menu from "../../components/header/Menu";
 import SignIn from "../../components/header/SignIn";
-import SearchTrigger from "../../components/header/SearchTrigger";
 import Searchbar, { type SearchbarProps } from "../../components/search/Searchbar/Form";
 import Drawer from "../../components/ui/Drawer";
 import Icon from "../../components/ui/Icon";
 import Modal from "../../components/ui/Modal";
-import {
-  SEARCHBAR_DRAWER_ID,
-  SEARCHBAR_POPUP_ID,
-  SIDEMENU_CONTAINER_ID,
-  SIDEMENU_DRAWER_ID,
-} from "../../constants";
+import { SEARCHBAR_POPUP_ID, SIDEMENU_CONTAINER_ID, SIDEMENU_DRAWER_ID } from "../../constants";
 import { useDevice } from "@decocms/blocks/sdk/useDevice";
 import { type LoadingFallbackProps } from "~/types/deco";
 
@@ -72,7 +66,13 @@ const Desktop = ({ navItems, logo, searchbar, shippingNote, loading }: Props) =>
     </Modal>
 
     <div className="flex items-center justify-between gap-3 px-3 pt-3 pb-2">
-      <SearchTrigger placeholder={searchbar?.placeholder} />
+      <label
+        htmlFor={SEARCHBAR_POPUP_ID}
+        aria-label="Open search"
+        className="frost tap-scale flex size-10 shrink-0 items-center justify-center rounded-sm text-ink transition-colors duration-(--duration-fast) hover:bg-glass-strong"
+      >
+        <Icon id="menu" size={18} />
+      </label>
 
       <HeaderNav
         navItems={navItems ?? []}
@@ -91,22 +91,6 @@ const Desktop = ({ navItems, logo, searchbar, shippingNote, loading }: Props) =>
 const Mobile = ({ logo, searchbar, navItems, loading }: Props) => (
   <>
     <Drawer
-      id={SEARCHBAR_DRAWER_ID}
-      aside={
-        <Drawer.Aside title="Search" drawer={SEARCHBAR_DRAWER_ID}>
-          <div className="w-screen overflow-y-auto">
-            {loading === "lazy" ? (
-              <div className="flex h-full w-full items-center justify-center">
-                <span className="loading loading-spinner" />
-              </div>
-            ) : (
-              <Searchbar {...searchbar} />
-            )}
-          </div>
-        </Drawer.Aside>
-      }
-    />
-    <Drawer
       id={SIDEMENU_DRAWER_ID}
       aside={
         <Drawer.Aside title="Menu" drawer={SIDEMENU_DRAWER_ID}>
@@ -119,7 +103,7 @@ const Mobile = ({ logo, searchbar, navItems, loading }: Props) => (
               <span className="loading loading-spinner" />
             </div>
           ) : (
-            <Menu navItems={navItems ?? []} />
+            <Menu navItems={navItems ?? []} searchbar={searchbar} />
           )}
         </Drawer.Aside>
       }
@@ -147,13 +131,6 @@ const Mobile = ({ logo, searchbar, navItems, loading }: Props) => (
       )}
 
       <div className="flex items-center gap-1">
-        <label
-          htmlFor={SEARCHBAR_DRAWER_ID}
-          aria-label="Open search"
-          className={MOBILE_ICON_LABEL_CLASS}
-        >
-          <Icon id="search" size={18} />
-        </label>
         <SignIn variant="mobile" />
         <Bag size="sm" />
       </div>
