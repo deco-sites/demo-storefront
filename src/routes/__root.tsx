@@ -33,6 +33,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Storefront-tanstack" },
     ],
     links: [
+      { rel: "preconnect", href: "https://api.fontshare.com" },
+      {
+        rel: "stylesheet",
+        href: "https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap",
+      },
       { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.ico" },
     ],

@@ -19,13 +19,13 @@ function ProductImageZoom({ images, width, height, id = useId() }: Props) {
     <Modal id={id}>
       <div
         id={container}
-        className="modal-box w-11/12 max-w-7xl grid grid-cols-[48px_1fr_48px] grid-rows-1 place-items-center"
+        className="modal-box grid w-11/12 max-w-7xl grid-cols-[48px_1fr_48px] grid-rows-1 place-items-center rounded-md bg-white"
       >
-        <Slider className="carousel col-span-full col-start-1 row-start-1 row-span-full h-full w-full">
+        <Slider className="carousel col-span-full col-start-1 row-span-full row-start-1 h-full w-full">
           {images.map((image, index) => (
             <Slider.Item
               index={index}
-              className="carousel-item w-full h-full justify-center items-center"
+              className="carousel-item h-full w-full items-center justify-center"
             >
               <Image
                 style={{ aspectRatio: `${width} / ${height}` }}
@@ -33,18 +33,18 @@ function ProductImageZoom({ images, width, height, id = useId() }: Props) {
                 alt={image.alternateName}
                 width={width}
                 height={height}
-                className="h-full w-auto"
+                className="h-full w-auto rounded-sm"
               />
             </Slider.Item>
           ))}
         </Slider>
 
-        <Slider.PrevButton className="btn btn-circle btn-outline col-start-1 col-end-2 row-start-1 row-span-full">
-          <Icon id="chevron-right" className="rotate-180" />
+        <Slider.PrevButton className="tap-scale frost col-start-1 col-end-2 row-span-full row-start-1 flex size-10 items-center justify-center rounded-full disabled:opacity-0">
+          <Icon id="chevron-right" className="rotate-180" size={16} />
         </Slider.PrevButton>
 
-        <Slider.NextButton className="btn btn-circle btn-outline col-start-3 col-end-4 row-start-1 row-span-full">
-          <Icon id="chevron-right" />
+        <Slider.NextButton className="tap-scale frost col-start-3 col-end-4 row-span-full row-start-1 flex size-10 items-center justify-center rounded-full disabled:opacity-0">
+          <Icon id="chevron-right" size={16} />
         </Slider.NextButton>
       </div>
       <Slider.JS rootId={container} />

@@ -17,22 +17,23 @@ export default function SearchSortBar({
   filterDrawerId,
 }: Props) {
   return (
-    <div className="flex justify-between items-end gap-4">
-      <div className="flex flex-col gap-2">
-        <span className="text-sm font-normal">
-          {recordPerPage} of {totalRecords} results
-        </span>
-        {sortOptions.length > 0 && <Sort sortOptions={sortOptions} url={url} />}
-      </div>
+    <div className="flex items-center justify-between gap-4">
+      <span className="text-xs text-muted">
+        {recordPerPage} of {totalRecords} results
+      </span>
 
-      {filterDrawerId && (
-        <label
-          htmlFor={filterDrawerId}
-          className="btn btn-ghost sm:hidden"
-        >
-          Filters
-        </label>
-      )}
+      <div className="flex items-center gap-2">
+        {sortOptions.length > 0 && <Sort sortOptions={sortOptions} url={url} />}
+
+        {filterDrawerId && (
+          <label
+            htmlFor={filterDrawerId}
+            className="tap-scale frost flex h-9 items-center gap-1.5 rounded-sm px-3 text-xs text-ink-soft sm:hidden"
+          >
+            Filters
+          </label>
+        )}
+      </div>
     </div>
   );
 }

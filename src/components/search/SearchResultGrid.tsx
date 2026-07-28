@@ -10,17 +10,14 @@ export interface Props {
   prefetch?: "intent" | false;
 }
 
-export default function SearchResultGrid(
-  { products, offset = 0, prefetch = "intent" }: Props,
-) {
+export default function SearchResultGrid({ products, offset = 0, prefetch = "intent" }: Props) {
   return (
     <div
       data-product-list
       className={clx(
-        "grid items-center",
-        "grid-cols-2 gap-2",
-        "sm:grid-cols-4 sm:gap-10",
-        "w-full",
+        "grid w-full",
+        "grid-cols-2 gap-3",
+        "sm:grid-cols-3",
       )}
     >
       {products.map((product, index) => (
@@ -30,7 +27,6 @@ export default function SearchResultGrid(
           preload={index === 0}
           prefetch={prefetch}
           index={offset + index}
-          className="h-full min-w-40 max-w-75"
         />
       ))}
     </div>

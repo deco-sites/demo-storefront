@@ -10,13 +10,19 @@ function Breadcrumb({ itemListElement = [] }: Props) {
   const items = [{ name: "Home", item: "/" }, ...itemListElement];
 
   return (
-    <div className="breadcrumbs py-0 text-xs font-normal text-base-400">
+    <div className="breadcrumbs py-0 text-xs text-muted capitalize">
       <ul>
         {items
           .filter(({ name, item }) => name && item)
           .map(({ name, item }) => (
             <li key={item}>
-              <Link to={relative(item) ?? "/"} preload="intent">{name}</Link>
+              <Link
+                to={relative(item) ?? "/"}
+                preload="intent"
+                className="transition-colors duration-(--duration-fast) hover:text-ink"
+              >
+                {name}
+              </Link>
             </li>
           ))}
       </ul>

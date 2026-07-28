@@ -23,12 +23,13 @@ function ProductSlider({ products, itemListName }: Props) {
         }}
       >
         <div className="col-start-1 col-span-3 row-start-1 row-span-1">
-          <Slider className="carousel carousel-center sm:carousel-end gap-5 sm:gap-10 w-full">
+          <Slider className="carousel carousel-center sm:carousel-end gap-3 w-full">
             {products?.map((product, index) => (
               <Slider.Item
                 index={index}
                 className={clx(
                   "carousel-item",
+                  "sm:flex-1! sm:shrink! sm:max-w-[372px]!",
                   "first:pl-5 first:sm:pl-0",
                   "last:pr-5 last:sm:pr-0",
                 )}
@@ -37,7 +38,7 @@ function ProductSlider({ products, itemListName }: Props) {
                   index={index}
                   product={product}
                   itemListName={itemListName}
-                  className="w-[287px] sm:w-75"
+                  className="w-[287px] sm:w-full sm:min-w-75"
                 />
               </Slider.Item>
             ))}

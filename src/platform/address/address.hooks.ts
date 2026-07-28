@@ -23,15 +23,11 @@ export function useAddresses() {
 
 // Mutations reconcile via onSuccess (the server assigns ids and enforces the
 // single-default invariant, so an optimistic guess would be unreliable).
-function useAddressMutation<TInput>(
-  toOp: (input: TInput) => unknown,
-) {
+function useAddressMutation<TInput>(toOp: (input: TInput) => unknown) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (input: TInput): Promise<AddressBookState> =>
-      invoke.site.actions.address.submit(toOp(input)) as Promise<
-        AddressBookState
-      >,
+      invoke.site.actions.address.submit(toOp(input)) as Promise<AddressBookState>,
     onSuccess: (state) => qc.setQueryData(ADDRESS_QUERY_KEY, state),
   });
 }

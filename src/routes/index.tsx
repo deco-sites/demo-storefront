@@ -1,9 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import {
-  cmsHomeRouteConfig,
-  DecoPageRenderer,
-  loadCmsPage,
-} from "@decocms/tanstack";
+import { cmsHomeRouteConfig, DecoPageRenderer, loadCmsPage } from "@decocms/tanstack";
 import { deferredSectionLoader } from "@decocms/tanstack/sdk/deferredSectionLoader";
 import { preloadSectionComponents } from "@decocms/blocks/cms";
 
@@ -28,8 +24,7 @@ export const Route = createFileRoute("/")({
   // Preserve query string so filter/sort/pagination changes reach the loader.
   // Without this, TanStack Router collapses the home route to "/" and skips
   // re-fetching when the user clicks a filter or changes sort order.
-  validateSearch: (search: Record<string, unknown>) =>
-    search as Record<string, string>,
+  validateSearch: (search: Record<string, unknown>) => search as Record<string, string>,
   loaderDeps: ({ search }: { search: Record<string, string> }) => {
     const filtered = Object.fromEntries(
       Object.entries(search ?? {}).filter(([k]) => !IGNORED_SEARCH_PARAMS.has(k)),
@@ -39,9 +34,7 @@ export const Route = createFileRoute("/")({
     };
   },
   loader: async ({ deps }) => {
-    const searchStr = deps.search
-      ? "?" + new URLSearchParams(deps.search).toString()
-      : "";
+    const searchStr = deps.search ? "?" + new URLSearchParams(deps.search).toString() : "";
     const fullPath = "/" + searchStr;
     // Forward the real page URL via header. On CSR for the home route,
     // the framework's `loadCmsPageInternal` falls back to the `_serverFn`

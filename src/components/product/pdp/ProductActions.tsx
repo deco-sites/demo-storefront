@@ -1,7 +1,7 @@
 import type { AnalyticsItem, Product } from "@decocms/apps-commerce/types";
-import { clx } from "~/sdk/clx";
 import { useAddToCart } from "../../../platform/cart";
 import { useSendEvent } from "../../../sdk/useSendEvent";
+import Button from "../../ui/Button";
 import OutOfStock from "../OutOfStock";
 import WishlistButton from "../../wishlist/WishlistButton";
 
@@ -44,12 +44,7 @@ const DEFAULT_COPY = {
   errorLabel: "Try again",
 } satisfies Required<ActionsCopyConfig>;
 
-export default function ProductActions({
-  product,
-  analyticsItem,
-  isInStock,
-  copy,
-}: Props) {
+export default function ProductActions({ product, analyticsItem, isInStock, copy }: Props) {
   const { addToCartLabel, addingLabel, addedLabel, errorLabel } = {
     ...DEFAULT_COPY,
     ...copy,
@@ -78,23 +73,18 @@ export default function ProductActions({
         : addToCartLabel;
 
   return (
-    <div className="mt-4 sm:mt-10 flex flex-col gap-2">
-      <button
+    <div className="flex items-center justify-end gap-1">
+      <WishlistButton item={analyticsItem} variant="icon" />
+      <Button
         type="button"
+        variant="glass"
+        size="md"
         {...eventAttrs}
-        onClick={() =>
-          addToCart.mutate({ merchandiseId: product.productID, quantity: 1 })
-        }
+        onClick={() => addToCart.mutate({ merchandiseId: product.productID, quantity: 1 })}
         disabled={addToCart.isPending}
-        className={clx(
-          "btn btn-primary no-animation",
-          addToCart.isSuccess && "btn-success",
-          addToCart.isError && "btn-error",
-        )}
       >
         {label}
-      </button>
-      <WishlistButton item={analyticsItem} />
+      </Button>
     </div>
   );
 }

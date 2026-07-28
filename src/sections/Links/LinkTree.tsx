@@ -70,13 +70,7 @@ export interface Neutral {
 
 export interface Social {
   href: string;
-  label:
-    | "Instagram"
-    | "Facebook"
-    | "Linkedin"
-    | "WhatsApp"
-    | "Discord"
-    | "Tiktok";
+  label: "Instagram" | "Facebook" | "Linkedin" | "WhatsApp" | "Discord" | "Tiktok";
   /** @format color */
   iconColor?: string;
   /** @description width of the SVG line */
@@ -112,44 +106,33 @@ function Links(props: Props) {
     />
   );
 
-  const maybeLink = header?.logo?.link
-    ? <a href={header?.logo?.link!} target="_blank">{logo}</a>
-    : logo;
+  const maybeLink = header?.logo?.link ? (
+    <a href={header?.logo?.link!} target="_blank">
+      {logo}
+    </a>
+  ) : (
+    logo
+  );
 
   const ColorsNeutralAndHover = {
     color: links.style?.textColor,
-    backgroundImage: `linear-gradient(to right, ${
-      links.style?.gradientColors.neutral.map((color) => color.color).join(
-        ", ",
-      )
-    })`,
+    backgroundImage: `linear-gradient(to right, ${links.style?.gradientColors.neutral
+      .map((color) => color.color)
+      .join(", ")})`,
   };
 
   return (
     <BaseContainer background={background}>
       <header className="flex flex-col justify-center items-center gap-4">
-        {header?.logo?.img && (
-          <div className="rounded-full p-4">
-            {maybeLink}
-          </div>
-        )}
+        {header?.logo?.img && <div className="rounded-full p-4">{maybeLink}</div>}
 
         {header?.title && (
-          <h1
-            className="text-5xl font-bold text-center"
-            style={{ color: header.textColor }}
-          >
+          <h1 className="text-5xl font-bold text-center" style={{ color: header.textColor }}>
             {header?.title}
           </h1>
         )}
 
-        {header?.description && (
-          <p
-            style={{ color: header.textColor }}
-          >
-            {header?.description}
-          </p>
-        )}
+        {header?.description && <p style={{ color: header.textColor }}>{header?.description}</p>}
       </header>
 
       <main className="w-full">
@@ -162,22 +145,11 @@ function Links(props: Props) {
                 className="group h-13 px-6 rounded-full flex justify-start items-center font-bold gap-4"
                 style={ColorsNeutralAndHover}
               >
-                {Boolean(link.icon) && (
-                  <Icon
-                    size={20}
-                    id={link.icon!}
-                  />
-                )}
+                {Boolean(link.icon) && <Icon size={20} id={link.icon!} />}
 
-                <span className="w-full text-center text-sm">
-                  {link.label}
-                </span>
+                <span className="w-full text-center text-sm">{link.label}</span>
 
-                <Icon
-                  size={20}
-                  id="share"
-                  className="opacity-0 group-hover:opacity-100"
-                />
+                <Icon size={20} id="share" className="opacity-0 group-hover:opacity-100" />
               </a>
             </li>
           ))}
@@ -213,13 +185,7 @@ function Links(props: Props) {
               className="text-xs flex flex-row items-center justify-center gap-1"
               target="_blank"
             >
-              {props.footer.text && (
-                <p
-                  style={{ color: header.textColor }}
-                >
-                  {props.footer.text}
-                </p>
-              )}
+              {props.footer.text && <p style={{ color: header.textColor }}>{props.footer.text}</p>}
               {props.footer.image && (
                 <Image
                   src={props.footer.image || ""}
@@ -236,10 +202,7 @@ function Links(props: Props) {
   );
 }
 
-function BaseContainer(props: {
-  children?: ReactNode;
-  background?: Props["background"];
-}) {
+function BaseContainer(props: { children?: ReactNode; background?: Props["background"] }) {
   const { image } = props?.background ?? {};
   const baseClasses = "flex justify-center w-full min-h-screen";
   const inlineStyle = image ? { background: `url(${image})` } : undefined;

@@ -7,61 +7,48 @@
       "data": null
     }
   },
-  "alerts": [
-    "<p style=\"color: green;\">Hurry, offer ends soon! Save 10% today with code <strong>NEW10</strong></p>"
-  ],
+  "alerts": [],
   "logo": {
-    "src": "https://decoims.com/storefront-tanstack/49270f27-32c9-4da3-aef8-e154dd7bcdd1/1742560193760-ed9f7e80-86a8-4b72-9809-2e4e2e5f0e53.png",
+    "src": "https://decoims.com/decocms/e8c6326e-e009-4e3c-9787-b2fe25a1b993/deco-logo.png",
     "alt": "Deco Storefront",
-    "width": 160,
-    "height": 40
+    "width": 67,
+    "height": 28
   },
   "navItems": [
     {
-      "children": [
-        {
-          "image": [],
-          "children": [],
-          "name": "Hello"
-        },
-        {
-          "image": [],
-          "children": [],
-          "name": "World"
-        }
-      ],
       "@type": "SiteNavigationElement",
-      "url": "/deals",
-      "name": "Deals"
-    },
-    {
-      "@type": "SiteNavigationElement",
-      "url": "/valentines-day",
-      "name": "Valentine's Day",
+      "url": "/shirts",
+      "name": "Shirts",
       "children": []
     },
     {
       "@type": "SiteNavigationElement",
-      "url": "/women",
-      "name": "Women",
+      "url": "/hoodies-sweatshirts",
+      "name": "Hoodies & Sweatshirts",
       "children": []
     },
     {
       "@type": "SiteNavigationElement",
-      "url": "/men",
-      "name": "Men",
+      "url": "/jackets-outerwear",
+      "name": "Jackets & Outerwear",
       "children": []
     },
     {
       "@type": "SiteNavigationElement",
-      "url": "/clearance",
-      "name": "Clearance",
+      "url": "/bottoms",
+      "name": "Bottoms",
       "children": []
     },
     {
       "@type": "SiteNavigationElement",
-      "url": "/activities",
-      "name": "Activities",
+      "url": "/accessories",
+      "name": "Accessories",
+      "children": []
+    },
+    {
+      "@type": "SiteNavigationElement",
+      "url": "/stickers",
+      "name": "Stickers",
       "children": []
     }
   ],

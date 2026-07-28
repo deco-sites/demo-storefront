@@ -1,14 +1,17 @@
 import { type HTMLWidget, type ImageWidget } from "~/types/widgets";
 import { Picture, Source } from "~/components/ui/Picture";
 import Section from "../../components/ui/Section";
-import DeviceVisible, {
-  type VisibilityConfig,
-} from "../../components/ui/DeviceVisible";
+import DeviceVisible, { type VisibilityConfig } from "../../components/ui/DeviceVisible";
+import Button from "../../components/ui/Button";
 import { clx } from "~/sdk/clx";
 
 export interface Props extends VisibilityConfig {
   title: string;
   description?: HTMLWidget;
+  /** @title From-price prefix (e.g. "A partir de") */
+  priceLabel?: string;
+  /** @title Price (e.g. "R$ 79,99") */
+  price?: string;
 
   images: {
     mobile: ImageWidget;
@@ -21,60 +24,63 @@ export interface Props extends VisibilityConfig {
   };
 }
 
-function Banner({ title, description, images, cta, visibility }: Props) {
+function Banner({ title, description, priceLabel, price, images, cta, visibility }: Props) {
   return (
     <DeviceVisible visibility={visibility}>
-      <Section.Container>
-      <div className="relative bg-base-200 mx-5 sm:mx-0">
-        <Picture>
-          <Source
-            media="(max-width: 640px)"
-            src={images.mobile}
-            width={335}
-            height={572}
-          />
-          <Source
-            media="(min-width: 640px)"
-            src={images.desktop}
-            width={1320}
-            height={480}
-          />
-          <img src={images.desktop} alt={title} className="w-full object-cover" />
-        </Picture>
-
-        <div
-          className={clx(
-            "absolute left-0 top-0",
-            "p-5 sm:p-10 md:py-20 md:px-[60px]",
-            "flex flex-col",
-            "h-full max-w-full sm:max-w-[33%] md:max-w-[50%] justify-center",
-          )}
-        >
-          {title && <span className="font-bold text-7xl text-primary">{title}
-          </span>}
-          {description && (
-            <span
-              className="font-normal text-sm md: pt-4 pb-12"
-              dangerouslySetInnerHTML={{ __html: description }}
+      <Section.Container className="py-3 sm:py-4">
+        <div className="relative overflow-hidden rounded-md">
+          <Picture preload>
+            <Source media="(max-width: 640px)" src={images.mobile} width={686} height={480} />
+            <Source media="(min-width: 640px)" src={images.desktop} width={1488} height={461} />
+            <img
+              src={images.desktop}
+              alt={title}
+              className="aspect-[686/480] w-full object-cover sm:aspect-[1488/461]"
             />
-          )}
-          <div className="">
-            {cta && (
-              <a
-                href={cta.href}
-                className="btn btn-primary no-animatio w-fit border-0 min-w-45"
-              >
-                {cta.label}
-              </a>
+          </Picture>
+
+          {/* Scrim protects text legibility regardless of the underlying photo */}
+          <div className="absolute inset-y-0 left-0 w-full bg-gradient-to-r from-black/45 via-black/10 to-transparent sm:w-2/3" />
+
+          <div
+            className={clx(
+              "absolute inset-0 flex flex-col justify-between p-6 sm:p-8",
+              "max-w-full sm:max-w-[318px]",
             )}
+          >
+            {title && <span className="text-display font-medium text-white">{title}</span>}
+
+            <div className="flex flex-col items-start gap-3">
+              {description && (
+                <span
+                  className="text-xs text-white/90"
+                  dangerouslySetInnerHTML={{ __html: description }}
+                />
+              )}
+
+              {price && (
+                <div className="flex flex-col gap-1.5 text-white">
+                  <div className="flex items-end gap-1">
+                    <span className="text-lg tracking-tight">R$</span>
+                    <span className="text-display font-medium tracking-tight">{price}</span>
+                  </div>
+                  {priceLabel && <span className="text-2xs tracking-tight">{priceLabel}</span>}
+                </div>
+              )}
+
+              {cta && (
+                <Button href={cta.href} variant="glass" size="md">
+                  {cta.label}
+                </Button>
+              )}
+            </div>
           </div>
         </div>
-      </div>
       </Section.Container>
     </DeviceVisible>
   );
 }
 
-export const LoadingFallback = () => <Section.Placeholder height="635px" />;
+export const LoadingFallback = () => <Section.Placeholder height="461px" />;
 
 export default Banner;

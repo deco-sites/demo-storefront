@@ -1,15 +1,8 @@
 import type { ProductDetailsPage } from "@decocms/apps-commerce/types";
-import {
-  BreadcrumbJsonLd,
-  ProductJsonLd,
-} from "@decocms/blocks/hooks";
-import ProductHero, {
-  type HeroCopyConfig,
-} from "../../components/product/pdp/ProductHero";
-import type { DiscountBadgeConfig } from "../../components/product/pdp/ProductDiscountBadge";
+import { BreadcrumbJsonLd, ProductJsonLd } from "@decocms/blocks/hooks";
+import ProductHero, { type HeroCopyConfig } from "../../components/product/pdp/ProductHero";
 import type { GalleryConfig } from "../../components/product/pdp/ProductGallery";
 import type { VariantSelectorConfig } from "../../components/product/pdp/ProductVariantSelector";
-import Breadcrumb from "../../components/ui/Breadcrumb";
 import Section from "../../components/ui/Section";
 
 export interface CopyConfig extends HeroCopyConfig {
@@ -41,12 +34,6 @@ export interface Props {
   galleryConfig?: GalleryConfig;
 
   /**
-   * @title Discount badge
-   * @description "% off" promo badge shown above the title
-   */
-  discountBadgeConfig?: DiscountBadgeConfig;
-
-  /**
    * @title Variant selector
    * @description Swatches and preload strategy for sibling variants
    */
@@ -62,7 +49,6 @@ export interface Props {
 export default function ProductDetails({
   page,
   galleryConfig,
-  discountBadgeConfig,
   variantSelectorConfig,
   copy,
 }: Props) {
@@ -70,10 +56,13 @@ export default function ProductDetails({
     const notFoundTitle = copy?.notFoundTitle ?? "Page not found";
     const goHomeLabel = copy?.goHomeLabel ?? "Go back to Home";
     return (
-      <div className="w-full flex justify-center items-center py-28">
+      <div className="flex w-full items-center justify-center py-28">
         <div className="flex flex-col items-center justify-center gap-6">
-          <span className="font-medium text-2xl">{notFoundTitle}</span>
-          <a href="/" className="btn no-animation">
+          <span className="text-display font-medium text-ink">{notFoundTitle}</span>
+          <a
+            href="/"
+            className="tap-scale frost rounded-sm px-4 py-2.5 text-sm font-medium text-ink"
+          >
             {goHomeLabel}
           </a>
         </div>
@@ -82,15 +71,13 @@ export default function ProductDetails({
   }
 
   return (
-    <div className="container flex flex-col gap-4 sm:gap-5 w-full py-4 sm:py-5 px-5 sm:px-0">
+    <div className="container flex w-full flex-col gap-3 px-3 pt-15 pb-4 sm:gap-4 sm:pb-6">
       {/* SEO: schema.org JSON-LD, server-rendered inline (crawlers read it anywhere in the document) */}
       <ProductJsonLd product={page.product} />
       <BreadcrumbJsonLd breadcrumb={page.breadcrumbList} />
-      <Breadcrumb itemListElement={page.breadcrumbList.itemListElement} />
       <ProductHero
         page={page}
         galleryConfig={galleryConfig}
-        discountBadgeConfig={discountBadgeConfig}
         variantSelectorConfig={variantSelectorConfig}
         copy={copy}
       />

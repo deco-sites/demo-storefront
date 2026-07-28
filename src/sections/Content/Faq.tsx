@@ -1,7 +1,5 @@
 import { HTMLWidget } from "~/types/widgets";
-import Section, {
-  type Props as SectionHeaderProps,
-} from "../../components/ui/Section";
+import Section, { type Props as SectionHeaderProps } from "../../components/ui/Section";
 
 /** @titleBy question */
 export interface Question {
@@ -61,18 +59,11 @@ export interface Props extends SectionHeaderProps {
   contact?: Contact;
 }
 
-function QuestionItem(
-  { question, answer }: { question: string; answer: HTMLWidget },
-) {
+function QuestionItem({ question, answer }: { question: string; answer: HTMLWidget }) {
   return (
     <details className="collapse collapse-arrow border-t border-base-200">
-      <summary className="collapse-title text-lg font-medium">
-        {question}
-      </summary>
-      <div
-        className="collapse-content"
-        dangerouslySetInnerHTML={{ __html: answer }}
-      />
+      <summary className="collapse-title text-lg font-medium">{question}</summary>
+      <div className="collapse-content" dangerouslySetInnerHTML={{ __html: answer }} />
     </details>
   );
 }
@@ -83,14 +74,14 @@ function Contact({ title, description, link }: Contact) {
       <div className="flex flex-col gap-2">
         {title && <h2 className="text-xl lg:text-3xl">{title}</h2>}
         {description && (
-          <div
-            className="text-lg lg:text-xl"
-            dangerouslySetInnerHTML={{ __html: description }}
-          />
+          <div className="text-lg lg:text-xl" dangerouslySetInnerHTML={{ __html: description }} />
         )}
       </div>
-      {link &&
-        <a href={link.href} className="btn">{link.text}</a>}
+      {link && (
+        <a href={link.href} className="btn">
+          {link.text}
+        </a>
+      )}
     </div>
   );
 }
@@ -126,10 +117,7 @@ export default function FAQ({
       <ul className="w-full">
         {questions.map((question) => (
           <li key={question.question}>
-            <QuestionItem
-              question={question.question}
-              answer={question.answer}
-            />
+            <QuestionItem question={question.question} answer={question.answer} />
           </li>
         ))}
       </ul>

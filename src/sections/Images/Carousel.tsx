@@ -49,15 +49,8 @@ export interface Props {
   interval?: number;
 }
 
-function BannerItem(
-  { image, lcp }: { image: Banner; lcp?: boolean },
-) {
-  const {
-    alt,
-    mobile,
-    desktop,
-    action,
-  } = image;
+function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
+  const { alt, mobile, desktop, action } = image;
   const params = { promotion_name: image.alt };
   const setEarlyHint = useSetEarlyHints();
   const device = useDevice();
@@ -88,12 +81,8 @@ function BannerItem(
             "sm:left-40 sm:items-start sm:max-w-96",
           )}
         >
-          <span className="text-7xl font-bold text-base-100">
-            {action.title}
-          </span>
-          <span className="font-normal text-base text-base-100 pt-4 pb-12">
-            {action.subTitle}
-          </span>
+          <span className="text-7xl font-bold text-base-100">{action.title}</span>
+          <span className="font-normal text-base text-base-100 pt-4 pb-12">{action.subTitle}</span>
           <button
             type="button"
             className="btn btn-primary btn-outline border-0 bg-base-100 min-w-45"
@@ -176,12 +165,7 @@ function Carousel({ images = [], preload, interval }: Props) {
         </Slider.NextButton>
       </div>
 
-      <ul
-        className={clx(
-          "col-span-full row-start-4 z-10",
-          "carousel justify-center gap-3",
-        )}
-      >
+      <ul className={clx("col-span-full row-start-4 z-10", "carousel justify-center gap-3")}>
         {images.map((_, index) => (
           <li className="carousel-item">
             <Slider.Dot
@@ -190,8 +174,7 @@ function Carousel({ images = [], preload, interval }: Props) {
                 "bg-black opacity-20 h-3 w-3 no-animation rounded-full",
                 "disabled:w-8 disabled:bg-base-100 disabled:opacity-100 transition-[width]",
               )}
-            >
-            </Slider.Dot>
+            ></Slider.Dot>
           </li>
         ))}
       </ul>

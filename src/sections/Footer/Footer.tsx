@@ -39,19 +39,18 @@ function Footer({
   trademark,
 }: Props) {
   return (
-    <footer
-      className="px-5 sm:px-0 mt-5 sm:mt-10"
-      style={{ backgroundColor: "#EFF0F0" }}
-    >
-      <div className="container flex flex-col gap-5 sm:gap-10 py-10">
-        <ul className="grid grid-flow-row sm:grid-flow-col gap-6 ">
+    <footer className="mt-10 bg-gray-50 px-8">
+      <div className="flex flex-col gap-8 py-10 sm:gap-10 sm:py-14">
+        <ul className="grid grid-flow-row gap-6 sm:grid-flow-col">
           {links.map(({ title, href, children }) => (
-            <li className="flex flex-col gap-4">
-              <a className="text-base font-semibold" href={href}>{title}</a>
+            <li key={href} className="flex flex-col gap-4">
+              <a className="text-sm font-medium text-ink-soft" href={href}>
+                {title}
+              </a>
               <ul className="flex flex-col gap-2">
                 {children.map(({ title, href }) => (
-                  <li>
-                    <a className="text-sm font-medium text-base-400" href={href}>
+                  <li key={href}>
+                    <a className="text-sm text-muted" href={href}>
                       {title}
                     </a>
                   </li>
@@ -61,59 +60,45 @@ function Footer({
           ))}
         </ul>
 
-        <div className="flex flex-col sm:flex-row gap-12 justify-between items-start sm:items-center">
+        <div className="flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-center sm:gap-12">
           <ul className="flex gap-4">
             {social.map(({ image, href, alt }) => (
-              <li>
+              <li key={href}>
                 <a href={href}>
-                  <Image
-                    src={image}
-                    alt={alt}
-                    loading="lazy"
-                    width={24}
-                    height={24}
-                  />
+                  <Image src={image} alt={alt} loading="lazy" width={20} height={20} />
                 </a>
               </li>
             ))}
           </ul>
           <ul className="flex flex-wrap gap-2">
             {paymentMethods.map(({ image, alt }) => (
-              <li className="h-8 w-10 border border-base-100 rounded flex justify-center items-center">
-                <Image
-                  src={image}
-                  alt={alt}
-                  width={20}
-                  height={20}
-                  loading="lazy"
-                />
+              <li key={alt} className="frost flex h-8 w-10 items-center justify-center rounded-xs">
+                <Image src={image} alt={alt} width={20} height={20} loading="lazy" />
               </li>
             ))}
           </ul>
         </div>
 
-        <hr className="w-full text-base-400" />
+        <hr className="w-full border-gray-200" />
 
-        <div className="grid grid-flow-row sm:grid-flow-col gap-8">
-          <ul className="flex flex-col sm:flex-row gap-2 sm:gap-4 sm:items-center">
+        <div className="grid grid-flow-row gap-8 sm:grid-flow-col">
+          <ul className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
             {policies.map(({ title, href }) => (
-              <li>
-                <a className="text-xs font-medium" href={href}>
+              <li key={href}>
+                <a className="text-xs text-muted" href={href}>
                   {title}
                 </a>
               </li>
             ))}
           </ul>
 
-          <div className="flex flex-nowrap items-center justify-between sm:justify-center gap-4">
-            <div>
-              <img loading="lazy" src={logo} />
-            </div>
-            <span className="text-xs font-normal text-base-400">{trademark}</span>
+          <div className="flex flex-nowrap items-center justify-between gap-4 sm:justify-center">
+            {logo && <img loading="lazy" src={logo} className="h-5 w-auto" />}
+            <span className="text-xs text-muted">{trademark}</span>
           </div>
 
           <div className="flex flex-nowrap items-center justify-center gap-4">
-            <span className="text-sm font-normal text-base-400">Powered by</span>
+            <span className="text-sm text-muted">Powered by</span>
             <PoweredByDeco />
           </div>
         </div>
@@ -122,7 +107,7 @@ function Footer({
   );
 }
 
-export const LoadingFallback = () => <Section.Placeholder height="1145px" />;
+export const LoadingFallback = () => <Section.Placeholder height="380px" />;
 
 export default Footer;
 

@@ -1,8 +1,5 @@
 import type { ProductListingPage } from "@decocms/apps-commerce/types";
-import {
-  BreadcrumbJsonLd,
-  PLPJsonLd,
-} from "@decocms/blocks/hooks";
+import { BreadcrumbJsonLd, PLPJsonLd } from "@decocms/blocks/hooks";
 import { mapProductToAnalyticsItem } from "@decocms/apps-commerce/utils/productToAnalyticsItem";
 import { useId } from "react";
 import { useOffer } from "@decocms/apps-commerce/sdk/useOffer";
@@ -49,8 +46,8 @@ export interface Props {
 
 function NotFound() {
   return (
-    <div className="w-full flex justify-center items-center py-10">
-      <span>Not Found!</span>
+    <div className="flex w-full items-center justify-center py-28">
+      <span className="text-display font-medium text-ink">No results found</span>
     </div>
   );
 }
@@ -76,11 +73,7 @@ function Result({
   const perPage = pageInfo?.recordPerPage || products.length;
   const zeroIndexedOffsetPage = pageInfo.currentPage - startingPage;
   const offset = zeroIndexedOffsetPage * perPage;
-  const { prev, next } = rebasePaginationHrefs(
-    pageInfo.previousPage,
-    pageInfo.nextPage,
-    href,
-  );
+  const { prev, next } = rebasePaginationHrefs(pageInfo.previousPage, pageInfo.nextPage, href);
 
   const viewItemListEvent = useSendEvent({
     on: "view",
@@ -95,7 +88,7 @@ function Result({
             index: offset + index,
             product,
             breadcrumbList: breadcrumb,
-          })
+          }),
         ),
       },
     },
@@ -103,7 +96,7 @@ function Result({
 
   return (
     <div {...viewItemListEvent} className="w-full">
-      <div className="container flex flex-col gap-4 sm:gap-5 w-full py-4 sm:py-5 px-5 sm:px-0">
+      <div className="container flex w-full flex-col gap-5 px-3 py-4 sm:gap-8 sm:py-6">
         {/* SEO: schema.org JSON-LD, server-rendered inline (crawlers read it anywhere in the document) */}
         <PLPJsonLd page={page} />
         {breadcrumb && <BreadcrumbJsonLd breadcrumb={breadcrumb} />}
@@ -111,15 +104,13 @@ function Result({
 
         <SearchFilterDrawer id={filterDrawerId} filters={filters} baseUrl={href} />
 
-        <div className="grid grid-cols-1 sm:grid-cols-[250px_1fr]">
-          <aside className="hidden sm:flex place-self-start flex-col gap-9">
-            <span className="text-base font-semibold h-12 flex items-center">
-              Filters
-            </span>
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-[220px_1fr]">
+          <aside className="hidden flex-col gap-6 place-self-start sm:flex">
+            <span className="text-sm font-medium text-ink-soft">Filters</span>
             <Filters filters={filters} baseUrl={href} />
           </aside>
 
-          <div className="flex flex-col gap-9">
+          <div className="flex flex-col gap-6">
             <SearchSortBar
               recordPerPage={pageInfo.recordPerPage ?? products.length}
               totalRecords={pageInfo.records ?? products.length}
@@ -128,17 +119,17 @@ function Result({
               filterDrawerId={filterDrawerId}
             />
 
-            {isRouteLoading
-              ? <SearchResultGridSkeleton count={Math.min(perPage, 12) || 8} />
-              : (
-                <SearchResultGrid
-                  products={products}
-                  offset={offset}
-                  prefetch={layout?.enablePrefetch === false ? false : "intent"}
-                />
-              )}
+            {isRouteLoading ? (
+              <SearchResultGridSkeleton count={Math.min(perPage, 12) || 8} />
+            ) : (
+              <SearchResultGrid
+                products={products}
+                offset={offset}
+                prefetch={layout?.enablePrefetch === false ? false : "intent"}
+              />
+            )}
 
-            <div className="grid place-items-center pt-2 sm:pt-10">
+            <div className="grid place-items-center pt-2 sm:pt-8">
               <SearchPagination
                 currentPage={zeroIndexedOffsetPage + 1}
                 prev={prev}
@@ -158,10 +149,7 @@ export const loader = (props: Props, req: Request) => ({
   url: req.url,
 });
 
-export default function SearchResult({
-  page,
-  ...props
-}: SectionProps<typeof loader>) {
+export default function SearchResult({ page, ...props }: SectionProps<typeof loader>) {
   if (!page) return <NotFound />;
   return <Result {...props} page={page} />;
 }

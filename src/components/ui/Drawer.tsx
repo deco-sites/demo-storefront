@@ -1,10 +1,4 @@
-import {
-  useCallback,
-  useEffect,
-  useId,
-  useRef,
-  type ReactNode,
-} from "react";
+import { useCallback, useEffect, useId, useRef, type ReactNode } from "react";
 import { clx } from "~/sdk/clx";
 import { useEscapeKey } from "../../sdk/useEscapeKey";
 import Icon from "./Icon";
@@ -17,9 +11,7 @@ export interface Props {
   id?: string;
 }
 
-function Drawer(
-  { children, aside, open, className: _class = "", id }: Props,
-) {
+function Drawer({ children, aside, open, className: _class = "", id }: Props) {
   const fallbackId = useId();
   const toggleId = id ?? fallbackId;
 
@@ -77,9 +69,7 @@ function Drawer(
         aria-label={open ? "open drawer" : "closed drawer"}
       />
 
-      <div className="drawer-content">
-        {children}
-      </div>
+      <div className="drawer-content">{children}</div>
 
       <aside
         ref={asideRef}
@@ -96,7 +86,11 @@ function Drawer(
   );
 }
 
-function Aside({ title, drawer, children }: {
+function Aside({
+  title,
+  drawer,
+  children,
+}: {
   title: string;
   drawer: string;
   children: ReactNode;

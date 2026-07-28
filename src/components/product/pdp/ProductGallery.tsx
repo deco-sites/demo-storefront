@@ -1,16 +1,15 @@
 import { useId } from "react";
 import type { ImageObject } from "@decocms/apps-commerce/types";
 import Image from "~/components/ui/Image";
-import { clx } from "~/sdk/clx";
-import Icon from "../../ui/Icon";
+import Icon from "~/components/ui/Icon";
 import Slider from "../../ui/Slider";
 import ProductImageZoom from "../ProductImageZoom";
 
 export interface GalleryConfig {
   /**
    * @title Image aspect ratio
-   * @description CSS aspect-ratio value for the main image (e.g. "820 / 615")
-   * @default "820 / 615"
+   * @description CSS aspect-ratio value for each gallery image (e.g. "506 / 825")
+   * @default "506 / 825"
    */
   aspectRatio?: string;
   /**
@@ -32,9 +31,14 @@ export interface Props {
   config?: GalleryConfig;
 }
 
-const DEFAULT_WIDTH = 820;
-const DEFAULT_HEIGHT = 615;
+const DEFAULT_WIDTH = 506;
+const DEFAULT_HEIGHT = 825;
 
+/**
+ * Horizontal filmstrip — the Figma "Carroçel" pattern. Desktop shows several
+ * large images side by side (scroll-snap handles any image count); mobile
+ * shows one full-width image per swipe.
+ */
 export default function ProductGallery({ images, config }: Props) {
   const id = useId();
   const zoomId = `${id}-zoom`;
@@ -47,87 +51,77 @@ export default function ProductGallery({ images, config }: Props) {
 
   return (
     <>
-      <div
-        id={id}
-        className="grid grid-flow-row sm:grid-flow-col grid-cols-1 sm:grid-cols-[min-content_1fr] gap-5"
-      >
-        <div className="col-start-1 col-span-1 sm:col-start-2">
-          <div className="relative h-min grow">
-            <Slider className="carousel carousel-center gap-6 w-full">
-              {images.map((img, index) => (
-                <Slider.Item
-                  key={img.url ?? index}
-                  index={index}
-                  className="carousel-item w-full"
-                >
-                  <Image
-                    className="w-full"
-                    sizes="(max-width: 640px) 100vw, 40vw"
-                    style={{ aspectRatio }}
-                    src={img.url!}
-                    alt={img.alternateName}
-                    width={DEFAULT_WIDTH}
-                    height={DEFAULT_HEIGHT}
-                    preload={preloadFirstImage && index === 0}
-                    loading={index === 0 ? "eager" : "lazy"}
-                  />
-                </Slider.Item>
-              ))}
-            </Slider>
-
-            <Slider.PrevButton
-              className="no-animation absolute left-2 top-1/2 btn btn-circle btn-outline disabled:invisible"
-              disabled
+      <div id={id} className="relative h-full">
+        <Slider className="carousel carousel-center h-full w-full gap-3">
+          {images.map((img, index) => (
+            <Slider.Item
+              key={img.url ?? index}
+              index={index}
+              className="carousel-item h-full w-full shrink-0 sm:w-auto"
             >
-              <Icon id="chevron-right" className="rotate-180" />
+              <Image
+                className="h-full w-full rounded-md object-cover sm:w-auto"
+                sizes="(max-width: 640px) 100vw, 506px"
+                style={{ aspectRatio }}
+                src={img.url!}
+                alt={img.alternateName}
+                width={DEFAULT_WIDTH}
+                height={DEFAULT_HEIGHT}
+                preload={preloadFirstImage && index === 0}
+                loading={index === 0 ? "eager" : "lazy"}
+              />
+            </Slider.Item>
+          ))}
+        </Slider>
+
+        <div className="absolute inset-x-0 bottom-3 flex justify-center gap-1.5 sm:hidden">
+          {images.map((img, index) => (
+            <Slider.Dot
+              key={img.url ?? index}
+              index={index}
+              className="size-1.5 rounded-full bg-white/50 transition-colors duration-(--duration-fast) disabled:bg-white"
+            />
+          ))}
+        </div>
+
+        {images.length > 1 && (
+          <>
+            <Slider.PrevButton className="tap-scale frost absolute top-1/2 left-3 hidden size-10 -translate-y-1/2 items-center justify-center rounded-full disabled:opacity-0 sm:flex">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </Slider.PrevButton>
-
-            <Slider.NextButton
-              className="no-animation absolute right-2 top-1/2 btn btn-circle btn-outline disabled:invisible"
-              disabled={images.length < 2}
-            >
-              <Icon id="chevron-right" />
+            <Slider.NextButton className="tap-scale frost absolute top-1/2 right-3 hidden size-10 -translate-y-1/2 items-center justify-center rounded-full disabled:opacity-0 sm:flex">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </Slider.NextButton>
+          </>
+        )}
 
-            {enableZoom ? (
-              <div className="absolute top-2 right-2 bg-base-100 rounded-full">
-                <label
-                  className="btn btn-ghost hidden sm:inline-flex"
-                  htmlFor={zoomId}
-                >
-                  <Icon id="pan_zoom" />
-                </label>
-              </div>
-            ) : null}
-          </div>
-        </div>
-
-        <div className="col-start-1 col-span-1">
-          <ul
-            className={clx(
-              "carousel carousel-center",
-              "sm:carousel-vertical",
-              "gap-2 max-w-full",
-              "overflow-x-auto sm:overflow-y-auto",
-            )}
-            style={{ maxHeight: "600px" }}
+        {enableZoom && (
+          <label
+            htmlFor={zoomId}
+            aria-label="Zoom image"
+            className="tap-scale frost absolute top-3 right-3 hidden size-10 cursor-pointer items-center justify-center rounded-sm sm:flex"
           >
-            {images.map((img, index) => (
-              <li key={img.url ?? index} className="carousel-item w-16 h-16">
-                <Slider.Dot index={index}>
-                  <Image
-                    style={{ aspectRatio: "1 / 1" }}
-                    className="group-disabled:border-base-400 border rounded object-cover w-full h-full"
-                    width={64}
-                    height={64}
-                    src={img.url!}
-                    alt={img.alternateName}
-                  />
-                </Slider.Dot>
-              </li>
-            ))}
-          </ul>
-        </div>
+            <Icon id="pan_zoom" size={18} />
+          </label>
+        )}
 
         <Slider.JS rootId={id} />
       </div>
@@ -136,7 +130,7 @@ export default function ProductGallery({ images, config }: Props) {
           id={zoomId}
           images={images}
           width={700}
-          height={Math.trunc(700 * DEFAULT_HEIGHT / DEFAULT_WIDTH)}
+          height={Math.trunc((700 * DEFAULT_HEIGHT) / DEFAULT_WIDTH)}
         />
       ) : null}
     </>
@@ -154,8 +148,6 @@ export function filterImagesForVariant(
 ): ImageObject[] {
   if (!images?.length) return [];
   if (!productName) return images;
-  const matches = images.filter((img) =>
-    productName.includes(img.alternateName || "")
-  );
+  const matches = images.filter((img) => productName.includes(img.alternateName || ""));
   return matches.length > 0 ? matches : images;
 }

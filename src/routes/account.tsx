@@ -24,9 +24,7 @@ function AccountPage() {
       <div className="min-h-[60vh] flex items-center justify-center px-4">
         <div className="card bg-base-100 shadow w-full max-w-md p-8 text-center">
           <h1 className="text-2xl font-semibold mb-2">You're not signed in</h1>
-          <p className="text-base-content/70 mb-6">
-            Sign in to view your account details.
-          </p>
+          <p className="text-base-content/70 mb-6">Sign in to view your account details.</p>
           <Link to="/login" preload="intent" className="btn btn-primary">
             Go to sign in
           </Link>
@@ -46,10 +44,7 @@ function AccountPage() {
         <h2 className="text-lg font-medium mb-4">Profile</h2>
         <dl className="grid grid-cols-[120px_1fr] gap-y-2 text-sm">
           <dt className="text-base-content/60">Name</dt>
-          <dd>
-            {[user?.givenName, user?.familyName].filter(Boolean).join(" ") ||
-              "—"}
-          </dd>
+          <dd>{[user?.givenName, user?.familyName].filter(Boolean).join(" ") || "—"}</dd>
           <dt className="text-base-content/60">Email</dt>
           <dd>{user?.email ?? "—"}</dd>
         </dl>
@@ -62,11 +57,14 @@ function AccountPage() {
             onClick={() =>
               signOut.mutate(undefined, {
                 onSuccess: () => navigate({ to: "/" }),
-              })}
+              })
+            }
           >
-            {signOut.isPending
-              ? <span className="loading loading-spinner loading-sm" />
-              : "Sign out"}
+            {signOut.isPending ? (
+              <span className="loading loading-spinner loading-sm" />
+            ) : (
+              "Sign out"
+            )}
           </button>
         </div>
       </div>
