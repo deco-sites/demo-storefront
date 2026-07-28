@@ -75,39 +75,49 @@
       }
     },
     {
-      "__resolveType": "site/sections/Category/CategoryGrid.tsx",
-      "title": "Departments",
-      "cta": "/all",
-      "items": [
+      "__resolveType": "website/flags/multivariate/section.ts",
+      "variants": [
         {
-          "label": "Shirts",
-          "href": "/shirts",
-          "image": "https://decoims.com/storefront-tanstack/5ad15dbc-205a-4546-9801-5d18ed393caa/1742560225714-38c33c9f-14a1-4048-973b-dc2a75caf1fa.png"
-        },
-        {
-          "href": "/hoodies-sweatshirts",
-          "label": "Hoodies & Sweatshirts",
-          "image": "https://decoims.com/storefront-tanstack/24f19e67-c8f4-4601-8c86-379a92747535/1742560227121-f6bea2b8-b248-4b42-9246-6e924a0acc8b.png"
-        },
-        {
-          "href": "/jackets-outerwear",
-          "label": "Jackets & Outerwear",
-          "image": "https://decoims.com/storefront-tanstack/adfa8d1d-9a08-427b-ab0a-32dec0cc8fc3/1742560228502-1b0ecaa2-9a13-4de2-bf17-5196948ed128.png"
-        },
-        {
-          "href": "/bottoms",
-          "label": "Bottoms",
-          "image": "https://decoims.com/storefront-tanstack/048e3ef7-c5c6-41b7-aa3a-7b3822502d41/1742560231577-d0433c00-cd26-4638-b519-0cb64b9f82e8.png"
-        },
-        {
-          "href": "/accessories",
-          "label": "Accessories",
-          "image": "https://decoims.com/storefront-tanstack/ba682b53-64d8-44b7-8e57-18d02f5dcf5a/1742560230067-92129655-fe40-4b29-8fdb-e7f71e67a5d1.png"
-        },
-        {
-          "href": "/stickers",
-          "label": "Stickers",
-          "image": "https://decoims.com/storefront-tanstack/ba682b53-64d8-44b7-8e57-18d02f5dcf5a/1742560230067-92129655-fe40-4b29-8fdb-e7f71e67a5d1.png"
+          "value": {
+            "__resolveType": "site/sections/Category/CategoryGrid.tsx",
+            "title": "Departments",
+            "cta": "/all",
+            "items": [
+              {
+                "label": "Shirts",
+                "href": "/shirts",
+                "image": "https://decoims.com/storefront-tanstack/5ad15dbc-205a-4546-9801-5d18ed393caa/1742560225714-38c33c9f-14a1-4048-973b-dc2a75caf1fa.png"
+              },
+              {
+                "href": "/hoodies-sweatshirts",
+                "label": "Hoodies & Sweatshirts",
+                "image": "https://decoims.com/storefront-tanstack/24f19e67-c8f4-4601-8c86-379a92747535/1742560227121-f6bea2b8-b248-4b42-9246-6e924a0acc8b.png"
+              },
+              {
+                "href": "/jackets-outerwear",
+                "label": "Jackets & Outerwear",
+                "image": "https://decoims.com/storefront-tanstack/adfa8d1d-9a08-427b-ab0a-32dec0cc8fc3/1742560228502-1b0ecaa2-9a13-4de2-bf17-5196948ed128.png"
+              },
+              {
+                "href": "/bottoms",
+                "label": "Bottoms",
+                "image": "https://decoims.com/storefront-tanstack/048e3ef7-c5c6-41b7-aa3a-7b3822502d41/1742560231577-d0433c00-cd26-4638-b519-0cb64b9f82e8.png"
+              },
+              {
+                "href": "/accessories",
+                "label": "Accessories",
+                "image": "https://decoims.com/storefront-tanstack/ba682b53-64d8-44b7-8e57-18d02f5dcf5a/1742560230067-92129655-fe40-4b29-8fdb-e7f71e67a5d1.png"
+              },
+              {
+                "href": "/stickers",
+                "label": "Stickers",
+                "image": "https://decoims.com/storefront-tanstack/ba682b53-64d8-44b7-8e57-18d02f5dcf5a/1742560230067-92129655-fe40-4b29-8fdb-e7f71e67a5d1.png"
+              }
+            ]
+          },
+          "rule": {
+            "__resolveType": "website/matchers/never.ts"
+          }
         }
       ]
     },
@@ -121,8 +131,8 @@
       "price": "79,99",
       "priceLabel": "Starting at",
       "images": {
-        "desktop": "https://decoims.com/storefront-tanstack/6d050cd7-e16b-4fd2-830d-021125c95c2b/1742560233015-cf96d47f-564f-40da-ad94-7acac5f39327.png",
-        "mobile": "https://decoims.com/storefront-tanstack/b7b14181-28c7-421c-9535-2cc0e3259bc9/1742560234608-4d5c3212-3f75-4d50-89f3-970815748b43.png"
+        "desktop": "https://decoims.com/demo-storefront/2026/07/161c9ecb-ceea-4562-bc55-01a2967dc4f2-banner4.png",
+        "mobile": "https://decoims.com/demo-storefront/2026/07/fdcd0e46-2eb0-4d3f-9de2-ec8b7d6b8fc0-banner4-mob.png"
       }
     },
     {
