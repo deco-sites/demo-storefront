@@ -39,7 +39,7 @@ function Footer({
   trademark,
 }: Props) {
   return (
-    <footer className="mt-10 bg-gray-50 px-8">
+    <footer role="contentinfo" className="mt-10 bg-gray-50 px-8">
       <div className="flex flex-col gap-8 py-10 sm:gap-10 sm:py-14">
         <ul className="grid grid-flow-row gap-6 sm:grid-flow-col">
           {links.map(({ title, href, children }) => (

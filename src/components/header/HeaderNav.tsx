@@ -125,52 +125,55 @@ export default function HeaderNav({ navItems, logo, shippingNote }: Props) {
             {item.name}
           </Link>
         ))}
-      </nav>
 
-      {/*
-        Absolutely positioned so opening it never reflows page content below
-        the header — it floats over whatever's underneath, same as the row.
-      */}
-      <div
-        onMouseEnter={cancelClose}
-        className={clx(
-          "frost absolute inset-x-0 top-full z-0 grid overflow-hidden rounded-b-sm transition-[grid-template-rows] duration-(--duration-slow) ease-(--ease-out-soft)",
-          !isOpen && "pointer-events-none",
-        )}
-        style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
-      >
-        <div className="overflow-hidden">
-          <div
-            className={clx(
-              "flex flex-col items-center gap-10 pt-8 pb-5 transition-opacity duration-(--duration-base)",
-              isOpen ? "opacity-100 delay-75" : "opacity-0",
-            )}
-          >
-            {active && <MegaMenuList item={active} />}
+        {/*
+          Absolutely positioned so opening it never reflows page content
+          below the header — it floats over whatever's underneath, same as
+          the row. Kept INSIDE <nav> (rather than as a sibling after it) so
+          the mega menu's links and copy remain part of the navigation
+          landmark instead of being loose content outside any landmark.
+        */}
+        <div
+          onMouseEnter={cancelClose}
+          className={clx(
+            "frost absolute inset-x-0 top-full z-0 grid overflow-hidden rounded-b-sm transition-[grid-template-rows] duration-(--duration-slow) ease-(--ease-out-soft)",
+            !isOpen && "pointer-events-none",
+          )}
+          style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
+        >
+          <div className="overflow-hidden">
+            <div
+              className={clx(
+                "flex flex-col items-center gap-10 pt-8 pb-5 transition-opacity duration-(--duration-base)",
+                isOpen ? "opacity-100 delay-75" : "opacity-0",
+              )}
+            >
+              {active && <MegaMenuList item={active} />}
 
-            {shippingNote && (
-              <div className="flex w-full items-center justify-between px-3 py-3.5">
-                <div className="flex items-center gap-1">
-                  <span className="size-1.5 rounded-full bg-ink" aria-hidden="true" />
-                  <span className="text-2xs font-medium tracking-[-0.1px] text-muted-soft">
-                    {shippingNote}
-                  </span>
+              {shippingNote && (
+                <div className="flex w-full items-center justify-between px-3 py-3.5">
+                  <div className="flex items-center gap-1">
+                    <span className="size-1.5 rounded-full bg-ink" aria-hidden="true" />
+                    <span className="text-2xs font-medium tracking-[-0.1px] text-muted-soft">
+                      {shippingNote}
+                    </span>
+                  </div>
+                  {active?.url && (
+                    <Link
+                      to={active.url}
+                      preload="intent"
+                      className="flex items-center gap-1 text-2xs capitalize text-ink"
+                    >
+                      See all
+                      <Icon id="chevron-right" size={10} />
+                    </Link>
+                  )}
                 </div>
-                {active?.url && (
-                  <Link
-                    to={active.url}
-                    preload="intent"
-                    className="flex items-center gap-1 text-2xs capitalize text-ink"
-                  >
-                    See all
-                    <Icon id="chevron-right" size={10} />
-                  </Link>
-                )}
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      </nav>
     </div>
   );
 }
