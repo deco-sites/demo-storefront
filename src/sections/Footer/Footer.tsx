@@ -27,6 +27,8 @@ interface Props {
   paymentMethods?: Social[];
   policies?: Item[];
   logo?: ImageWidget;
+  /** @description Alternative text describing the footer logo, for screen readers */
+  logoAlt?: string;
   trademark?: string;
 }
 
@@ -36,6 +38,7 @@ function Footer({
   policies = [],
   paymentMethods = [],
   logo,
+  logoAlt = "Store logo",
   trademark,
 }: Props) {
   return (
@@ -93,7 +96,7 @@ function Footer({
           </ul>
 
           <div className="flex flex-nowrap items-center justify-between gap-4 sm:justify-center">
-            {logo && <img loading="lazy" src={logo} className="h-5 w-auto" />}
+            {logo && <img loading="lazy" src={logo} alt={logoAlt} className="h-5 w-auto" />}
             <span className="text-xs text-muted">{trademark}</span>
           </div>
 
