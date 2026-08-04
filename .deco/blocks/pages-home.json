@@ -281,6 +281,8 @@
   "__resolveType": "website/pages/Page.tsx",
   "path": "/",
   "seo": {
-    "__resolveType": "website/sections/Seo/SeoV2.tsx"
+    "__resolveType": "website/sections/Seo/SeoV2.tsx",
+    "title": "Storefront — Clothing, Accessories & Essentials",
+    "description": "Shop the new season at Storefront: shirts, jeans, accessories and everyday essentials, with up to 60% off selected styles. Free and fast shipping."
   }
 }
