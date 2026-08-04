@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, notFound } from "@tanstack/react-router";
 import { cmsRouteConfig, DecoPageRenderer } from "@decocms/tanstack";
 import { deferredSectionLoader } from "@decocms/tanstack/sdk/deferredSectionLoader";
 
@@ -14,8 +14,66 @@ const routeConfig = cmsRouteConfig({
   pendingMinMs: 0,
 });
 
+type ResolvedSectionLike = { component: string; props?: Record<string, unknown> };
+
+/**
+ * Sections that render whatever entity a dynamic URL points at, mapped to a
+ * predicate that answers "is there really something here?". A URL with no
+ * product / no collection behind it renders "not found" copy, and without this
+ * check the document still answers 200 — a soft-404 that search engines index
+ * as a valid page.
+ */
+const ENTITY_SECTIONS: Record<string, (props: Record<string, unknown>) => boolean> = {
+  // The `/*` catch-all resolves the collection from the URL. A missing
+  // collection still yields a ProductListingPage, but an empty one (no
+  // products, no `pageInfo.records`) — so emptiness is the only signal.
+  "site/sections/Product/SearchResult.tsx": (props) => {
+    const page = props.page as { products?: unknown[] } | null | undefined;
+    return !!page?.products?.length;
+  },
+  // PDP: the loader returns null (or a page without a product) for a slug that
+  // does not resolve to a product.
+  "site/sections/Product/ProductDetails.tsx": (props) => {
+    const page = props.page as { product?: unknown } | null | undefined;
+    return page?.product != null;
+  },
+};
+
+/**
+ * True when the CMS matched this URL through a dynamic page block (the `/*`
+ * catch-all Category Page, or `/products/:slug`) but there is no entity behind
+ * it. Pages matched by a literal path (`/`, `/s`, landing pages) always exist
+ * and are never probed.
+ *
+ * Sections resolve eagerly for crawlers (`isEagerRequest` in @decocms/blocks),
+ * so `resolvedSections` carries the entity on exactly the requests whose status
+ * code decides what gets indexed. Browser requests defer these sections and
+ * fall through as before, rendering the section's own empty state.
+ */
+function isSoftNotFound(data: unknown): boolean {
+  const { path = "", resolvedSections = [] } = (data ?? {}) as {
+    path?: string;
+    resolvedSections?: ResolvedSectionLike[];
+  };
+  if (!path.includes("*") && !path.includes(":")) return false;
+
+  return resolvedSections.some((section) => {
+    const hasEntity = ENTITY_SECTIONS[section.component];
+    return hasEntity !== undefined && !hasEntity(section.props ?? {});
+  });
+}
+
 export const Route = createFileRoute("/$")({
   ...routeConfig,
+  // Wrap the CMS loader so URLs with nothing behind them answer 404 instead of
+  // a soft-404 (200 + "not found" body). Throwing notFound() makes TanStack
+  // Start set the 404 status on the SSR response and render notFoundComponent
+  // below, so search engines stop indexing missing pages as valid.
+  loader: async (ctx) => {
+    const data = await routeConfig.loader?.(ctx);
+    if (!data || isSoftNotFound(data)) throw notFound();
+    return data;
+  },
   component: CmsPage,
   notFoundComponent: NotFoundPage,
 });
