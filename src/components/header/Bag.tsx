@@ -44,7 +44,10 @@ export default function Bag({ size = "md" }: { size?: "sm" | "md" }) {
   return (
     <label
       htmlFor={MINICART_DRAWER_ID}
-      aria-label="Open cart"
+      // Visible text is "Bag" (plus the item count), so the announced name
+      // has to start with it — otherwise voice control users asking for
+      // "Bag" don't reach this control.
+      aria-label={count > 0 ? `Bag (${count > 9 ? "9+" : count} items)` : "Bag"}
       className={clx(
         "frost tap-scale inline-flex h-10 cursor-pointer items-center justify-center gap-1.5 rounded-sm px-3 text-sm font-medium capitalize transition-colors duration-(--duration-fast) hover:bg-glass-strong",
       )}

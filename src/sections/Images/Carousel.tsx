@@ -69,7 +69,10 @@ function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
     <a
       {...selectPromotionEvent}
       href={action?.href ?? "#"}
-      aria-label={action?.label}
+      // The slide shows its title, subtitle and CTA label; labelling the link
+      // with only the CTA hid that visible text from screen readers, so let
+      // the accessible name come from the content itself.
+      aria-label={action ? undefined : "Banner"}
       className="relative block overflow-y-hidden w-full"
     >
       {action && (
