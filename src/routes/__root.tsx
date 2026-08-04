@@ -7,9 +7,6 @@ import MinicartDrawer from "../components/minicart/MinicartDrawer";
 // @ts-ignore Vite ?url import
 import appCss from "../styles/app.css?url";
 
-const OG_IMAGE =
-  "https://decoims.com/demo-storefront/2026/07/57440993-8c68-4943-9084-1c947c1d0fd5-banner1.png?quality=original";
-
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   beforeLoad: async ({ context }) => {
     const tasks: Promise<unknown>[] = [];
@@ -34,13 +31,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Storefront-tanstack" },
-      // Open Graph / Twitter defaults. Pages that resolve a CMS Seo block
-      // override these; without them a shared link has no preview image.
-      { property: "og:image", content: OG_IMAGE },
-      { property: "og:image:alt", content: "Storefront-tanstack" },
+      // og:site_name has no equivalent in the CMS Seo block, so it is safe to
+      // declare once here for every route. Image/title/description/type tags
+      // are intentionally NOT set here: the Seo block renders its own copies
+      // and the two mechanisms do not de-duplicate against each other.
       { property: "og:site_name", content: "Storefront-tanstack" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: OG_IMAGE },
     ],
     links: [
       { rel: "preconnect", href: "https://api.fontshare.com" },
