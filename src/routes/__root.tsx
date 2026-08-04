@@ -31,6 +31,26 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Storefront-tanstack" },
+      {
+        name: "description",
+        content:
+          "Shop the new season at Storefront-tanstack — apparel, accessories and more, with up to 60% off.",
+      },
+      // Open Graph / Twitter defaults so shared links render a preview card.
+      { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Storefront-tanstack" },
+      { property: "og:title", content: "Storefront-tanstack" },
+      {
+        property: "og:description",
+        content:
+          "Shop the new season at Storefront-tanstack — apparel, accessories and more, with up to 60% off.",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://decoims.com/demo-storefront/2026/07/57440993-8c68-4943-9084-1c947c1d0fd5-banner1.png",
+      },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       { rel: "preconnect", href: "https://api.fontshare.com" },
