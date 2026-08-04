@@ -21,7 +21,27 @@ interface Social {
   image: ImageWidget;
 }
 
+/** @titleBy label */
+interface SupportChannel {
+  /** @description Ex.: Telefone, E-mail, WhatsApp */
+  label: string;
+  /** @description Valor exibido. Ex.: 0800 000 0000, sac@loja.com.br */
+  value: string;
+  /** @description Link opcional. Ex.: tel:08000000000, mailto:sac@loja.com.br */
+  href?: string;
+}
+
+interface Support {
+  /** @description Título do bloco de atendimento */
+  title?: string;
+  /** @description Horário de atendimento e prazo de resposta */
+  description?: string;
+  channels?: SupportChannel[];
+}
+
 interface Props {
+  /** @description Canais de atendimento (SAC) exibidos no rodapé */
+  support?: Support;
   links?: Link[];
   social?: Social[];
   paymentMethods?: Social[];
@@ -31,6 +51,7 @@ interface Props {
 }
 
 function Footer({
+  support,
   links = [],
   social = [],
   policies = [],
@@ -41,6 +62,31 @@ function Footer({
   return (
     <footer className="mt-10 bg-gray-50 px-8">
       <div className="flex flex-col gap-8 py-10 sm:gap-10 sm:py-14">
+        {support && (support.channels?.length || support.description) && (
+          <div className="flex flex-col gap-2">
+            <span className="text-sm font-medium text-ink-soft">
+              {support.title ?? "Atendimento"}
+            </span>
+            {support.description && (
+              <p className="text-sm text-muted">{support.description}</p>
+            )}
+            <ul className="flex flex-col gap-2 sm:flex-row sm:gap-6">
+              {support.channels?.map(({ label, value, href }) => (
+                <li key={label} className="text-sm text-muted">
+                  <span className="text-ink-soft">{label}: </span>
+                  {href ? (
+                    <a className="underline" href={href}>
+                      {value}
+                    </a>
+                  ) : (
+                    value
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
         <ul className="grid grid-flow-row gap-6 sm:grid-flow-col">
           {links.map(({ title, href, children }) => (
             <li key={href} className="flex flex-col gap-4">
