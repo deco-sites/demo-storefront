@@ -1672,6 +1672,12 @@
             "format": "image-uri",
             "title": "Logo"
           },
+          "logoAlt": {
+            "type": "string",
+            "nullable": true,
+            "description": "Alternative text describing the footer logo, for screen readers",
+            "title": "LogoAlt"
+          },
           "trademark": {
             "type": "string",
             "nullable": true,
