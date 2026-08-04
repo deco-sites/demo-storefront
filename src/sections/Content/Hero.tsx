@@ -39,6 +39,11 @@ export interface HeroSlide {
 }
 
 export interface Props {
+  /**
+   * @title Page heading (H1)
+   * @description Main heading of the page, read by search engines. Visually hidden — falls back to the first slide's headline.
+   */
+  heading?: string;
   /** @title Banner slides */
   slides: HeroSlide[];
   /** @title Category tiles */
@@ -186,14 +191,17 @@ function HeroSlide({ image, mobileImage, href = "/", headline, logo, logoAlt, is
   );
 }
 
-export default function Hero({ slides, categories = [], infoBullets = [], interval }: Props) {
+export default function Hero({ heading, slides, categories = [], infoBullets = [], interval }: Props) {
   const id = useId();
   const first = slides[0];
   const hasProductNav = slides.some((slide) => slide.product?.[0]);
   if (!first) return null;
 
+  const h1 = heading ?? first.headline;
+
   return (
     <div className="flex flex-col gap-2 px-3">
+      {h1 && <h1 className="sr-only">{h1}</h1>}
       <div className="flex h-screen flex-col gap-2 pt-17 pb-3 sm:pt-15">
         {/* Carousel — each slide's own background (mobile/desktop crop), logo and featured products. */}
         <div className="flex min-h-0 flex-1 flex-col">
