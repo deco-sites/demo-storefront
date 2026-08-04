@@ -22,6 +22,7 @@ import {
 } from "@decocms/blocks-admin";
 import { getCookies } from "@decocms/apps-shopify/utils/cookies";
 import { withABTesting } from "@decocms/blocks/sdk/abTesting";
+import { SECURITY_TXT_PATH, securityTxtResponse } from "./security-txt";
 
 const serverEntry = createServerEntry({ fetch: handler.fetch });
 
@@ -95,7 +96,23 @@ const abTestedWorker = withABTesting(decoWorker, {
   kvBinding: "SITES_KV",
 });
 
+// security.txt (RFC 9116) — answered before the A/B split and the router so
+// the catch-all CMS route can't turn it into an HTML 404.
+type FetchWorker = {
+  fetch: (request: Request, env: any, ctx: any) => Response | Promise<Response>;
+};
+
+const withSecurityTxt = <T extends FetchWorker>(worker: T): T => ({
+  ...worker,
+  fetch: (request: Request, env: any, ctx: any) => {
+    if (new URL(request.url).pathname === SECURITY_TXT_PATH) {
+      return securityTxtResponse();
+    }
+    return worker.fetch(request, env, ctx);
+  },
+});
+
 // instrumentWorker MUST be the outermost wrapper. It initialises the OTel
 // pipeline (metrics buffering, error log direct-POST) and reads
 // DECO_OTEL_METRICS_ENDPOINT + DECO_OTEL_LOGS_ENDPOINT from env at boot.
-export default instrumentWorker(abTestedWorker);
+export default instrumentWorker(withSecurityTxt(abTestedWorker));
