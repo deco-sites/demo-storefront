@@ -39,6 +39,11 @@ export interface HeroSlide {
 }
 
 export interface Props {
+  /**
+   * @title Page heading
+   * @description Page's main heading (h1), read by screen readers. Defaults to the first slide's headline.
+   */
+  heading?: string;
   /** @title Banner slides */
   slides: HeroSlide[];
   /** @title Category tiles */
@@ -186,7 +191,7 @@ function HeroSlide({ image, mobileImage, href = "/", headline, logo, logoAlt, is
   );
 }
 
-export default function Hero({ slides, categories = [], infoBullets = [], interval }: Props) {
+export default function Hero({ heading, slides, categories = [], infoBullets = [], interval }: Props) {
   const id = useId();
   const first = slides[0];
   const hasProductNav = slides.some((slide) => slide.product?.[0]);
@@ -194,6 +199,8 @@ export default function Hero({ slides, categories = [], infoBullets = [], interv
 
   return (
     <div className="flex flex-col gap-2 px-3">
+      {/* Page's single h1 — the banner artwork carries the headline visually, so it's screen-reader only. */}
+      <h1 className="sr-only">{heading ?? first.headline ?? "Home"}</h1>
       <div className="flex h-screen flex-col gap-2 pt-17 pb-3 sm:pt-15">
         {/* Carousel — each slide's own background (mobile/desktop crop), logo and featured products. */}
         <div className="flex min-h-0 flex-1 flex-col">
