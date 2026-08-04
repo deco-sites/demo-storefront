@@ -3,7 +3,13 @@ import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useRecoverPassword, useSignIn, useSignUp, useUser } from "../platform/user";
 
 export const Route = createFileRoute("/login")({
-  component: LoginPage,
+  // The root layout no longer wraps the outlet in <main> (see __root.tsx), so
+  // each page route provides its own main landmark.
+  component: () => (
+    <main>
+      <LoginPage />
+    </main>
+  ),
 });
 
 type View = "signin" | "signup" | "recover";

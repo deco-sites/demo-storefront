@@ -1,6 +1,14 @@
-import { createRootRouteWithContext } from "@tanstack/react-router";
+import {
+  createRootRouteWithContext,
+  HeadContent,
+  ScriptOnce,
+  Scripts,
+} from "@tanstack/react-router";
 import type { QueryClient } from "@tanstack/react-query";
-import { DecoRootLayout } from "@decocms/tanstack";
+import { NavigationProgress, StableOutlet } from "@decocms/tanstack";
+import { LiveControls } from "@decocms/blocks/hooks";
+import { ANALYTICS_SCRIPT } from "@decocms/blocks/sdk/analytics";
+import { useEffect } from "react";
 import { CART_QUERY_KEY, getCartServerFn } from "../platform/cart";
 import { getUserServerFn, USER_QUERY_KEY } from "../platform/user";
 import MinicartDrawer from "../components/minicart/MinicartDrawer";
@@ -45,10 +53,56 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   component: RootLayout,
 });
 
+// Same bootstrap `DecoRootLayout` injects. We compose the layout by hand — the
+// escape hatch the framework documents — because `DecoRootLayout` wraps the
+// outlet in a single `<main>`, which nests the Header/Footer sections inside it
+// and strips their `banner`/`contentinfo` landmark roles. Each page route now
+// renders its own `<main>` around the actual page content instead.
+const DECO_EVENTS_BOOTSTRAP = `
+window.__RUNTIME__ = window.__RUNTIME__ || { account: "" };
+window.DECO = window.DECO || {};
+window.DECO.events = window.DECO.events || {
+  _q: [],
+  _subs: [],
+  dispatch: function(e) {
+    this._q.push(e);
+    for (var i = 0; i < this._subs.length; i++) {
+      try { this._subs[i](e); } catch(err) { console.error('[DECO.events]', err); }
+    }
+  },
+  subscribe: function(fn) {
+    this._subs.push(fn);
+    for (var i = 0; i < this._q.length; i++) {
+      try { fn(this._q[i]); } catch(err) {}
+    }
+  }
+};
+window.dataLayer = window.dataLayer || [];
+`;
+
 function RootLayout() {
+  useEffect(() => {
+    const id = setTimeout(() => {
+      window.__deco_ready = true;
+      document.dispatchEvent(new Event("deco:ready"));
+    }, 500);
+    return () => clearTimeout(id);
+  }, []);
+
   return (
-    <DecoRootLayout lang="en" siteName="demo-storefront">
-      <MinicartDrawer />
-    </DecoRootLayout>
+    <html lang="en" data-theme="light" suppressHydrationWarning>
+      <head>
+        <HeadContent />
+      </head>
+      <body className="bg-base-200 text-base-content" suppressHydrationWarning>
+        <ScriptOnce children={DECO_EVENTS_BOOTSTRAP} />
+        <NavigationProgress />
+        <StableOutlet />
+        <MinicartDrawer />
+        <LiveControls site="demo-storefront" />
+        <ScriptOnce children={ANALYTICS_SCRIPT} />
+        <Scripts />
+      </body>
+    </html>
   );
 }

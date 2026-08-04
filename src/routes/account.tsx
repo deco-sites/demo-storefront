@@ -3,7 +3,13 @@ import { useSignOut, useUser } from "../platform/user";
 import AddressBook from "../components/account/AddressBook";
 
 export const Route = createFileRoute("/account")({
-  component: AccountPage,
+  // The root layout no longer wraps the outlet in <main> (see __root.tsx), so
+  // each page route provides its own main landmark.
+  component: () => (
+    <main>
+      <AccountPage />
+    </main>
+  ),
 });
 
 function AccountPage() {
