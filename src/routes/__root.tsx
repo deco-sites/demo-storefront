@@ -31,6 +31,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Storefront-tanstack" },
+      // og:site_name has no equivalent in the CMS Seo block, so it is safe to
+      // declare once here for every route. Image/title/description/type tags
+      // are intentionally NOT set here: the Seo block renders its own copies
+      // and the two mechanisms do not de-duplicate against each other.
+      { property: "og:site_name", content: "Storefront-tanstack" },
     ],
     links: [
       { rel: "preconnect", href: "https://api.fontshare.com" },
