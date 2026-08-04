@@ -8,9 +8,23 @@ const isServer = typeof document === "undefined";
 // Variant selection (?skuId=…) is client-side only — don't refetch the page.
 const IGNORED_SEARCH_PARAMS = new Set(["skuId"]);
 
+const SITE_NAME = "Storefront-tanstack";
+
+// Fallbacks for the home page's social metadata, applied only when the CMS SEO
+// config leaves the field empty. `buildHead()` in @decocms/tanstack already
+// emits og:url/canonical from `seo.canonical`, og:image from `seo.image` and so
+// on; whatever the CMS provides always wins (see homeHead below). These are
+// scoped to the home route on purpose — a fixed URL must never leak into other
+// routes' head.
+const HOME_DESCRIPTION = "Build profitable websites with deco.cx";
+const HOME_URL = "https://demo-storefront.decocms.com/";
+const HOME_IMAGE =
+  "https://decoims.com/storefront-tanstack/bfe00763-d6fa-40f0-9fa9-77e6769fe02d/1742560188441-74d13a55-4c18-4a5c-8cb4-dcaa27aae923.png";
+
 const baseConfig = cmsHomeRouteConfig({
-  defaultTitle: "Storefront-tanstack",
-  siteName: "Storefront-tanstack",
+  defaultTitle: SITE_NAME,
+  siteName: SITE_NAME,
+  defaultDescription: HOME_DESCRIPTION,
   // Keep the previous route UI visible while the loader re-runs on filter/sort
   // navigation. Without this, framework defaults (pendingMs=200) flash the
   // pending UI and the page looks like a hard reload. The deferred SearchResult
@@ -19,8 +33,44 @@ const baseConfig = cmsHomeRouteConfig({
   pendingMinMs: 0,
 });
 
+type HeadTag = Record<string, string>;
+
+/**
+ * Framework head() for the home page, plus fallbacks for the Open Graph fields
+ * the CMS SEO config currently leaves empty (og:url/canonical and og:image).
+ * Any value coming from the CMS is kept untouched.
+ */
+function homeHead(ctx: Parameters<typeof baseConfig.head>[0]) {
+  const head = baseConfig.head(ctx);
+  const meta: HeadTag[] = [...head.meta];
+  const links: HeadTag[] = [...head.links];
+  const hasMeta = (key: "name" | "property", value: string) =>
+    meta.some((tag) => tag[key] === value);
+
+  if (!hasMeta("property", "og:site_name")) {
+    meta.push({ property: "og:site_name", content: SITE_NAME });
+  }
+  if (!hasMeta("property", "og:url")) {
+    meta.push({ property: "og:url", content: HOME_URL });
+  }
+  if (!links.some((link) => link.rel === "canonical")) {
+    links.push({ rel: "canonical", href: HOME_URL });
+  }
+  if (!hasMeta("property", "og:image")) {
+    meta.push({ property: "og:image", content: HOME_IMAGE });
+    meta.push({ name: "twitter:image", content: HOME_IMAGE });
+    // buildHead() picked "summary" because it saw no image — with one, the
+    // large card is the right variant.
+    const cardIndex = meta.findIndex((tag) => tag.name === "twitter:card");
+    if (cardIndex >= 0) meta[cardIndex] = { name: "twitter:card", content: "summary_large_image" };
+  }
+
+  return { ...head, meta, links };
+}
+
 export const Route = createFileRoute("/")({
   ...baseConfig,
+  head: homeHead,
   // Preserve query string so filter/sort/pagination changes reach the loader.
   // Without this, TanStack Router collapses the home route to "/" and skips
   // re-fetching when the user clicks a filter or changes sort order.

@@ -7,12 +7,6 @@ import MinicartDrawer from "../components/minicart/MinicartDrawer";
 // @ts-ignore Vite ?url import
 import appCss from "../styles/app.css?url";
 
-const SITE_TITLE = "Storefront-tanstack";
-const SITE_DESCRIPTION = "Build profitable websites with deco.cx";
-const SITE_URL = "https://demo-storefront.decocms.com/";
-const SITE_IMAGE =
-  "https://decoims.com/storefront-tanstack/bfe00763-d6fa-40f0-9fa9-77e6769fe02d/1742560188441-74d13a55-4c18-4a5c-8cb4-dcaa27aae923.png";
-
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   beforeLoad: async ({ context }) => {
     const tasks: Promise<unknown>[] = [];
@@ -36,20 +30,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: SITE_TITLE },
-      { name: "description", content: SITE_DESCRIPTION },
-      // Open Graph — without these, social shares render with no title,
-      // description or preview image.
-      { property: "og:type", content: "website" },
-      { property: "og:site_name", content: SITE_TITLE },
-      { property: "og:title", content: SITE_TITLE },
-      { property: "og:description", content: SITE_DESCRIPTION },
-      { property: "og:image", content: SITE_IMAGE },
-      { property: "og:url", content: SITE_URL },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: SITE_TITLE },
-      { name: "twitter:description", content: SITE_DESCRIPTION },
-      { name: "twitter:image", content: SITE_IMAGE },
+      { title: "Storefront-tanstack" },
     ],
     links: [
       { rel: "preconnect", href: "https://api.fontshare.com" },
