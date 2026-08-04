@@ -95,7 +95,29 @@ const abTestedWorker = withABTesting(decoWorker, {
   kvBinding: "SITES_KV",
 });
 
-// instrumentWorker MUST be the outermost wrapper. It initialises the OTel
-// pipeline (metrics buffering, error log direct-POST) and reads
+// instrumentWorker MUST be the outermost *behavioural* wrapper. It initialises
+// the OTel pipeline (metrics buffering, error log direct-POST) and reads
 // DECO_OTEL_METRICS_ENDPOINT + DECO_OTEL_LOGS_ENDPOINT from env at boot.
-export default instrumentWorker(abTestedWorker);
+const instrumentedWorker = instrumentWorker(abTestedWorker);
+
+// Strip `x-powered-by` (the framework sets it to `deco@<version>`), which
+// discloses the exact platform version and helps target known CVEs. This is a
+// pass-through shim: every other handler on the worker object is preserved and
+// only the response headers are touched, so it does not disturb the OTel wrap.
+export default {
+  ...instrumentedWorker,
+  async fetch(...args: Parameters<NonNullable<typeof instrumentedWorker.fetch>>) {
+    const response = await instrumentedWorker.fetch!(...args);
+    if (!response.headers.has("x-powered-by")) return response;
+
+    // Response headers are immutable once returned from a handler in some
+    // runtimes — clone so the delete always takes effect.
+    const headers = new Headers(response.headers);
+    headers.delete("x-powered-by");
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers,
+    });
+  },
+};
