@@ -98,4 +98,38 @@ const abTestedWorker = withABTesting(decoWorker, {
 // instrumentWorker MUST be the outermost wrapper. It initialises the OTel
 // pipeline (metrics buffering, error log direct-POST) and reads
 // DECO_OTEL_METRICS_ENDPOINT + DECO_OTEL_LOGS_ENDPOINT from env at boot.
-export default instrumentWorker(abTestedWorker);
+const instrumentedWorker = instrumentWorker(abTestedWorker);
+
+// ---------------------------------------------------------------------------
+// Strip `x-powered-by` from every response. The framework advertises its exact
+// version (e.g. `deco@7.20.7`), which hands attackers a free version
+// fingerprint for targeting known CVEs. Nothing depends on this header.
+// ---------------------------------------------------------------------------
+const stripPoweredBy = (response: Response): Response => {
+  if (!response.headers.has("x-powered-by")) return response;
+
+  try {
+    response.headers.delete("x-powered-by");
+    return response;
+  } catch {
+    // Immutable headers (cached / redirect responses): rebuild the response.
+    const headers = new Headers(response.headers);
+    headers.delete("x-powered-by");
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers,
+    });
+  }
+};
+
+export default {
+  ...instrumentedWorker,
+  async fetch(
+    request: Request,
+    env: Parameters<typeof instrumentedWorker.fetch>[1],
+    ctx: Parameters<typeof instrumentedWorker.fetch>[2],
+  ) {
+    return stripPoweredBy(await instrumentedWorker.fetch(request, env, ctx));
+  },
+} satisfies typeof instrumentedWorker;
