@@ -95,7 +95,7 @@ async function subscribeNewsletter(email: string): Promise<void> {
 function Notice({ title, description }: NoticeProps) {
   return (
     <div className="flex flex-col items-center justify-center gap-3 sm:items-start">
-      <span className="text-display text-center font-medium text-ink sm:text-start">{title}</span>
+      <h2 className="text-display text-center font-medium text-ink sm:text-start">{title}</h2>
       <span className="text-center text-sm font-normal text-muted sm:text-start">
         {description}
       </span>

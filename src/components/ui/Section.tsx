@@ -18,7 +18,7 @@ function Header({ title, cta }: Props) {
 
   return (
     <div className="flex items-end justify-between gap-2">
-      <span className="text-display font-medium text-ink">{title}</span>
+      <h2 className="text-display font-medium text-ink">{title}</h2>
       {cta && (
         <a
           className="tap-scale flex items-center gap-1 text-sm text-ink-soft transition-colors duration-(--duration-fast) hover:text-ink"
