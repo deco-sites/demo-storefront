@@ -7,6 +7,11 @@ import MinicartDrawer from "../components/minicart/MinicartDrawer";
 // @ts-ignore Vite ?url import
 import appCss from "../styles/app.css?url";
 
+const SEO_TITLE = "Storefront-tanstack";
+const SEO_DESCRIPTION = "Build profitable websites with deco.cx";
+const SEO_IMAGE =
+  "https://decoims.com/storefront-tanstack/bfe00763-d6fa-40f0-9fa9-77e6769fe02d/1742560188441-74d13a55-4c18-4a5c-8cb4-dcaa27aae923.png";
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   beforeLoad: async ({ context }) => {
     const tasks: Promise<unknown>[] = [];
@@ -31,6 +36,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Storefront-tanstack" },
+      { name: "description", content: SEO_DESCRIPTION },
+      // Open Graph / Twitter defaults so shared links render a preview card.
+      // Routes with CMS SEO data override these by property/name.
+      { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Storefront-tanstack" },
+      { property: "og:title", content: SEO_TITLE },
+      { property: "og:description", content: SEO_DESCRIPTION },
+      { property: "og:image", content: SEO_IMAGE },
+      { property: "og:image:alt", content: SEO_TITLE },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: SEO_TITLE },
+      { name: "twitter:description", content: SEO_DESCRIPTION },
+      { name: "twitter:image", content: SEO_IMAGE },
     ],
     links: [
       { rel: "preconnect", href: "https://api.fontshare.com" },
