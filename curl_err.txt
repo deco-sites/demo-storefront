@@ -1,0 +1,66 @@
+* Host envs-demo-storefront--diienw.decocdn.com:443 was resolved.
+* IPv6: 2606:4700::6812:a19, 2606:4700::6812:b19
+* IPv4: 104.18.10.25, 104.18.11.25
+*   Trying [2606:4700::6812:a19]:443...
+* Immediate connect fail for 2606:4700::6812:a19: Network is unreachable
+*   Trying [2606:4700::6812:b19]:443...
+* Immediate connect fail for 2606:4700::6812:b19: Network is unreachable
+*   Trying 104.18.10.25:443...
+* ALPN: curl offers h2,http/1.1
+} [5 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Client hello (1):
+} [1595 bytes data]
+*  CAfile: /etc/ssl/certs/ca-certificates.crt
+*  CApath: /etc/ssl/certs
+{ [5 bytes data]
+* TLSv1.3 (IN), TLS handshake, Server hello (2):
+{ [1210 bytes data]
+* TLSv1.3 (IN), TLS change cipher, Change cipher spec (1):
+{ [1 bytes data]
+* TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+{ [19 bytes data]
+* TLSv1.3 (IN), TLS handshake, Certificate (11):
+{ [2487 bytes data]
+* TLSv1.3 (IN), TLS handshake, CERT verify (15):
+{ [79 bytes data]
+* TLSv1.3 (IN), TLS handshake, Finished (20):
+{ [52 bytes data]
+* TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+} [1 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Finished (20):
+} [52 bytes data]
+* SSL connection using TLSv1.3 / TLS_AES_256_GCM_SHA384 / X25519MLKEM768 / id-ecPublicKey
+* ALPN: server accepted h2
+* Server certificate:
+*  subject: CN=decocdn.com
+*  start date: Jul 30 18:32:03 2026 GMT
+*  expire date: Oct 28 19:31:43 2026 GMT
+*  subjectAltName: host "envs-demo-storefront--diienw.decocdn.com" matched cert's "*.decocdn.com"
+*  issuer: C=US; O=Google Trust Services; CN=WE1
+*  SSL certificate verify ok.
+*   Certificate level 0: Public key type EC/prime256v1 (256/128 Bits/secBits), signed using ecdsa-with-SHA256
+*   Certificate level 1: Public key type EC/prime256v1 (256/128 Bits/secBits), signed using ecdsa-with-SHA384
+*   Certificate level 2: Public key type EC/secp384r1 (384/192 Bits/secBits), signed using ecdsa-with-SHA384
+* Connected to envs-demo-storefront--diienw.decocdn.com (104.18.10.25) port 443
+* using HTTP/2
+* [HTTP/2] [1] OPENED stream for https://envs-demo-storefront--diienw.decocdn.com/zzz-nonexistent-1785178559053-qx
+* [HTTP/2] [1] [:method: GET]
+* [HTTP/2] [1] [:scheme: https]
+* [HTTP/2] [1] [:authority: envs-demo-storefront--diienw.decocdn.com]
+* [HTTP/2] [1] [:path: /zzz-nonexistent-1785178559053-qx]
+* [HTTP/2] [1] [user-agent: curl/8.14.1]
+* [HTTP/2] [1] [accept: */*]
+} [5 bytes data]
+> GET /zzz-nonexistent-1785178559053-qx HTTP/2
+> Host: envs-demo-storefront--diienw.decocdn.com
+> User-Agent: curl/8.14.1
+> Accept: */*
+> 
+* Request completely sent off
+{ [5 bytes data]
+* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+{ [230 bytes data]
+* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+{ [230 bytes data]
+* Operation timed out after 15001 milliseconds with 0 bytes received
+* Connection #0 to host envs-demo-storefront--diienw.decocdn.com left intact
