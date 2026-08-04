@@ -2,7 +2,7 @@ import { SEARCHBAR_POPUP_ID } from "../../constants";
 import Icon from "../ui/Icon";
 
 export default function SearchTrigger({
-  placeholder = "Produto, categoria...",
+  placeholder = "What are you looking for?",
 }: {
   placeholder?: string;
 }) {

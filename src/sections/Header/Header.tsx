@@ -60,7 +60,17 @@ const MOBILE_ICON_LABEL_CLASS =
 const Desktop = ({ navItems, logo, shippingNote, searchbar }: Props) => (
   <>
     <div className="flex items-center justify-between gap-3 px-3 pt-3 pb-2">
-      <SearchTrigger placeholder={searchbar?.placeholder} />
+      <div className="flex items-center gap-1.5">
+        <label
+          htmlFor={SIDEMENU_DRAWER_ID}
+          aria-label="Open menu"
+          className="frost tap-scale flex size-10 shrink-0 items-center justify-center rounded-sm text-ink transition-colors duration-(--duration-fast) hover:bg-glass-strong"
+        >
+          <Icon id="menu" size={18} />
+        </label>
+
+        <SearchTrigger placeholder={searchbar?.placeholder} />
+      </div>
 
       <HeaderNav
         navItems={navItems ?? []}
@@ -155,28 +165,35 @@ function Header({
         }
       />
 
-      <Modal id={SEARCHBAR_POPUP_ID}>
-        <div className="glass-strong modal-box max-w-2xl rounded-lg p-0 shadow-none">
-          <Searchbar {...searchbar} />
-        </div>
-      </Modal>
-
-      <Drawer
-        id={SEARCHBAR_DRAWER_ID}
-        aside={
-          <Drawer.Aside title="Search" drawer={SEARCHBAR_DRAWER_ID}>
-            <div className="w-screen overflow-y-auto">
-              {loading === "lazy" ? (
-                <div className="flex h-full items-center justify-center">
-                  <span className="loading loading-spinner" />
-                </div>
-              ) : (
-                <Searchbar {...searchbar} />
-              )}
-            </div>
-          </Drawer.Aside>
-        }
-      />
+      {/*
+        Only the searchbar instance for the current device is rendered, so the
+        page never holds two forms with the same SEARCHBAR_INPUT_FORM_ID (nor
+        two competing Cmd+K listeners).
+      */}
+      {device === "desktop" ? (
+        <Modal id={SEARCHBAR_POPUP_ID}>
+          <div className="glass-strong modal-box max-w-2xl rounded-lg p-0 shadow-none">
+            <Searchbar {...searchbar} popupId={SEARCHBAR_POPUP_ID} />
+          </div>
+        </Modal>
+      ) : (
+        <Drawer
+          id={SEARCHBAR_DRAWER_ID}
+          aside={
+            <Drawer.Aside title="Search" drawer={SEARCHBAR_DRAWER_ID}>
+              <div className="w-screen overflow-y-auto">
+                {loading === "lazy" ? (
+                  <div className="flex h-full items-center justify-center">
+                    <span className="loading loading-spinner" />
+                  </div>
+                ) : (
+                  <Searchbar {...searchbar} popupId={SEARCHBAR_DRAWER_ID} />
+                )}
+              </div>
+            </Drawer.Aside>
+          }
+        />
+      )}
 
       {device === "desktop" ? (
         <Desktop

@@ -4,7 +4,7 @@
  */
 import { useEffect, useId, useRef } from "react";
 import { Suggestion } from "@decocms/apps-commerce/types";
-import { SEARCHBAR_INPUT_FORM_ID, SIDEMENU_DRAWER_ID } from "../../../constants";
+import { SEARCHBAR_INPUT_FORM_ID } from "../../../constants";
 import { useComponent } from "../../../sections/Component";
 import Icon from "../../ui/Icon";
 import { Props as SuggestionProps } from "./Suggestions";
@@ -29,27 +29,41 @@ export interface SearchbarProps {
 
 const Suggestions = "./Suggestions.tsx";
 
+interface Props extends SearchbarProps {
+  /**
+   * Id of the checkbox toggle (Modal on desktop, Drawer on mobile) that holds
+   * this searchbar. Used by the Cmd+K shortcut to open it.
+   * @hide true
+   */
+  popupId?: string;
+}
+
 export default function Searchbar({
   placeholder = "What are you looking for?",
   loader,
-}: SearchbarProps) {
+  popupId,
+}: Props) {
   const slot = useId();
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    if (!popupId) return;
     const onKey = (e: KeyboardEvent) => {
       const isK = e.key === "k" || e.key === "K";
-      if (e.metaKey && isK) {
-        const drawer = document.getElementById(SIDEMENU_DRAWER_ID) as HTMLInputElement | null;
-        if (drawer) {
-          drawer.checked = true;
-          inputRef.current?.focus();
+      if ((e.metaKey || e.ctrlKey) && isK) {
+        const toggle = document.getElementById(popupId) as HTMLInputElement | null;
+        if (toggle) {
+          e.preventDefault();
+          toggle.checked = true;
+          // Focus after the popup becomes visible, otherwise the still-hidden
+          // input silently ignores focus().
+          requestAnimationFrame(() => inputRef.current?.focus());
         }
       }
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, []);
+  }, [popupId]);
 
   const onSubmit = () => {
     const term = inputRef.current?.value;
