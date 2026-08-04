@@ -4,11 +4,18 @@ import Alert from "../../components/header/Alert";
 import Bag from "../../components/header/Bag";
 import HeaderNav from "../../components/header/HeaderNav";
 import Menu from "../../components/header/Menu";
+import SearchTrigger from "../../components/header/SearchTrigger";
 import SignIn from "../../components/header/SignIn";
-import { type SearchbarProps } from "../../components/search/Searchbar/Form";
+import Searchbar, { type SearchbarProps } from "../../components/search/Searchbar/Form";
 import Drawer from "../../components/ui/Drawer";
 import Icon from "../../components/ui/Icon";
-import { SIDEMENU_CONTAINER_ID, SIDEMENU_DRAWER_ID } from "../../constants";
+import Modal from "../../components/ui/Modal";
+import {
+  SEARCHBAR_DRAWER_ID,
+  SEARCHBAR_POPUP_ID,
+  SIDEMENU_CONTAINER_ID,
+  SIDEMENU_DRAWER_ID,
+} from "../../constants";
 import { useDevice } from "@decocms/blocks/sdk/useDevice";
 import { type LoadingFallbackProps } from "~/types/deco";
 
@@ -50,16 +57,10 @@ type Props = SectionProps;
 const MOBILE_ICON_LABEL_CLASS =
   "tap-scale flex size-10 items-center justify-center rounded-sm text-ink transition-colors duration-(--duration-fast) hover:bg-white/60";
 
-const Desktop = ({ navItems, logo, shippingNote }: Props) => (
+const Desktop = ({ navItems, logo, shippingNote, searchbar }: Props) => (
   <>
     <div className="flex items-center justify-between gap-3 px-3 pt-3 pb-2">
-      <label
-        htmlFor={SIDEMENU_DRAWER_ID}
-        aria-label="Open menu"
-        className="frost tap-scale flex size-10 shrink-0 items-center justify-center rounded-sm text-ink transition-colors duration-(--duration-fast) hover:bg-glass-strong"
-      >
-        <Icon id="menu" size={18} />
-      </label>
+      <SearchTrigger placeholder={searchbar?.placeholder} />
 
       <HeaderNav
         navItems={navItems ?? []}
@@ -99,6 +100,13 @@ const Mobile = ({ logo }: Props) => (
       )}
 
       <div className="flex items-center gap-1">
+        <label
+          htmlFor={SEARCHBAR_DRAWER_ID}
+          aria-label="Open search"
+          className={MOBILE_ICON_LABEL_CLASS}
+        >
+          <Icon id="search" size={18} />
+        </label>
         <SignIn variant="mobile" />
         <Bag size="sm" />
       </div>
@@ -141,8 +149,31 @@ function Header({
                 <span className="loading loading-spinner" />
               </div>
             ) : (
-              <Menu navItems={navItems ?? []} searchbar={searchbar} />
+              <Menu navItems={navItems ?? []} />
             )}
+          </Drawer.Aside>
+        }
+      />
+
+      <Modal id={SEARCHBAR_POPUP_ID}>
+        <div className="glass-strong modal-box max-w-2xl rounded-lg p-0 shadow-none">
+          <Searchbar {...searchbar} />
+        </div>
+      </Modal>
+
+      <Drawer
+        id={SEARCHBAR_DRAWER_ID}
+        aside={
+          <Drawer.Aside title="Search" drawer={SEARCHBAR_DRAWER_ID}>
+            <div className="w-screen overflow-y-auto">
+              {loading === "lazy" ? (
+                <div className="flex h-full items-center justify-center">
+                  <span className="loading loading-spinner" />
+                </div>
+              ) : (
+                <Searchbar {...searchbar} />
+              )}
+            </div>
           </Drawer.Aside>
         }
       />
