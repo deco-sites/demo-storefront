@@ -1131,6 +1131,12 @@
       "c3JjL3NlY3Rpb25zL0NvbnRlbnQvSGVyby50c3g=@Props": {
         "type": "object",
         "properties": {
+          "heading": {
+            "type": "string",
+            "nullable": true,
+            "title": "Page heading",
+            "description": "Page's main heading (h1), read by screen readers. Defaults to the first slide's headline."
+          },
           "slides": {
             "type": "array",
             "items": {
