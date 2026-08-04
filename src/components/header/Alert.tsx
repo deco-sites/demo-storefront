@@ -19,7 +19,7 @@ function Alert({ alerts = [], interval = 5 }: Props) {
         {alerts.map((alert, index) => (
           <Slider.Item key={index} index={index} className="carousel-item">
             <span
-              className="w-screen px-5 text-center"
+              className="w-screen px-5 text-center !text-ink [&_*]:!text-ink"
               dangerouslySetInnerHTML={{ __html: alert }}
             />
           </Slider.Item>
