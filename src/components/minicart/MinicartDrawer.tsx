@@ -8,7 +8,7 @@ export default function MinicartDrawer() {
         type="checkbox"
         id={MINICART_DRAWER_ID}
         className="peer/minicart sr-only"
-        aria-hidden="true"
+        tabIndex={-1}
       />
       <label
         htmlFor={MINICART_DRAWER_ID}
