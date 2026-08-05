@@ -7,6 +7,9 @@ import MinicartDrawer from "../components/minicart/MinicartDrawer";
 // @ts-ignore Vite ?url import
 import appCss from "../styles/app.css?url";
 
+const SITE_DESCRIPTION =
+  "Storefront made with love in Rio — a demo commerce experience built with deco.cx.";
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   beforeLoad: async ({ context }) => {
     const tasks: Promise<unknown>[] = [];
@@ -31,6 +34,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Storefront-tanstack" },
+      // Fallback SEO / Open Graph tags. TanStack dedupes head meta by
+      // `name`/`property`, so a CMS page that provides its own description or
+      // og:* tags still wins over these defaults.
+      { name: "description", content: SITE_DESCRIPTION },
+      { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Storefront-tanstack" },
+      { property: "og:title", content: "Storefront-tanstack" },
+      { property: "og:description", content: SITE_DESCRIPTION },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Storefront-tanstack" },
+      { name: "twitter:description", content: SITE_DESCRIPTION },
     ],
     links: [
       { rel: "preconnect", href: "https://api.fontshare.com" },
