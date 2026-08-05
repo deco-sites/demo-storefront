@@ -26,7 +26,7 @@ export interface Props {
   /**
    * @title Placeholder
    * @description Message shown in the trigger and in the search input
-   * @default What are you looking for?
+   * @default O que você está procurando?
    */
   placeholder?: string;
   variant?: "desktop" | "mobile";
@@ -74,7 +74,7 @@ function SuggestionItem({ product, onNavigate }: { product: Product; onNavigate:
 }
 
 export default function SearchModal({
-  placeholder = "What are you looking for?",
+  placeholder = "O que você está procurando?",
   variant = "desktop",
 }: Props) {
   const [open, setOpen] = useState(false);
@@ -150,7 +150,6 @@ export default function SearchModal({
         <button
           type="button"
           onClick={() => setOpen(true)}
-          aria-label="Search"
           className="frost tap-scale flex h-10 min-w-56 shrink-0 items-center gap-2 rounded-sm px-3 text-sm text-muted-soft transition-colors duration-(--duration-fast) hover:bg-glass-strong"
         >
           <Icon id="search" size={18} className="shrink-0 text-ink" />
@@ -160,7 +159,7 @@ export default function SearchModal({
         <button
           type="button"
           onClick={() => setOpen(true)}
-          aria-label="Search"
+          aria-label="Buscar"
           className="tap-scale flex size-10 items-center justify-center rounded-sm text-ink transition-colors duration-(--duration-fast) hover:bg-white/60"
         >
           <Icon id="search" size={18} />
@@ -171,7 +170,7 @@ export default function SearchModal({
         <div className="fixed inset-0 z-[60] flex items-start justify-center">
           <button
             type="button"
-            aria-label="Close search"
+            aria-label="Fechar busca"
             onClick={() => setOpen(false)}
             className="absolute inset-0 cursor-default bg-ink/25 backdrop-blur-sm"
           />
@@ -179,7 +178,7 @@ export default function SearchModal({
           <div
             role="dialog"
             aria-modal="true"
-            aria-label="Search"
+            aria-label="Buscar"
             className="relative mx-3 mt-[12vh] flex w-full max-w-2xl flex-col gap-4 rounded-sm bg-white p-4 shadow-xl"
           >
             <form
@@ -196,13 +195,13 @@ export default function SearchModal({
                 onChange={(e) => setTerm(e.currentTarget.value)}
                 placeholder={placeholder}
                 autoComplete="off"
-                aria-label="Search"
+                aria-label="Buscar"
                 className="grow border-0 border-b border-ink/15 bg-transparent pb-2 text-base text-ink outline-none placeholder:text-muted focus:border-ink/40"
               />
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                aria-label="Close search"
+                aria-label="Fechar busca"
                 className="tap-scale flex size-9 shrink-0 items-center justify-center rounded-sm text-ink transition-colors duration-(--duration-fast) hover:bg-ink/5"
               >
                 <Icon id="close" size={18} />
