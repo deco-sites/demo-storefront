@@ -3,6 +3,7 @@ import { MINICART_DRAWER_ID } from "../../constants";
 import { useCart } from "../../platform/cart";
 import { clx } from "~/sdk/clx";
 import Icon from "../ui/Icon";
+import { minicartToggleProps } from "../minicart/minicartToggle";
 
 /**
  * Desktop renders the Figma "Action button" — plain text pill: "Bag", with an
@@ -25,6 +26,7 @@ export default function Bag({ size = "md" }: { size?: "sm" | "md" }) {
       <label
         htmlFor={MINICART_DRAWER_ID}
         aria-label="Open cart"
+        {...minicartToggleProps}
         className="tap-scale relative flex size-10 cursor-pointer items-center justify-center rounded-sm text-ink transition-colors duration-(--duration-fast) hover:bg-white/60"
       >
         {busy ? (
@@ -45,6 +47,7 @@ export default function Bag({ size = "md" }: { size?: "sm" | "md" }) {
     <label
       htmlFor={MINICART_DRAWER_ID}
       aria-label="Open cart"
+      {...minicartToggleProps}
       className={clx(
         "frost tap-scale inline-flex h-10 cursor-pointer items-center justify-center gap-1.5 rounded-sm px-3 text-sm font-medium capitalize transition-colors duration-(--duration-fast) hover:bg-glass-strong",
       )}
