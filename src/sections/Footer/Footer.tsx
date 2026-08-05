@@ -93,7 +93,9 @@ function Footer({
           </ul>
 
           <div className="flex flex-nowrap items-center justify-between gap-4 sm:justify-center">
-            {logo && <img loading="lazy" src={logo} className="h-5 w-auto" />}
+            {logo && (
+              <img loading="lazy" src={logo} alt="Logo" className="h-5 w-auto" />
+            )}
             <span className="text-xs text-muted">{trademark}</span>
           </div>
 
