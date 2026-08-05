@@ -22,6 +22,7 @@ import {
 } from "@decocms/blocks-admin";
 import { getCookies } from "@decocms/apps-shopify/utils/cookies";
 import { withABTesting } from "@decocms/blocks/sdk/abTesting";
+import { withCompression } from "./compression";
 
 const serverEntry = createServerEntry({ fetch: handler.fetch });
 
@@ -98,4 +99,7 @@ const abTestedWorker = withABTesting(decoWorker, {
 // instrumentWorker MUST be the outermost wrapper. It initialises the OTel
 // pipeline (metrics buffering, error log direct-POST) and reads
 // DECO_OTEL_METRICS_ENDPOINT + DECO_OTEL_LOGS_ENDPOINT from env at boot.
-export default instrumentWorker(abTestedWorker);
+// gzip text responses (HTML / JSON / JS / CSS) when the client advertises
+// support. Sits inside instrumentWorker so timings still cover the whole
+// request, and outside the A/B wrapper so both branches get compressed.
+export default instrumentWorker(withCompression(abTestedWorker));
