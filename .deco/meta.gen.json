@@ -136,6 +136,10 @@
           "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw==",
           "namespace": "site"
         },
+        "site/loaders/searchSuggestions.ts": {
+          "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3NlYXJjaFN1Z2dlc3Rpb25zLnRz",
+          "namespace": "site"
+        },
         "site/loaders/user.ts": {
           "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3VzZXIudHM=",
           "namespace": "site"
@@ -268,6 +272,34 @@
             "type": "string",
             "title": "Product handle",
             "description": "The product's URL handle/slug (e.g. \"high-top-canvas-shoes\") — pins an exact product instead of relying on a search query."
+          }
+        }
+      },
+      "c2l0ZS9sb2FkZXJzL3NlYXJjaFN1Z2dlc3Rpb25zLnRz": {
+        "title": "site/loaders/searchSuggestions.ts",
+        "type": "object",
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "site/loaders/searchSuggestions.ts"
+            ],
+            "default": "site/loaders/searchSuggestions.ts"
+          },
+          "query": {
+            "type": "string",
+            "nullable": true,
+            "description": "Term typed in the searchbar",
+            "title": "Query"
+          },
+          "count": {
+            "type": "number",
+            "nullable": true,
+            "description": "How many products to suggest",
+            "title": "Count"
           }
         }
       },
@@ -5558,6 +5590,9 @@
           },
           {
             "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3NlYXJjaFN1Z2dlc3Rpb25zLnRz"
           },
           {
             "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3VzZXIudHM="
