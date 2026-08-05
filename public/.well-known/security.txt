@@ -1,0 +1,7 @@
+# Security policy for demo-storefront.decocms.com
+# See RFC 9116 (https://www.rfc-editor.org/rfc/rfc9116)
+
+Contact: mailto:security@deco.cx
+Expires: 2027-08-05T00:00:00.000Z
+Preferred-Languages: pt-BR, en
+Canonical: https://demo-storefront.decocms.com/.well-known/security.txt
