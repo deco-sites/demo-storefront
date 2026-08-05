@@ -54,6 +54,19 @@ const decoWorker = createDecoWorkerEntry(serverEntry, {
 
   csp: CSP_DIRECTIVES,
 
+  // Cross-origin isolation headers (mitigate Spectre-class attacks and
+  // cross-origin data leakage). `credentialless` is used instead of
+  // `require-corp` because this storefront embeds third-party Shopify
+  // resources (checkout iframe via *.shopify.com, cdn.shopify.com assets)
+  // that don't set their own CORP/CORS headers — `require-corp` would
+  // block those subresources outright, while `credentialless` still
+  // enables `self.crossOriginIsolated` by loading them without
+  // credentials instead of failing the request.
+  securityHeaders: {
+    "Cross-Origin-Embedder-Policy": "credentialless",
+    "Cross-Origin-Resource-Policy": "same-site",
+  },
+
   buildSegment: (request) => {
     const cookies = getCookies(request.headers);
     const rawDevice = detectDevice(request.headers.get("user-agent") ?? "");
