@@ -41,32 +41,34 @@ function Menu({ navItems = [], searchbar }: Props) {
           <Searchbar {...searchbar} />
         </div>
       )}
-      <ul className="flex grow flex-col divide-y divide-ink-soft/10 px-5">
-        {navItems.map((item) => (
-          <li key={item.url ?? item.name}>
-            <MenuItem item={item} />
-          </li>
-        ))}
-      </ul>
+      <nav aria-label="Menu principal" className="contents">
+        <ul className="flex grow flex-col divide-y divide-ink-soft/10 px-5">
+          {navItems.map((item) => (
+            <li key={item.url ?? item.name}>
+              <MenuItem item={item} />
+            </li>
+          ))}
+        </ul>
 
-      <ul className="flex flex-col gap-1 border-t border-ink-soft/10 py-4">
-        {[
-          { href: "/wishlist", icon: "favorite" as const, label: "Lista de desejos" },
-          { href: "https://www.deco.cx", icon: "home_pin" as const, label: "Nossas lojas" },
-          { href: "https://www.deco.cx", icon: "call" as const, label: "Fale conosco" },
-          { href: "/account", icon: "account_circle" as const, label: "Minha conta" },
-        ].map(({ href, icon, label }) => (
-          <li key={label}>
-            <a
-              className="tap-scale flex items-center gap-3 px-5 py-2.5 text-sm text-ink transition-colors duration-(--duration-fast) hover:bg-white/60"
-              href={href}
-            >
-              <Icon id={icon} size={18} />
-              <span>{label}</span>
-            </a>
-          </li>
-        ))}
-      </ul>
+        <ul className="flex flex-col gap-1 border-t border-ink-soft/10 py-4">
+          {[
+            { href: "/wishlist", icon: "favorite" as const, label: "Lista de desejos" },
+            { href: "https://www.deco.cx", icon: "home_pin" as const, label: "Nossas lojas" },
+            { href: "https://www.deco.cx", icon: "call" as const, label: "Fale conosco" },
+            { href: "/account", icon: "account_circle" as const, label: "Minha conta" },
+          ].map(({ href, icon, label }) => (
+            <li key={label}>
+              <a
+                className="tap-scale flex items-center gap-3 px-5 py-2.5 text-sm text-ink transition-colors duration-(--duration-fast) hover:bg-white/60"
+                href={href}
+              >
+                <Icon id={icon} size={18} />
+                <span>{label}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </div>
   );
 }

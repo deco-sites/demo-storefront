@@ -194,14 +194,9 @@ export default function Hero({ slides, categories = [], infoBullets = [], interv
 
   return (
     <div className="flex flex-col gap-2 px-3">
-      {/*
-        Page-level H1: the hero is a full-bleed image carousel with no
-        visible text title, but the page still needs a single top-level
-        heading so the document outline (H1 -> H2 -> ...) has no gaps for
-        screen readers and search engines. Visually hidden, not decorative.
-      */}
-      <h1 className="sr-only">{first.headline ?? "Home"}</h1>
-
+      {/* Page main heading — visually hidden to preserve the hero's design while
+          giving the home page the H1 it needs for semantic structure/a11y. */}
+      <h1 className="sr-only">{first.headline ?? "Deco Storefront"}</h1>
       <div className="flex h-screen flex-col gap-2 pt-17 pb-3 sm:pt-15">
         {/* Carousel — each slide's own background (mobile/desktop crop), logo and featured products. */}
         <div className="flex min-h-0 flex-1 flex-col">
