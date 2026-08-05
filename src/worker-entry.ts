@@ -22,6 +22,7 @@ import {
 } from "@decocms/blocks-admin";
 import { getCookies } from "@decocms/apps-shopify/utils/cookies";
 import { withABTesting } from "@decocms/blocks/sdk/abTesting";
+import { withCompression } from "./sdk/compression";
 
 const serverEntry = createServerEntry({ fetch: handler.fetch });
 
@@ -95,7 +96,13 @@ const abTestedWorker = withABTesting(decoWorker, {
   kvBinding: "SITES_KV",
 });
 
+// Gzip text responses (HTML, JSON, JS, CSS, SVG) when the client advertises
+// support. Sits inside instrumentWorker so traces still see the real status,
+// and outside the A/B split so both the worker and the fallback origin's
+// responses get compressed.
+const compressedWorker = withCompression(abTestedWorker);
+
 // instrumentWorker MUST be the outermost wrapper. It initialises the OTel
 // pipeline (metrics buffering, error log direct-POST) and reads
 // DECO_OTEL_METRICS_ENDPOINT + DECO_OTEL_LOGS_ENDPOINT from env at boot.
-export default instrumentWorker(abTestedWorker);
+export default instrumentWorker(compressedWorker);
