@@ -217,6 +217,10 @@ This repo was itself produced by the migration flow above. Two generated docs ar
 - `MIGRATION_REPORT.md` — files scaffolded / transformed / deleted, manual review items
 - `MIGRATION_NEXT_STEPS.md` — open follow-up work and canonical patterns to follow
 
+## Operations
+
+- [`docs/email-authentication.md`](docs/email-authentication.md) — SPF / DKIM / DMARC records for the storefront domain, and how to find the DKIM selector once a mail provider is wired up
+
 ## Help
 
 - [deco.cx docs](https://www.deco.cx/docs/en/overview)
