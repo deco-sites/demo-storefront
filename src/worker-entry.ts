@@ -25,13 +25,36 @@ import { withABTesting } from "@decocms/blocks/sdk/abTesting";
 
 const serverEntry = createServerEntry({ fetch: handler.fetch });
 
+// Enforced Content-Security-Policy.
+//
+// The framework's `csp` option only ever emits
+// `Content-Security-Policy-Report-Only`, so the enforcing header is set
+// explicitly through `securityHeaders` below (custom entries win over the
+// framework defaults).
+//
+// Hosts included here are the ones actually referenced by the rendered
+// storefront: decoims.com (deco image CDN), cdn.shopify.com / *.shopify.com /
+// *.myshopify.com (Shopify assets + Storefront API), api/cdn.fontshare.com
+// (webfonts) and fbcdn/graph.instagram.com (Instagram feed section).
+//
+// `default-src` is intentionally broad (https:) so resource types with no
+// explicit directive — media, manifest, prefetch — keep working; the XSS
+// hardening comes from `script-src`, `object-src`, `base-uri` and
+// `form-action`. `frame-ancestors` is deliberately omitted so the deco CMS
+// admin can keep rendering the site in its preview iframe; clickjacking is
+// still covered by the default `X-Frame-Options: SAMEORIGIN`.
 const CSP_DIRECTIVES = [
+  "default-src 'self' https: data: blob:",
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' cdn.shopify.com *.shopify.com",
-  "img-src 'self' data: blob: cdn.shopify.com *.shopify.com *.myshopify.com",
-  "connect-src 'self' *.myshopify.com cdn.shopify.com",
+  "img-src 'self' data: blob: decoims.com cdn.shopify.com *.shopify.com *.myshopify.com *.fbcdn.net",
+  "connect-src 'self' *.myshopify.com cdn.shopify.com decoims.com graph.instagram.com",
   "frame-src 'self' *.shopify.com",
-  "style-src 'self' 'unsafe-inline' fonts.googleapis.com",
-  "font-src 'self' fonts.gstatic.com data:",
+  "style-src 'self' 'unsafe-inline' api.fontshare.com fonts.googleapis.com",
+  "font-src 'self' data: cdn.fontshare.com api.fontshare.com fonts.gstatic.com",
+  "worker-src 'self' blob:",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self' *.myshopify.com *.shopify.com",
   // TODO: Add site-specific domains (analytics, CDN, tag managers)
 ];
 
@@ -52,7 +75,10 @@ const decoWorker = createDecoWorkerEntry(serverEntry, {
     corsHeaders,
   },
 
-  csp: CSP_DIRECTIVES,
+  // Enforced header — `csp` would only produce the report-only variant.
+  securityHeaders: {
+    "Content-Security-Policy": CSP_DIRECTIVES.join("; "),
+  },
 
   buildSegment: (request) => {
     const cookies = getCookies(request.headers);
