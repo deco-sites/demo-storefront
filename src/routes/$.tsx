@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, notFound } from "@tanstack/react-router";
 import { cmsRouteConfig, DecoPageRenderer } from "@decocms/tanstack";
 import { deferredSectionLoader } from "@decocms/tanstack/sdk/deferredSectionLoader";
 
@@ -16,6 +16,16 @@ const routeConfig = cmsRouteConfig({
 
 export const Route = createFileRoute("/$")({
   ...routeConfig,
+  // When no CMS page matches the URL, throw `notFound()` instead of letting the
+  // loader return null. The null path still rendered the 404 UI, but with HTTP
+  // 200 — search engines then indexed those phantom pages. A thrown notFound
+  // puts the match in `notFound` status, which makes the SSR response carry a
+  // real 404 status code (router.state.statusCode).
+  loader: async (ctx: Parameters<typeof routeConfig.loader>[0]) => {
+    const page = await routeConfig.loader(ctx);
+    if (!page) throw notFound();
+    return page;
+  },
   component: CmsPage,
   notFoundComponent: NotFoundPage,
 });
