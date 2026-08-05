@@ -12,13 +12,15 @@ const MOBILE_ICON_CLASS =
 
 /**
  * Desktop renders the Figma "Action button" — plain text pill: "Account" or
- * "Login". Mobile has no room for a text pill next to the logo and cart, so
+ * "Sign in". Mobile has no room for a text pill next to the logo and cart, so
  * it renders an icon-only button matching the menu/search icons instead.
+ * Both variants take their accessible name from the same `label`, so what a
+ * screen reader announces always matches the visible text.
  */
 function SignIn({ variant }: Props) {
   const { isAuthenticated } = useUser();
   const href = isAuthenticated ? "/account" : "/login";
-  const label = isAuthenticated ? "Account" : "Login";
+  const label = isAuthenticated ? "Account" : "Sign in";
 
   if (variant === "mobile") {
     return (
