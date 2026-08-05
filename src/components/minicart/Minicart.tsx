@@ -3,6 +3,7 @@ import { clx } from "~/sdk/clx";
 import Image from "~/components/ui/Image";
 import Icon from "../ui/Icon";
 import { MINICART_DRAWER_ID } from "../../constants";
+import { minicartToggleProps } from "./minicartToggle";
 import {
   useCart,
   useRemoveCartItem,
@@ -96,7 +97,11 @@ function EmptyState() {
   return (
     <div className="flex flex-col gap-6 items-center justify-center grow">
       <span className="font-medium text-2xl">Your bag is empty</span>
-      <label htmlFor={MINICART_DRAWER_ID} className="btn btn-outline no-animation cursor-pointer">
+      <label
+        htmlFor={MINICART_DRAWER_ID}
+        {...minicartToggleProps}
+        className="btn btn-outline no-animation cursor-pointer"
+      >
         Choose products
       </label>
     </div>
@@ -146,6 +151,7 @@ export default function Minicart() {
         <label
           htmlFor={MINICART_DRAWER_ID}
           aria-label="Close cart"
+          {...minicartToggleProps}
           className="btn btn-ghost btn-sm no-animation cursor-pointer"
         >
           <Icon id="close" />
