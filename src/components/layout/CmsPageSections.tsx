@@ -2,16 +2,25 @@ import { DecoPageRenderer } from "@decocms/tanstack";
 import { deferredSectionLoader } from "@decocms/tanstack/sdk/deferredSectionLoader";
 
 /**
- * Sections that bring their own top-level landmark (`<header>` in Header,
- * `<footer>` in Footer) or render no visible content at all (Theme).
- *
- * Everything else is page content and belongs inside `<main>` so screen reader
- * users can jump straight to it with region shortcuts. The split matters:
- * `<header>`/`<footer>` only expose the `banner`/`contentinfo` landmarks while
- * they are NOT nested inside `<main>`, so we cannot simply wrap the whole
- * section list in a single element.
+ * Sections that expose their own top-level landmark and therefore must stay
+ * outside `<main>`: `<header>`/`<footer>` only expose the `banner`/`contentinfo`
+ * roles while they are NOT nested inside `<main>`, so we cannot simply wrap the
+ * whole section list in a single element.
  */
-const OWN_LANDMARK_SECTION = /\/sections\/(Header|Footer|Theme)\//;
+const HEADER_SECTION = /\/sections\/Header\//;
+const FOOTER_SECTION = /\/sections\/Footer\//;
+
+/**
+ * Sections that are not page content: the landmark ones above, sections that
+ * render nothing visible (Theme), and the site-wide globals that the CMS route
+ * loader prepends to every page (`site.global` in .deco/blocks/site.json —
+ * currently htmx, Analytics and Session). Those globals sit *before* the page's
+ * own Header, so they must not be mistaken for content when computing the
+ * `<main>` boundary — otherwise the boundary would start at index 0 and swallow
+ * the Header.
+ */
+const NON_CONTENT_SECTION =
+  /\/sections\/(Header|Footer|Theme)\/|\/sections\/Session\.tsx$|htmx\/sections\/|\/sections\/Analytics\//;
 
 interface SectionLike {
   component: string;
@@ -26,28 +35,56 @@ interface CmsPage {
   pageUrl?: string;
 }
 
-/** Original CMS positions of the sections that make up the page content. */
-function contentRange(page: CmsPage) {
+/** Every section of the page paired with its original CMS position. */
+function sectionPositions(page: CmsPage) {
   const eager = page.resolvedSections ?? [];
   const deferred = page.deferredSections ?? [];
 
-  const positions = [
-    ...eager.map((s, i) => [s.index ?? i, s.component] as const),
-    ...deferred.map((d) => [d.index, d.component] as const),
-  ]
-    .filter(([, component]) => !OWN_LANDMARK_SECTION.test(component ?? ""))
-    .map(([position]) => position);
+  return [
+    ...eager.map((s, i) => ({
+      position: s.index ?? i,
+      component: s.component ?? "",
+    })),
+    ...deferred.map((d) => ({
+      position: d.index,
+      component: d.component ?? "",
+    })),
+  ];
+}
 
-  if (!positions.length) return null;
-  return { start: Math.min(...positions), end: Math.max(...positions) };
+/**
+ * Range of CMS positions that `<main>` should cover.
+ *
+ * Anchored on the Header/Footer positions themselves rather than on "everything
+ * that is not a layout section", so unrelated non-content sections sitting
+ * outside them (the site-wide globals) cannot stretch the range over the
+ * landmarks.
+ */
+function contentRange(page: CmsPage) {
+  const all = sectionPositions(page);
+  const content = all.filter((s) => !NON_CONTENT_SECTION.test(s.component));
+  if (!content.length) return null;
+
+  const header = all.find((s) => HEADER_SECTION.test(s.component));
+  const footer = all.find((s) => FOOTER_SECTION.test(s.component));
+
+  const start = header
+    ? header.position + 1
+    : Math.min(...content.map((s) => s.position));
+  const end = footer
+    ? footer.position - 1
+    : Math.max(...content.map((s) => s.position));
+
+  if (start > end) return null;
+  return { start, end };
 }
 
 type Group = "before" | "main" | "after";
 
 /**
  * Renders a CMS page's sections wrapped in semantic landmarks: layout sections
- * (Header/Footer/Theme) stay at the top level, everything between the first and
- * the last content section goes inside `<main>`.
+ * (Header/Footer/Theme) and site-wide globals stay at the top level, the page
+ * content between Header and Footer goes inside `<main>`.
  */
 export default function CmsPageSections({ page }: { page: CmsPage }) {
   const eager = page.resolvedSections ?? [];
@@ -55,24 +92,33 @@ export default function CmsPageSections({ page }: { page: CmsPage }) {
   const range = contentRange(page);
 
   const renderGroup = (group: Group) => {
-    const keep = (position: number) => {
+    const keep = (position: number, component: string) => {
       // Nothing but layout sections: keep them all at the top level.
       if (!range) return group === "before";
+      // Header/Footer never go inside `<main>`, whatever their position is.
+      if (HEADER_SECTION.test(component)) return group === "before";
+      if (FOOTER_SECTION.test(component)) return group === "after";
       if (group === "before") return position < range.start;
       if (group === "after") return position > range.end;
       return position >= range.start && position <= range.end;
     };
 
-    const groupEager = eager.filter((s, i) => keep(s.index ?? i));
-    const groupDeferred = deferred.filter((d) => keep(d.index));
+    const groupEager = eager.filter((s, i) =>
+      keep(s.index ?? i, s.component ?? ""),
+    );
+    const groupDeferred = deferred.filter((d) =>
+      keep(d.index, d.component ?? ""),
+    );
     if (!groupEager.length && !groupDeferred.length) return null;
 
     // Deferred promises are keyed `d_<original index>` by the route loader.
     const groupPromises = page.deferredPromises
       ? Object.fromEntries(
-          Object.entries(page.deferredPromises).filter(([key]) =>
-            keep(Number(key.replace(/^d_/, ""))),
-          ),
+          Object.entries(page.deferredPromises).filter(([key]) => {
+            const position = Number(key.replace(/^d_/, ""));
+            const section = deferred.find((d) => d.index === position);
+            return keep(position, section?.component ?? "");
+          }),
         )
       : undefined;
 
