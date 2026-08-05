@@ -49,7 +49,7 @@
   --color-ink: #0a0a0a;
   --color-ink-soft: #262626;
   --color-muted: #737373;
-  --color-muted-soft: rgb(64 64 64 / 60%);
+  --color-muted-soft: rgb(64 64 64 / 80%);
 
   /* Glass — the frosted-blur surface used across nav, tags, PDP panel, banners */
   --color-glass: rgb(240 240 240 / 60%);
