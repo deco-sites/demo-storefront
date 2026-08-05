@@ -281,6 +281,10 @@
   "__resolveType": "website/pages/Page.tsx",
   "path": "/",
   "seo": {
-    "__resolveType": "website/sections/Seo/SeoV2.tsx"
+    "__resolveType": "website/sections/Seo/SeoV2.tsx",
+    "title": "Demo Storefront — New Season, Up to 60% Off",
+    "description": "Shop the new season at Demo Storefront: shirts, denim, accessories and more. Free shipping on orders over $50 and interest-free installments.",
+    "image": "https://decoims.com/demo-storefront/2026/07/57440993-8c68-4943-9084-1c947c1d0fd5-banner1.png?quality=original",
+    "type": "website"
   }
 }
