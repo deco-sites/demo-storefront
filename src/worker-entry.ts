@@ -95,7 +95,47 @@ const abTestedWorker = withABTesting(decoWorker, {
   kvBinding: "SITES_KV",
 });
 
-// instrumentWorker MUST be the outermost wrapper. It initialises the OTel
-// pipeline (metrics buffering, error log direct-POST) and reads
-// DECO_OTEL_METRICS_ENDPOINT + DECO_OTEL_LOGS_ENDPOINT from env at boot.
-export default instrumentWorker(abTestedWorker);
+// instrumentWorker MUST be the outermost wrapper of the request pipeline. It
+// initialises the OTel pipeline (metrics buffering, error log direct-POST) and
+// reads DECO_OTEL_METRICS_ENDPOINT + DECO_OTEL_LOGS_ENDPOINT from env at boot.
+const instrumentedWorker = instrumentWorker(abTestedWorker);
+
+// ---------------------------------------------------------------------------
+// Strip `x-powered-by` from every response.
+//
+// The runtime stamps the framework name and version (e.g. `deco@7.20.7`) on
+// responses, including error pages. That hands an attacker a free version
+// fingerprint to match against known advisories, so we remove it here rather
+// than only on the error path — every response should be equally quiet.
+//
+// Headers on a Response are immutable in some cases (e.g. cached responses),
+// so build a new Response around the same body instead of mutating in place.
+// ---------------------------------------------------------------------------
+const stripPoweredBy = (response: Response): Response => {
+  if (!response.headers.has("x-powered-by")) return response;
+
+  const headers = new Headers(response.headers);
+  headers.delete("x-powered-by");
+
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+};
+
+// Proxy rather than object spread so every other handler the wrappers expose
+// (tail, scheduled, ...) keeps working untouched, prototype included.
+export default new Proxy(instrumentedWorker as unknown as Record<string, unknown>, {
+  get(target, prop, receiver) {
+    if (prop !== "fetch") return Reflect.get(target, prop, receiver);
+
+    const fetchHandler = Reflect.get(target, prop, receiver) as
+      | ((...args: unknown[]) => Promise<Response> | Response)
+      | undefined;
+    if (typeof fetchHandler !== "function") return fetchHandler;
+
+    return async (...args: unknown[]) =>
+      stripPoweredBy(await fetchHandler.apply(target, args));
+  },
+});
