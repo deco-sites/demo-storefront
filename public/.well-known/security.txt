@@ -1,0 +1,7 @@
+# Security contact information for demo-storefront.decocms.com
+# Format: https://www.rfc-editor.org/rfc/rfc9116
+
+Contact: mailto:security@deco.cx
+Expires: 2027-08-01T00:00:00.000Z
+Preferred-Languages: pt-BR, en
+Canonical: https://demo-storefront.decocms.com/.well-known/security.txt
