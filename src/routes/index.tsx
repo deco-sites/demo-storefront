@@ -83,14 +83,22 @@ function HomePage() {
     );
   }
 
+  // The home page is composed entirely of CMS sections, none of which renders a
+  // top-level heading. Screen readers rely on an H1 to announce the page's main
+  // purpose, so provide one visually-hidden heading here.
+  const heading = data.seo?.title ?? "Storefront: clothing, accessories and new season arrivals";
+
   return (
-    <DecoPageRenderer
-      sections={data.resolvedSections ?? []}
-      deferredSections={data.deferredSections ?? []}
-      deferredPromises={data.deferredPromises}
-      pagePath={data.pagePath}
-      pageUrl={data.pageUrl}
-      loadDeferredSectionFn={deferredSectionLoader}
-    />
+    <>
+      <h1 className="sr-only">{heading}</h1>
+      <DecoPageRenderer
+        sections={data.resolvedSections ?? []}
+        deferredSections={data.deferredSections ?? []}
+        deferredPromises={data.deferredPromises}
+        pagePath={data.pagePath}
+        pageUrl={data.pageUrl}
+        loadDeferredSectionFn={deferredSectionLoader}
+      />
+    </>
   );
 }
