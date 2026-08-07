@@ -13,8 +13,13 @@ export type PositionedSection = { key?: string; component?: string; index?: numb
 /** Sections that render a top-level landmark of their own, or no markup at all. */
 const HEADER_SECTION = /sections\/(Header|Theme)\//;
 const FOOTER_SECTION = /sections\/Footer\//;
-/** SEO sections only emit `<head>` metadata, so they are not page content. */
-const NON_VISUAL_SECTION = /sections\/Seo\//;
+/**
+ * Sections that render no visible markup — SEO only emits `<head>` metadata,
+ * and Analytics/Session/htmx only inject scripts. Treating them as content
+ * would drag the `<main>` boundaries past the Header/Footer and trip the
+ * orphan warning below.
+ */
+const NON_VISUAL_SECTION = /sections\/(Seo|Analytics)\/|sections\/(Session|htmx)\.tsx/;
 
 const matches = (re: RegExp, s: PositionedSection) =>
   re.test(s.component ?? "") || re.test(s.key ?? "");

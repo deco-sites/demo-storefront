@@ -6,6 +6,18 @@ import { mainBounds, type PositionedSection } from "./splitPageSections";
 const page = (components: string[]) =>
   components.map((component, pos) => ({ s: { component } as PositionedSection, pos }));
 
+/** Runs `fn` with `console.warn` captured, so tests don't print to stdout. */
+const captureWarnings = <T>(fn: () => T): { result: T; warnings: unknown[][] } => {
+  const warnings: unknown[][] = [];
+  const original = console.warn;
+  console.warn = (...args: unknown[]) => warnings.push(args);
+  try {
+    return { result: fn(), warnings };
+  } finally {
+    console.warn = original;
+  }
+};
+
 const HEADER = "site/sections/Header/Header.tsx";
 const FOOTER = "site/sections/Footer/Footer.tsx";
 const THEME = "site/sections/Theme/Theme.tsx";
@@ -57,7 +69,7 @@ test("content after the Footer does not pull the Footer into main", () => {
     FOOTER,
     "site/sections/Content/Newsletter.tsx",
   ]);
-  assert.deepEqual(mainBounds(sections), { first: 1, last: 1 });
+  assert.deepEqual(captureWarnings(() => mainBounds(sections)).result, { first: 1, last: 1 });
 });
 
 test("a Header after content does not end up inside main", () => {
@@ -67,7 +79,7 @@ test("a Header after content does not end up inside main", () => {
     "site/sections/Content/Faq.tsx",
     FOOTER,
   ]);
-  assert.deepEqual(mainBounds(sections), { first: 2, last: 2 });
+  assert.deepEqual(captureWarnings(() => mainBounds(sections)).result, { first: 2, last: 2 });
 });
 
 test("uses the stamped index rather than array order", () => {
@@ -101,14 +113,22 @@ test("documents the multiple-content-runs limitation: only one run gets wrapped"
     "site/sections/Content/Faq.tsx",
     FOOTER,
   ]);
-  const warnings: unknown[][] = [];
-  const original = console.warn;
-  console.warn = (...args: unknown[]) => warnings.push(args);
-  try {
-    assert.deepEqual(mainBounds(sections), { first: 3, last: 3 });
-  } finally {
-    console.warn = original;
-  }
+  const { result, warnings } = captureWarnings(() => mainBounds(sections));
+  assert.deepEqual(result, { first: 3, last: 3 });
   assert.equal(warnings.length, 1);
   assert.match(String(warnings[0][0]), /fall outside <main>/);
+});
+
+test("script-only sections are not content, so they don't widen main", () => {
+  const sections = page([
+    "website/sections/Analytics/Analytics.tsx",
+    "site/sections/Session.tsx",
+    "htmx/sections/htmx.tsx",
+    HEADER,
+    "site/sections/Content/Hero.tsx",
+    FOOTER,
+  ]);
+  const { result, warnings } = captureWarnings(() => mainBounds(sections));
+  assert.deepEqual(result, { first: 4, last: 4 });
+  assert.equal(warnings.length, 0);
 });

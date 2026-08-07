@@ -75,6 +75,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 // Mirrors `DecoRootLayout`'s bootstrap: sets up `DECO.events` before hydration
 // so sections can dispatch analytics events during their first render.
+// Copied from `buildDecoEventsBootstrap` in @decocms/tanstack@7.20.7
+// (src/hooks/DecoRootLayout.tsx), as is the 500ms `deco:ready` timeout in
+// `RootLayout` below — keep both in sync when bumping that package.
 const DECO_EVENTS_BOOTSTRAP = `
 window.__RUNTIME__ = window.__RUNTIME__ || { account: "" };
 window.DECO = window.DECO || {};
