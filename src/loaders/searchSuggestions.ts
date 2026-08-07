@@ -20,6 +20,9 @@ const MAX_QUERY_LENGTH = 64;
 // The loader is reachable from the browser (`/deco/invoke`), so responses are
 // memoized for a short window to keep a burst of keystrokes — or a caller
 // hammering the endpoint — from turning into one upstream query each.
+// The key is `count|term` only — this store is single-locale/single-currency, so
+// there is no per-request context to fold in. If the site ever serves more than
+// one locale, currency or customer segment, add it to the key.
 const TTL_MS = 60_000;
 const MAX_ENTRIES = 200;
 const cache = new Map<string, { at: number; products: Product[] }>();

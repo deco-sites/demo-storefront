@@ -31,6 +31,10 @@ export interface SearchbarProps {
   /**
    * @title Search modal labels
    * @description Copy shown inside the header search modal
+   *
+   * Not read by `Searchbar` itself: it lives here so the whole search copy set
+   * (placeholder + modal strings) is one group in the CMS, and Header forwards
+   * it to `SearchModal`.
    */
   labels?: SearchModalLabels;
   /** @description Loader to run when suggesting new elements */

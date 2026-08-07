@@ -7,6 +7,7 @@
  * as the searchbar inside the side menu.
  */
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import type { Product } from "@decocms/apps-commerce/types";
 import { formatPrice } from "@decocms/apps-commerce/sdk/formatPrice";
 import { useOffer } from "@decocms/apps-commerce/sdk/useOffer";
@@ -50,6 +51,18 @@ export interface SearchModalLabels {
    * @default Nenhum produto encontrado para “{term}”.
    */
   empty?: string;
+  /**
+   * @title Search accessible name
+   * @description Accessible name of the search trigger, input and dialog
+   * @default Buscar
+   */
+  searchAriaLabel?: string;
+  /**
+   * @title Close accessible name
+   * @description Accessible name of the close button and the backdrop
+   * @default Fechar busca
+   */
+  closeAriaLabel?: string;
 }
 
 export const DEFAULT_LABELS: Required<SearchModalLabels> = {
@@ -57,6 +70,8 @@ export const DEFAULT_LABELS: Required<SearchModalLabels> = {
   suggestionsTitle: "Produtos sugeridos",
   seeAll: "Ver todos os resultados",
   empty: "Nenhum produto encontrado para “{term}”.",
+  searchAriaLabel: "Buscar",
+  closeAriaLabel: "Fechar busca",
 };
 
 export interface Props {
@@ -124,6 +139,7 @@ export default function SearchModal({
   const [loading, setLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   // Open with Cmd+K / Ctrl+K, close with Escape.
   useEffect(() => {
@@ -139,9 +155,13 @@ export default function SearchModal({
     return () => document.removeEventListener("keydown", onKey);
   }, []);
 
-  // The input only exists once the modal is mounted, so focus after that.
+  // The input only exists once the modal is mounted, so focus after that; on
+  // close, hand focus back to the trigger that opened it.
   useEffect(() => {
-    if (open) inputRef.current?.focus();
+    if (open) {
+      inputRef.current?.focus();
+      return () => triggerRef.current?.focus();
+    }
   }, [open]);
 
   // The overlay is a plain div, so the `dialog[open]` / `.drawer-toggle:checked`
@@ -230,10 +250,94 @@ export default function SearchModal({
     events?.dispatch?.({ name: "search", params: { search_term: query } });
   };
 
+  // The mobile trigger lives inside the frosted header bar, and a non-`none`
+  // `backdrop-filter` makes that bar the containing block for `position: fixed`
+  // descendants — the overlay would be clamped to a 56px-tall inset bar instead
+  // of the viewport. Portal it to <body> so it always resolves against the
+  // viewport on both variants.
+  const overlay = open && (
+    <div className="fixed inset-0 z-50 flex items-start justify-center">
+      <button
+        type="button"
+        aria-label={copy.closeAriaLabel}
+        onClick={() => setOpen(false)}
+        className="absolute inset-0 cursor-default bg-ink/25 backdrop-blur-sm"
+      />
+
+      <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label={copy.searchAriaLabel}
+        className="relative mx-3 mt-24 flex w-full max-w-2xl flex-col gap-4 rounded-sm bg-white p-4 shadow-xl"
+      >
+        <form action={ACTION} method="get" onSubmit={onSubmit} className="flex items-center gap-3">
+          <Icon id="search" size={20} className="shrink-0 text-ink" />
+          <input
+            ref={inputRef}
+            name={NAME}
+            value={term}
+            onChange={(e) => setTerm(e.currentTarget.value)}
+            placeholder={placeholder}
+            autoComplete="off"
+            aria-label={copy.searchAriaLabel}
+            className="grow border-0 border-b border-ink/15 bg-transparent pb-2 text-base text-ink outline-none placeholder:text-muted focus:border-ink/40"
+          />
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            aria-label={copy.closeAriaLabel}
+            className="tap-scale flex size-9 shrink-0 items-center justify-center rounded-sm text-ink transition-colors duration-(--duration-fast) hover:bg-ink/5"
+          >
+            <Icon id="close" size={18} />
+          </button>
+        </form>
+
+        <div aria-live="polite" className={clx("flex flex-col gap-2", !term.trim() && "hidden")}>
+          {loading && products.length === 0 && (
+            <span className="px-2 py-3 text-sm text-muted">{copy.loading}</span>
+          )}
+
+          {products.length > 0 && (
+            <>
+              <span className="px-2 text-xs font-medium text-muted-soft">
+                {copy.suggestionsTitle}
+              </span>
+              <ul className="flex flex-col">
+                {products.map((product) => (
+                  <SuggestionItem
+                    key={product.url ?? product.productID}
+                    product={product}
+                    onNavigate={() => setOpen(false)}
+                  />
+                ))}
+              </ul>
+              <a
+                href={`${ACTION}?${NAME}=${encodeURIComponent(term.trim())}`}
+                onClick={onSubmit}
+                className="flex items-center gap-1 px-2 py-2 text-sm text-ink underline"
+              >
+                {copy.seeAll}
+                <Icon id="chevron-right" size={12} />
+              </a>
+            </>
+          )}
+
+          {!loading && products.length === 0 && (
+            <span className="px-2 py-3 text-sm text-muted">
+              {copy.empty.replace("{term}", term.trim())}
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <>
       {variant === "desktop" ? (
         <button
+          ref={triggerRef}
           type="button"
           onClick={() => setOpen(true)}
           className="frost tap-scale flex h-10 min-w-56 shrink-0 items-center gap-2 rounded-sm px-3 text-sm text-muted-soft transition-colors duration-(--duration-fast) hover:bg-glass-strong"
@@ -243,100 +347,17 @@ export default function SearchModal({
         </button>
       ) : (
         <button
+          ref={triggerRef}
           type="button"
           onClick={() => setOpen(true)}
-          aria-label="Buscar"
+          aria-label={copy.searchAriaLabel}
           className="tap-scale flex size-10 items-center justify-center rounded-sm text-ink transition-colors duration-(--duration-fast) hover:bg-white/60"
         >
           <Icon id="search" size={18} />
         </button>
       )}
 
-      {open && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center">
-          <button
-            type="button"
-            aria-label="Fechar busca"
-            onClick={() => setOpen(false)}
-            className="absolute inset-0 cursor-default bg-ink/25 backdrop-blur-sm"
-          />
-
-          <div
-            ref={dialogRef}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Buscar"
-            className="relative mx-3 mt-24 flex w-full max-w-2xl flex-col gap-4 rounded-sm bg-white p-4 shadow-xl"
-          >
-            <form
-              action={ACTION}
-              method="get"
-              onSubmit={onSubmit}
-              className="flex items-center gap-3"
-            >
-              <Icon id="search" size={20} className="shrink-0 text-ink" />
-              <input
-                ref={inputRef}
-                name={NAME}
-                value={term}
-                onChange={(e) => setTerm(e.currentTarget.value)}
-                placeholder={placeholder}
-                autoComplete="off"
-                aria-label="Buscar"
-                className="grow border-0 border-b border-ink/15 bg-transparent pb-2 text-base text-ink outline-none placeholder:text-muted focus:border-ink/40"
-              />
-              <button
-                type="button"
-                onClick={() => setOpen(false)}
-                aria-label="Fechar busca"
-                className="tap-scale flex size-9 shrink-0 items-center justify-center rounded-sm text-ink transition-colors duration-(--duration-fast) hover:bg-ink/5"
-              >
-                <Icon id="close" size={18} />
-              </button>
-            </form>
-
-            <div
-              aria-live="polite"
-              className={clx("flex flex-col gap-2", !term.trim() && "hidden")}
-            >
-              {loading && products.length === 0 && (
-                <span className="px-2 py-3 text-sm text-muted">{copy.loading}</span>
-              )}
-
-              {products.length > 0 && (
-                <>
-                  <span className="px-2 text-xs font-medium text-muted-soft">
-                    {copy.suggestionsTitle}
-                  </span>
-                  <ul className="flex flex-col">
-                    {products.map((product) => (
-                      <SuggestionItem
-                        key={product.url ?? product.productID}
-                        product={product}
-                        onNavigate={() => setOpen(false)}
-                      />
-                    ))}
-                  </ul>
-                  <a
-                    href={`${ACTION}?${NAME}=${encodeURIComponent(term.trim())}`}
-                    onClick={onSubmit}
-                    className="flex items-center gap-1 px-2 py-2 text-sm text-ink underline"
-                  >
-                    {copy.seeAll}
-                    <Icon id="chevron-right" size={12} />
-                  </a>
-                </>
-              )}
-
-              {!loading && products.length === 0 && (
-                <span className="px-2 py-3 text-sm text-muted">
-                  {copy.empty.replace("{term}", term.trim())}
-                </span>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+      {overlay && createPortal(overlay, document.body)}
     </>
   );
 }
