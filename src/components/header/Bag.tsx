@@ -44,7 +44,10 @@ export default function Bag({ size = "md" }: { size?: "sm" | "md" }) {
   return (
     <label
       htmlFor={MINICART_DRAWER_ID}
-      aria-label="Open cart"
+      // The pill shows visible text ("Bag", plus the item count), so the
+      // accessible name has to match it (WCAG 2.5.3 Label in Name). Only the
+      // busy state, which swaps the text for a spinner, needs a label.
+      aria-label={busy ? "Bag" : undefined}
       className={clx(
         "frost tap-scale inline-flex h-10 cursor-pointer items-center justify-center gap-1.5 rounded-sm px-3 text-sm font-medium capitalize transition-colors duration-(--duration-fast) hover:bg-glass-strong",
       )}

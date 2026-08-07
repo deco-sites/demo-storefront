@@ -9,9 +9,12 @@ function Dot({
 } & React.JSX.IntrinsicElements["button"]) {
   return (
     <button
+      // Fallback name for bare dots; callers that render visible text inside
+      // the dot (e.g. the hero's product thumbnails) pass their own
+      // `aria-label` so the announced name matches what's on screen.
+      aria-label={`go to slider item ${index}`}
       {...props}
       data-dot={index}
-      aria-label={`go to slider item ${index}`}
       className={clx("focus:outline-none group", props.className?.toString())}
     />
   );
