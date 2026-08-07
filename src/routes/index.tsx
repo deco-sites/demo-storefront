@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { cmsHomeRouteConfig, DecoPageRenderer, loadCmsPage } from "@decocms/tanstack";
+import { cmsHomeRouteConfig, loadCmsPage } from "@decocms/tanstack";
 import { deferredSectionLoader } from "@decocms/tanstack/sdk/deferredSectionLoader";
+import PageSections from "../components/ui/PageSections";
 import { preloadSectionComponents } from "@decocms/blocks/cms";
 
 const isServer = typeof document === "undefined";
@@ -84,7 +85,7 @@ function HomePage() {
   }
 
   return (
-    <DecoPageRenderer
+    <PageSections
       sections={data.resolvedSections ?? []}
       deferredSections={data.deferredSections ?? []}
       deferredPromises={data.deferredPromises}
