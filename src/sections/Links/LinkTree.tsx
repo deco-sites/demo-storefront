@@ -135,6 +135,9 @@ function Links(props: Props) {
         {header?.description && <p style={{ color: header.textColor }}>{header?.description}</p>}
       </header>
 
+      {/* This section is meant to be the whole page (a standalone link tree), so it owns
+          its own `<main>`. Don't add it to a CMS page alongside other sections: `PageSections`
+          already wraps page content in a `<main>`, and this would nest one inside the other. */}
       <main className="w-full">
         <ul className="flex flex-col justify-center items-center gap-4">
           {links?.items?.map((link) => (

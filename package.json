@@ -18,6 +18,7 @@
     "sync:kv": "bun node_modules/@decocms/blocks-cli/scripts/sync-blocks-to-kv.ts",
     "types": "wrangler types",
     "typecheck": "tsc --noEmit",
+    "test": "tsx --test \"src/**/*.test.ts\"",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx}\"",
     "knip": "knip",

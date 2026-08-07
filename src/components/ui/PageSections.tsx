@@ -1,4 +1,5 @@
 import { DecoPageRenderer } from "@decocms/tanstack";
+import { mainBounds } from "./splitPageSections";
 
 /**
  * Wraps the CMS page content in a `<main>` landmark.
@@ -9,14 +10,9 @@ import { DecoPageRenderer } from "@decocms/tanstack";
  * top-level. Instead we split the list into the landmark sections that lead
  * and trail the page and render everything in between inside `<main>`, so no
  * page content is left outside a landmark region.
+ *
+ * The ordering logic lives in `./splitPageSections` and is unit tested there.
  */
-
-type Section = { key?: string; component?: string; index?: number };
-
-const LANDMARK_SECTION = /sections\/(Header|Footer|Theme)\//;
-
-const isLandmark = (s: Section) =>
-  LANDMARK_SECTION.test(s.component ?? "") || LANDMARK_SECTION.test(s.key ?? "");
 
 interface Props {
   sections: any[];
@@ -43,24 +39,6 @@ export default function PageSections({
     ...eager.map((s, i) => ({ s, pos: s?.index ?? i })),
     ...deferred.map((s, i) => ({ s, pos: s?.index ?? eager.length + i })),
   ];
-  const contentPositions = positioned.filter(({ s }) => !isLandmark(s)).map(({ pos }) => pos);
-
-  // No content sections (or no landmarks at all): nothing to split.
-  if (!contentPositions.length) {
-    return (
-      <DecoPageRenderer
-        sections={eager}
-        deferredSections={deferred}
-        deferredPromises={deferredPromises}
-        pagePath={pagePath}
-        pageUrl={pageUrl}
-        loadDeferredSectionFn={loadDeferredSectionFn}
-      />
-    );
-  }
-
-  const first = Math.min(...contentPositions);
-  const last = Math.max(...contentPositions);
 
   const pick = (from: number, to: number) => ({
     sections: eager.filter((s, i) => {
@@ -73,26 +51,30 @@ export default function PageSections({
     }),
   });
 
-  const before = pick(-Infinity, first - 1);
-  const main = pick(first, last);
-  const after = pick(last + 1, Infinity);
+  type Group = ReturnType<typeof pick>;
 
-  const render = (group: ReturnType<typeof pick>) => (
-    <DecoPageRenderer
-      sections={group.sections}
-      deferredSections={group.deferredSections}
-      deferredPromises={deferredPromises}
-      pagePath={pagePath}
-      pageUrl={pageUrl}
-      loadDeferredSectionFn={loadDeferredSectionFn}
-    />
-  );
+  const render = (group: Group) =>
+    group.sections.length || group.deferredSections.length ? (
+      <DecoPageRenderer
+        sections={group.sections}
+        deferredSections={group.deferredSections}
+        deferredPromises={deferredPromises}
+        pagePath={pagePath}
+        pageUrl={pageUrl}
+        loadDeferredSectionFn={loadDeferredSectionFn}
+      />
+    ) : null;
+
+  const bounds = mainBounds(positioned);
+
+  // No content sections: nothing to wrap.
+  if (!bounds) return render({ sections: eager, deferredSections: deferred });
 
   return (
     <>
-      {render(before)}
-      <main id="main-content">{render(main)}</main>
-      {render(after)}
+      {render(pick(-Infinity, bounds.first - 1))}
+      <main id="main-content">{render(pick(bounds.first, bounds.last))}</main>
+      {render(pick(bounds.last + 1, Infinity))}
     </>
   );
 }
