@@ -129,7 +129,65 @@ const withoutPoweredBy = <T extends FetchWorker>(worker: T): T => ({
   },
 });
 
+// ---------------------------------------------------------------------------
+// Cross-origin isolation headers — COEP + CORP.
+//
+// Without these the site has no cross-origin isolation, so a malicious page
+// can embed our resources (no-cors) and use side channels (Spectre) to read
+// them out of its own process.
+//
+//   Cross-Origin-Resource-Policy: same-site  (enforced)
+//     Blocks other sites from embedding our responses via no-cors requests
+//     (<img>, <script>, <link>, ...). CORP is ignored for navigations and for
+//     cors-mode fetches, so pages and the admin/CORS API keep working.
+//
+//   Cross-Origin-Embedder-Policy: credentialless  (report-only)
+//     Enforcing COEP requires *every* cross-origin subresource (Shopify CDN
+//     images, analytics, tag managers, embedded Shopify iframes) to opt in
+//     with CORP/CORS headers — anything that doesn't gets blocked outright.
+//     We ship it Report-Only first so violations surface in the reporting
+//     pipeline instead of breaking the storefront. Flip
+//     COEP_ENFORCE to true (making the header `Cross-Origin-Embedder-Policy`)
+//     once the report shows a clean run.
+//
+// Skipped for responses that can't be reconstructed (WebSocket upgrades) and
+// for responses that already carry the header, so an upstream/proxied value
+// wins over ours.
+// ---------------------------------------------------------------------------
+
+const COEP_ENFORCE = false;
+const COEP_HEADER = COEP_ENFORCE
+  ? "cross-origin-embedder-policy"
+  : "cross-origin-embedder-policy-report-only";
+
+const withCrossOriginIsolation = <T extends FetchWorker>(worker: T): T => ({
+  ...worker,
+  fetch: async (request: Request, env: never, ctx: never) => {
+    const response = await worker.fetch(request, env, ctx);
+
+    if ("webSocket" in response && response.webSocket) {
+      return response;
+    }
+
+    const isolated = new Response(response.body, response);
+
+    if (!isolated.headers.has("cross-origin-resource-policy")) {
+      isolated.headers.set("cross-origin-resource-policy", "same-site");
+    }
+    if (
+      !isolated.headers.has("cross-origin-embedder-policy") &&
+      !isolated.headers.has("cross-origin-embedder-policy-report-only")
+    ) {
+      isolated.headers.set(COEP_HEADER, "credentialless");
+    }
+
+    return isolated;
+  },
+});
+
 // instrumentWorker MUST be the outermost wrapper. It initialises the OTel
 // pipeline (metrics buffering, error log direct-POST) and reads
 // DECO_OTEL_METRICS_ENDPOINT + DECO_OTEL_LOGS_ENDPOINT from env at boot.
-export default instrumentWorker(withoutPoweredBy(abTestedWorker));
+export default instrumentWorker(
+  withCrossOriginIsolation(withoutPoweredBy(abTestedWorker)),
+);
