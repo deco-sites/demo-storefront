@@ -21,6 +21,43 @@ export const NAME = "q";
 
 const SUGGESTION_COUNT = 4;
 const DEBOUNCE_MS = 300;
+// Mirrors the selector in src/styles/app.css that locks background scroll.
+const SCROLL_LOCK_CLASS = "search-modal-open";
+
+/**
+ * Copy shown inside the modal. Grouped so the whole set is editable from the
+ * CMS alongside the searchbar placeholder.
+ */
+export interface SearchModalLabels {
+  /**
+   * @title Loading
+   * @default Buscando…
+   */
+  loading?: string;
+  /**
+   * @title Suggestions title
+   * @default Produtos sugeridos
+   */
+  suggestionsTitle?: string;
+  /**
+   * @title See all results
+   * @default Ver todos os resultados
+   */
+  seeAll?: string;
+  /**
+   * @title Empty state
+   * @description `{term}` is replaced with what the shopper typed
+   * @default Nenhum produto encontrado para “{term}”.
+   */
+  empty?: string;
+}
+
+export const DEFAULT_LABELS: Required<SearchModalLabels> = {
+  loading: "Buscando…",
+  suggestionsTitle: "Produtos sugeridos",
+  seeAll: "Ver todos os resultados",
+  empty: "Nenhum produto encontrado para “{term}”.",
+};
 
 export interface Props {
   /**
@@ -29,6 +66,8 @@ export interface Props {
    * @default O que você está procurando?
    */
   placeholder?: string;
+  /** @title Modal labels */
+  labels?: SearchModalLabels;
   variant?: "desktop" | "mobile";
 }
 
@@ -75,13 +114,16 @@ function SuggestionItem({ product, onNavigate }: { product: Product; onNavigate:
 
 export default function SearchModal({
   placeholder = "O que você está procurando?",
+  labels,
   variant = "desktop",
 }: Props) {
+  const copy = { ...DEFAULT_LABELS, ...labels };
   const [open, setOpen] = useState(false);
   const [term, setTerm] = useState("");
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   // Open with Cmd+K / Ctrl+K, close with Escape.
   useEffect(() => {
@@ -100,6 +142,51 @@ export default function SearchModal({
   // The input only exists once the modal is mounted, so focus after that.
   useEffect(() => {
     if (open) inputRef.current?.focus();
+  }, [open]);
+
+  // The overlay is a plain div, so the `dialog[open]` / `.drawer-toggle:checked`
+  // scroll-lock rule in app.css does not match it — mark the body instead (the
+  // rule matches `body.search-modal-open` too).
+  useEffect(() => {
+    if (!open) return;
+    document.body.classList.add(SCROLL_LOCK_CLASS);
+    return () => document.body.classList.remove(SCROLL_LOCK_CLASS);
+  }, [open]);
+
+  // Keep Tab inside the dialog while it is open, so focus does not walk into
+  // the header behind the overlay.
+  useEffect(() => {
+    if (!open) return;
+    const onTab = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+      const root = dialogRef.current;
+      if (!root) return;
+      const focusables = Array.from(
+        root.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((el) => el.offsetParent !== null);
+      if (focusables.length === 0) return;
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+
+      if (!active || !root.contains(active)) {
+        e.preventDefault();
+        first.focus();
+        return;
+      }
+      if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", onTab);
+    return () => document.removeEventListener("keydown", onTab);
   }, [open]);
 
   // Live suggestions — debounced, and stale responses are dropped.
@@ -139,8 +226,7 @@ export default function SearchModal({
     // `dispatch` exists at runtime (framework's DECO.events bootstrap) but the
     // ambient Window.DECO type only declares `subscribe`.
     const events = window.DECO?.events as unknown as
-      | { dispatch?: (event: unknown) => void }
-      | undefined;
+      { dispatch?: (event: unknown) => void } | undefined;
     events?.dispatch?.({ name: "search", params: { search_term: query } });
   };
 
@@ -167,7 +253,7 @@ export default function SearchModal({
       )}
 
       {open && (
-        <div className="fixed inset-0 z-[60] flex items-start justify-center">
+        <div className="fixed inset-0 z-50 flex items-start justify-center">
           <button
             type="button"
             aria-label="Fechar busca"
@@ -176,10 +262,11 @@ export default function SearchModal({
           />
 
           <div
+            ref={dialogRef}
             role="dialog"
             aria-modal="true"
             aria-label="Buscar"
-            className="relative mx-3 mt-[12vh] flex w-full max-w-2xl flex-col gap-4 rounded-sm bg-white p-4 shadow-xl"
+            className="relative mx-3 mt-24 flex w-full max-w-2xl flex-col gap-4 rounded-sm bg-white p-4 shadow-xl"
           >
             <form
               action={ACTION}
@@ -213,13 +300,13 @@ export default function SearchModal({
               className={clx("flex flex-col gap-2", !term.trim() && "hidden")}
             >
               {loading && products.length === 0 && (
-                <span className="px-2 py-3 text-sm text-muted">Buscando…</span>
+                <span className="px-2 py-3 text-sm text-muted">{copy.loading}</span>
               )}
 
               {products.length > 0 && (
                 <>
                   <span className="px-2 text-xs font-medium text-muted-soft">
-                    Produtos sugeridos
+                    {copy.suggestionsTitle}
                   </span>
                   <ul className="flex flex-col">
                     {products.map((product) => (
@@ -235,7 +322,7 @@ export default function SearchModal({
                     onClick={onSubmit}
                     className="flex items-center gap-1 px-2 py-2 text-sm text-ink underline"
                   >
-                    Ver todos os resultados
+                    {copy.seeAll}
                     <Icon id="chevron-right" size={12} />
                   </a>
                 </>
@@ -243,7 +330,7 @@ export default function SearchModal({
 
               {!loading && products.length === 0 && (
                 <span className="px-2 py-3 text-sm text-muted">
-                  Nenhum produto encontrado para “{term.trim()}”.
+                  {copy.empty.replace("{term}", term.trim())}
                 </span>
               )}
             </div>

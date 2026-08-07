@@ -63,7 +63,11 @@ const Desktop = ({ navItems, logo, shippingNote, searchbar }: Props) => (
           <Icon id="menu" size={18} />
         </label>
 
-        <SearchModal variant="desktop" placeholder={searchbar?.placeholder} />
+        <SearchModal
+          variant="desktop"
+          placeholder={searchbar?.placeholder}
+          labels={searchbar?.labels}
+        />
       </div>
 
       <HeaderNav
@@ -104,7 +108,11 @@ const Mobile = ({ logo, searchbar }: Props) => (
       )}
 
       <div className="flex items-center gap-1">
-        <SearchModal variant="mobile" placeholder={searchbar?.placeholder} />
+        <SearchModal
+          variant="mobile"
+          placeholder={searchbar?.placeholder}
+          labels={searchbar?.labels}
+        />
         <SignIn variant="mobile" />
         <Bag size="sm" />
       </div>
