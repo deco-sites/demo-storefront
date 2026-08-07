@@ -14,6 +14,7 @@ import { useOffer } from "@decocms/apps-commerce/sdk/useOffer";
 import { clx } from "~/sdk/clx";
 import { relative } from "~/sdk/url";
 import Icon from "../ui/Icon";
+import Image from "../ui/Image";
 import { invoke } from "../../runtime";
 
 // Where the form navigates on submit, and the querystring param it uses.
@@ -100,7 +101,7 @@ function SuggestionItem({ product, onNavigate }: { product: Product; onNavigate:
         className="flex items-center gap-3 rounded-sm px-2 py-2 transition-colors duration-(--duration-fast) hover:bg-ink/5"
       >
         {image?.url && (
-          <img
+          <Image
             src={image.url}
             alt={image.alternateName ?? title}
             width={48}
