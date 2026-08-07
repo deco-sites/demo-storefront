@@ -51,7 +51,8 @@ function Card({ label, headline, cta = "Shop Now", href, image, index = 0 }: Pro
 
       <span className="relative text-sm font-medium text-white">{label}</span>
 
-      <span className="relative text-xl font-semibold text-white sm:text-2xl">{headline}</span>
+      {/* h3: nested under the grid's h2 heading, keeping the outline h2 -> h3. */}
+      <h3 className="relative text-xl font-semibold text-white sm:text-2xl">{headline}</h3>
 
       <span className="relative text-sm font-medium text-white">{cta}</span>
     </Link>
