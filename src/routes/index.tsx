@@ -91,6 +91,7 @@ function HomePage() {
       deferredPromises={data.deferredPromises}
       pagePath={data.pagePath}
       pageUrl={data.pageUrl}
+      device={data.device}
       loadDeferredSectionFn={deferredSectionLoader}
     />
   );

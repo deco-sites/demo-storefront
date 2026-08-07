@@ -19,16 +19,16 @@ const NON_VISUAL_SECTION = /sections\/Seo\//;
 const matches = (re: RegExp, s: PositionedSection) =>
   re.test(s.component ?? "") || re.test(s.key ?? "");
 
-export type SectionKind = "header" | "footer" | "non-visual" | "content";
+type SectionKind = "header" | "footer" | "non-visual" | "content";
 
-export const sectionKind = (s: PositionedSection): SectionKind => {
+const sectionKind = (s: PositionedSection): SectionKind => {
   if (matches(HEADER_SECTION, s)) return "header";
   if (matches(FOOTER_SECTION, s)) return "footer";
   if (matches(NON_VISUAL_SECTION, s)) return "non-visual";
   return "content";
 };
 
-export interface MainBounds {
+interface MainBounds {
   /** First position (inclusive) that belongs inside `<main>`. */
   first: number;
   /** Last position (inclusive) that belongs inside `<main>`. */
@@ -62,5 +62,23 @@ export function mainBounds(positioned: { s: PositionedSection; pos: number }[]):
   const footersInSpan = footers.filter((pos) => pos > first && pos <= last);
   if (footersInSpan.length) last = Math.min(...footersInSpan) - 1;
 
-  return first > last ? null : { first, last };
+  if (first > last) return null;
+
+  // Known limitation: exactly one `<main>` per document is allowed, so a page
+  // with several content runs separated by Header/Footer sections (e.g.
+  // [Header, Content, Header, Content, Footer]) can only have one of them
+  // wrapped — the clamping above keeps the landmarks correct, but the content
+  // outside the chosen span stays outside `main`. That layout isn't produced by
+  // any page in this site; warn loudly if the CMS ever yields one.
+  const orphans = content.filter((pos) => pos < first || pos > last);
+  if (orphans.length) {
+    console.warn(
+      `[PageSections] ${orphans.length} content section(s) at position(s) ` +
+        `${orphans.join(", ")} fall outside <main> (${first}..${last}) because ` +
+        `a Header/Footer section splits the page content into multiple runs. ` +
+        `Reorder the page so all content sits between the Header and the Footer.`,
+    );
+  }
+
+  return { first, last };
 }

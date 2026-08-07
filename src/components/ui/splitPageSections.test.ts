@@ -89,3 +89,26 @@ test("matches on `key` when `component` is absent", () => {
   ];
   assert.deepEqual(mainBounds(sections), { first: 2, last: 2 });
 });
+
+test("documents the multiple-content-runs limitation: only one run gets wrapped", () => {
+  // Only one `<main>` per document is valid, so a page whose content is split
+  // by a second Header can't have both runs wrapped. The bounds stay landmark-
+  // safe (Header/Footer never inside main) and the dropped run is warned about.
+  const sections = page([
+    HEADER,
+    "site/sections/Content/Hero.tsx",
+    HEADER,
+    "site/sections/Content/Faq.tsx",
+    FOOTER,
+  ]);
+  const warnings: unknown[][] = [];
+  const original = console.warn;
+  console.warn = (...args: unknown[]) => warnings.push(args);
+  try {
+    assert.deepEqual(mainBounds(sections), { first: 3, last: 3 });
+  } finally {
+    console.warn = original;
+  }
+  assert.equal(warnings.length, 1);
+  assert.match(String(warnings[0][0]), /fall outside <main>/);
+});

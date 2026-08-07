@@ -1,4 +1,6 @@
 import { DecoPageRenderer } from "@decocms/tanstack";
+import type { DeferredSection, ResolvedSection } from "@decocms/blocks/cms";
+import type { Device } from "@decocms/blocks/sdk/useDevice";
 import { mainBounds } from "./splitPageSections";
 
 /**
@@ -14,13 +16,27 @@ import { mainBounds } from "./splitPageSections";
  * The ordering logic lives in `./splitPageSections` and is unit tested there.
  */
 
+type LoadDeferredSectionFn = (data: {
+  component: string;
+  rawProps?: Record<string, unknown>;
+  pagePath: string;
+  pageUrl?: string;
+  index?: number;
+}) => Promise<ResolvedSection | null>;
+
 interface Props {
-  sections: any[];
-  deferredSections?: any[];
-  deferredPromises?: Record<string, Promise<any>>;
+  sections: ResolvedSection[];
+  deferredSections?: DeferredSection[];
+  deferredPromises?: Record<string, Promise<ResolvedSection | null>>;
   pagePath?: string;
   pageUrl?: string;
-  loadDeferredSectionFn?: any;
+  /**
+   * Server-resolved device. Forwarded to every `DecoPageRenderer` — omitting it
+   * makes `useDevice()` re-resolve on the client and causes React #418
+   * hydration mismatches.
+   */
+  device?: Device;
+  loadDeferredSectionFn?: LoadDeferredSectionFn;
 }
 
 export default function PageSections({
@@ -29,6 +45,7 @@ export default function PageSections({
   deferredPromises,
   pagePath,
   pageUrl,
+  device,
   loadDeferredSectionFn,
 }: Props) {
   const eager = sections ?? [];
@@ -61,6 +78,7 @@ export default function PageSections({
         deferredPromises={deferredPromises}
         pagePath={pagePath}
         pageUrl={pageUrl}
+        device={device}
         loadDeferredSectionFn={loadDeferredSectionFn}
       />
     ) : null;
