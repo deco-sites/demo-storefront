@@ -5,8 +5,6 @@
  * Shopify checkout runs on Shopify's hosted checkout (or the store's domain)
  * and does not need a reverse proxy — all commerce calls go via the
  * Storefront API (GraphQL) from the server loaders.
- *
- * MANUAL REVIEW: Add site-specific CSP domains (analytics, CDN, tag managers).
  */
 import "./setup";
 import handler, { createServerEntry } from "@tanstack/react-start/server-entry";
@@ -25,14 +23,48 @@ import { withABTesting } from "@decocms/blocks/sdk/abTesting";
 
 const serverEntry = createServerEntry({ fetch: handler.fetch });
 
+// ---------------------------------------------------------------------------
+// Content Security Policy.
+//
+// The framework's `csp` option only ever emits
+// `Content-Security-Policy-Report-Only`, which browsers do not enforce. The
+// only enforcing policy the site shipped was the framework default, which
+// carries `frame-ancestors` and nothing else — there was no script/resource
+// policy at all. We build the full directive list here and hand it to
+// `securityHeaders` as the enforcing `Content-Security-Policy` header instead
+// (see `securityHeaders` below).
+//
+// Notes on the loose bits:
+//   - `'unsafe-inline'`/`'unsafe-eval'` in script-src are required by the
+//     TanStack Start hydration payload and the Shopify/deco inline snippets.
+//     Removing them needs a nonce plumbed through the SSR stream first.
+//   - `img-src`/`media-src` allow any https origin because banner, logo and
+//     product media URLs are authored in the CMS and can point anywhere.
+//   - `frame-ancestors` keeps the Studio preview iframe working. A custom
+//     `Content-Security-Policy` REPLACES the framework's default header rather
+//     than merging into it, so this list must stay a superset of
+//     `DECO_ADMIN_FRAME_ANCESTORS` in `@decocms/tanstack`
+//     (`src/sdk/workerEntry.ts`). If a framework bump adds an admin surface it
+//     will NOT propagate here — add it by hand, or the Studio preview goes
+//     blank on that surface.
+// ---------------------------------------------------------------------------
 const CSP_DIRECTIVES = [
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' cdn.shopify.com *.shopify.com",
-  "img-src 'self' data: blob: cdn.shopify.com *.shopify.com *.myshopify.com",
-  "connect-src 'self' *.myshopify.com cdn.shopify.com",
-  "frame-src 'self' *.shopify.com",
-  "style-src 'self' 'unsafe-inline' fonts.googleapis.com",
-  "font-src 'self' fonts.gstatic.com data:",
-  // TODO: Add site-specific domains (analytics, CDN, tag managers)
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.shopify.com https://*.shopify.com https://*.decocms.com",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.fontshare.com",
+  "font-src 'self' data: https://fonts.gstatic.com https://api.fontshare.com https://cdn.fontshare.com",
+  "img-src 'self' data: blob: https:",
+  "media-src 'self' data: blob: https:",
+  "connect-src 'self' https://cdn.shopify.com https://*.shopify.com https://*.myshopify.com https://graph.instagram.com https://*.decocms.com https://otel-ingest.infra.deco.cx",
+  "frame-src 'self' https://*.shopify.com",
+  // Superset of DECO_ADMIN_FRAME_ANCESTORS — see note above.
+  "frame-ancestors 'self' https://*.decocms.com https://*.deco.studio",
+  "worker-src 'self' blob:",
+  "manifest-src 'self'",
+  "form-action 'self' https://*.shopify.com https://*.myshopify.com",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "upgrade-insecure-requests",
 ];
 
 const decoWorker = createDecoWorkerEntry(serverEntry, {
@@ -52,7 +84,13 @@ const decoWorker = createDecoWorkerEntry(serverEntry, {
     corsHeaders,
   },
 
-  csp: CSP_DIRECTIVES,
+  // Report-only duplicate would be redundant — the enforcing header below is
+  // the policy we actually ship.
+  csp: false,
+
+  securityHeaders: {
+    "Content-Security-Policy": CSP_DIRECTIVES.join("; "),
+  },
 
   buildSegment: (request) => {
     const cookies = getCookies(request.headers);
