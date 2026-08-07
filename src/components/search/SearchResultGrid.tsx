@@ -8,9 +8,20 @@ export interface Props {
   offset?: number;
   /** Router preload strategy passed to each card's product link. */
   prefetch?: "intent" | false;
+  /**
+   * Heading level of each card title. Defaults to 2 because the result set is
+   * the first content under the page h1 on search/category pages.
+   * @default 2
+   */
+  headingLevel?: 2 | 3 | 4 | 5 | 6;
 }
 
-export default function SearchResultGrid({ products, offset = 0, prefetch = "intent" }: Props) {
+export default function SearchResultGrid({
+  products,
+  offset = 0,
+  prefetch = "intent",
+  headingLevel = 2,
+}: Props) {
   return (
     <div
       data-product-list
@@ -27,6 +38,7 @@ export default function SearchResultGrid({ products, offset = 0, prefetch = "int
           preload={index === 0}
           prefetch={prefetch}
           index={offset + index}
+          headingLevel={headingLevel}
         />
       ))}
     </div>

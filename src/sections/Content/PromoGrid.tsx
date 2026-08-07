@@ -29,7 +29,16 @@ export interface Props {
   tabs: PromoTab[];
 }
 
-function Card({ label, headline, cta = "Shop Now", href, image, index = 0 }: PromoCard & { index?: number }) {
+function Card({
+  label,
+  headline,
+  cta = "Shop Now",
+  href,
+  image,
+  index = 0,
+  headingLevel = 3,
+}: PromoCard & { index?: number; headingLevel?: 2 | 3 }) {
+  const Heading = headingLevel === 2 ? "h2" : "h3";
   const ref = useReveal<HTMLAnchorElement>();
   return (
     <Link
@@ -51,8 +60,8 @@ function Card({ label, headline, cta = "Shop Now", href, image, index = 0 }: Pro
 
       <span className="relative text-sm font-medium text-white">{label}</span>
 
-      {/* h3: nested under the grid's h2 heading, keeping the outline h2 -> h3. */}
-      <h3 className="relative text-xl font-semibold text-white sm:text-2xl">{headline}</h3>
+      {/* h3 when the section renders its own h2; h2 when it has no title, so the cards are never orphaned. */}
+      <Heading className="relative text-xl font-semibold text-white sm:text-2xl">{headline}</Heading>
 
       <span className="relative text-sm font-medium text-white">{cta}</span>
     </Link>
@@ -93,7 +102,7 @@ export default function PromoGrid({ title, tabs = [] }: Props) {
 
       <div className="flex w-full flex-col gap-3 sm:flex-row">
         {active.cards.map((card, index) => (
-          <Card key={card.href} {...card} index={index} />
+          <Card key={card.href} {...card} index={index} headingLevel={title ? 3 : 2} />
         ))}
       </div>
     </div>

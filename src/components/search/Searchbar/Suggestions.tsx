@@ -77,7 +77,13 @@ function Suggestions({ suggestion }: ComponentProps<typeof loader, typeof action
                 index={index}
                 className="carousel-item first:ml-4 last:mr-4 min-w-50 max-w-50"
               >
-                <ProductCard product={product} index={index} itemListName="Suggeestions" />
+                {/* h4: the "Produtos sugeridos" label above is an aria-level 3 heading */}
+                <ProductCard
+                  product={product}
+                  index={index}
+                  itemListName="Suggeestions"
+                  headingLevel={4}
+                />
               </Slider.Item>
             ))}
           </Slider>

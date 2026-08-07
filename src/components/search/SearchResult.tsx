@@ -102,6 +102,13 @@ function Result({
         {breadcrumb && <BreadcrumbJsonLd breadcrumb={breadcrumb} />}
         <Breadcrumb itemListElement={breadcrumb?.itemListElement} />
 
+        {/*
+          The result set needs an owning h1: these pages render no visible page
+          title, so without it the card headings would be the first (and
+          out-of-order) headings in the document.
+        */}
+        <h1 className="sr-only">{breadcrumb?.itemListElement?.at(-1)?.name ?? "Products"}</h1>
+
         <SearchFilterDrawer id={filterDrawerId} filters={filters} baseUrl={href} />
 
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-[220px_1fr]">

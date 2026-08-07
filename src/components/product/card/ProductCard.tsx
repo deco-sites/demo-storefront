@@ -33,6 +33,12 @@ export interface Props {
   className?: string;
   /** Skip the scroll-reveal animation — for cards inside a horizontal carousel */
   disableReveal?: boolean;
+  /**
+   * Heading level for the card title, so each list declares the level that fits
+   * its own page context (see ProductCardTitle).
+   * @default 3
+   */
+  headingLevel?: 2 | 3 | 4 | 5 | 6;
 }
 
 const ASPECT_RATIO = "372 / 498";
@@ -46,6 +52,7 @@ export default function ProductCard({
   index,
   className,
   disableReveal,
+  headingLevel,
 }: Props) {
   const { url, image: images, offers, isVariantOf } = product;
   const hasVariant = isVariantOf?.hasVariant ?? [];
@@ -129,7 +136,7 @@ export default function ProductCard({
 
       <div className="frost flex flex-col rounded-sm p-3 transition-colors duration-(--duration-base) sm:p-4">
         <Link to={selectedHref} preload={prefetch} className="min-w-0">
-          <ProductCardTitle title={title} />
+          <ProductCardTitle title={title} headingLevel={headingLevel} />
         </Link>
 
         <div className="flex items-center justify-between gap-2">
