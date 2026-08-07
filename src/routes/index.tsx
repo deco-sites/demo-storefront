@@ -76,7 +76,7 @@ function HomePage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">Storefront-tanstack</h1>
+          <h1 className="text-4xl font-bold mb-4">Boas-vindas às capivaras da demo! 🌿</h1>
           <p className="text-sm text-base-content/40 mt-2">No CMS page found for /</p>
         </div>
       </div>
