@@ -12,7 +12,10 @@
   --color-base-200: #ffffff;
   --color-base-300: #e5e5e5;
   --color-info: #2e72d2;
-  --color-success: #008060;
+  /* Darkened from #008060, which only reached 4.33:1 on the site's gray/glass
+     surfaces (#f0f0f0) and so missed the WCAG AA 4.5:1 threshold for body text.
+     #006b50 is 6.52:1 on white and 5.72:1 on #f0f0f0. */
+  --color-success: #006b50;
   --color-warning: #b45309;
   --color-error: #c0362c;
 }
