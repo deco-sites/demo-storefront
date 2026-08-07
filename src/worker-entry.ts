@@ -25,14 +25,40 @@ import { withABTesting } from "@decocms/blocks/sdk/abTesting";
 
 const serverEntry = createServerEntry({ fetch: handler.fetch });
 
+// ---------------------------------------------------------------------------
+// Content Security Policy.
+//
+// The framework's `csp` option only ever emits
+// `Content-Security-Policy-Report-Only`, which browsers do not enforce — the
+// site was effectively shipping without a policy. We build the directive list
+// here and hand it to `securityHeaders` as the enforcing
+// `Content-Security-Policy` header instead (see `securityHeaders` below), so
+// injected scripts are actually blocked.
+//
+// Notes on the loose bits:
+//   - `'unsafe-inline'`/`'unsafe-eval'` in script-src are required by the
+//     TanStack Start hydration payload and the Shopify/deco inline snippets.
+//     Removing them needs a nonce plumbed through the SSR stream first.
+//   - `img-src`/`media-src` allow any https origin because banner, logo and
+//     product media URLs are authored in the CMS and can point anywhere.
+//   - `frame-ancestors` keeps the decocms Studio preview iframe working.
+// ---------------------------------------------------------------------------
 const CSP_DIRECTIVES = [
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' cdn.shopify.com *.shopify.com",
-  "img-src 'self' data: blob: cdn.shopify.com *.shopify.com *.myshopify.com",
-  "connect-src 'self' *.myshopify.com cdn.shopify.com",
-  "frame-src 'self' *.shopify.com",
-  "style-src 'self' 'unsafe-inline' fonts.googleapis.com",
-  "font-src 'self' fonts.gstatic.com data:",
-  // TODO: Add site-specific domains (analytics, CDN, tag managers)
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.shopify.com https://*.shopify.com https://*.decocms.com",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.fontshare.com",
+  "font-src 'self' data: https://fonts.gstatic.com https://api.fontshare.com https://cdn.fontshare.com",
+  "img-src 'self' data: blob: https:",
+  "media-src 'self' data: blob: https:",
+  "connect-src 'self' https://cdn.shopify.com https://*.shopify.com https://*.myshopify.com https://graph.instagram.com https://*.decocms.com https://otel-ingest.infra.deco.cx",
+  "frame-src 'self' https://*.shopify.com",
+  "frame-ancestors 'self' https://*.decocms.com",
+  "worker-src 'self' blob:",
+  "manifest-src 'self'",
+  "form-action 'self' https://*.shopify.com https://*.myshopify.com",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "upgrade-insecure-requests",
 ];
 
 const decoWorker = createDecoWorkerEntry(serverEntry, {
@@ -52,7 +78,13 @@ const decoWorker = createDecoWorkerEntry(serverEntry, {
     corsHeaders,
   },
 
-  csp: CSP_DIRECTIVES,
+  // Report-only duplicate would be redundant — the enforcing header below is
+  // the policy we actually ship.
+  csp: false,
+
+  securityHeaders: {
+    "Content-Security-Policy": CSP_DIRECTIVES.join("; "),
+  },
 
   buildSegment: (request) => {
     const cookies = getCookies(request.headers);
