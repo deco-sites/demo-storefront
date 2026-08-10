@@ -11,7 +11,10 @@ function Dot({
     <button
       {...props}
       data-dot={index}
-      aria-label={`go to slider item ${index}`}
+      // Callers that render visible text inside the dot (e.g. the Hero
+      // thumbnail nav) pass their own label so the announced name matches
+      // what's on screen; bare dots keep the generic fallback.
+      aria-label={props["aria-label"] ?? `go to slider item ${index}`}
       className={clx("focus:outline-none group", props.className?.toString())}
     />
   );

@@ -96,7 +96,7 @@ const Mobile = ({ logo, searchbar }: Props) => (
       </label>
 
       {logo && (
-        <a href="/" aria-label="Store logo" className="flex items-center">
+        <a href="/" aria-label="Home" className="flex items-center">
           <img
             src={logo.src}
             alt={logo.alt}

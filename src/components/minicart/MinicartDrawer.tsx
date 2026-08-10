@@ -19,7 +19,7 @@ export default function MinicartDrawer() {
       />
       <aside
         className="fixed top-0 right-0 bottom-0 z-50 w-full max-w-md translate-x-full transition-transform duration-200 peer-checked/minicart:translate-x-0 bg-base-100 shadow-xl"
-        aria-label="Cart"
+        aria-label="Your bag"
       >
         <Minicart />
       </aside>
