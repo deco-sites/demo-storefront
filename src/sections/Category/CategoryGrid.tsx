@@ -38,7 +38,7 @@ function Card({
     >
       <Image
         src={image}
-        alt={label}
+        alt={label ?? ""}
         width={340}
         height={453}
         className="absolute inset-0 size-full object-cover transition-transform duration-(--duration-slow) ease-(--ease-out-soft) group-hover:scale-105"

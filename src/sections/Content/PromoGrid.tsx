@@ -41,7 +41,7 @@ function Card({ label, headline, cta = "Shop Now", href, image, index = 0 }: Pro
     >
       <Image
         src={image}
-        alt={headline}
+        alt={headline ?? ""}
         width={640}
         height={640}
         className="absolute inset-0 size-full object-cover transition-transform duration-(--duration-slow) ease-(--ease-out-soft) group-hover:scale-105"

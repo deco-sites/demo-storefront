@@ -34,7 +34,7 @@ function Banner({ title, description, priceLabel, price, images, cta, visibility
             <Source media="(min-width: 640px)" src={images.desktop} width={1488} height={461} />
             <img
               src={images.desktop}
-              alt={title}
+              alt={title ?? ""}
               className="aspect-[686/480] w-full object-cover sm:aspect-[1488/461]"
             />
           </Picture>

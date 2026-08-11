@@ -119,7 +119,7 @@ function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
           // @ts-expect-error: fetchpriority is a valid HTML attribute not yet typed in preact
           fetchpriority={lcp ? "high" : "auto"}
           src={desktop}
-          alt={alt}
+          alt={alt ?? ""}
         />
       </Picture>
     </a>

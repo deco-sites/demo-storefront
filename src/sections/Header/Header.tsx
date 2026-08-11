@@ -99,7 +99,7 @@ const Mobile = ({ logo, searchbar }: Props) => (
         <a href="/" aria-label="Home" className="flex items-center">
           <img
             src={logo.src}
-            alt={logo.alt}
+            alt={logo.alt ?? ""}
             width={logo.width ? Math.min(logo.width, 88) : 88}
             height={logo.height ?? 20}
             className="h-5 w-auto object-contain"

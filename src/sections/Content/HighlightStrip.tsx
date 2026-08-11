@@ -31,7 +31,7 @@ function Card({ image, href, eyebrow, label, index = 0 }: HighlightItem & { inde
       <div className="relative size-[102px] shrink-0 overflow-hidden rounded-xs">
         <Image
           src={image}
-          alt={label}
+          alt={label ?? ""}
           width={102}
           height={102}
           className="absolute inset-0 size-full object-cover"
