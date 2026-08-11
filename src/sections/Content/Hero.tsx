@@ -73,7 +73,7 @@ function CategoryTile({
     >
       <Image
         src={image}
-        alt={label ?? ""}
+        alt={label}
         width={496}
         height={498}
         className="absolute inset-0 size-full object-cover transition-transform duration-(--duration-slow) ease-(--ease-out-soft) group-hover:scale-105"

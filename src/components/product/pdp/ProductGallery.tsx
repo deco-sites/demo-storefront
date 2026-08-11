@@ -29,6 +29,8 @@ export interface GalleryConfig {
 export interface Props {
   images: ImageObject[];
   config?: GalleryConfig;
+  /** Nome do produto, usado como alt quando a imagem nao tem alternateName */
+  productName?: string;
 }
 
 const DEFAULT_WIDTH = 506;
@@ -39,7 +41,7 @@ const DEFAULT_HEIGHT = 825;
  * large images side by side (scroll-snap handles any image count); mobile
  * shows one full-width image per swipe.
  */
-export default function ProductGallery({ images, config }: Props) {
+export default function ProductGallery({ images, config, productName }: Props) {
   const id = useId();
   const zoomId = `${id}-zoom`;
 
@@ -64,7 +66,7 @@ export default function ProductGallery({ images, config }: Props) {
                 sizes="(max-width: 640px) 100vw, 506px"
                 style={{ aspectRatio }}
                 src={img.url!}
-                alt={img.alternateName ?? ""}
+                alt={img.alternateName ?? productName ?? ""}
                 width={DEFAULT_WIDTH}
                 height={DEFAULT_HEIGHT}
                 preload={preloadFirstImage && index === 0}
@@ -129,6 +131,7 @@ export default function ProductGallery({ images, config }: Props) {
         <ProductImageZoom
           id={zoomId}
           images={images}
+          productName={productName}
           width={700}
           height={Math.trunc((700 * DEFAULT_HEIGHT) / DEFAULT_WIDTH)}
         />

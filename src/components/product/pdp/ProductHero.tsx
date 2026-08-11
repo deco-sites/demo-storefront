@@ -91,7 +91,11 @@ export default function ProductHero({ page, galleryConfig, variantSelectorConfig
         </div>
 
         <div className="order-1 min-h-0 w-full flex-1 sm:order-2 sm:h-full">
-          <ProductGallery images={images} config={galleryConfig} />
+          <ProductGallery
+            images={images}
+            config={galleryConfig}
+            productName={isVariantOf?.name ?? product.name}
+          />
         </div>
       </div>
 
