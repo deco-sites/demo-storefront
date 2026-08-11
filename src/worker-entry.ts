@@ -122,7 +122,52 @@ const abTestedWorker = withABTesting(decoWorker, {
 });
 
 // ---------------------------------------------------------------------------
-// Strip `x-powered-by` from every response.
+// Cross-Origin-Resource-Policy (CORP).
+//
+// CORP tells the browser which origins may embed a response as a no-cors
+// subresource. Without it, any site can pull our documents/assets into its own
+// process and use a Spectre-style side channel to read them. Default here is
+// `same-site`, which is the strictest value compatible with serving the
+// storefront from apex + `www` + preview subdomains.
+//
+// Resources that genuinely need to be readable from other origins are opted
+// into `cross-origin`:
+//   - static public assets (favicons, webmanifest, sprite sheet, robots) —
+//     these are fetched by the deco CMS admin (different origin) when it
+//     renders the site preview, and by browsers/crawlers with an opaque origin;
+//   - build output under /_build/ and /assets/;
+//   - /image/* (deco image proxy output), which is referenced from the CMS
+//     admin previews as well.
+//
+// COEP (`require-corp`) is deliberately NOT set: it would require every
+// third-party subresource (Shopify CDN assets/frames, fontshare webfonts,
+// Instagram images) to send CORP or CORS headers of its own, and those are
+// outside our control — enabling it would break the storefront. CORP on our
+// own responses is the half of the pair we can ship safely.
+// ---------------------------------------------------------------------------
+const CORP_SAME_SITE = "same-site";
+const CORP_CROSS_ORIGIN = "cross-origin";
+
+const CROSS_ORIGIN_PREFIXES = ["/_build/", "/assets/", "/image/", "/live/invoke/"];
+const CROSS_ORIGIN_PATHS = new Set([
+  "/favicon.ico",
+  "/favicon-16x16.png",
+  "/favicon-32x32.png",
+  "/site.webmanifest",
+  "/browserconfig.xml",
+  "/sprites.svg",
+  "/robots.txt",
+  "/sw.js",
+]);
+
+const corpValueFor = (pathname: string): string =>
+  CROSS_ORIGIN_PATHS.has(pathname) ||
+    CROSS_ORIGIN_PREFIXES.some((prefix) => pathname.startsWith(prefix))
+    ? CORP_CROSS_ORIGIN
+    : CORP_SAME_SITE;
+
+// ---------------------------------------------------------------------------
+// Strip `x-powered-by` from every response, and stamp CORP.
 //
 // The framework stamps the exact platform version (e.g. `deco@7.20.7`) on
 // outgoing responses, which hands an attacker a precise version to match
@@ -136,26 +181,34 @@ interface FetchWorker {
   fetch(request: Request, env: never, ctx: never): Response | Promise<Response>;
 }
 
-const withoutPoweredBy = <T extends FetchWorker>(worker: T): T => ({
+const withSecurityHeaders = <T extends FetchWorker>(worker: T): T => ({
   ...worker,
   fetch: async (request: Request, env: never, ctx: never) => {
     const response = await worker.fetch(request, env, ctx);
 
-    // WebSocket upgrades and bodyless responses can't be reconstructed.
-    if (
-      ("webSocket" in response && response.webSocket) ||
-      !response.headers.has("x-powered-by")
-    ) {
+    // WebSocket upgrades can't be reconstructed.
+    if ("webSocket" in response && response.webSocket) {
       return response;
     }
 
-    const stripped = new Response(response.body, response);
-    stripped.headers.delete("x-powered-by");
-    return stripped;
+    const needsCorp = !response.headers.has("cross-origin-resource-policy");
+    if (!needsCorp && !response.headers.has("x-powered-by")) {
+      return response;
+    }
+
+    const patched = new Response(response.body, response);
+    patched.headers.delete("x-powered-by");
+    if (needsCorp) {
+      patched.headers.set(
+        "Cross-Origin-Resource-Policy",
+        corpValueFor(new URL(request.url).pathname),
+      );
+    }
+    return patched;
   },
 });
 
 // instrumentWorker MUST be the outermost wrapper. It initialises the OTel
 // pipeline (metrics buffering, error log direct-POST) and reads
 // DECO_OTEL_METRICS_ENDPOINT + DECO_OTEL_LOGS_ENDPOINT from env at boot.
-export default instrumentWorker(withoutPoweredBy(abTestedWorker));
+export default instrumentWorker(withSecurityHeaders(abTestedWorker));
