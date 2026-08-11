@@ -52,7 +52,8 @@
   /*
    * 78% (not 60%) so the composited color clears WCAG AA 4.5:1 for normal text:
    * over white it lands on #6a6a6a (5.41:1) and over the `frost` surface it is
-   * still 5.16:1. At 60% it composited to #8c8c8c — 3.36:1, a fail — and this
+   * still ~4.8:1 (frost composites to ~#f6f6f6 over white, so this lands on
+   * ~#686868). At 60% it composited to #8c8c8c — 3.36:1, a fail — and this
    * token carries small text (search placeholder, the 10px shipping notice).
    */
   --color-muted-soft: rgb(64 64 64 / 78%);
