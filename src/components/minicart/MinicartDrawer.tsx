@@ -4,11 +4,14 @@ import Minicart from "./Minicart";
 export default function MinicartDrawer() {
   return (
     <>
+      {/* CSS-only toggle: the Bag button and the "Close cart" label are the real
+          controls, so keep this out of both the a11y tree and the tab order. */}
       <input
         type="checkbox"
         id={MINICART_DRAWER_ID}
         className="peer/minicart sr-only"
-        aria-label="Cart"
+        aria-hidden="true"
+        tabIndex={-1}
       />
       {/* Click-outside overlay: pointer-only. It lives outside every landmark,
           so expose it to nobody — the drawer has its own "Close cart" button. */}
