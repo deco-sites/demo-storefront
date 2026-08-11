@@ -95,9 +95,9 @@ const Mobile = ({ logo, searchbar }: Props) => (
         <Icon id="menu" size={18} />
       </label>
 
+      {/* Name starts with the logo's visible wording (its alt text) so it
+          isn't announced as just "Home" — WCAG 2.5.3. */}
       {logo && (
-        {/* Name starts with the logo's visible wording (its alt text) so it
-            isn't announced as just "Home" — WCAG 2.5.3. */}
         <a href="/" aria-label={`${logo.alt} – Home`} className="flex items-center">
           <img
             src={logo.src}
