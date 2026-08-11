@@ -81,18 +81,27 @@ const decoWorker = createDecoWorkerEntry(serverEntry, {
 
     // Cross-origin isolation (Spectre hardening).
     //
-    // COEP `require-corp` makes the document refuse to embed cross-origin
-    // subresources that don't opt in via CORS or `Cross-Origin-Resource-Policy`.
-    // Cross-origin assets loaded by this storefront (cdn.shopify.com,
-    // decoims.com, api/cdn.fontshare.com, *.fbcdn.net) must therefore be served
-    // with CORS or CORP headers — if a third party ever drops those, downgrade
-    // this to `credentialless`, which keeps the isolation guarantee while
-    // loading no-CORS subresources without credentials.
+    // `credentialless` instead of `require-corp`: both give the same isolation
+    // semantics, but `require-corp` drops every cross-origin **no-cors**
+    // subresource whose origin doesn't send `Cross-Origin-Resource-Policy`
+    // (`Access-Control-Allow-Origin: *` does not satisfy COEP). The origins this
+    // storefront loads — api/cdn.fontshare.com (Switzer webfont), cdn.shopify.com
+    // (product imagery), decoims.com, *.fbcdn.net — send ACAO `*` but no CORP,
+    // and nothing here requests them with `crossorigin`, so `require-corp` would
+    // break typography and product images site-wide. `credentialless` fetches
+    // those subresources without credentials instead of blocking them.
     //
-    // CORP `same-site` prevents other sites from embedding *our* responses as
-    // subresources (the receiving half of the same protection).
-    "Cross-Origin-Embedder-Policy": "require-corp",
-    "Cross-Origin-Resource-Policy": "same-site",
+    // No `Cross-Origin-Resource-Policy` header is set: CORP is enforced on
+    // nested navigations too, so emitting it on HTML documents would block the
+    // deco CMS admin preview iframe — the same reason `frame-ancestors` is left
+    // out of the CSP above.
+    //
+    // Note the document only becomes fully `crossOriginIsolated` once
+    // `Cross-Origin-Opener-Policy: same-origin` is also set, which we
+    // deliberately don't do (it would break the admin preview popup/iframe
+    // flow). COEP alone is still a meaningful narrowing of what this document
+    // will embed.
+    "Cross-Origin-Embedder-Policy": "credentialless",
   },
 
   buildSegment: (request) => {
