@@ -96,7 +96,9 @@ const Mobile = ({ logo, searchbar }: Props) => (
       </label>
 
       {logo && (
-        <a href="/" aria-label="Home" className="flex items-center">
+        {/* Name starts with the logo's visible wording (its alt text) so it
+            isn't announced as just "Home" — WCAG 2.5.3. */}
+        <a href="/" aria-label={`${logo.alt} – Home`} className="flex items-center">
           <img
             src={logo.src}
             alt={logo.alt}
@@ -144,6 +146,7 @@ function Header({
 
       <Drawer
         id={SIDEMENU_DRAWER_ID}
+        label="Menu"
         aside={
           <Drawer.Aside title="Menu" drawer={SIDEMENU_DRAWER_ID}>
             {loading === "lazy" ? (
