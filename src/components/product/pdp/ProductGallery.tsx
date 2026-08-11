@@ -64,7 +64,7 @@ export default function ProductGallery({ images, config }: Props) {
                 sizes="(max-width: 640px) 100vw, 506px"
                 style={{ aspectRatio }}
                 src={img.url!}
-                alt={img.alternateName}
+                alt={img.alternateName ?? ""}
                 width={DEFAULT_WIDTH}
                 height={DEFAULT_HEIGHT}
                 preload={preloadFirstImage && index === 0}

@@ -111,7 +111,7 @@ function Footer({
             {social.map(({ image, href, alt }) => (
               <li key={href}>
                 <a href={href}>
-                  <Image src={image} alt={alt} loading="lazy" width={20} height={20} />
+                  <Image src={image} alt={alt ?? ""} loading="lazy" width={20} height={20} />
                 </a>
               </li>
             ))}
@@ -119,7 +119,7 @@ function Footer({
           <ul className="flex flex-wrap gap-2">
             {paymentMethods.map(({ image, alt }) => (
               <li key={alt} className="frost flex h-8 w-10 items-center justify-center rounded-xs">
-                <Image src={image} alt={alt} width={20} height={20} loading="lazy" />
+                <Image src={image} alt={alt ?? ""} width={20} height={20} loading="lazy" />
               </li>
             ))}
           </ul>

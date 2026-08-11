@@ -44,7 +44,7 @@ export default function ProductCardImage({
     >
       <Image
         src={frontUrl}
-        alt={frontAlt}
+        alt={frontAlt ?? ""}
         width={width}
         height={height}
         style={{ aspectRatio }}
@@ -56,7 +56,7 @@ export default function ProductCardImage({
       />
       <Image
         src={backUrl ?? frontUrl}
-        alt={backAlt ?? frontAlt}
+        alt={backAlt ?? frontAlt ?? ""}
         width={width}
         height={height}
         style={{ aspectRatio }}

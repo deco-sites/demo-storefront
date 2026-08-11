@@ -30,7 +30,7 @@ function ProductImageZoom({ images, width, height, id = useId() }: Props) {
               <Image
                 style={{ aspectRatio: `${width} / ${height}` }}
                 src={image.url!}
-                alt={image.alternateName}
+                alt={image.alternateName ?? ""}
                 width={width}
                 height={height}
                 className="h-full w-auto rounded-sm"
