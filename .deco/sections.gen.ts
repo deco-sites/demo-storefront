@@ -18,10 +18,10 @@ import { LoadingFallback as _fb0 } from "../src/sections/Category/CategoryBanner
 import { LoadingFallback as _fb1 } from "../src/sections/Category/CategoryGrid";
 import { LoadingFallback as _fb2 } from "../src/sections/Content/HighlightStrip";
 import { LoadingFallback as _fb3 } from "../src/sections/Content/PromoGrid";
-import { LoadingFallback as _fb4 } from "../src/sections/Images/Banner";
-import { LoadingFallback as _fb5 } from "../src/sections/Images/Carousel";
-import { LoadingFallback as _fb6 } from "../src/sections/Images/ImageGallery";
-import { LoadingFallback as _fb7 } from "../src/sections/Images/ShoppableBanner";
+import { LoadingFallback as _fb4 } from "../src/sections/Images/ImageGallery";
+import { LoadingFallback as _fb5 } from "../src/sections/Images/ShoppableBanner";
+import { LoadingFallback as _fb6 } from "../src/sections/Images/Banner";
+import { LoadingFallback as _fb7 } from "../src/sections/Images/Carousel";
 import { LoadingFallback as _fb8 } from "../src/sections/Links/LinkTree";
 import { LoadingFallback as _fb9 } from "../src/sections/Miscellaneous/CampaignTimer";
 import { LoadingFallback as _fb10 } from "../src/sections/Miscellaneous/CookieConsent";
@@ -52,10 +52,10 @@ export const sectionMeta: Record<string, SectionMetaEntry> = {
   "site/sections/Content/PromoGrid.tsx": { hasLoadingFallback: true },
   "site/sections/Footer/Footer.tsx": { eager: true, sync: true, layout: true, hasLoadingFallback: true },
   "site/sections/Header/Header.tsx": { eager: true, sync: true, layout: true, hasLoadingFallback: true },
-  "site/sections/Images/Banner.tsx": { hasLoadingFallback: true },
-  "site/sections/Images/Carousel.tsx": { cache: "listing", hasLoadingFallback: true },
   "site/sections/Images/ImageGallery.tsx": { hasLoadingFallback: true },
   "site/sections/Images/ShoppableBanner.tsx": { hasLoadingFallback: true },
+  "site/sections/Images/Banner.tsx": { hasLoadingFallback: true },
+  "site/sections/Images/Carousel.tsx": { cache: "listing", hasLoadingFallback: true },
   "site/sections/Links/LinkTree.tsx": { hasLoadingFallback: true },
   "site/sections/Miscellaneous/CampaignTimer.tsx": { hasLoadingFallback: true },
   "site/sections/Miscellaneous/CookieConsent.tsx": { hasLoadingFallback: true },
@@ -84,10 +84,10 @@ export const loadingFallbacks: Record<string, React.ComponentType<any>> = {
   "site/sections/Content/PromoGrid.tsx": _fb3,
   "site/sections/Footer/Footer.tsx": _sync0.LoadingFallback,
   "site/sections/Header/Header.tsx": _sync1.LoadingFallback,
-  "site/sections/Images/Banner.tsx": _fb4,
-  "site/sections/Images/Carousel.tsx": _fb5,
-  "site/sections/Images/ImageGallery.tsx": _fb6,
-  "site/sections/Images/ShoppableBanner.tsx": _fb7,
+  "site/sections/Images/ImageGallery.tsx": _fb4,
+  "site/sections/Images/ShoppableBanner.tsx": _fb5,
+  "site/sections/Images/Banner.tsx": _fb6,
+  "site/sections/Images/Carousel.tsx": _fb7,
   "site/sections/Links/LinkTree.tsx": _fb8,
   "site/sections/Miscellaneous/CampaignTimer.tsx": _fb9,
   "site/sections/Miscellaneous/CookieConsent.tsx": _fb10,
