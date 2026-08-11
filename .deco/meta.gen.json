@@ -38,12 +38,12 @@
           "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Db250ZW50L0ludHJvLnRzeA==",
           "namespace": "site"
         },
-        "site/sections/Content/Logos.tsx": {
-          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Db250ZW50L0xvZ29zLnRzeA==",
-          "namespace": "site"
-        },
         "site/sections/Content/PromoGrid.tsx": {
           "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Db250ZW50L1Byb21vR3JpZC50c3g=",
+          "namespace": "site"
+        },
+        "site/sections/Content/Logos.tsx": {
+          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Db250ZW50L0xvZ29zLnRzeA==",
           "namespace": "site"
         },
         "site/sections/Footer/Footer.tsx": {
@@ -102,20 +102,20 @@
           "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Qcm9kdWN0L1NlYXJjaFJlc3VsdC50c3g=",
           "namespace": "site"
         },
-        "site/sections/Product/ShelfWithImage.tsx": {
-          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Qcm9kdWN0L1NoZWxmV2l0aEltYWdlLnRzeA==",
-          "namespace": "site"
-        },
         "site/sections/Product/Wishlist.tsx": {
           "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Qcm9kdWN0L1dpc2hsaXN0LnRzeA==",
           "namespace": "site"
         },
-        "site/sections/Social/InstagramPosts.tsx": {
-          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Tb2NpYWwvSW5zdGFncmFtUG9zdHMudHN4",
+        "site/sections/Product/ShelfWithImage.tsx": {
+          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Qcm9kdWN0L1NoZWxmV2l0aEltYWdlLnRzeA==",
           "namespace": "site"
         },
         "site/sections/Social/WhatsApp.tsx": {
           "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Tb2NpYWwvV2hhdHNBcHAudHN4",
+          "namespace": "site"
+        },
+        "site/sections/Social/InstagramPosts.tsx": {
+          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Tb2NpYWwvSW5zdGFncmFtUG9zdHMudHN4",
           "namespace": "site"
         },
         "site/sections/Theme/Theme.tsx": {
@@ -1418,67 +1418,6 @@
           }
         }
       },
-      "c3JjL3NlY3Rpb25zL0NvbnRlbnQvTG9nb3MudHN4@Props": {
-        "type": "object",
-        "properties": {
-          "images": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "image": {
-                  "type": "string",
-                  "format": "image-uri",
-                  "title": "Image"
-                },
-                "alt": {
-                  "type": "string",
-                  "title": "Alt"
-                }
-              },
-              "required": [
-                "image",
-                "alt"
-              ]
-            },
-            "nullable": true,
-            "title": "Images"
-          },
-          "title": {
-            "type": "string",
-            "nullable": true,
-            "description": "Section title",
-            "title": "Title"
-          },
-          "cta": {
-            "type": "string",
-            "nullable": true,
-            "description": "See all link",
-            "title": "Cta"
-          }
-        }
-      },
-      "c2l0ZS9zZWN0aW9ucy9Db250ZW50L0xvZ29zLnRzeA==": {
-        "title": "site/sections/Content/Logos.tsx",
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/definitions/c3JjL3NlY3Rpb25zL0NvbnRlbnQvTG9nb3MudHN4@Props"
-          }
-        ],
-        "required": [
-          "__resolveType"
-        ],
-        "properties": {
-          "__resolveType": {
-            "type": "string",
-            "enum": [
-              "site/sections/Content/Logos.tsx"
-            ],
-            "default": "site/sections/Content/Logos.tsx"
-          }
-        }
-      },
       "c3JjL3NlY3Rpb25zL0NvbnRlbnQvUHJvbW9HcmlkLnRzeA==@Props": {
         "type": "object",
         "properties": {
@@ -1565,6 +1504,67 @@
               "site/sections/Content/PromoGrid.tsx"
             ],
             "default": "site/sections/Content/PromoGrid.tsx"
+          }
+        }
+      },
+      "c3JjL3NlY3Rpb25zL0NvbnRlbnQvTG9nb3MudHN4@Props": {
+        "type": "object",
+        "properties": {
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "image": {
+                  "type": "string",
+                  "format": "image-uri",
+                  "title": "Image"
+                },
+                "alt": {
+                  "type": "string",
+                  "title": "Alt"
+                }
+              },
+              "required": [
+                "image",
+                "alt"
+              ]
+            },
+            "nullable": true,
+            "title": "Images"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true,
+            "description": "Section title",
+            "title": "Title"
+          },
+          "cta": {
+            "type": "string",
+            "nullable": true,
+            "description": "See all link",
+            "title": "Cta"
+          }
+        }
+      },
+      "c2l0ZS9zZWN0aW9ucy9Db250ZW50L0xvZ29zLnRzeA==": {
+        "title": "site/sections/Content/Logos.tsx",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/c3JjL3NlY3Rpb25zL0NvbnRlbnQvTG9nb3MudHN4@Props"
+          }
+        ],
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "site/sections/Content/Logos.tsx"
+            ],
+            "default": "site/sections/Content/Logos.tsx"
           }
         }
       },
@@ -1754,6 +1754,12 @@
             "nullable": true,
             "format": "image-uri",
             "title": "Logo"
+          },
+          "logoAlt": {
+            "type": "string",
+            "nullable": true,
+            "title": "Texto alternativo do logo",
+            "description": "Deixe vazio se o logo for decorativo (ele aparece ao lado do texto de trademark, que ja identifica a loja). Preencha com o nome da loja se quiser que leitores de tela o anunciem."
           },
           "trademark": {
             "type": "string",
@@ -4963,64 +4969,6 @@
           }
         }
       },
-      "c3JjL3NlY3Rpb25zL1Byb2R1Y3QvU2hlbGZXaXRoSW1hZ2UudHN4@Props": {
-        "type": "object",
-        "properties": {
-          "section": {
-            "$ref": "#/definitions/__SECTION_REF__",
-            "title": "Section"
-          },
-          "image": {
-            "type": "object",
-            "properties": {
-              "src": {
-                "type": "string",
-                "format": "image-uri",
-                "title": "Src"
-              },
-              "alt": {
-                "type": "string",
-                "nullable": true,
-                "title": "Alt"
-              },
-              "href": {
-                "type": "string",
-                "nullable": true,
-                "title": "Href"
-              }
-            },
-            "required": [
-              "src"
-            ],
-            "title": "Image"
-          }
-        },
-        "required": [
-          "section",
-          "image"
-        ]
-      },
-      "c2l0ZS9zZWN0aW9ucy9Qcm9kdWN0L1NoZWxmV2l0aEltYWdlLnRzeA==": {
-        "title": "site/sections/Product/ShelfWithImage.tsx",
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/definitions/c3JjL3NlY3Rpb25zL1Byb2R1Y3QvU2hlbGZXaXRoSW1hZ2UudHN4@Props"
-          }
-        ],
-        "required": [
-          "__resolveType"
-        ],
-        "properties": {
-          "__resolveType": {
-            "type": "string",
-            "enum": [
-              "site/sections/Product/ShelfWithImage.tsx"
-            ],
-            "default": "site/sections/Product/ShelfWithImage.tsx"
-          }
-        }
-      },
       "c3JjL3NlY3Rpb25zL1Byb2R1Y3QvV2lzaGxpc3QudHN4@Props": {
         "type": "object",
         "properties": {
@@ -5098,6 +5046,96 @@
           }
         }
       },
+      "c3JjL3NlY3Rpb25zL1Byb2R1Y3QvU2hlbGZXaXRoSW1hZ2UudHN4@Props": {
+        "type": "object",
+        "properties": {
+          "section": {
+            "$ref": "#/definitions/__SECTION_REF__",
+            "title": "Section"
+          },
+          "image": {
+            "type": "object",
+            "properties": {
+              "src": {
+                "type": "string",
+                "format": "image-uri",
+                "title": "Src"
+              },
+              "alt": {
+                "type": "string",
+                "title": "Texto alternativo",
+                "description": "Descreva o conteúdo da imagem para leitores de tela. Use vazio apenas se a imagem for decorativa."
+              },
+              "href": {
+                "type": "string",
+                "nullable": true,
+                "title": "Href"
+              }
+            },
+            "required": [
+              "src",
+              "alt"
+            ],
+            "title": "Image"
+          }
+        },
+        "required": [
+          "section",
+          "image"
+        ]
+      },
+      "c2l0ZS9zZWN0aW9ucy9Qcm9kdWN0L1NoZWxmV2l0aEltYWdlLnRzeA==": {
+        "title": "site/sections/Product/ShelfWithImage.tsx",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/c3JjL3NlY3Rpb25zL1Byb2R1Y3QvU2hlbGZXaXRoSW1hZ2UudHN4@Props"
+          }
+        ],
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "site/sections/Product/ShelfWithImage.tsx"
+            ],
+            "default": "site/sections/Product/ShelfWithImage.tsx"
+          }
+        }
+      },
+      "c3JjL3NlY3Rpb25zL1NvY2lhbC9XaGF0c0FwcC50c3g=@Props": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "number",
+            "nullable": true,
+            "title": "Phone"
+          }
+        }
+      },
+      "c2l0ZS9zZWN0aW9ucy9Tb2NpYWwvV2hhdHNBcHAudHN4": {
+        "title": "site/sections/Social/WhatsApp.tsx",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/c3JjL3NlY3Rpb25zL1NvY2lhbC9XaGF0c0FwcC50c3g=@Props"
+          }
+        ],
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "site/sections/Social/WhatsApp.tsx"
+            ],
+            "default": "site/sections/Social/WhatsApp.tsx"
+          }
+        }
+      },
       "c3JjL3NlY3Rpb25zL1NvY2lhbC9JbnN0YWdyYW1Qb3N0cy50c3g=@Props": {
         "type": "object",
         "properties": {
@@ -5146,37 +5184,6 @@
               "site/sections/Social/InstagramPosts.tsx"
             ],
             "default": "site/sections/Social/InstagramPosts.tsx"
-          }
-        }
-      },
-      "c3JjL3NlY3Rpb25zL1NvY2lhbC9XaGF0c0FwcC50c3g=@Props": {
-        "type": "object",
-        "properties": {
-          "phone": {
-            "type": "number",
-            "nullable": true,
-            "title": "Phone"
-          }
-        }
-      },
-      "c2l0ZS9zZWN0aW9ucy9Tb2NpYWwvV2hhdHNBcHAudHN4": {
-        "title": "site/sections/Social/WhatsApp.tsx",
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/definitions/c3JjL3NlY3Rpb25zL1NvY2lhbC9XaGF0c0FwcC50c3g=@Props"
-          }
-        ],
-        "required": [
-          "__resolveType"
-        ],
-        "properties": {
-          "__resolveType": {
-            "type": "string",
-            "enum": [
-              "site/sections/Social/WhatsApp.tsx"
-            ],
-            "default": "site/sections/Social/WhatsApp.tsx"
           }
         }
       },
@@ -5590,12 +5597,12 @@
             "inputSchema": "#/definitions/c3JjL3NlY3Rpb25zL0NvbnRlbnQvSW50cm8udHN4@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Db250ZW50L0xvZ29zLnRzeA==",
-            "inputSchema": "#/definitions/c3JjL3NlY3Rpb25zL0NvbnRlbnQvTG9nb3MudHN4@Props"
-          },
-          {
             "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Db250ZW50L1Byb21vR3JpZC50c3g=",
             "inputSchema": "#/definitions/c3JjL3NlY3Rpb25zL0NvbnRlbnQvUHJvbW9HcmlkLnRzeA==@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Db250ZW50L0xvZ29zLnRzeA==",
+            "inputSchema": "#/definitions/c3JjL3NlY3Rpb25zL0NvbnRlbnQvTG9nb3MudHN4@Props"
           },
           {
             "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Gb290ZXIvRm9vdGVyLnRzeA==",
@@ -5654,20 +5661,20 @@
             "inputSchema": "#/definitions/c3JjL3NlY3Rpb25zL1Byb2R1Y3QvU2VhcmNoUmVzdWx0LnRzeA==@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Qcm9kdWN0L1NoZWxmV2l0aEltYWdlLnRzeA==",
-            "inputSchema": "#/definitions/c3JjL3NlY3Rpb25zL1Byb2R1Y3QvU2hlbGZXaXRoSW1hZ2UudHN4@Props"
-          },
-          {
             "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Qcm9kdWN0L1dpc2hsaXN0LnRzeA==",
             "inputSchema": "#/definitions/c3JjL3NlY3Rpb25zL1Byb2R1Y3QvV2lzaGxpc3QudHN4@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Tb2NpYWwvSW5zdGFncmFtUG9zdHMudHN4",
-            "inputSchema": "#/definitions/c3JjL3NlY3Rpb25zL1NvY2lhbC9JbnN0YWdyYW1Qb3N0cy50c3g=@Props"
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Qcm9kdWN0L1NoZWxmV2l0aEltYWdlLnRzeA==",
+            "inputSchema": "#/definitions/c3JjL3NlY3Rpb25zL1Byb2R1Y3QvU2hlbGZXaXRoSW1hZ2UudHN4@Props"
           },
           {
             "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Tb2NpYWwvV2hhdHNBcHAudHN4",
             "inputSchema": "#/definitions/c3JjL3NlY3Rpb25zL1NvY2lhbC9XaGF0c0FwcC50c3g=@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Tb2NpYWwvSW5zdGFncmFtUG9zdHMudHN4",
+            "inputSchema": "#/definitions/c3JjL3NlY3Rpb25zL1NvY2lhbC9JbnN0YWdyYW1Qb3N0cy50c3g=@Props"
           },
           {
             "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9UaGVtZS9UaGVtZS50c3g=",
