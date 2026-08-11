@@ -130,14 +130,20 @@ const abTestedWorker = withABTesting(decoWorker, {
 // `same-site`, which is the strictest value compatible with serving the
 // storefront from apex + `www` + preview subdomains.
 //
-// Resources that genuinely need to be readable from other origins are opted
-// into `cross-origin`:
-//   - static public assets (favicons, webmanifest, sprite sheet, robots) —
-//     these are fetched by the deco CMS admin (different origin) when it
-//     renders the site preview, and by browsers/crawlers with an opaque origin;
-//   - build output under /_build/ and /assets/;
-//   - /image/* (deco image proxy output), which is referenced from the CMS
-//     admin previews as well.
+// Scope: this wrapper only sees responses produced by the worker. Static
+// files (`public/` — favicons, sprites.svg, robots.txt, site.webmanifest,
+// /image/*) and the client build (/_build/, /assets/) are served by
+// Cloudflare Assets BEFORE the worker is invoked (no `assets.run_worker_first`
+// in wrangler.jsonc), so they keep no CORP header. That is deliberate: the
+// absence of CORP is exactly equivalent to `cross-origin` for a browser, which
+// is what those public, cross-origin-shared assets want anyway — so routing
+// them through the worker just to state it explicitly would only buy extra
+// worker invocations on the hottest paths. It would only matter if we ever
+// enabled COEP, which we don't (see below).
+//
+// The admin/RPC endpoints the worker does serve are opted into `cross-origin`,
+// since they are consumed from the deco CMS admin on a different origin:
+// `/deco/invoke/` (RPC), `/deco/render` and `/deco/meta`.
 //
 // COEP (`require-corp`) is deliberately NOT set: it would require every
 // third-party subresource (Shopify CDN assets/frames, fontshare webfonts,
@@ -148,21 +154,11 @@ const abTestedWorker = withABTesting(decoWorker, {
 const CORP_SAME_SITE = "same-site";
 const CORP_CROSS_ORIGIN = "cross-origin";
 
-const CROSS_ORIGIN_PREFIXES = ["/_build/", "/assets/", "/image/", "/live/invoke/"];
-const CROSS_ORIGIN_PATHS = new Set([
-  "/favicon.ico",
-  "/favicon-16x16.png",
-  "/favicon-32x32.png",
-  "/site.webmanifest",
-  "/browserconfig.xml",
-  "/sprites.svg",
-  "/robots.txt",
-  "/sw.js",
-]);
+// Worker-served, admin-facing endpoints (see src/routes/deco/*).
+const CROSS_ORIGIN_PREFIXES = ["/deco/invoke/", "/deco/render", "/deco/meta"];
 
 const corpValueFor = (pathname: string): string =>
-  CROSS_ORIGIN_PATHS.has(pathname) ||
-    CROSS_ORIGIN_PREFIXES.some((prefix) => pathname.startsWith(prefix))
+  CROSS_ORIGIN_PREFIXES.some((prefix) => pathname.startsWith(prefix))
     ? CORP_CROSS_ORIGIN
     : CORP_SAME_SITE;
 
