@@ -78,6 +78,21 @@ const decoWorker = createDecoWorkerEntry(serverEntry, {
   // Enforced header — `csp` would only produce the report-only variant.
   securityHeaders: {
     "Content-Security-Policy": CSP_DIRECTIVES.join("; "),
+
+    // Cross-origin isolation (Spectre hardening).
+    //
+    // COEP `require-corp` makes the document refuse to embed cross-origin
+    // subresources that don't opt in via CORS or `Cross-Origin-Resource-Policy`.
+    // Cross-origin assets loaded by this storefront (cdn.shopify.com,
+    // decoims.com, api/cdn.fontshare.com, *.fbcdn.net) must therefore be served
+    // with CORS or CORP headers — if a third party ever drops those, downgrade
+    // this to `credentialless`, which keeps the isolation guarantee while
+    // loading no-CORS subresources without credentials.
+    //
+    // CORP `same-site` prevents other sites from embedding *our* responses as
+    // subresources (the receiving half of the same protection).
+    "Cross-Origin-Embedder-Policy": "require-corp",
+    "Cross-Origin-Resource-Policy": "same-site",
   },
 
   buildSegment: (request) => {
