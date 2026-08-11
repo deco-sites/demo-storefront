@@ -84,6 +84,10 @@ function HomePage() {
     );
   }
 
+  // The home is fully CMS-driven and its main banner (`Images/Carousel`)
+  // renders slide titles as `<span>`s, so the page ships without an `<h1>` and
+  // fails `page-has-heading-one`. `fallbackHeading` is the safety net; it
+  // removes itself if a section on the page already provides an `<h1>`.
   return (
     <PageSections
       sections={data.resolvedSections ?? []}
@@ -93,6 +97,7 @@ function HomePage() {
       pageUrl={data.pageUrl}
       device={data.device}
       loadDeferredSectionFn={deferredSectionLoader}
+      fallbackHeading="Loja Storefront-tanstack: ofertas, novidades e coleções"
     />
   );
 }
