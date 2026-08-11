@@ -103,6 +103,7 @@ function InstagramPosts({
               {item.media_type === "IMAGE" ? (
                 <Image
                   loading="lazy"
+                  alt={`Publicação do Instagram ${index + 1}`}
                   className="max-w-full max-h-full object-cover"
                   style={{ aspectRatio: "1 / 1" }}
                   src={item.media_url ?? ""}

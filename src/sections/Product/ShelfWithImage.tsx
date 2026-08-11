@@ -6,7 +6,11 @@ export interface Props {
   section: Section;
   image: {
     src: ImageWidget;
-    alt?: string;
+    /**
+     * @title Texto alternativo
+     * @description Descreva o conteúdo da imagem para leitores de tela. Use vazio apenas se a imagem for decorativa.
+     */
+    alt: string;
     href?: string;
   };
 }
@@ -23,7 +27,7 @@ function ShelfWithImage({ section, image }: Props) {
             className="w-full h-full object-cover"
             width={720}
             height={640}
-            alt={image.alt}
+            alt={image.alt ?? ""}
           />
         </a>
       </div>
