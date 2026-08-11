@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { cmsRouteConfig, DecoPageRenderer } from "@decocms/tanstack";
+import { cmsRouteConfig } from "@decocms/tanstack";
 import { deferredSectionLoader } from "@decocms/tanstack/sdk/deferredSectionLoader";
+import PageLandmarks from "../components/ui/PageLandmarks";
 
 const routeConfig = cmsRouteConfig({
   siteName: "Storefront-tanstack",
@@ -25,7 +26,7 @@ function CmsPage() {
   if (!data) return <NotFoundPage />;
 
   return (
-    <DecoPageRenderer
+    <PageLandmarks
       sections={data.resolvedSections ?? []}
       deferredSections={data.deferredSections ?? []}
       deferredPromises={data.deferredPromises}
@@ -38,7 +39,7 @@ function CmsPage() {
 
 function NotFoundPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <main className="min-h-screen flex items-center justify-center">
       <div className="text-center">
         <h1 className="text-6xl font-bold text-base-content/20 mb-4">404</h1>
         <h2 className="text-2xl font-bold mb-2">Page Not Found</h2>
@@ -47,6 +48,6 @@ function NotFoundPage() {
           Go Home
         </a>
       </div>
-    </div>
+    </main>
   );
 }

@@ -3,13 +3,16 @@ import { DecoPageRenderer } from "@decocms/tanstack";
 type SectionLike = { component?: string; key?: string };
 
 /**
- * CMS sections are rendered as a flat list of siblings, so any section that
- * doesn't render its own landmark (Header renders <header>, Footer renders
- * <footer>) ends up outside every semantic region. Screen reader users then
- * can't jump between page regions and the content reads as orphaned text.
+ * CMS sections are rendered as a flat list of siblings. Header renders
+ * <header role="banner"> and Footer renders <footer role="contentinfo">, but
+ * everything between them had no <main> of its own, and the only <main> on the
+ * page wrapped all three — which scopes banner/contentinfo to that main and
+ * stops them counting as page landmarks. See __root.tsx, which replaced that
+ * wrapper with a neutral <div id="app">.
  *
  * This splits the page's sections into header / content / footer groups and
- * wraps the content group in <main>, keeping the CMS order inside each group.
+ * wraps only the content group in <main>, so the three landmarks are siblings.
+ * CMS order is preserved inside each group (DecoPageRenderer sorts by index).
  */
 const isHeader = (s: SectionLike) => /sections\/Header\//.test(s.component ?? s.key ?? "");
 const isFooter = (s: SectionLike) => /sections\/Footer\//.test(s.component ?? s.key ?? "");
