@@ -79,7 +79,11 @@ const decoWorker = createDecoWorkerEntry(serverEntry, {
   securityHeaders: {
     "Content-Security-Policy": CSP_DIRECTIVES.join("; "),
 
-    // Cross-origin isolation (Spectre hardening).
+    // Cross-Origin-Embedder-Policy. This is one half of cross-origin
+    // isolation, not the whole thing: `crossOriginIsolated` (and with it the
+    // actual Spectre hardening) also requires
+    // `Cross-Origin-Opener-Policy: same-origin`, which we don't set — see the
+    // last paragraph below.
     //
     // `credentialless` instead of `require-corp`: both give the same isolation
     // semantics, but `require-corp` drops every cross-origin **no-cors**
