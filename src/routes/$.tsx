@@ -2,6 +2,7 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { cmsRouteConfig } from "@decocms/tanstack";
 import { deferredSectionLoader } from "@decocms/tanstack/sdk/deferredSectionLoader";
 import PageSections from "../components/ui/PageSections";
+import { collectionExistsServerFn } from "../platform/collection";
 
 const routeConfig = cmsRouteConfig({
   siteName: "Storefront-tanstack",
@@ -25,11 +26,33 @@ export const Route = createFileRoute("/$")({
   loader: async (ctx: Parameters<typeof routeConfig.loader>[0]) => {
     const page = await routeConfig.loader(ctx);
     if (!page) throw notFound();
+    if (await isSoft404(page)) throw notFound();
     return page;
   },
   component: CmsPage,
   notFoundComponent: NotFoundPage,
 });
+
+/**
+ * Second soft-404 source: the CMS "Category Page" block is configured with the
+ * catch-all path `/*`, so a URL that matches no real page still resolves to a
+ * page — the PLP renders "No results found" with HTTP 200. Only the wildcard
+ * page needs this check (every other block has a literal path), and only its
+ * first path segment matters, since that is the collection handle the Shopify
+ * PLP loader queries. Unknown handle => a real 404.
+ */
+async function isSoft404(page: Record<string, any>): Promise<boolean> {
+  const cmsPath: string = page.path ?? "";
+  if (!cmsPath.includes("*")) return false;
+
+  const pagePath: string = page.pagePath ?? "";
+  const segments = pagePath.split("/").filter(Boolean);
+  // Only single-segment URLs can be a collection; deeper paths under the
+  // wildcard are never real categories.
+  if (segments.length !== 1) return true;
+
+  return !(await collectionExistsServerFn({ data: segments[0] }));
+}
 
 function CmsPage() {
   const data = Route.useLoaderData() as Record<string, any> | null;
