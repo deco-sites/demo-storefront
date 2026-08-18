@@ -42,12 +42,12 @@
           "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Db250ZW50L0xvZ29zLnRzeA==",
           "namespace": "site"
         },
-        "site/sections/Content/PromoGrid.tsx": {
-          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Db250ZW50L1Byb21vR3JpZC50c3g=",
-          "namespace": "site"
-        },
         "site/sections/Content/MideaJourney.tsx": {
           "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Db250ZW50L01pZGVhSm91cm5leS50c3g=",
+          "namespace": "site"
+        },
+        "site/sections/Content/PromoGrid.tsx": {
+          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Db250ZW50L1Byb21vR3JpZC50c3g=",
           "namespace": "site"
         },
         "site/sections/Footer/Footer.tsx": {
@@ -1483,95 +1483,6 @@
           }
         }
       },
-      "c3JjL3NlY3Rpb25zL0NvbnRlbnQvUHJvbW9HcmlkLnRzeA==@Props": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string",
-            "nullable": true,
-            "title": "Heading"
-          },
-          "tabs": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "label": {
-                  "type": "string",
-                  "title": "Label"
-                },
-                "cards": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "label": {
-                        "type": "string",
-                        "title": "Eyebrow label"
-                      },
-                      "headline": {
-                        "type": "string",
-                        "title": "Headline"
-                      },
-                      "cta": {
-                        "type": "string",
-                        "nullable": true,
-                        "title": "CTA label"
-                      },
-                      "href": {
-                        "type": "string",
-                        "title": "Href"
-                      },
-                      "image": {
-                        "type": "string",
-                        "format": "image-uri",
-                        "title": "Image"
-                      }
-                    },
-                    "required": [
-                      "label",
-                      "headline",
-                      "href",
-                      "image"
-                    ]
-                  },
-                  "title": "Cards"
-                }
-              },
-              "required": [
-                "label",
-                "cards"
-              ],
-              "titleBy": "label"
-            },
-            "title": "Tabs"
-          }
-        },
-        "required": [
-          "tabs"
-        ]
-      },
-      "c2l0ZS9zZWN0aW9ucy9Db250ZW50L1Byb21vR3JpZC50c3g=": {
-        "title": "site/sections/Content/PromoGrid.tsx",
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/definitions/c3JjL3NlY3Rpb25zL0NvbnRlbnQvUHJvbW9HcmlkLnRzeA==@Props"
-          }
-        ],
-        "required": [
-          "__resolveType"
-        ],
-        "properties": {
-          "__resolveType": {
-            "type": "string",
-            "enum": [
-              "site/sections/Content/PromoGrid.tsx"
-            ],
-            "default": "site/sections/Content/PromoGrid.tsx"
-          }
-        }
-      },
       "c3JjL3NlY3Rpb25zL0NvbnRlbnQvTWlkZWFKb3VybmV5LnRzeA==@Props": {
         "type": "object",
         "properties": {
@@ -1784,6 +1695,95 @@
               "site/sections/Content/MideaJourney.tsx"
             ],
             "default": "site/sections/Content/MideaJourney.tsx"
+          }
+        }
+      },
+      "c3JjL3NlY3Rpb25zL0NvbnRlbnQvUHJvbW9HcmlkLnRzeA==@Props": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true,
+            "title": "Heading"
+          },
+          "tabs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "title": "Label"
+                },
+                "cards": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "label": {
+                        "type": "string",
+                        "title": "Eyebrow label"
+                      },
+                      "headline": {
+                        "type": "string",
+                        "title": "Headline"
+                      },
+                      "cta": {
+                        "type": "string",
+                        "nullable": true,
+                        "title": "CTA label"
+                      },
+                      "href": {
+                        "type": "string",
+                        "title": "Href"
+                      },
+                      "image": {
+                        "type": "string",
+                        "format": "image-uri",
+                        "title": "Image"
+                      }
+                    },
+                    "required": [
+                      "label",
+                      "headline",
+                      "href",
+                      "image"
+                    ]
+                  },
+                  "title": "Cards"
+                }
+              },
+              "required": [
+                "label",
+                "cards"
+              ],
+              "titleBy": "label"
+            },
+            "title": "Tabs"
+          }
+        },
+        "required": [
+          "tabs"
+        ]
+      },
+      "c2l0ZS9zZWN0aW9ucy9Db250ZW50L1Byb21vR3JpZC50c3g=": {
+        "title": "site/sections/Content/PromoGrid.tsx",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/c3JjL3NlY3Rpb25zL0NvbnRlbnQvUHJvbW9HcmlkLnRzeA==@Props"
+          }
+        ],
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "site/sections/Content/PromoGrid.tsx"
+            ],
+            "default": "site/sections/Content/PromoGrid.tsx"
           }
         }
       },
@@ -5813,12 +5813,12 @@
             "inputSchema": "#/definitions/c3JjL3NlY3Rpb25zL0NvbnRlbnQvTG9nb3MudHN4@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Db250ZW50L1Byb21vR3JpZC50c3g=",
-            "inputSchema": "#/definitions/c3JjL3NlY3Rpb25zL0NvbnRlbnQvUHJvbW9HcmlkLnRzeA==@Props"
-          },
-          {
             "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Db250ZW50L01pZGVhSm91cm5leS50c3g=",
             "inputSchema": "#/definitions/c3JjL3NlY3Rpb25zL0NvbnRlbnQvTWlkZWFKb3VybmV5LnRzeA==@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Db250ZW50L1Byb21vR3JpZC50c3g=",
+            "inputSchema": "#/definitions/c3JjL3NlY3Rpb25zL0NvbnRlbnQvUHJvbW9HcmlkLnRzeA==@Props"
           },
           {
             "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Gb290ZXIvRm9vdGVyLnRzeA==",
