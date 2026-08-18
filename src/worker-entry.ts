@@ -22,8 +22,6 @@ import {
 } from "@decocms/blocks-admin";
 import { getCookies } from "@decocms/apps-shopify/utils/cookies";
 import { withABTesting } from "@decocms/blocks/sdk/abTesting";
-import securityTxt from "../public/.well-known/security.txt?raw";
-import assetlinksJson from "../public/.well-known/assetlinks.json?raw";
 
 const serverEntry = createServerEntry({ fetch: handler.fetch });
 
@@ -124,51 +122,6 @@ const abTestedWorker = withABTesting(decoWorker, {
 });
 
 // ---------------------------------------------------------------------------
-// `/.well-known/*` — serve straight from the worker.
-//
-// Requests to `/.well-known/security.txt` were reaching the SSR router and
-// falling through to the `$` catch-all route, which answered `200 text/html`
-// with the 404 shell. Security researchers scanning for RFC 9116 contact info
-// therefore never saw the file, even though `public/.well-known/` ships it.
-//
-// Dot-prefixed directories don't survive the asset pipeline reliably, so the
-// files are inlined at build time (`?raw`, read from the same files under
-// `public/`) and answered here — before A/B split, before `decoWorker`, before
-// the router. Everything else in `public/` (robots.txt, sw.js, sprites.svg,
-// favicons) keeps being served by the normal static asset path; this wrapper
-// only claims the two `.well-known` paths below.
-// ---------------------------------------------------------------------------
-const WELL_KNOWN: Record<string, { body: string; contentType: string }> = {
-  "/.well-known/security.txt": {
-    body: securityTxt,
-    contentType: "text/plain; charset=utf-8",
-  },
-  "/.well-known/assetlinks.json": {
-    body: assetlinksJson,
-    contentType: "application/json; charset=utf-8",
-  },
-};
-
-const withWellKnown = <T extends FetchWorker>(worker: T): T => ({
-  ...worker,
-  fetch: async (request: Request, env: never, ctx: never) => {
-    const { pathname } = new URL(request.url);
-    const file = WELL_KNOWN[pathname];
-
-    if (file && (request.method === "GET" || request.method === "HEAD")) {
-      return new Response(request.method === "HEAD" ? null : file.body, {
-        headers: {
-          "content-type": file.contentType,
-          "cache-control": "public, max-age=3600",
-        },
-      });
-    }
-
-    return worker.fetch(request, env, ctx);
-  },
-});
-
-// ---------------------------------------------------------------------------
 // Strip `x-powered-by` from every response.
 //
 // The framework stamps the exact platform version (e.g. `deco@7.20.7`) on
@@ -205,4 +158,4 @@ const withoutPoweredBy = <T extends FetchWorker>(worker: T): T => ({
 // instrumentWorker MUST be the outermost wrapper. It initialises the OTel
 // pipeline (metrics buffering, error log direct-POST) and reads
 // DECO_OTEL_METRICS_ENDPOINT + DECO_OTEL_LOGS_ENDPOINT from env at boot.
-export default instrumentWorker(withoutPoweredBy(withWellKnown(abTestedWorker)));
+export default instrumentWorker(withoutPoweredBy(abTestedWorker));
