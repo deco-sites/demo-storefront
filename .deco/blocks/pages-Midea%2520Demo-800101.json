@@ -1,0 +1,24 @@
+{
+  "name": "Midea Demo",
+  "path": "/midea-demo",
+  "sections": [
+    {
+      "__resolveType": "Deco"
+    },
+    {
+      "__resolveType": "Header"
+    },
+    {
+      "__resolveType": "site/sections/Content/MideaJourney.tsx"
+    },
+    {
+      "__resolveType": "Footer"
+    }
+  ],
+  "seo": {
+    "__resolveType": "website/sections/Seo/SeoV2.tsx",
+    "title": "Midea × FC Barcelona — Uma viagem por Barcelona",
+    "description": "Uma bola. Sete ícones. Inovação sem fim. Barcelona encontra a Midea, onde cada lance revela um lar."
+  },
+  "__resolveType": "website/pages/Page.tsx"
+}
