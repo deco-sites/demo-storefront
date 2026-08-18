@@ -1,0 +1,25 @@
+{
+  "name": "Midea Demo (Landing Page)",
+  "__resolveType": "website/pages/Page.tsx",
+  "path": "/midea-demo",
+  "seo": {
+    "__resolveType": "website/sections/Seo/SeoV2.tsx",
+    "title": "Midea × FC Barcelona — Uma viagem por Barcelona",
+    "description": "Uma bola. Sete ícones. Inovação sem fim. Acompanha a bola blaugrana por nove marcos de Barcelona e descobre a família de produtos Midea.",
+    "type": "website"
+  },
+  "sections": [
+    {
+      "__resolveType": "Deco"
+    },
+    {
+      "__resolveType": "Header"
+    },
+    {
+      "__resolveType": "site/sections/Content/MideaBarcelonaJourney.tsx"
+    },
+    {
+      "__resolveType": "Footer"
+    }
+  ]
+}
