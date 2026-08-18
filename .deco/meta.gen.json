@@ -74,6 +74,10 @@
           "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9MaW5rcy9MaW5rVHJlZS50c3g=",
           "namespace": "site"
         },
+        "site/sections/Midea/MideaJourney.tsx": {
+          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9NaWRlYS9NaWRlYUpvdXJuZXkudHN4",
+          "namespace": "site"
+        },
         "site/sections/Miscellaneous/CampaignTimer.tsx": {
           "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9NaXNjZWxsYW5lb3VzL0NhbXBhaWduVGltZXIudHN4",
           "namespace": "site"
@@ -120,10 +124,6 @@
         },
         "site/sections/Theme/Theme.tsx": {
           "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9UaGVtZS9UaGVtZS50c3g=",
-          "namespace": "site"
-        },
-        "site/sections/Midea/MideaJourney.tsx": {
-          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9NaWRlYS9NaWRlYUpvdXJuZXkudHN4",
           "namespace": "site"
         }
       },
@@ -4267,6 +4267,31 @@
           }
         }
       },
+      "c3JjL3NlY3Rpb25zL01pZGVhL01pZGVhSm91cm5leS50c3g=@Props": {
+        "type": "object",
+        "properties": {}
+      },
+      "c2l0ZS9zZWN0aW9ucy9NaWRlYS9NaWRlYUpvdXJuZXkudHN4": {
+        "title": "site/sections/Midea/MideaJourney.tsx",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/c3JjL3NlY3Rpb25zL01pZGVhL01pZGVhSm91cm5leS50c3g=@Props"
+          }
+        ],
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "site/sections/Midea/MideaJourney.tsx"
+            ],
+            "default": "site/sections/Midea/MideaJourney.tsx"
+          }
+        }
+      },
       "c3JjL3NlY3Rpb25zL01pc2NlbGxhbmVvdXMvQ2FtcGFpZ25UaW1lci50c3g=@Props": {
         "type": "object",
         "properties": {
@@ -5504,31 +5529,6 @@
           }
         }
       },
-      "c3JjL3NlY3Rpb25zL01pZGVhL01pZGVhSm91cm5leS50c3g=@Props": {
-        "type": "object",
-        "properties": {}
-      },
-      "c2l0ZS9zZWN0aW9ucy9NaWRlYS9NaWRlYUpvdXJuZXkudHN4": {
-        "title": "site/sections/Midea/MideaJourney.tsx",
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/definitions/c3JjL3NlY3Rpb25zL01pZGVhL01pZGVhSm91cm5leS50c3g=@Props"
-          }
-        ],
-        "required": [
-          "__resolveType"
-        ],
-        "properties": {
-          "__resolveType": {
-            "type": "string",
-            "enum": [
-              "site/sections/Midea/MideaJourney.tsx"
-            ],
-            "default": "site/sections/Midea/MideaJourney.tsx"
-          }
-        }
-      },
       "c3JjL2FwcHMvc2hvcGlmeS50cw==@Props": {
         "type": "object",
         "properties": {}
@@ -5655,6 +5655,10 @@
             "inputSchema": "#/definitions/c3JjL3NlY3Rpb25zL0xpbmtzL0xpbmtUcmVlLnRzeA==@Props"
           },
           {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9NaWRlYS9NaWRlYUpvdXJuZXkudHN4",
+            "inputSchema": "#/definitions/c3JjL3NlY3Rpb25zL01pZGVhL01pZGVhSm91cm5leS50c3g=@Props"
+          },
+          {
             "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9NaXNjZWxsYW5lb3VzL0NhbXBhaWduVGltZXIudHN4",
             "inputSchema": "#/definitions/c3JjL3NlY3Rpb25zL01pc2NlbGxhbmVvdXMvQ2FtcGFpZ25UaW1lci50c3g=@Props"
           },
@@ -5701,10 +5705,6 @@
           {
             "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9UaGVtZS9UaGVtZS50c3g=",
             "inputSchema": "#/definitions/c3JjL3NlY3Rpb25zL1RoZW1lL1RoZW1lLnRzeA==@Props"
-          },
-          {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9NaWRlYS9NaWRlYUpvdXJuZXkudHN4",
-            "inputSchema": "#/definitions/c3JjL3NlY3Rpb25zL01pZGVhL01pZGVhSm91cm5leS50c3g=@Props"
           }
         ]
       },

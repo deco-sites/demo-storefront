@@ -57,6 +57,7 @@ export const sectionMeta: Record<string, SectionMetaEntry> = {
   "site/sections/Images/ImageGallery.tsx": { hasLoadingFallback: true },
   "site/sections/Images/ShoppableBanner.tsx": { hasLoadingFallback: true },
   "site/sections/Links/LinkTree.tsx": { hasLoadingFallback: true },
+  "site/sections/Midea/MideaJourney.tsx": { eager: true },
   "site/sections/Miscellaneous/CampaignTimer.tsx": { hasLoadingFallback: true },
   "site/sections/Miscellaneous/CookieConsent.tsx": { hasLoadingFallback: true },
   "site/sections/Newsletter/Newsletter.tsx": { hasLoadingFallback: true },
@@ -69,7 +70,6 @@ export const sectionMeta: Record<string, SectionMetaEntry> = {
   "site/sections/Social/InstagramPosts.tsx": { hasLoadingFallback: true },
   "site/sections/Social/WhatsApp.tsx": { hasLoadingFallback: true },
   "site/sections/Theme/Theme.tsx": { eager: true, sync: true, layout: true, hasLoadingFallback: true },
-  "site/sections/Midea/MideaJourney.tsx": { eager: true },
 };
 
 export const syncComponents: Record<string, any> = {
