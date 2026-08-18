@@ -42,6 +42,10 @@
           "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Db250ZW50L0xvZ29zLnRzeA==",
           "namespace": "site"
         },
+        "site/sections/Content/MideaJourney.tsx": {
+          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Db250ZW50L01pZGVhSm91cm5leS50c3g=",
+          "namespace": "site"
+        },
         "site/sections/Content/PromoGrid.tsx": {
           "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Db250ZW50L1Byb21vR3JpZC50c3g=",
           "namespace": "site"
@@ -1476,6 +1480,221 @@
               "site/sections/Content/Logos.tsx"
             ],
             "default": "site/sections/Content/Logos.tsx"
+          }
+        }
+      },
+      "c3JjL3NlY3Rpb25zL0NvbnRlbnQvTWlkZWFKb3VybmV5LnRzeA==@Props": {
+        "type": "object",
+        "properties": {
+          "heroTitle": {
+            "type": "string",
+            "nullable": true,
+            "title": "Hero title (use | to break lines)"
+          },
+          "heroHighlight": {
+            "type": "string",
+            "nullable": true,
+            "title": "Hero highlighted word"
+          },
+          "heroSubtitle": {
+            "type": "string",
+            "nullable": true,
+            "title": "Hero subtitle"
+          },
+          "heroCtaLabel": {
+            "type": "string",
+            "nullable": true,
+            "title": "Primary CTA label"
+          },
+          "heroVideoLabel": {
+            "type": "string",
+            "nullable": true,
+            "title": "Video CTA label"
+          },
+          "video": {
+            "type": "string",
+            "nullable": true,
+            "title": "Campaign video",
+            "format": "video-uri"
+          },
+          "heroImage": {
+            "type": "string",
+            "nullable": true,
+            "title": "Hero poster / fallback image",
+            "format": "image-uri"
+          },
+          "lockup": {
+            "type": "string",
+            "nullable": true,
+            "title": "Partnership lockup image",
+            "format": "image-uri"
+          },
+          "partnershipEyebrow": {
+            "type": "string",
+            "nullable": true,
+            "title": "Partnership eyebrow"
+          },
+          "partnershipTitle": {
+            "type": "string",
+            "nullable": true,
+            "title": "Partnership title"
+          },
+          "partnershipHighlight": {
+            "type": "string",
+            "nullable": true,
+            "title": "Partnership highlighted words"
+          },
+          "partnershipLede": {
+            "type": "string",
+            "nullable": true,
+            "title": "Partnership lede"
+          },
+          "stats": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "title": "Value"
+                },
+                "label": {
+                  "type": "string",
+                  "title": "Label"
+                },
+                "accent": {
+                  "type": "string",
+                  "enum": [
+                    "red",
+                    "blue",
+                    "gold"
+                  ],
+                  "nullable": true,
+                  "title": "Accent"
+                }
+              },
+              "required": [
+                "value",
+                "label"
+              ],
+              "titleBy": "label"
+            },
+            "nullable": true,
+            "title": "Stats"
+          },
+          "journeyEyebrow": {
+            "type": "string",
+            "nullable": true,
+            "title": "Journey eyebrow"
+          },
+          "journeyTitle1": {
+            "type": "string",
+            "nullable": true,
+            "title": "Journey title line 1"
+          },
+          "journeyTitle2": {
+            "type": "string",
+            "nullable": true,
+            "title": "Journey title line 2"
+          },
+          "journeyTitle3": {
+            "type": "string",
+            "nullable": true,
+            "title": "Journey title line 3"
+          },
+          "journeyCopy": {
+            "type": "string",
+            "nullable": true,
+            "title": "Journey copy"
+          },
+          "routeLabel": {
+            "type": "string",
+            "nullable": true,
+            "title": "Route label"
+          },
+          "stops": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "n": {
+                  "type": "string",
+                  "title": "Number (e.g. 01)"
+                },
+                "location": {
+                  "type": "string",
+                  "title": "Metro station"
+                },
+                "title": {
+                  "type": "string",
+                  "title": "Landmark"
+                },
+                "line": {
+                  "type": "string",
+                  "enum": [
+                    "L1",
+                    "L3",
+                    "L4",
+                    "L5",
+                    "L9"
+                  ],
+                  "nullable": true,
+                  "title": "Metro line"
+                },
+                "product": {
+                  "type": "string",
+                  "nullable": true,
+                  "title": "Product"
+                },
+                "link": {
+                  "type": "string",
+                  "nullable": true,
+                  "title": "Product link"
+                },
+                "image": {
+                  "type": "string",
+                  "nullable": true,
+                  "title": "Image",
+                  "format": "image-uri"
+                },
+                "copy": {
+                  "type": "string",
+                  "title": "Copy",
+                  "description": "Separate paragraphs with a blank line",
+                  "format": "textarea"
+                }
+              },
+              "required": [
+                "n",
+                "location",
+                "title",
+                "copy"
+              ],
+              "titleBy": "title"
+            },
+            "nullable": true,
+            "title": "Stops"
+          }
+        }
+      },
+      "c2l0ZS9zZWN0aW9ucy9Db250ZW50L01pZGVhSm91cm5leS50c3g=": {
+        "title": "site/sections/Content/MideaJourney.tsx",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/c3JjL3NlY3Rpb25zL0NvbnRlbnQvTWlkZWFKb3VybmV5LnRzeA==@Props"
+          }
+        ],
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "site/sections/Content/MideaJourney.tsx"
+            ],
+            "default": "site/sections/Content/MideaJourney.tsx"
           }
         }
       },
@@ -5592,6 +5811,10 @@
           {
             "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Db250ZW50L0xvZ29zLnRzeA==",
             "inputSchema": "#/definitions/c3JjL3NlY3Rpb25zL0NvbnRlbnQvTG9nb3MudHN4@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Db250ZW50L01pZGVhSm91cm5leS50c3g=",
+            "inputSchema": "#/definitions/c3JjL3NlY3Rpb25zL0NvbnRlbnQvTWlkZWFKb3VybmV5LnRzeA==@Props"
           },
           {
             "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Db250ZW50L1Byb21vR3JpZC50c3g=",
