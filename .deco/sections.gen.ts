@@ -69,6 +69,7 @@ export const sectionMeta: Record<string, SectionMetaEntry> = {
   "site/sections/Social/InstagramPosts.tsx": { hasLoadingFallback: true },
   "site/sections/Social/WhatsApp.tsx": { hasLoadingFallback: true },
   "site/sections/Theme/Theme.tsx": { eager: true, sync: true, layout: true, hasLoadingFallback: true },
+  "site/sections/Midea/MideaJourney.tsx": { eager: true },
 };
 
 export const syncComponents: Record<string, any> = {
