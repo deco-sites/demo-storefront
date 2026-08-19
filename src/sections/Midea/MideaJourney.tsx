@@ -10,6 +10,9 @@
 import { useEffect, useRef, useState } from "react";
 
 export const eager = true;
+// Marketing landing page: the whole story must be in the SSR payload for SEO
+// and first paint, so never let the fold threshold defer it to the client.
+export const neverDefer = true;
 
 const TMB: Record<string, string> = {
   L1: "#E1322D",
