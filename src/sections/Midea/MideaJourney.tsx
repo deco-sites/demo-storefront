@@ -40,8 +40,7 @@ const STOPS: Stop[] = [
     n: "01",
     location: "LESSEPS",
     title: "PARK GÜELL",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Barcelona_Parc_G%C3%BCell_el_drac.jpg/960px-Barcelona_Parc_G%C3%BCell_el_drac.jpg",
+    image: "/midea-demo/stop-01-parkguell.jpg",
     copy: "Gaudí imaginou primeiro esta colina como um empreendimento habitacional de luxo, mas apenas duas casas chegaram a ser vendidas, e a cidade transformou-a num parque. Desse silencioso fracasso nasceu um dos horizontes mais fotografados do mundo.\n\nA viagem começa aqui: um pontapé, uma bola, e uma cidade prestes a transformar-se.",
   },
   {
@@ -50,8 +49,7 @@ const STOPS: Stop[] = [
     title: "BASÍLICA SAGRADA FAMÍLIA",
     product: "Frigorífico French Door",
     link: "https://www.midea.com/global/refrigerators",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Exterior_of_the_Sagrada_Fam%C3%ADlia.jpg/960px-Exterior_of_the_Sagrada_Fam%C3%ADlia.jpg",
+    image: "/midea-demo/stop-02-sagradafamilia.jpg",
     copy: "Escondidas no claustro da catedral, treze gansas brancas vivem lá há mais de cinco séculos, uma por cada ano da vida de Santa Eulália. Sob essas abóbadas góticas, o tempo é algo que se protege.\n\nO nosso frigorífico French Door faz o mesmo pelos teus alimentos: climas multizona, humidade precisa e uma engenharia silenciosa que mantém cada ingrediente no seu ponto ideal.",
   },
   {
@@ -60,8 +58,7 @@ const STOPS: Stop[] = [
     title: "ARC DE TRIOMF",
     product: "Ar Condicionado",
     link: "https://www.midea.com/global/hvac",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Arc_de_Triomf_Barcelona_2013.jpg/960px-Arc_de_Triomf_Barcelona_2013.jpg",
+    image: "/midea-demo/stop-03-arc.jpg",
     copy: "Ao contrário da maioria dos arcos do triunfo, este não celebra nenhuma batalha — foi construído como porta de boas-vindas à Exposição Universal de 1888. Pura hospitalidade, esculpida em tijolo vermelho.\n\nO ar condicionado Midea partilha essa ideia: uma receção silenciosa assim que se entra. Arrefecimento uniforme, fluxo de ar inteligente e um desempenho eficiente que transforma qualquer divisão numa chegada tranquila.",
   },
   {
@@ -70,8 +67,7 @@ const STOPS: Stop[] = [
     title: "L'ESTEL FERIT",
     product: "Máquina de Lavar Roupa",
     link: "https://www.midea.com/global/laundry",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/L%27Estel_ferit%2C_Rebecca_Horn.JPG/960px-L%27Estel_ferit%2C_Rebecca_Horn.JPG",
+    image: "/midea-demo/stop-04-estelferit.jpg",
     copy: "Os quatro cubos empilhados de Rebecca Horn foram erguidos como tributo às antigas barracas de pescadores demolidas para os Jogos Olímpicos de 1992, uma pilha inclinada de casas viradas para o vento salgado. Lavar roupa junto ao mar sempre foi um ritual aqui.\n\nA máquina de lavar roupa Midea dá continuidade a essa tradição: suave com os tecidos, implacável com as manchas, com programas a vapor e ciclos inteligentes que respeitam cada peça que adoras.",
   },
   {
@@ -80,8 +76,7 @@ const STOPS: Stop[] = [
     title: "BARRI GÒTIC",
     product: "FORNO DE ENCASTRAR",
     link: "https://www.midea.com/global/kitchen-appliances",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Barri_G%C3%B2tic_at_night.jpg/960px-Barri_G%C3%B2tic_at_night.jpg",
+    image: "/midea-demo/stop-05-barrigotic.jpg",
     copy: "Grande parte do aspeto medieval do Bairro Gótico não é medieval de todo. Foi restaurado, e em parte inventado, no início do século XX para dar a Barcelona um passado mais romântico. Artesanato a fazer-se passar por história.\n\nO forno Midea faz a mesma magia em casa: convecção, vapor e temperaturas precisas que transformam ingredientes do dia a dia em algo que sabe como se tivesse demorado séculos a aperfeiçoar.",
   },
   {
@@ -90,8 +85,7 @@ const STOPS: Stop[] = [
     title: "MERCAT DE LA BOQUERIA",
     product: "Fritadeira de Ar",
     link: "https://www.midea.com/global/small-appliances",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/La_Boqueria%2C_Barcelona.jpg/960px-La_Boqueria%2C_Barcelona.jpg",
+    image: "/midea-demo/stop-06-boqueria.jpg",
     copy: "A Boqueria existe, de uma forma ou de outra, desde 1217, quando começou como um mercado ambulante de porcos mesmo fora das antigas muralhas da cidade. Oitocentos anos depois, continua a tratar-se de uma única coisa: bons ingredientes, cozinhados de forma simples.\n\nA nossa fritadeira de ar Midea encaixa perfeitamente: resultados dourados e estaladiços com pouco ou nenhum óleo, rápida o suficiente para um dia de semana e boa o suficiente para um almoço de domingo.",
   },
   {
@@ -100,8 +94,7 @@ const STOPS: Stop[] = [
     title: "FONT MÀGICA",
     product: "Máquina de Lavar Loiça",
     link: "https://www.midea.com/global/dishwashers",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Font_M%C3%A0gica_de_Montju%C3%AFc_01.JPG/960px-Font_M%C3%A0gica_de_Montju%C3%AFc_01.JPG",
+    image: "/midea-demo/stop-07-fontmagica.jpg",
     copy: "A Font Màgica impulsiona mais de 2600 litros de água por segundo através de mais de 3000 luzes, e toda a estrutura foi construída em menos de um ano para a Exposição Universal de 1929. Por trás do espetáculo: uma engenharia invisível, perfeitamente coreografada.\n\nA máquina de lavar loiça Midea é exatamente esse tipo de herói silencioso: uso inteligente da água, baixo consumo de energia e ciclos silenciosos que deixam cada peça impecável.",
   },
   {
@@ -110,8 +103,7 @@ const STOPS: Stop[] = [
     title: "PLAÇA D'ESPANYA",
     product: "Chiller Comercial",
     link: "https://www.midea.com/global/hvac",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Torres_venecianes_Barcelona_2013.jpg/960px-Torres_venecianes_Barcelona_2013.jpg",
+    image: "/midea-demo/stop-08-torres.jpg",
     copy: "As duas torres de estilo veneziano que emolduram a praça inspiraram-se no campanário de São Marcos em Veneza, pensadas para que os visitantes sentissem que entravam num lugar monumental. Grandes espaços exigem grande pensamento climático.\n\nO chiller comercial da Midea oferece exatamente isso: arrefecimento de alta capacidade para hotéis, recintos e grandes edifícios, com a eficiência que uma cidade moderna exige.",
   },
   {
@@ -120,14 +112,12 @@ const STOPS: Stop[] = [
     title: "SPOTIFY CAMP NOU",
     product: "Toda a família de produtos",
     link: "https://www.midea.com/global/space-master",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/2014._Camp_Nou._M%C3%A9s_que_un_club._Barcelona_B40.jpg/960px-2014._Camp_Nou._M%C3%A9s_que_un_club._Barcelona_B40.jpg",
+    image: "/midea-demo/stop-09-campnou.jpg",
     copy: "«Camp Nou» significa literalmente «campo novo», um nome provisório escolhido em 1957 que os adeptos tanto adoraram que simplesmente ficou. Algumas coisas são feitas para durar.\n\nA bola chega a casa, e com ela chega toda a família Midea: cozinha, lavandaria, climatização e soluções comerciais, juntas sob os holofotes. Uma cidade, uma equipa, a marca de eletrodomésticos inteligentes número um do mundo.",
   },
 ];
 
-const HERO_IMAGE =
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Barcelona_-_Exterior_of_the_Apse_of_the_Sagrada_Fam%C3%ADlia_-_Western_exposure.jpg/1280px-Barcelona_-_Exterior_of_the_Apse_of_the_Sagrada_Fam%C3%ADlia_-_Western_exposure.jpg";
+const HERO_IMAGE = "/midea-demo/hero-sagradafamilia.jpg";
 
 /** Marquee stations — consecutive duplicates collapsed, like the original JS. */
 const MARQUEE = STOPS.filter((s, i) => i === 0 || STOPS[i - 1].location !== s.location).map(
@@ -254,7 +244,7 @@ export default function MideaJourney() {
       {/* ------------------------------- HERO ------------------------------- */}
       <section className="mxb-hero" id="mxb-top">
         <div className="mxb-hero-media">
-          <img className="mxb-hero-image" src={HERO_IMAGE} alt="" width={1280} height={853} />
+          <img className="mxb-hero-image" src={HERO_IMAGE} alt="" width={1280} height={1673} />
           <div className="mxb-hero-scrim" />
         </div>
 
