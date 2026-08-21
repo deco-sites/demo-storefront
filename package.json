@@ -19,6 +19,7 @@
     "types": "wrangler types",
     "typecheck": "tsc --noEmit",
     "test": "tsx --test \"src/**/*.test.ts\"",
+    "smoke:headers": "tsx scripts/smoke-headers.ts",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx}\"",
     "knip": "knip",
