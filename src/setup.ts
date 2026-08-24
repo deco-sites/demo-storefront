@@ -151,13 +151,6 @@ registerCommerceLoaders({
 import { registerInvokeHandlers } from "@decocms/blocks-admin";
 
 registerInvokeHandlers({
-  // Header search suggestions — fetched from the browser on each keystroke, so
-  // it goes through the additive invoke registry (the only one the
-  // /deco/invoke endpoint consults for site-local handlers).
-  "site/loaders/searchSuggestions.ts": async (props) =>
-    (await import("./loaders/searchSuggestions")).default(props as any),
-  "site/loaders/searchSuggestions": async (props) =>
-    (await import("./loaders/searchSuggestions")).default(props as any),
   "site/actions/wishlist/submit.ts": async (props, req) =>
     (await import("./actions/wishlist/submit")).default(props, req),
   "site/actions/wishlist/submit": async (props, req) =>
