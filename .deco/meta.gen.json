@@ -3267,54 +3267,7 @@
                 "nullable": true,
                 "title": "Placeholder",
                 "description": "Search bar default placeholder message",
-                "default": "O que você está procurando?"
-              },
-              "labels": {
-                "type": "object",
-                "properties": {
-                  "loading": {
-                    "type": "string",
-                    "nullable": true,
-                    "title": "Loading",
-                    "default": "Buscando…"
-                  },
-                  "suggestionsTitle": {
-                    "type": "string",
-                    "nullable": true,
-                    "title": "Suggestions title",
-                    "default": "Produtos sugeridos"
-                  },
-                  "seeAll": {
-                    "type": "string",
-                    "nullable": true,
-                    "title": "See all results",
-                    "default": "Ver todos os resultados"
-                  },
-                  "empty": {
-                    "type": "string",
-                    "nullable": true,
-                    "title": "Empty state",
-                    "description": "`{term}` is replaced with what the shopper typed",
-                    "default": "Nenhum produto encontrado para “{term}”."
-                  },
-                  "searchAriaLabel": {
-                    "type": "string",
-                    "nullable": true,
-                    "title": "Search accessible name",
-                    "description": "Accessible name of the search trigger, input and dialog",
-                    "default": "Buscar"
-                  },
-                  "closeAriaLabel": {
-                    "type": "string",
-                    "nullable": true,
-                    "title": "Close accessible name",
-                    "description": "Accessible name of the close button and the backdrop",
-                    "default": "Fechar busca"
-                  }
-                },
-                "description": "Copy shown inside the header search modal\n\nNot read by `Searchbar` itself: it lives here so the whole search copy set\n(placeholder + modal strings) is one group in the CMS, and Header forwards\nit to `SearchModal`.",
-                "nullable": true,
-                "title": "Search modal labels"
+                "default": "What are you looking for?"
               },
               "loader": {
                 "type": "object",

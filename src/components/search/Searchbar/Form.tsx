@@ -1,18 +1,13 @@
 /**
  * Search form. Submits to /s?q=<term>; as the user types, suggestions are
  * fetched via HTMX (kept for now — the suggestions migration is its own task).
- *
- * Cmd/Ctrl+K is owned by the header search modal (see SearchModal.tsx), the
- * primary search entry point — a second listener here made one keypress open
- * both the side drawer and the modal.
  */
-import { useId, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 import { Suggestion } from "@decocms/apps-commerce/types";
-import { SEARCHBAR_INPUT_FORM_ID } from "../../../constants";
+import { SEARCHBAR_INPUT_FORM_ID, SIDEMENU_DRAWER_ID } from "../../../constants";
 import { useComponent } from "../../../sections/Component";
 import Icon from "../../ui/Icon";
 import { Props as SuggestionProps } from "./Suggestions";
-import type { SearchModalLabels } from "../SearchModal";
 import { asResolved } from "~/types/deco";
 import { type Resolved } from "~/types/deco";
 
@@ -25,18 +20,9 @@ export interface SearchbarProps {
   /**
    * @title Placeholder
    * @description Search bar default placeholder message
-   * @default O que você está procurando?
+   * @default What are you looking for?
    */
   placeholder?: string;
-  /**
-   * @title Search modal labels
-   * @description Copy shown inside the header search modal
-   *
-   * Not read by `Searchbar` itself: it lives here so the whole search copy set
-   * (placeholder + modal strings) is one group in the CMS, and Header forwards
-   * it to `SearchModal`.
-   */
-  labels?: SearchModalLabels;
   /** @description Loader to run when suggesting new elements */
   loader: Resolved<Suggestion | null>;
 }
@@ -44,11 +30,26 @@ export interface SearchbarProps {
 const Suggestions = "./Suggestions.tsx";
 
 export default function Searchbar({
-  placeholder = "O que você está procurando?",
+  placeholder = "What are you looking for?",
   loader,
 }: SearchbarProps) {
   const slot = useId();
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const isK = e.key === "k" || e.key === "K";
+      if (e.metaKey && isK) {
+        const drawer = document.getElementById(SIDEMENU_DRAWER_ID) as HTMLInputElement | null;
+        if (drawer) {
+          drawer.checked = true;
+          inputRef.current?.focus();
+        }
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, []);
 
   const onSubmit = () => {
     const term = inputRef.current?.value;
@@ -76,7 +77,7 @@ export default function Searchbar({
         <button
           type="submit"
           className="btn btn-ghost btn-square no-animation shrink-0"
-          aria-label="Buscar"
+          aria-label="Search"
           form={SEARCHBAR_INPUT_FORM_ID}
           tabIndex={-1}
         >
