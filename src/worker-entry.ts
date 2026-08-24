@@ -122,7 +122,48 @@ const abTestedWorker = withABTesting(decoWorker, {
 });
 
 // ---------------------------------------------------------------------------
-// Strip `x-powered-by` from every response.
+// Cross-Origin-Resource-Policy (CORP).
+//
+// CORP tells the browser which origins may embed a response as a no-cors
+// subresource. Without it, any site can pull our documents/assets into its own
+// process and use a Spectre-style side channel to read them. Default here is
+// `same-site`, which is the strictest value compatible with serving the
+// storefront from apex + `www` + preview subdomains.
+//
+// Scope: this wrapper only sees responses produced by the worker. Static
+// files (`public/` — favicons, sprites.svg, robots.txt, site.webmanifest,
+// /image/*) and the client build (/_build/, /assets/) are served by
+// Cloudflare Assets BEFORE the worker is invoked (no `assets.run_worker_first`
+// in wrangler.jsonc), so they keep no CORP header. That is deliberate: the
+// absence of CORP is exactly equivalent to `cross-origin` for a browser, which
+// is what those public, cross-origin-shared assets want anyway — so routing
+// them through the worker just to state it explicitly would only buy extra
+// worker invocations on the hottest paths. It would only matter if we ever
+// enabled COEP, which we don't (see below).
+//
+// The admin/RPC endpoints the worker does serve are opted into `cross-origin`,
+// since they are consumed from the deco CMS admin on a different origin:
+// `/deco/invoke/` (RPC), `/deco/render` and `/deco/meta`.
+//
+// COEP (`require-corp`) is deliberately NOT set: it would require every
+// third-party subresource (Shopify CDN assets/frames, fontshare webfonts,
+// Instagram images) to send CORP or CORS headers of its own, and those are
+// outside our control — enabling it would break the storefront. CORP on our
+// own responses is the half of the pair we can ship safely.
+// ---------------------------------------------------------------------------
+const CORP_SAME_SITE = "same-site";
+const CORP_CROSS_ORIGIN = "cross-origin";
+
+// Worker-served, admin-facing endpoints (see src/routes/deco/*).
+const CROSS_ORIGIN_PREFIXES = ["/deco/invoke/", "/deco/render", "/deco/meta"];
+
+const corpValueFor = (pathname: string): string =>
+  CROSS_ORIGIN_PREFIXES.some((prefix) => pathname.startsWith(prefix))
+    ? CORP_CROSS_ORIGIN
+    : CORP_SAME_SITE;
+
+// ---------------------------------------------------------------------------
+// Strip `x-powered-by` from every response, and stamp CORP.
 //
 // The framework stamps the exact platform version (e.g. `deco@7.20.7`) on
 // outgoing responses, which hands an attacker a precise version to match
@@ -136,26 +177,34 @@ interface FetchWorker {
   fetch(request: Request, env: never, ctx: never): Response | Promise<Response>;
 }
 
-const withoutPoweredBy = <T extends FetchWorker>(worker: T): T => ({
+const withSecurityHeaders = <T extends FetchWorker>(worker: T): T => ({
   ...worker,
   fetch: async (request: Request, env: never, ctx: never) => {
     const response = await worker.fetch(request, env, ctx);
 
-    // WebSocket upgrades and bodyless responses can't be reconstructed.
-    if (
-      ("webSocket" in response && response.webSocket) ||
-      !response.headers.has("x-powered-by")
-    ) {
+    // WebSocket upgrades can't be reconstructed.
+    if ("webSocket" in response && response.webSocket) {
       return response;
     }
 
-    const stripped = new Response(response.body, response);
-    stripped.headers.delete("x-powered-by");
-    return stripped;
+    const needsCorp = !response.headers.has("cross-origin-resource-policy");
+    if (!needsCorp && !response.headers.has("x-powered-by")) {
+      return response;
+    }
+
+    const patched = new Response(response.body, response);
+    patched.headers.delete("x-powered-by");
+    if (needsCorp) {
+      patched.headers.set(
+        "Cross-Origin-Resource-Policy",
+        corpValueFor(new URL(request.url).pathname),
+      );
+    }
+    return patched;
   },
 });
 
 // instrumentWorker MUST be the outermost wrapper. It initialises the OTel
 // pipeline (metrics buffering, error log direct-POST) and reads
 // DECO_OTEL_METRICS_ENDPOINT + DECO_OTEL_LOGS_ENDPOINT from env at boot.
-export default instrumentWorker(withoutPoweredBy(abTestedWorker));
+export default instrumentWorker(withSecurityHeaders(abTestedWorker));
