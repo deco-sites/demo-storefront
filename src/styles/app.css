@@ -48,7 +48,10 @@
   /* Ink — primary text & solid surfaces */
   --color-ink: #0a0a0a;
   --color-ink-soft: #262626;
-  --color-muted: #737373;
+  /* Darkened one step from #737373: the card's `frost` panel composites to
+     #f6f6f6, where #737373 was only 4.39:1 (below the AA 4.5:1 minimum) for
+     the struck-through list price. #6b6b6b is 4.93:1 there, 5.13:1 on white. */
+  --color-muted: #6b6b6b;
   /* Opaque (was rgb(64 64 64 / 60%), which composited to ~#8c8c8c over
      white/frost — only 3.2:1, below the WCAG AA 4.5:1 minimum for text). */
   --color-muted-soft: #666666;
@@ -56,7 +59,10 @@
   /* Glass — the frosted-blur surface used across nav, tags, PDP panel, banners */
   --color-glass: rgb(240 240 240 / 60%);
   --color-glass-strong: rgb(245 245 245 / 60%);
-  --color-glass-tag: rgb(166 166 166 / 60%);
+  /* Opaque (was rgb(166 166 166 / 60%): composited over a light product photo
+     it landed around #cacaca, leaving white label text at 1.6:1). #525252
+     gives white 7.8:1 regardless of the image behind the badge. */
+  --color-glass-tag: #525252;
   --color-glass-white: rgb(255 255 255 / 40%);
 
   /* Radii — named to match the Figma "border-radius/*" variables */
