@@ -2,7 +2,7 @@
   "major": 1,
   "version": "1.0.0",
   "namespace": "site",
-  "site": "storefront",
+  "site": "demo-storefront",
   "manifest": {
     "blocks": {
       "sections": {

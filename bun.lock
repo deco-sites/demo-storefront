@@ -7,6 +7,7 @@
       "dependencies": {
         "@decocms/apps-commerce": "^7.52.1",
         "@decocms/apps-shopify": "^7.52.1",
+        "@decocms/apps-vtex": "^7.52.1",
         "@decocms/blocks": "^7.52.1",
         "@decocms/blocks-admin": "^7.52.1",
         "@decocms/blocks-cli": "^7.52.1",
@@ -107,6 +108,10 @@
     "@decocms/apps-commerce": ["@decocms/apps-commerce@7.52.1", "", { "dependencies": { "@decocms/blocks": "7.52.1" }, "peerDependencies": { "react": "^19.0.0", "react-dom": "^19.0.0" } }, "sha512-ktMzPdn77szAT/teKrjPANnymILTyUy5H65MNooRhwzBNIGhdmLOXoJzXlKP4314DZV5hAnukHZHlfmpN6b69A=="],
 
     "@decocms/apps-shopify": ["@decocms/apps-shopify@7.52.1", "", { "dependencies": { "@decocms/apps-commerce": "7.52.1", "@decocms/blocks": "7.52.1", "@decocms/tanstack": "7.52.1" }, "peerDependencies": { "react": "^19.0.0", "react-dom": "^19.0.0" } }, "sha512-3wdFjb/klXDQkC0+msHtqoIOdT5nGuXAVZcRCTOpOw2YVT/vSYcHGpUT96NGSulGqkox8sdOtm5DDdyOmg4/pw=="],
+
+    "@decocms/apps-vtex": ["@decocms/apps-vtex@7.52.1", "", { "dependencies": { "@decocms/apps-commerce": "7.52.1", "@decocms/apps-website": "7.52.1", "@decocms/blocks": "7.52.1", "@decocms/tanstack": "7.52.1" }, "peerDependencies": { "@tanstack/react-query": ">=5.0.0", "react": "^19.0.0", "react-dom": "^19.0.0" }, "optionalPeers": ["@tanstack/react-query"] }, "sha512-7Alzk/misxoicAwQ6dKQqCX1jCWfdGhQ+4Vg6lcfsh0S4NghCgak6Ap7RT4DYR14H7oK+Vthx8kOEMwJIDMdRQ=="],
+
+    "@decocms/apps-website": ["@decocms/apps-website@7.52.1", "", { "dependencies": { "@decocms/apps-commerce": "7.52.1", "@decocms/blocks": "7.52.1" }, "peerDependencies": { "react": "^19.0.0", "react-dom": "^19.0.0" } }, "sha512-ULpIX5Vwtni2gZu+Kuf21gemS+rqzWE1X0Zyl5T5o5ePhpKnxQwCVuB9gm4uvGoGg6pRoTgpIWB4MX1ZniCCeg=="],
 
     "@decocms/blocks": ["@decocms/blocks@7.52.1", "", { "dependencies": { "@opentelemetry/api": "^1.9.1", "@opentelemetry/semantic-conventions": "^1.41.1", "@tanstack/store": "^0.9.1", "clsx": "^2.1.1", "fast-json-patch": "^3.1.0", "tailwind-merge": "^3.3.1" }, "peerDependencies": { "react": "^19.0.0", "react-dom": "^19.0.0" } }, "sha512-sCzv10s4r7nzDtjuqPlakSTvFdLx3bfZ2ynJ/MrXvJkDNXZHQun8Mz2j+9lWA6TA9KC6nyGNuB9i9+enOElB0w=="],
 
