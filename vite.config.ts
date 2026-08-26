@@ -17,11 +17,18 @@ const srcDir = path.resolve(__dirname, "src");
 // `strictPort` is on whenever PORT is set: if the platform assigned us a port,
 // silently listening on a *different* one means the health check and the
 // router hit a closed port — failing loudly is the correct outcome there.
+// Validated against the full 1-65535 range, not just `Number.isInteger`:
+// out-of-range values would otherwise reach Vite and fail at bind time with a
+// far more obscure error. Port 0 is rejected for a subtler reason — Vite reads
+// it as "pick any free port", which would silently listen elsewhere and defeat
+// the `strictPort` guarantee below.
 const portEnv = process.env.PORT;
 const port = portEnv ? Number(portEnv) : undefined;
 
-if (portEnv && !Number.isInteger(port!)) {
-  throw new Error(`Invalid PORT environment variable: ${JSON.stringify(portEnv)}`);
+if (portEnv && (!Number.isInteger(port!) || port! < 1 || port! > 65535)) {
+  throw new Error(
+    `Invalid PORT environment variable: ${JSON.stringify(portEnv)} (expected an integer 1-65535)`,
+  );
 }
 
 export default defineConfig({
