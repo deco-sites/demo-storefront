@@ -232,6 +232,7 @@ section[data-deferred="true"] {
 
   /* Drawer / modal scroll lock */
   body:has(dialog[open]),
+  body.search-modal-open,
   body:has(.drawer-toggle:checked) {
     overflow: hidden;
   }
