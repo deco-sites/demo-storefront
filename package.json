@@ -31,12 +31,12 @@
   "author": "deco.cx",
   "license": "MIT",
   "dependencies": {
-    "@decocms/apps-commerce": "^7.20.7",
-    "@decocms/apps-shopify": "^7.20.7",
-    "@decocms/blocks": "^7.20.7",
-    "@decocms/blocks-admin": "^7.20.7",
-    "@decocms/blocks-cli": "^7.20.7",
-    "@decocms/tanstack": "^7.20.7",
+    "@decocms/apps-commerce": "^7.52.1",
+    "@decocms/apps-shopify": "^7.52.1",
+    "@decocms/blocks": "^7.52.1",
+    "@decocms/blocks-admin": "^7.52.1",
+    "@decocms/blocks-cli": "^7.52.1",
+    "@decocms/tanstack": "^7.52.1",
     "@tanstack/react-query": "5.90.21",
     "@tanstack/react-router": "1.166.7",
     "@tanstack/react-start": "1.166.8",
@@ -64,8 +64,5 @@
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
     "wrangler": "^4.72.0"
-  },
-  "patchedDependencies": {
-    "@decocms/blocks@7.20.7": "patches/@decocms%2Fblocks@7.20.7.patch"
   }
 }
