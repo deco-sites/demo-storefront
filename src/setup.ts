@@ -15,6 +15,7 @@
 import "./cache-config";
 
 import { registerCommerceLoaders, applySectionConventions } from "@decocms/blocks/cms";
+import { registerImageQuality } from "@decocms/blocks/hooks";
 import { createSiteSetup } from "@decocms/blocks/setup";
 import { createAdminSetup } from "@decocms/blocks-admin/setup";
 import { autoconfigApps, type AppRegistry } from "@decocms/blocks-admin/apps";
@@ -41,6 +42,20 @@ import "./setup/section-loaders";
 const APP_REGISTRY: AppRegistry = [
   { ...SHOPIFY_REGISTRY_ENTRY, module: async () => shopifyMod as never },
 ];
+
+// -- Image quality --
+// Replaces the local `@decocms/blocks` patch dropped in the 7.20.7 -> 7.52.1
+// upgrade. That patch defaulted every optimized URL to `quality=original` to
+// fix banner banding from the CDN's aggressive default compression (#7);
+// upstream has since shipped this supported hook instead, whose type
+// deliberately excludes `original` (a site-wide 100% default costs bytes on
+// every page). `high` is the strongest supported level — the CDN maps
+// low/medium/high to 60/70/80%, versus the 60% it applies with no param.
+//
+// Must be called at module scope, not per-request: this is isolate-wide state,
+// and setting it on only one of the SSR/hydration paths would emit mismatched
+// src/srcSet and re-download every image on the client.
+registerImageQuality("high");
 
 // -- Framework setup (framework-generic options only) --
 createSiteSetup({
