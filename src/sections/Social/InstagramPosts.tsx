@@ -8,6 +8,7 @@ export interface Data {
   permalink: string;
   media_type: string;
   media_url: string;
+  caption?: string;
 }
 export interface Props extends SectionHeaderProps {
   /**
@@ -19,7 +20,18 @@ export interface Props extends SectionHeaderProps {
    */
   nposts: number;
 }
-const FIELDS = "media_url,media_type,permalink";
+/** Usa a legenda do post como texto alternativo, truncada; sem legenda, cai num rótulo posicional. */
+const captionToAlt = (caption: string | undefined, index: number) => {
+  const text = caption?.replace(/\s+/g, " ").trim();
+
+  if (!text) {
+    return `Publicação do Instagram ${index + 1}`;
+  }
+
+  return text.length > 120 ? `${text.slice(0, 117)}...` : text;
+};
+
+const FIELDS = "media_url,media_type,permalink,caption";
 const fetchPosts = async (token: string): Promise<Data[]> => {
   try {
     const response = await fetch(
@@ -103,6 +115,7 @@ function InstagramPosts({
               {item.media_type === "IMAGE" ? (
                 <Image
                   loading="lazy"
+                  alt={captionToAlt(item.caption, index)}
                   className="max-w-full max-h-full object-cover"
                   style={{ aspectRatio: "1 / 1" }}
                   src={item.media_url ?? ""}
