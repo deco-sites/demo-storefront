@@ -8,6 +8,14 @@
       "__resolveType": "Header"
     },
     {
+      "__resolveType": "site/sections/Product/ProductShelf.tsx",
+      "title": "Discover Our Featured Picks",
+      "cta": "/mono",
+      "products": {
+        "__resolveType": "Product List Loader"
+      }
+    },
+    {
       "__resolveType": "site/sections/Content/Hero.tsx",
       "slides": [
         {
@@ -65,14 +73,6 @@
         "Interest-free installments",
         "Up to 15% off paying cash"
       ]
-    },
-    {
-      "__resolveType": "site/sections/Product/ProductShelf.tsx",
-      "title": "Discover Our Featured Picks",
-      "cta": "/mono",
-      "products": {
-        "__resolveType": "Product List Loader"
-      }
     },
     {
       "__resolveType": "website/flags/multivariate/section.ts",
