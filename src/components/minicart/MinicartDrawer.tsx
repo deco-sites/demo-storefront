@@ -8,10 +8,12 @@ export default function MinicartDrawer() {
         type="checkbox"
         id={MINICART_DRAWER_ID}
         className="peer/minicart sr-only"
-        aria-label="Cart"
+        // The only control that opens this drawer is the header's "Bag"
+        // button, so the toggle announces the same wording the user sees.
+        aria-label="Bag"
       />
       {/* Click-outside overlay: pointer-only. It lives outside every landmark,
-          so expose it to nobody — the drawer has its own "Close cart" button. */}
+          so expose it to nobody — the drawer has its own "Close bag" button. */}
       <label
         htmlFor={MINICART_DRAWER_ID}
         aria-hidden="true"

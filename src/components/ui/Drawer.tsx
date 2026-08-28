@@ -9,9 +9,15 @@ export interface Props {
   children?: ReactNode;
   aside: ReactNode;
   id?: string;
+  /**
+   * Accessible name for the toggle — pass the drawer's visible title (e.g.
+   * "Menu") so screen readers announce what the user sees instead of a
+   * generic "drawer" string (WCAG 2.5.3 Label in Name).
+   */
+  label?: string;
 }
 
-function Drawer({ children, aside, open, className: _class = "", id }: Props) {
+function Drawer({ children, aside, open, className: _class = "", id, label }: Props) {
   const fallbackId = useId();
   const toggleId = id ?? fallbackId;
 
@@ -66,7 +72,7 @@ function Drawer({ children, aside, open, className: _class = "", id }: Props) {
         defaultChecked={open}
         type="checkbox"
         className="drawer-toggle"
-        aria-label={open ? "open drawer" : "closed drawer"}
+        aria-label={label ?? (open ? "open drawer" : "closed drawer")}
       />
 
       <div className="drawer-content">{children}</div>
