@@ -46,8 +46,14 @@ interface Props {
   social?: Social[];
   paymentMethods?: Social[];
   policies?: Item[];
-  logo?: ImageWidget;
+  logo?: Logo | ImageWidget;
   trademark?: string;
+}
+
+interface Logo {
+  src: ImageWidget;
+  /** @description Texto alternativo da logo. Ex.: nome da loja/marca */
+  alt?: string;
 }
 
 function Footer({
@@ -59,6 +65,10 @@ function Footer({
   logo,
   trademark,
 }: Props) {
+  const logoSrc = typeof logo === "string" ? logo : logo?.src;
+  const logoAlt =
+    (typeof logo === "string" ? undefined : logo?.alt) || trademark || "Deco Storefront";
+
   return (
     <footer role="contentinfo" className="mt-10 bg-gray-50 px-8">
       <div className="flex flex-col gap-8 py-10 sm:gap-10 sm:py-14">
@@ -139,8 +149,8 @@ function Footer({
           </ul>
 
           <div className="flex flex-nowrap items-center justify-between gap-4 sm:justify-center">
-            {logo && (
-              <img loading="lazy" src={logo} alt="Logo" className="h-5 w-auto" />
+            {logoSrc && (
+              <img loading="lazy" src={logoSrc} alt={logoAlt} className="h-5 w-auto" />
             )}
             <span className="text-xs text-muted">{trademark}</span>
           </div>
