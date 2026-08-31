@@ -66,8 +66,7 @@ function Footer({
   trademark,
 }: Props) {
   const logoSrc = typeof logo === "string" ? logo : logo?.src;
-  const logoAlt =
-    (typeof logo === "string" ? undefined : logo?.alt) || "Deco Storefront";
+  const logoAlt = (typeof logo === "string" ? undefined : logo?.alt) || "Deco Storefront";
 
   return (
     <footer role="contentinfo" className="mt-10 bg-gray-50 px-8">
@@ -77,9 +76,7 @@ function Footer({
             <span className="text-sm font-medium text-ink-soft">
               {support.title ?? "Atendimento"}
             </span>
-            {support.description && (
-              <p className="text-sm text-muted">{support.description}</p>
-            )}
+            {support.description && <p className="text-sm text-muted">{support.description}</p>}
             <ul className="flex flex-col gap-2 sm:flex-row sm:gap-6">
               {support.channels?.map(({ label, value, href }) => (
                 <li key={label} className="text-sm text-muted">
@@ -149,9 +146,7 @@ function Footer({
           </ul>
 
           <div className="flex flex-nowrap items-center justify-between gap-4 sm:justify-center">
-            {logoSrc && (
-              <img loading="lazy" src={logoSrc} alt={logoAlt} className="h-5 w-auto" />
-            )}
+            {logoSrc && <img loading="lazy" src={logoSrc} alt={logoAlt} className="h-5 w-auto" />}
             <span className="text-xs text-muted">{trademark}</span>
           </div>
 
