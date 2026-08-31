@@ -67,7 +67,7 @@ function Footer({
 }: Props) {
   const logoSrc = typeof logo === "string" ? logo : logo?.src;
   const logoAlt =
-    (typeof logo === "string" ? undefined : logo?.alt) || trademark || "Deco Storefront";
+    (typeof logo === "string" ? undefined : logo?.alt) || "Deco Storefront";
 
   return (
     <footer role="contentinfo" className="mt-10 bg-gray-50 px-8">
