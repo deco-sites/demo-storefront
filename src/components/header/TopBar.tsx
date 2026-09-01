@@ -92,9 +92,7 @@ function Unit({ value, label }: { value: number; label: string }) {
       <span className="rounded-[4px] bg-black/25 px-1.5 py-0.5 font-semibold tabular-nums text-white text-[11px]">
         {pad(value)}
       </span>
-      <span className="mt-px text-[7px] uppercase tracking-[0.12em] text-white/70">
-        {label}
-      </span>
+      <span className="mt-px text-[7px] uppercase tracking-[0.12em] text-white/70">{label}</span>
     </span>
   );
 }
@@ -127,10 +125,7 @@ function TopBar({
 
   useEffect(() => {
     if (highlights.length < 2) return;
-    const timer = setInterval(
-      () => setHighlightIndex((i) => (i + 1) % highlights.length),
-      4000,
-    );
+    const timer = setInterval(() => setHighlightIndex((i) => (i + 1) % highlights.length), 4000);
     return () => clearInterval(timer);
   }, [highlights.length]);
 
@@ -176,12 +171,8 @@ function TopBar({
                 className="inline-block size-1.5 rounded-full bg-white"
                 style={{ animation: "topbar-pulse 1.4s ease-in-out infinite" }}
               />
-              <strong className="font-bold uppercase tracking-[0.14em]">
-                {title}
-              </strong>
-              <span className="hidden text-white/90 sm:inline">
-                {description}
-              </span>
+              <strong className="font-bold uppercase tracking-[0.14em]">{title}</strong>
+              <span className="hidden text-white/90 sm:inline">{description}</span>
             </span>
 
             <span className="flex items-center gap-1">

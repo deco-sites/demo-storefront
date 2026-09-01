@@ -128,10 +128,7 @@ function Header({
 }: Props) {
   const device = useDevice();
   return (
-    <header
-      role="banner"
-      className="fixed top-0 inset-x-0 z-50"
-    >
+    <header role="banner" className="fixed top-0 inset-x-0 z-50">
       {topBar?.enabled && <TopBar {...topBar} />}
 
       {alerts.length > 0 && (
