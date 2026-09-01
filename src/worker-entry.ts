@@ -76,8 +76,34 @@ const decoWorker = createDecoWorkerEntry(serverEntry, {
   },
 
   // Enforced header — `csp` would only produce the report-only variant.
+  //
+  // Cross-origin isolation headers:
+  //
+  // `Cross-Origin-Opener-Policy: same-origin` severs the `window.opener`
+  // relationship with cross-origin documents (Spectre / XS-Leaks hardening).
+  // Safe here because no storefront flow relies on popups: sign-in is a plain
+  // link to `/login` (see `src/components/header/SignIn.tsx`) and Shopify's
+  // hosted checkout is a full-page navigation, not a popup. COOP only applies
+  // to top-level documents, so the deco CMS preview iframe is unaffected.
+  //
+  // `Cross-Origin-Resource-Policy: same-origin` stops other origins from
+  // embedding our responses as subresources. It governs how *our* responses
+  // are consumed, never how we consume third parties — Shopify/Instagram
+  // images, Fontshare/Google fonts and the Instagram feed keep working.
+  //
+  // `Cross-Origin-Embedder-Policy` is deliberately NOT set. Both
+  // `require-corp` and `credentialless` would require every cross-origin
+  // subresource to opt in via CORP/CORS, and the hosts listed in the CSP above
+  // (cdn.shopify.com, *.fbcdn.net, cdn/api.fontshare.com, fonts.gstatic.com)
+  // do not send CORP today, so enabling it would break product images, the
+  // Instagram section and webfonts. Nothing on this storefront needs
+  // `SharedArrayBuffer` or the memory-measurement APIs, so full cross-origin
+  // isolation buys us nothing that justifies that breakage. Revisit only after
+  // verifying each host in staging.
   securityHeaders: {
     "Content-Security-Policy": CSP_DIRECTIVES.join("; "),
+    "Cross-Origin-Opener-Policy": "same-origin",
+    "Cross-Origin-Resource-Policy": "same-origin",
   },
 
   buildSegment: (request) => {
