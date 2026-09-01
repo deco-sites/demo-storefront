@@ -89,7 +89,9 @@ const decoWorker = createDecoWorkerEntry(serverEntry, {
   // `Cross-Origin-Resource-Policy: same-origin` stops other origins from
   // embedding our responses as subresources. It governs how *our* responses
   // are consumed, never how we consume third parties — Shopify/Instagram
-  // images, Fontshare/Google fonts and the Instagram feed keep working.
+  // images, Fontshare/Google fonts and the Instagram feed keep working. It is
+  // only enforced against embedders that themselves opt into COEP, which the
+  // deco admin does not, so the CMS preview iframe keeps rendering.
   //
   // `Cross-Origin-Embedder-Policy` is deliberately NOT set. Both
   // `require-corp` and `credentialless` would require every cross-origin
