@@ -109,19 +109,28 @@ function TopBar({
   highlights = [],
 }: Props) {
   const target = expiresAt ? new Date(expiresAt).getTime() : NaN;
-  const [delta, setDelta] = useState<Delta>(() => computeDelta(target));
+  // Delta starts zeroed (not computeDelta(target)) so the server-rendered
+  // markup matches the client's first render exactly; Date.now() differs
+  // between the two and would otherwise trigger a hydration mismatch.
+  const [delta, setDelta] = useState<Delta>({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+    expired: false,
+  });
   const [copied, setCopied] = useState(false);
   const [highlightIndex, setHighlightIndex] = useState(0);
 
   useEffect(() => {
-    if (delta.expired) return;
+    setDelta(computeDelta(target));
     const timer = setInterval(() => {
       const next = computeDelta(target);
       setDelta(next);
       if (next.expired) clearInterval(timer);
     }, 1000);
     return () => clearInterval(timer);
-  }, [target, delta.expired]);
+  }, [target]);
 
   useEffect(() => {
     if (highlights.length < 2) return;
