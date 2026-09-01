@@ -49,3 +49,49 @@ export const rebaseToSearch = (
     search: Object.fromEntries(url.searchParams),
   };
 };
+
+/** Canonical origin of the storefront, used to absolutize social/SEO URLs. */
+export const SITE_ORIGIN = "https://demo-storefront.decocms.com";
+
+/**
+ * Resolves the value for the `og:url` meta tag.
+ *
+ * Facebook/Twitter/WhatsApp reject relative `og:url` values, so a path-only
+ * `pageUrl` (which is what the CMS loader forwards on the home route) must be
+ * absolutized against the site origin. Returns `undefined` only when the input
+ * is unusable, so callers can decide on their own fallback.
+ */
+export const toAbsoluteOgUrl = (
+  pageUrl: string | undefined | null,
+  origin: string = SITE_ORIGIN,
+): string | undefined => {
+  const raw = pageUrl?.trim();
+  if (!raw) return undefined;
+  try {
+    // Already absolute (http/https) → keep as-is; anything else is resolved
+    // against the site origin.
+    const url = new URL(raw, origin);
+    if (url.protocol !== "http:" && url.protocol !== "https:") return undefined;
+    return url.href;
+  } catch {
+    return undefined;
+  }
+};
+
+/**
+ * Picks the `og:url` value for a page, given the meta tags already produced by
+ * the CMS SEO block. Precedence: an explicit canonical from the CMS, then the
+ * page URL resolved by the loader, then the site home — always absolute.
+ */
+export const resolveOgUrl = (
+  meta: readonly Record<string, string | undefined>[],
+  pageUrl: string | undefined | null,
+  origin: string = SITE_ORIGIN,
+): string => {
+  const cmsOgUrl = meta.find((tag) => tag.property === "og:url")?.content;
+  return (
+    toAbsoluteOgUrl(cmsOgUrl, origin) ??
+    toAbsoluteOgUrl(pageUrl, origin) ??
+    new URL("/", origin).href
+  );
+};
