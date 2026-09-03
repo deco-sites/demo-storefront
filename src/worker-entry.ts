@@ -76,8 +76,20 @@ const decoWorker = createDecoWorkerEntry(serverEntry, {
   },
 
   // Enforced header — `csp` would only produce the report-only variant.
+  //
+  // Cross-origin isolation headers: COOP puts the storefront in its own
+  // browsing context group (Spectre / cross-tab session leakage), using
+  // `same-origin-allow-popups` so any Shopify login/checkout window opened via
+  // `window.open` keeps its `window.opener` reference. CORP blocks other
+  // origins from embedding our resources as no-cors subresources.
+  //
+  // COEP is deliberately NOT set: the storefront loads Instagram images
+  // (*.fbcdn.net), fontshare webfonts and Shopify iframes that don't send
+  // CORP/`crossorigin`, so enabling it would break them. Needs its own audit.
   securityHeaders: {
     "Content-Security-Policy": CSP_DIRECTIVES.join("; "),
+    "Cross-Origin-Opener-Policy": "same-origin-allow-popups",
+    "Cross-Origin-Resource-Policy": "same-origin",
   },
 
   buildSegment: (request) => {
