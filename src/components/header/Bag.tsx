@@ -24,7 +24,9 @@ export default function Bag({ size = "md" }: { size?: "sm" | "md" }) {
     return (
       <label
         htmlFor={MINICART_DRAWER_ID}
-        aria-label="Open cart"
+        // Same control as the desktop pill, which shows the text "Bag" — the
+        // icon-only variant announces the same wording (WCAG 2.5.3).
+        aria-label="Bag"
         className="tap-scale relative flex size-10 cursor-pointer items-center justify-center rounded-sm text-ink transition-colors duration-(--duration-fast) hover:bg-white/60"
       >
         {busy ? (

@@ -9,9 +9,14 @@ export interface Props {
   children?: ReactNode;
   aside: ReactNode;
   id?: string;
+  /**
+   * Accessible name of the toggle — pass the same wording the drawer shows as
+   * its visible title ("Menu"), so it isn't announced as "closed drawer".
+   */
+  label?: string;
 }
 
-function Drawer({ children, aside, open, className: _class = "", id }: Props) {
+function Drawer({ children, aside, open, className: _class = "", id, label }: Props) {
   const fallbackId = useId();
   const toggleId = id ?? fallbackId;
 
@@ -66,7 +71,7 @@ function Drawer({ children, aside, open, className: _class = "", id }: Props) {
         defaultChecked={open}
         type="checkbox"
         className="drawer-toggle"
-        aria-label={open ? "open drawer" : "closed drawer"}
+        aria-label={label}
       />
 
       <div className="drawer-content">{children}</div>
