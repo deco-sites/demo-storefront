@@ -1,9 +1,13 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { gunzipSync } from "node:zlib";
-import { withCompression } from "./compression";
+import { withCompression, type FetchWorker } from "./compression";
 
-const worker = (body: BodyInit | null, headers: Record<string, string>, status = 200) => ({
+const worker = (
+  body: BodyInit | null,
+  headers: Record<string, string>,
+  status = 200,
+): FetchWorker => ({
   fetch: () => new Response(body, { status, headers }),
 });
 
