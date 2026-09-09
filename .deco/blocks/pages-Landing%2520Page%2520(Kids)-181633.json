@@ -51,7 +51,11 @@
     }
   ],
   "seo": {
-    "__resolveType": "commerce/sections/Seo/SeoPLPV2.tsx"
+    "__resolveType": "commerce/sections/Seo/SeoPLPV2.tsx",
+    "jsonLD": {
+      "filters": {},
+      "__resolveType": "shopify/loaders/ProductList.ts"
+    }
   },
   "__resolveType": "website/pages/Page.tsx"
 }
