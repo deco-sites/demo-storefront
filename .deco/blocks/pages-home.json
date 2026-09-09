@@ -8,6 +8,7 @@
           "__resolveType": "website/matchers/location.ts",
           "includeLocations": [
             {
+              "regionCode": "SP",
               "country": "BR"
             }
           ]
