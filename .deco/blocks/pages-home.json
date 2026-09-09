@@ -7,7 +7,9 @@
         "rule": {
           "__resolveType": "website/matchers/location.ts",
           "includeLocations": [
-            ""
+            {
+              "country": "BR"
+            }
           ]
         },
         "value": [
