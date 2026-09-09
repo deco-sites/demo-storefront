@@ -74,12 +74,22 @@
             ]
           },
           {
-            "__resolveType": "site/sections/Product/ProductShelf.tsx",
-            "title": "Discover Our Featured Picks",
-            "cta": "/mono",
-            "products": {
-              "__resolveType": "Product List Loader"
-            }
+            "__resolveType": "website/flags/multivariate/section.ts",
+            "variants": [
+              {
+                "value": {
+                  "__resolveType": "site/sections/Product/ProductShelf.tsx",
+                  "title": "Discover Our Featured Picks",
+                  "cta": "/mono",
+                  "products": {
+                    "__resolveType": "Product List Loader"
+                  }
+                },
+                "rule": {
+                  "__resolveType": "website/matchers/never.ts"
+                }
+              }
+            ]
           },
           {
             "__resolveType": "website/flags/multivariate/section.ts",
