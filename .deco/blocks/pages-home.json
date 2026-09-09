@@ -5,7 +5,7 @@
     "variants": [
       {
         "rule": {
-          "__resolveType": "website/matchers/always.ts"
+          "__resolveType": "website/matchers/location.ts"
         },
         "value": [
           {
