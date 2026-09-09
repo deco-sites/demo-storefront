@@ -5,7 +5,10 @@
     "variants": [
       {
         "rule": {
-          "__resolveType": "website/matchers/location.ts"
+          "__resolveType": "website/matchers/location.ts",
+          "includeLocations": [
+            ""
+          ]
         },
         "value": [
           {
