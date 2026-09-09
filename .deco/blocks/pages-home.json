@@ -5,13 +5,7 @@
     "variants": [
       {
         "rule": {
-          "__resolveType": "website/matchers/location.ts",
-          "includeLocations": [
-            {
-              "regionCode": "SP",
-              "country": "BR"
-            }
-          ]
+          "__resolveType": "website/matchers/date.ts"
         },
         "value": [
           {
