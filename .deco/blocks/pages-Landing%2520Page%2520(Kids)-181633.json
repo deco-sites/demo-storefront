@@ -54,7 +54,10 @@
     "__resolveType": "commerce/sections/Seo/SeoPLPV2.tsx",
     "jsonLD": {
       "filters": {},
-      "__resolveType": "shopify/loaders/ProductList.ts"
+      "__resolveType": "shopify/loaders/ProductList.ts",
+      "props": {
+        "count": 1
+      }
     }
   },
   "__resolveType": "website/pages/Page.tsx"
