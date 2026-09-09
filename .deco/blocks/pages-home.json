@@ -5,7 +5,8 @@
     "variants": [
       {
         "rule": {
-          "__resolveType": "website/matchers/date.ts"
+          "__resolveType": "website/matchers/date.ts",
+          "start": "2026-09-12T03:00:00.000Z"
         },
         "value": [
           {
