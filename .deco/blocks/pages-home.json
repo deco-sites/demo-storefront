@@ -5,7 +5,17 @@
       "__resolveType": "Deco"
     },
     {
-      "__resolveType": "Header"
+      "__resolveType": "website/flags/multivariate/section.ts",
+      "variants": [
+        {
+          "value": {
+            "__resolveType": "Header"
+          },
+          "rule": {
+            "__resolveType": "website/matchers/never.ts"
+          }
+        }
+      ]
     },
     {
       "__resolveType": "site/sections/Content/Hero.tsx",
