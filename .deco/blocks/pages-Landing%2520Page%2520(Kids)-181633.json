@@ -51,7 +51,7 @@
     }
   ],
   "seo": {
-    "__resolveType": "website/sections/Seo/SeoV2.tsx"
+    "__resolveType": "commerce/sections/Seo/SeoPLPV2.tsx"
   },
   "__resolveType": "website/pages/Page.tsx"
 }
