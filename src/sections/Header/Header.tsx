@@ -6,6 +6,7 @@ import HeaderNav from "../../components/header/HeaderNav";
 import Menu from "../../components/header/Menu";
 import SignIn from "../../components/header/SignIn";
 import { type SearchbarProps } from "../../components/search/Searchbar/Form";
+import SearchModal from "../../components/search/SearchModal";
 import Drawer from "../../components/ui/Drawer";
 import Icon from "../../components/ui/Icon";
 import { SIDEMENU_CONTAINER_ID, SIDEMENU_DRAWER_ID } from "../../constants";
@@ -50,16 +51,24 @@ type Props = SectionProps;
 const MOBILE_ICON_LABEL_CLASS =
   "tap-scale flex size-10 items-center justify-center rounded-sm text-ink transition-colors duration-(--duration-fast) hover:bg-white/60";
 
-const Desktop = ({ navItems, logo, shippingNote }: Props) => (
+const Desktop = ({ navItems, logo, shippingNote, searchbar }: Props) => (
   <>
     <div className="flex items-center justify-between gap-3 px-3 pt-3 pb-2">
-      <label
-        htmlFor={SIDEMENU_DRAWER_ID}
-        aria-label="Open menu"
-        className="frost tap-scale flex size-10 shrink-0 items-center justify-center rounded-sm text-ink transition-colors duration-(--duration-fast) hover:bg-glass-strong"
-      >
-        <Icon id="menu" size={18} />
-      </label>
+      <div className="flex shrink-0 items-center gap-1.5">
+        <label
+          htmlFor={SIDEMENU_DRAWER_ID}
+          aria-label="Open menu"
+          className="frost tap-scale flex size-10 shrink-0 items-center justify-center rounded-sm text-ink transition-colors duration-(--duration-fast) hover:bg-glass-strong"
+        >
+          <Icon id="menu" size={18} />
+        </label>
+
+        <SearchModal
+          variant="desktop"
+          placeholder={searchbar?.placeholder}
+          labels={searchbar?.labels}
+        />
+      </div>
 
       <HeaderNav
         navItems={navItems ?? []}
@@ -75,7 +84,7 @@ const Desktop = ({ navItems, logo, shippingNote }: Props) => (
   </>
 );
 
-const Mobile = ({ logo }: Props) => (
+const Mobile = ({ logo, searchbar }: Props) => (
   <>
     <div className="frost mx-3 mt-3 flex h-14 items-center justify-between gap-2 rounded-sm px-2">
       <label
@@ -99,6 +108,11 @@ const Mobile = ({ logo }: Props) => (
       )}
 
       <div className="flex items-center gap-1">
+        <SearchModal
+          variant="mobile"
+          placeholder={searchbar?.placeholder}
+          labels={searchbar?.labels}
+        />
         <SignIn variant="mobile" />
         <Bag size="sm" />
       </div>
@@ -121,10 +135,7 @@ function Header({
 }: Props) {
   const device = useDevice();
   return (
-    <header
-      role="banner"
-      className="fixed top-0 inset-x-0 z-50"
-    >
+    <header role="banner" className="fixed top-0 inset-x-0 z-50">
       {alerts.length > 0 && (
         <div className="glass-strong flex h-8 items-center justify-center text-2xs">
           <Alert alerts={alerts} />
