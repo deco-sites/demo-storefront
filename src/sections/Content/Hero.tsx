@@ -79,7 +79,8 @@ function CategoryTile({
         className="absolute inset-0 size-full object-cover transition-transform duration-(--duration-slow) ease-(--ease-out-soft) group-hover:scale-105"
         loading="lazy"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/0 from-55% to-black/30" />
+      {/* Scrim strong enough that the white label clears WCAG AA (4.5:1) even over a pure-white photo. */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/65 from-25% to-black/0" />
       <span className="relative text-display font-medium text-white">{label}</span>
     </Link>
   );
