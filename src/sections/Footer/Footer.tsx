@@ -64,9 +64,9 @@ function Footer({
       <div className="flex flex-col gap-8 py-10 sm:gap-10 sm:py-14">
         {support && (support.channels?.length || support.description) && (
           <div className="flex flex-col gap-2">
-            <span className="text-sm font-medium text-ink-soft">
+            <h2 className="text-sm font-medium text-ink-soft">
               {support.title ?? "Atendimento"}
-            </span>
+            </h2>
             {support.description && (
               <p className="text-sm text-muted">{support.description}</p>
             )}
@@ -90,9 +90,9 @@ function Footer({
         <ul className="grid grid-flow-row gap-6 sm:grid-flow-col">
           {links.map(({ title, href, children }) => (
             <li key={href} className="flex flex-col gap-4">
-              <a className="text-sm font-medium text-ink-soft" href={href}>
-                {title}
-              </a>
+              <h2 className="text-sm font-medium text-ink-soft">
+                <a href={href}>{title}</a>
+              </h2>
               <ul className="flex flex-col gap-2">
                 {children.map(({ title, href }) => (
                   <li key={href}>

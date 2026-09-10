@@ -80,7 +80,7 @@ function CategoryTile({
         loading="lazy"
       />
       <div className="absolute inset-0 bg-gradient-to-b from-black/0 from-55% to-black/30" />
-      <span className="relative text-display font-medium text-white">{label}</span>
+      <h3 className="relative text-display font-medium text-white">{label}</h3>
     </Link>
   );
 }
@@ -266,6 +266,10 @@ export default function Hero({ slides, categories = [], infoBullets = [], interv
 
       {categories.length > 0 && (
         <>
+          {/* Section heading for the category tiles — visually hidden so the tiles keep
+              their design while the tile labels below have an H2 to sit under (no skipped level). */}
+          <h2 className="sr-only">Shop by category</h2>
+
           <div className="hidden gap-3 sm:flex">
             {categories.map((category, index) => (
               <CategoryTile key={category.label} {...category} index={index} />
