@@ -102,7 +102,7 @@ export default function HeaderNav({ navItems, logo, shippingNote }: Props) {
           <Link to="/" aria-label="Home" className="mr-2 flex shrink-0 items-center">
             <Image
               src={logo.src}
-              alt={logo.alt}
+              alt={logo.alt ?? ""}
               width={logo.width ?? 88}
               height={logo.height ?? 24}
               className="h-6 w-auto object-contain"
