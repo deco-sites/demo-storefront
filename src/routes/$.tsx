@@ -25,6 +25,13 @@ export const Route = createFileRoute("/$")({
   loader: async (ctx: Parameters<typeof routeConfig.loader>[0]) => {
     const page = await routeConfig.loader(ctx);
     if (!page) throw notFound();
+    console.log("DEBUG", JSON.stringify({
+      path: (page as any).path,
+      sections: ((page as any).resolvedSections ?? []).map((s: any) => ({
+        c: s.component,
+        props: Object.fromEntries(Object.entries(s.props ?? {}).map(([k, v]) => [k, v === null ? "NULL" : typeof v])),
+      })),
+    }));
     return page;
   },
   component: CmsPage,
