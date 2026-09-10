@@ -1,4 +1,4 @@
-# demo-storefront 
+# demo-storefront  
 
 A [deco.cx](https://deco.cx) storefront built on **TanStack Start + React 19 + Cloudflare Workers**, with Shopify as the commerce backend.
 
