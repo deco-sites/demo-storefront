@@ -6,12 +6,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import type { Product } from "@decocms/apps-commerce/types";
 import { formatPrice } from "@decocms/apps-commerce/sdk/formatPrice";
-import { useOffer } from "@decocms/apps-commerce/sdk/useOffer";
-import { clx } from "~/sdk/clx";
 import { relative } from "~/sdk/url";
-import { searchSuggestionsServerFn } from "~/platform/search/search.actions";
+import {
+  searchSuggestionsServerFn,
+  type SearchSuggestionProduct,
+} from "~/platform/search/search.actions";
 import Icon from "../ui/Icon";
 
 export const ACTION = "/s";
@@ -19,10 +19,14 @@ export const NAME = "q";
 
 const DEBOUNCE_MS = 300;
 
-function SuggestionItem({ product, onNavigate }: { product: Product; onNavigate: () => void }) {
-  const { price, listPrice } = useOffer(product.offers);
-  const title = product.isVariantOf?.name ?? product.name ?? "";
-  const image = product.image?.[0];
+function SuggestionItem({
+  product,
+  onNavigate,
+}: {
+  product: SearchSuggestionProduct;
+  onNavigate: () => void;
+}) {
+  const { title, image, price, listPrice, currencyCode } = product;
 
   return (
     <Link
@@ -31,10 +35,10 @@ function SuggestionItem({ product, onNavigate }: { product: Product; onNavigate:
       onClick={onNavigate}
       className="tap-scale flex items-center gap-3 rounded-sm px-2 py-2 transition-colors duration-(--duration-fast) hover:bg-white/70"
     >
-      {image?.url && (
+      {image && (
         <img
-          src={image.url}
-          alt={image.alternateName ?? title}
+          src={image}
+          alt={title}
           width={48}
           height={64}
           loading="lazy"
@@ -46,12 +50,10 @@ function SuggestionItem({ product, onNavigate }: { product: Product; onNavigate:
         <span className="flex items-baseline gap-2 tabular-nums">
           {listPrice != null && price != null && listPrice > price && (
             <span className="text-2xs text-muted line-through">
-              {formatPrice(listPrice, product.offers?.priceCurrency)}
+              {formatPrice(listPrice, currencyCode)}
             </span>
           )}
-          <span className="text-xs text-ink-soft">
-            {formatPrice(price, product.offers?.priceCurrency)}
-          </span>
+          <span className="text-xs text-ink-soft">{formatPrice(price, currencyCode)}</span>
         </span>
       </span>
     </Link>
@@ -192,9 +194,9 @@ export default function SearchModal({
                   <span className="px-2 text-2xs font-medium text-muted-soft">
                     Suggested products
                   </span>
-                  <ul className={clx("flex flex-col")}>
+                  <ul className="flex flex-col">
                     {products.map((product) => (
-                      <li key={product.url ?? product.productID}>
+                      <li key={product.id || product.url}>
                         <SuggestionItem product={product} onNavigate={() => setOpen(false)} />
                       </li>
                     ))}
