@@ -6,6 +6,7 @@ import HeaderNav from "../../components/header/HeaderNav";
 import Menu from "../../components/header/Menu";
 import SignIn from "../../components/header/SignIn";
 import { type SearchbarProps } from "../../components/search/Searchbar/Form";
+import SearchModal from "../../components/search/SearchModal";
 import Drawer from "../../components/ui/Drawer";
 import Icon from "../../components/ui/Icon";
 import { SIDEMENU_CONTAINER_ID, SIDEMENU_DRAWER_ID } from "../../constants";
@@ -50,7 +51,7 @@ type Props = SectionProps;
 const MOBILE_ICON_LABEL_CLASS =
   "tap-scale flex size-10 items-center justify-center rounded-sm text-ink transition-colors duration-(--duration-fast) hover:bg-white/60";
 
-const Desktop = ({ navItems, logo, shippingNote }: Props) => (
+const Desktop = ({ navItems, logo, shippingNote, searchbar }: Props) => (
   <>
     <div className="flex items-center justify-between gap-3 px-3 pt-3 pb-2">
       <label
@@ -68,6 +69,7 @@ const Desktop = ({ navItems, logo, shippingNote }: Props) => (
       />
 
       <div className="flex items-center gap-1.5">
+        <SearchModal placeholder={searchbar?.placeholder} variant="desktop" />
         <SignIn variant="desktop" />
         <Bag />
       </div>
@@ -75,7 +77,7 @@ const Desktop = ({ navItems, logo, shippingNote }: Props) => (
   </>
 );
 
-const Mobile = ({ logo }: Props) => (
+const Mobile = ({ logo, searchbar }: Props) => (
   <>
     <div className="frost mx-3 mt-3 flex h-14 items-center justify-between gap-2 rounded-sm px-2">
       <label
@@ -99,6 +101,7 @@ const Mobile = ({ logo }: Props) => (
       )}
 
       <div className="flex items-center gap-1">
+        <SearchModal placeholder={searchbar?.placeholder} variant="mobile" />
         <SignIn variant="mobile" />
         <Bag size="sm" />
       </div>
