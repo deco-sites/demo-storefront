@@ -7,7 +7,20 @@
 // Site-specific extensions: import { vtexActions } from this file and merge
 // with your own actions in a separate invoke.ts.
 import { createServerFn } from "@tanstack/react-start";
-import { getOrCreateCart, addItemsToCart, updateCartItems, addCouponToCart, getOrCreateCartV2, addItemsToCartV2, updateCartItemsV2, addCouponToCartV2, simulateCart, getSellersByRegion, setShippingPostalCode, updateOrderFormAttachment } from "@decocms/apps-vtex/actions/checkout";
+import {
+  getOrCreateCart,
+  addItemsToCart,
+  updateCartItems,
+  addCouponToCart,
+  getOrCreateCartV2,
+  addItemsToCartV2,
+  updateCartItemsV2,
+  addCouponToCartV2,
+  simulateCart,
+  getSellersByRegion,
+  setShippingPostalCode,
+  updateOrderFormAttachment,
+} from "@decocms/apps-vtex/actions/checkout";
 import { createSession, editSession } from "@decocms/apps-vtex/actions/session";
 import { subscribe } from "@decocms/apps-vtex/actions/newsletter";
 import { notifyMe } from "@decocms/apps-vtex/actions/misc";
@@ -18,10 +31,7 @@ import type { SimulationItem, RegionResult } from "@decocms/apps-vtex/actions/ch
 import type { SessionData } from "@decocms/apps-vtex/actions/session";
 import type { SubscribeProps } from "@decocms/apps-vtex/actions/newsletter";
 import type { NotifyMeProps } from "@decocms/apps-vtex/actions/misc";
-import {
-  getResponseHeaders,
-  setResponseHeader,
-} from "@tanstack/react-start/server";
+import { getResponseHeaders, setResponseHeader } from "@tanstack/react-start/server";
 import { RequestContext } from "@decocms/blocks/sdk/requestContext";
 
 function unwrapResult<T>(result: unknown): T {
@@ -74,14 +84,16 @@ const $getOrCreateCart = createServerFn({ method: "POST" })
   });
 
 const $addItemsToCart = createServerFn({ method: "POST" })
-  .inputValidator((data: {
-          orderFormId: string;
-          orderItems: Array<{
-            id: string;
-            seller: string;
-            quantity: number;
-          }>;
-        }) => data)
+  .inputValidator(
+    (data: {
+      orderFormId: string;
+      orderItems: Array<{
+        id: string;
+        seller: string;
+        quantity: number;
+      }>;
+    }) => data,
+  )
   .handler(async ({ data }): Promise<any> => {
     const result = await addItemsToCart(data);
     forwardResponseCookies();
@@ -89,7 +101,9 @@ const $addItemsToCart = createServerFn({ method: "POST" })
   });
 
 const $updateCartItems = createServerFn({ method: "POST" })
-  .inputValidator((data: { orderFormId: string; orderItems: Array<{ index: number; quantity: number }> }) => data)
+  .inputValidator(
+    (data: { orderFormId: string; orderItems: Array<{ index: number; quantity: number }> }) => data,
+  )
   .handler(async ({ data }): Promise<any> => {
     const result = await updateCartItems(data);
     forwardResponseCookies();
@@ -105,7 +119,9 @@ const $addCouponToCart = createServerFn({ method: "POST" })
   });
 
 const $getOrCreateCartV2 = createServerFn({ method: "POST" })
-  .inputValidator((data: { orderFormId?: string; projection?: CartProjection; sections?: CartSection[] }) => data)
+  .inputValidator(
+    (data: { orderFormId?: string; projection?: CartProjection; sections?: CartSection[] }) => data,
+  )
   .handler(async ({ data }): Promise<any> => {
     const result = await getOrCreateCartV2(data);
     forwardResponseCookies();
@@ -113,12 +129,14 @@ const $getOrCreateCartV2 = createServerFn({ method: "POST" })
   });
 
 const $addItemsToCartV2 = createServerFn({ method: "POST" })
-  .inputValidator((data: {
-          orderFormId: string;
-          orderItems: Array<{ id: string; seller: string; quantity: number }>;
-          projection?: CartProjection;
-          sections?: CartSection[];
-        }) => data)
+  .inputValidator(
+    (data: {
+      orderFormId: string;
+      orderItems: Array<{ id: string; seller: string; quantity: number }>;
+      projection?: CartProjection;
+      sections?: CartSection[];
+    }) => data,
+  )
   .handler(async ({ data }): Promise<any> => {
     const result = await addItemsToCartV2(data);
     forwardResponseCookies();
@@ -126,12 +144,14 @@ const $addItemsToCartV2 = createServerFn({ method: "POST" })
   });
 
 const $updateCartItemsV2 = createServerFn({ method: "POST" })
-  .inputValidator((data: {
-          orderFormId: string;
-          orderItems: Array<{ index: number; quantity: number }>;
-          projection?: CartProjection;
-          sections?: CartSection[];
-        }) => data)
+  .inputValidator(
+    (data: {
+      orderFormId: string;
+      orderItems: Array<{ index: number; quantity: number }>;
+      projection?: CartProjection;
+      sections?: CartSection[];
+    }) => data,
+  )
   .handler(async ({ data }): Promise<any> => {
     const result = await updateCartItemsV2(data);
     forwardResponseCookies();
@@ -139,12 +159,14 @@ const $updateCartItemsV2 = createServerFn({ method: "POST" })
   });
 
 const $addCouponToCartV2 = createServerFn({ method: "POST" })
-  .inputValidator((data: {
-          orderFormId: string;
-          text: string;
-          projection?: CartProjection;
-          sections?: CartSection[];
-        }) => data)
+  .inputValidator(
+    (data: {
+      orderFormId: string;
+      text: string;
+      projection?: CartProjection;
+      sections?: CartSection[];
+    }) => data,
+  )
   .handler(async ({ data }): Promise<any> => {
     const result = await addCouponToCartV2(data);
     forwardResponseCookies();
@@ -176,7 +198,9 @@ const $setShippingPostalCode = createServerFn({ method: "POST" })
   });
 
 const $updateOrderFormAttachment = createServerFn({ method: "POST" })
-  .inputValidator((data: { orderFormId: string; attachment: string; body: Record<string, unknown> }) => data)
+  .inputValidator(
+    (data: { orderFormId: string; attachment: string; body: Record<string, unknown> }) => data,
+  )
   .handler(async ({ data }): Promise<any> => {
     const result = await updateOrderFormAttachment(data);
     forwardResponseCookies();
@@ -220,42 +244,66 @@ const $notifyMe = createServerFn({ method: "POST" })
 // ---------------------------------------------------------------------------
 
 export const vtexActions = {
-  getOrCreateCart: $getOrCreateCart as unknown as (ctx: { data: { orderFormId?: string } }) => Promise<OrderForm>,
-  addItemsToCart: $addItemsToCart as unknown as (ctx: { data: {
-          orderFormId: string;
-          orderItems: Array<{
-            id: string;
-            seller: string;
-            quantity: number;
-          }>;
-        } }) => Promise<OrderForm>,
-  updateCartItems: $updateCartItems as unknown as (ctx: { data: { orderFormId: string; orderItems: Array<{ index: number; quantity: number }> } }) => Promise<OrderForm>,
-  addCouponToCart: $addCouponToCart as unknown as (ctx: { data: { orderFormId: string; text: string } }) => Promise<OrderForm>,
-  getOrCreateCartV2: $getOrCreateCartV2 as unknown as (ctx: { data: { orderFormId?: string; projection?: CartProjection; sections?: CartSection[] } }) => Promise<VtexCartProjectionResult>,
-  addItemsToCartV2: $addItemsToCartV2 as unknown as (ctx: { data: {
-          orderFormId: string;
-          orderItems: Array<{ id: string; seller: string; quantity: number }>;
-          projection?: CartProjection;
-          sections?: CartSection[];
-        } }) => Promise<VtexCartProjectionResult>,
-  updateCartItemsV2: $updateCartItemsV2 as unknown as (ctx: { data: {
-          orderFormId: string;
-          orderItems: Array<{ index: number; quantity: number }>;
-          projection?: CartProjection;
-          sections?: CartSection[];
-        } }) => Promise<VtexCartProjectionResult>,
-  addCouponToCartV2: $addCouponToCartV2 as unknown as (ctx: { data: {
-          orderFormId: string;
-          text: string;
-          projection?: CartProjection;
-          sections?: CartSection[];
-        } }) => Promise<VtexCartProjectionResult>,
+  getOrCreateCart: $getOrCreateCart as unknown as (ctx: {
+    data: { orderFormId?: string };
+  }) => Promise<OrderForm>,
+  addItemsToCart: $addItemsToCart as unknown as (ctx: {
+    data: {
+      orderFormId: string;
+      orderItems: Array<{
+        id: string;
+        seller: string;
+        quantity: number;
+      }>;
+    };
+  }) => Promise<OrderForm>,
+  updateCartItems: $updateCartItems as unknown as (ctx: {
+    data: { orderFormId: string; orderItems: Array<{ index: number; quantity: number }> };
+  }) => Promise<OrderForm>,
+  addCouponToCart: $addCouponToCart as unknown as (ctx: {
+    data: { orderFormId: string; text: string };
+  }) => Promise<OrderForm>,
+  getOrCreateCartV2: $getOrCreateCartV2 as unknown as (ctx: {
+    data: { orderFormId?: string; projection?: CartProjection; sections?: CartSection[] };
+  }) => Promise<VtexCartProjectionResult>,
+  addItemsToCartV2: $addItemsToCartV2 as unknown as (ctx: {
+    data: {
+      orderFormId: string;
+      orderItems: Array<{ id: string; seller: string; quantity: number }>;
+      projection?: CartProjection;
+      sections?: CartSection[];
+    };
+  }) => Promise<VtexCartProjectionResult>,
+  updateCartItemsV2: $updateCartItemsV2 as unknown as (ctx: {
+    data: {
+      orderFormId: string;
+      orderItems: Array<{ index: number; quantity: number }>;
+      projection?: CartProjection;
+      sections?: CartSection[];
+    };
+  }) => Promise<VtexCartProjectionResult>,
+  addCouponToCartV2: $addCouponToCartV2 as unknown as (ctx: {
+    data: {
+      orderFormId: string;
+      text: string;
+      projection?: CartProjection;
+      sections?: CartSection[];
+    };
+  }) => Promise<VtexCartProjectionResult>,
   simulateCart: $simulateCart,
-  getSellersByRegion: $getSellersByRegion as unknown as (ctx: { data: { postalCode: string; salesChannel?: string } }) => Promise<RegionResult | null>,
-  setShippingPostalCode: $setShippingPostalCode as unknown as (ctx: { data: { orderFormId: string; postalCode: string; country?: string } }) => Promise<boolean>,
-  updateOrderFormAttachment: $updateOrderFormAttachment as unknown as (ctx: { data: { orderFormId: string; attachment: string; body: Record<string, unknown> } }) => Promise<OrderForm>,
+  getSellersByRegion: $getSellersByRegion as unknown as (ctx: {
+    data: { postalCode: string; salesChannel?: string };
+  }) => Promise<RegionResult | null>,
+  setShippingPostalCode: $setShippingPostalCode as unknown as (ctx: {
+    data: { orderFormId: string; postalCode: string; country?: string };
+  }) => Promise<boolean>,
+  updateOrderFormAttachment: $updateOrderFormAttachment as unknown as (ctx: {
+    data: { orderFormId: string; attachment: string; body: Record<string, unknown> };
+  }) => Promise<OrderForm>,
   createSession: $createSession,
-  editSession: $editSession as unknown as (ctx: { data: { public: Record<string, { value: string }> } }) => Promise<SessionData>,
+  editSession: $editSession as unknown as (ctx: {
+    data: { public: Record<string, { value: string }> };
+  }) => Promise<SessionData>,
   subscribe: $subscribe as unknown as (ctx: { data: SubscribeProps }) => Promise<void>,
   notifyMe: $notifyMe as unknown as (ctx: { data: NotifyMeProps }) => Promise<void>,
 } as const;

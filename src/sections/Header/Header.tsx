@@ -124,10 +124,7 @@ function Header({
 }: Props) {
   const device = useDevice();
   return (
-    <header
-      role="banner"
-      className="fixed top-0 inset-x-0 z-50"
-    >
+    <header role="banner" className="fixed top-0 inset-x-0 z-50">
       {alerts.length > 0 && (
         <div className="glass-strong flex h-8 items-center justify-center text-2xs">
           <Alert alerts={alerts} />

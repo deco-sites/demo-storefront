@@ -111,8 +111,7 @@ export default function SearchModal({
     const value = term.trim();
     if (!value) return;
     const events = window.DECO?.events as unknown as
-      | { dispatch?: (event: unknown) => void }
-      | undefined;
+      { dispatch?: (event: unknown) => void } | undefined;
     events?.dispatch?.({ name: "search", params: { search_term: value } });
     setOpen(false);
     // `to`/`search` passed separately (same as Sort.tsx) — strict-typed routes
@@ -184,9 +183,7 @@ export default function SearchModal({
               )}
 
               {!query.isFetching && debounced.length > 1 && products.length === 0 && (
-                <span className="px-2 py-4 text-sm text-muted">
-                  No results for “{debounced}”.
-                </span>
+                <span className="px-2 py-4 text-sm text-muted">No results for “{debounced}”.</span>
               )}
 
               {products.length > 0 && (
