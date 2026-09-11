@@ -3492,6 +3492,87 @@
             "nullable": true,
             "title": "Alerts"
           },
+          "topBar": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean",
+                "nullable": true,
+                "title": "Enabled",
+                "description": "Show the promo top bar above the header"
+              },
+              "label": {
+                "type": "string",
+                "nullable": true,
+                "title": "Label",
+                "description": "Small highlighted tag on the left, e.g. \"ROXO WEEK\""
+              },
+              "message": {
+                "type": "string",
+                "nullable": true,
+                "title": "Message",
+                "description": "Main promo message"
+              },
+              "startsAt": {
+                "type": "string",
+                "nullable": true,
+                "title": "Starts in — target date",
+                "description": "When the countdown reaches this date, the bar shows the \"live\" message",
+                "format": "datetime"
+              },
+              "liveMessage": {
+                "type": "string",
+                "nullable": true,
+                "title": "Live message",
+                "description": "Shown after the countdown reaches zero"
+              },
+              "ctaLabel": {
+                "type": "string",
+                "nullable": true,
+                "title": "Call to action label"
+              },
+              "ctaHref": {
+                "type": "string",
+                "nullable": true,
+                "title": "Call to action link"
+              },
+              "labels": {
+                "type": "object",
+                "properties": {
+                  "days": {
+                    "type": "string",
+                    "nullable": true,
+                    "default": "d",
+                    "title": "Days"
+                  },
+                  "hours": {
+                    "type": "string",
+                    "nullable": true,
+                    "default": "h",
+                    "title": "Hours"
+                  },
+                  "minutes": {
+                    "type": "string",
+                    "nullable": true,
+                    "default": "min",
+                    "title": "Minutes"
+                  },
+                  "seconds": {
+                    "type": "string",
+                    "nullable": true,
+                    "default": "s",
+                    "title": "Seconds"
+                  }
+                },
+                "nullable": true,
+                "title": "Unit labels",
+                "description": "Short labels under each counter"
+              }
+            },
+            "nullable": true,
+            "title": "Promo top bar",
+            "description": "Purple top bar with a countdown to the next campaign"
+          },
           "navItems": {
             "anyOf": [
               {

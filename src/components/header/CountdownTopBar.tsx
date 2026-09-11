@@ -123,9 +123,7 @@ function CountdownTopBar({
           </span>
         )}
 
-        <span className="truncate">
-          {delta.expired ? liveMessage : message}
-        </span>
+        <span className="truncate">{delta.expired ? liveMessage : message}</span>
 
         {!delta.expired && (
           <span className="flex shrink-0 items-center gap-1 sm:gap-1.5">
