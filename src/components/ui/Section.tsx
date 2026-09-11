@@ -44,7 +44,10 @@ function Container({ className: _class, ...props }: React.JSX.IntrinsicElements[
   return (
     <div
       {...props}
-      className={clx("flex w-full flex-col gap-6 px-3 py-8 sm:py-14", _class?.toString())}
+      className={clx(
+        "flex w-full flex-col gap-6 px-3 py-8 sm:py-14",
+        _class?.toString(),
+      )}
     />
   );
 }
