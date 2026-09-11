@@ -93,18 +93,26 @@ function CountdownTopBar({
   labels,
 }: Props) {
   const target = startsAt ? new Date(startsAt).getTime() : NaN;
-  // Rendered on the server too, so the first paint already shows a sane value.
-  const [delta, setDelta] = useState<Delta>(() => computeDelta(target));
+  // Server and client compute Date.now() at different instants, so seeding
+  // state from it here would mismatch on hydration; the real value is only
+  // computed client-side, after mount.
+  const [delta, setDelta] = useState<Delta | null>(null);
 
   useEffect(() => {
-    if (delta.expired) return;
+    setDelta(computeDelta(target));
     const timer = setInterval(() => {
-      const next = computeDelta(target);
-      setDelta(next);
-      if (next.expired) clearInterval(timer);
+      setDelta((prev) => {
+        if (prev?.expired) {
+          clearInterval(timer);
+          return prev;
+        }
+        return computeDelta(target);
+      });
     }, 1000);
     return () => clearInterval(timer);
-  }, [target, delta.expired]);
+  }, [target]);
+
+  if (!delta) return null;
 
   if (!enabled) return null;
 
