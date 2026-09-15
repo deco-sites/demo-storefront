@@ -191,6 +191,22 @@ The worker entry applies Cloudflare edge cache profiles (defined in `@decocms/st
 
 Override per-route in `src/cache-config.ts`.
 
+## Security headers
+
+`src/worker-entry.ts` sets the enforced `Content-Security-Policy` (see `CSP_DIRECTIVES`) and wraps the worker with `withoutPoweredBy` (`src/server/withoutPoweredBy.ts`).
+
+**`x-powered-by` is removed on purpose, from every response.** The framework stamps the exact platform version (`deco@7.x.y`) on outgoing responses, which hands an attacker a precise version to match against known CVEs. The wrapper deletes the header entirely — do not "fix" it by masking the value, and keep the wrapper in place when bumping `@decocms/*` or reworking the worker entry. It sits just inside `instrumentWorker` (the OTel layer adds no response headers of its own), so it covers pages, 404/500 errors and streamed SSR alike; `src/server/withoutPoweredBy.test.ts` asserts each of those cases.
+
+`server: cloudflare` is added by the Cloudflare edge, not by this code, and cannot be removed from the worker.
+
+Verify against a deployment with:
+
+```sh
+curl -sSI https://demo-storefront.decocms.com/ | grep -i x-powered-by   # expect: no output
+```
+
+Note that Cloudflare may serve cached responses from before a deploy — purge the edge cache for the domain before re-running an audit.
+
 ## Deployment
 
 Cloudflare Workers via Wrangler. Configuration is in `wrangler.jsonc` (entry: `src/worker-entry.ts`).

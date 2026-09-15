@@ -27,10 +27,7 @@ export const withoutPoweredBy = <T extends FetchWorker>(worker: T): T => ({
 
     // WebSocket upgrades can't be reconstructed; and when the header is
     // absent there is nothing to strip, so avoid the copy entirely.
-    if (
-      ("webSocket" in response && response.webSocket) ||
-      !response.headers.has("x-powered-by")
-    ) {
+    if (("webSocket" in response && response.webSocket) || !response.headers.has("x-powered-by")) {
       return response;
     }
 
