@@ -78,6 +78,22 @@ const decoWorker = createDecoWorkerEntry(serverEntry, {
   // Enforced header — `csp` would only produce the report-only variant.
   securityHeaders: {
     "Content-Security-Policy": CSP_DIRECTIVES.join("; "),
+
+    // Cross-origin isolation (Spectre-style side-channel hardening).
+    //
+    // COOP severs the window reference between this site and cross-origin
+    // openers/popups, so they can't share a browser process with us. It does
+    // not affect the deco CMS preview iframe (that's `frame-ancestors` /
+    // X-Frame-Options territory), and same-origin popups keep working.
+    //
+    // COEP is `credentialless` rather than `require-corp` on purpose: the
+    // storefront embeds cross-origin images that don't send CORP/CORS headers
+    // (cdn.shopify.com, decoims.com, Instagram feed via fbcdn). With
+    // `require-corp` those would be blocked; `credentialless` loads them
+    // without credentials instead.
+    "Cross-Origin-Opener-Policy": "same-origin",
+    "Cross-Origin-Embedder-Policy": "credentialless",
+    "Cross-Origin-Resource-Policy": "same-origin",
   },
 
   buildSegment: (request) => {
