@@ -1,6 +1,9 @@
 import type { HTMLWidget, ImageWidget } from "~/types/widgets";
 import type { SiteNavigationElement } from "@decocms/apps-commerce/types";
 import Alert from "../../components/header/Alert";
+import CountdownTopBar, {
+  type Props as CountdownTopBarProps,
+} from "../../components/header/CountdownTopBar";
 import Bag from "../../components/header/Bag";
 import HeaderNav from "../../components/header/HeaderNav";
 import Menu from "../../components/header/Menu";
@@ -21,6 +24,11 @@ export interface Logo {
 
 export interface SectionProps {
   alerts?: HTMLWidget[];
+  /**
+   * @title Promo top bar
+   * @description Purple top bar with a countdown to the next campaign
+   */
+  topBar?: CountdownTopBarProps;
   /**
    * @title Navigation items
    * @description Navigation items used both on mobile and desktop menus
@@ -108,6 +116,7 @@ const Mobile = ({ logo }: Props) => (
 
 function Header({
   alerts = [],
+  topBar,
   logo = {
     src: "https://decoims.com/decocms/e8c6326e-e009-4e3c-9787-b2fe25a1b993/deco-logo.png",
     width: 67,
@@ -121,10 +130,9 @@ function Header({
 }: Props) {
   const device = useDevice();
   return (
-    <header
-      role="banner"
-      className="fixed top-0 inset-x-0 z-50"
-    >
+    <header role="banner" className="fixed top-0 inset-x-0 z-50">
+      {topBar?.enabled && <CountdownTopBar {...topBar} />}
+
       {alerts.length > 0 && (
         <div className="glass-strong flex h-8 items-center justify-center text-2xs">
           <Alert alerts={alerts} />

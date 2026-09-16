@@ -57,6 +57,11 @@
   --color-glass-tag: rgb(166 166 166 / 60%);
   --color-glass-white: rgb(255 255 255 / 40%);
 
+  /* Promo purple — used by the campaign countdown top bar */
+  --color-promo-deep: #3b0764;
+  --color-promo: #7c3aed;
+  --color-promo-light: #a855f7;
+
   /* Radii — named to match the Figma "border-radius/*" variables */
   --radius-xs: 6px;
   --radius-sm: 8px;

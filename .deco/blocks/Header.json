@@ -8,6 +8,15 @@
     }
   },
   "alerts": [],
+  "topBar": {
+    "enabled": true,
+    "label": "Roxo Week",
+    "message": "Nossa próxima promoção começa em",
+    "startsAt": "2026-12-01T03:00:00.000Z",
+    "liveMessage": "Roxo Week no ar! Até 60% OFF em toda a loja",
+    "ctaLabel": "Quero saber mais",
+    "ctaHref": "/s?q=sale"
+  },
   "logo": {
     "src": "https://decoims.com/decocms/e8c6326e-e009-4e3c-9787-b2fe25a1b993/deco-logo.png",
     "alt": "Deco Storefront",
