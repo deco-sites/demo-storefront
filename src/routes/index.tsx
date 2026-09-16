@@ -3,6 +3,7 @@ import { cmsHomeRouteConfig, loadCmsPage } from "@decocms/tanstack";
 import { deferredSectionLoader } from "@decocms/tanstack/sdk/deferredSectionLoader";
 import PageSections from "../components/ui/PageSections";
 import { preloadSectionComponents } from "@decocms/blocks/cms";
+import { resolveOgUrl } from "../sdk/url";
 
 const isServer = typeof document === "undefined";
 
@@ -30,10 +31,15 @@ export const Route = createFileRoute("/")({
     const head = baseConfig.head(ctx);
     const meta = head.meta ?? [];
     const pageUrl = (ctx.loaderData as { pageUrl?: string } | null | undefined)?.pageUrl;
-    const hasOgUrl = meta.some((tag: Record<string, string>) => tag.property === "og:url");
+    const ogUrl = resolveOgUrl(meta, pageUrl);
     return {
       ...head,
-      meta: hasOgUrl || !pageUrl ? meta : [...meta, { property: "og:url", content: pageUrl }],
+      // Replace instead of append: a CMS canonical is folded into `ogUrl`
+      // above, and duplicate `og:url` tags confuse social crawlers.
+      meta: [
+        ...meta.filter((tag: Record<string, string>) => tag.property !== "og:url"),
+        { property: "og:url", content: ogUrl },
+      ],
     };
   },
   // Preserve query string so filter/sort/pagination changes reach the loader.
