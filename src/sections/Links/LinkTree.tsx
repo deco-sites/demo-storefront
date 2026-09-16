@@ -100,7 +100,7 @@ function Links(props: Props) {
     <Image
       decoding="async"
       src={header.logo?.img || ""}
-      alt={header.logo?.alt}
+      alt={header.logo?.alt ?? ""}
       width={header.logo?.width || 171}
       height={header.logo?.height || 60}
     />
@@ -191,7 +191,7 @@ function Links(props: Props) {
               {props.footer.image && (
                 <Image
                   src={props.footer.image || ""}
-                  alt={props.footer.alt}
+                  alt={props.footer.alt ?? ""}
                   width={props.footer.width || 50}
                   height={props.footer.height || 20}
                 />

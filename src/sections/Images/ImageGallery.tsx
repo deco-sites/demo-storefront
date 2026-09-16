@@ -30,7 +30,7 @@ function Banner({ mobile, desktop, alt, href }: Banner) {
           width={640}
           className="w-full h-full object-cover"
           src={mobile}
-          alt={alt}
+          alt={alt ?? ""}
           decoding="async"
           loading="lazy"
         />

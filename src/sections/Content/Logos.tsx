@@ -38,7 +38,7 @@ function Logos({
               width={300}
               height={300}
               src={item.image}
-              alt={item.alt}
+              alt={item.alt ?? ""}
               className="w-full h-full object-cover"
             />
           </li>

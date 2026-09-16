@@ -47,6 +47,11 @@ interface Props {
   paymentMethods?: Social[];
   policies?: Item[];
   logo?: ImageWidget;
+  /**
+   * @title Texto alternativo do logo
+   * @description Deixe vazio se o logo for decorativo (ele aparece ao lado do texto de trademark, que ja identifica a loja). Preencha com o nome da loja se quiser que leitores de tela o anunciem.
+   */
+  logoAlt?: string;
   trademark?: string;
 }
 
@@ -57,6 +62,7 @@ function Footer({
   policies = [],
   paymentMethods = [],
   logo,
+  logoAlt,
   trademark,
 }: Props) {
   return (
@@ -111,7 +117,7 @@ function Footer({
             {social.map(({ image, href, alt }) => (
               <li key={href}>
                 <a href={href}>
-                  <Image src={image} alt={alt} loading="lazy" width={20} height={20} />
+                  <Image src={image} alt={alt ?? ""} loading="lazy" width={20} height={20} />
                 </a>
               </li>
             ))}
@@ -119,7 +125,7 @@ function Footer({
           <ul className="flex flex-wrap gap-2">
             {paymentMethods.map(({ image, alt }) => (
               <li key={alt} className="frost flex h-8 w-10 items-center justify-center rounded-xs">
-                <Image src={image} alt={alt} width={20} height={20} loading="lazy" />
+                <Image src={image} alt={alt ?? ""} width={20} height={20} loading="lazy" />
               </li>
             ))}
           </ul>
@@ -140,7 +146,7 @@ function Footer({
 
           <div className="flex flex-nowrap items-center justify-between gap-4 sm:justify-center">
             {logo && (
-              <img loading="lazy" src={logo} alt="Logo" className="h-5 w-auto" />
+              <img loading="lazy" src={logo} alt={logoAlt ?? ""} className="h-5 w-auto" />
             )}
             <span className="text-xs text-muted">{trademark}</span>
           </div>

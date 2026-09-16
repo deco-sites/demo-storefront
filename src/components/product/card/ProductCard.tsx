@@ -109,9 +109,9 @@ export default function ProductCard({
           <ProductCardImage
             href={selectedHref}
             frontUrl={front.url!}
-            frontAlt={front.alternateName}
+            frontAlt={front.alternateName ?? title}
             backUrl={back?.url}
-            backAlt={back?.alternateName}
+            backAlt={back?.alternateName ?? title}
             width={372}
             height={498}
             preload={preload}

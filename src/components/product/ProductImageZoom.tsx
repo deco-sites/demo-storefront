@@ -10,9 +10,11 @@ export interface Props {
   width: number;
   height: number;
   images: ImageObject[];
+  /** Nome do produto, usado como alt quando a imagem nao tem alternateName */
+  productName?: string;
 }
 
-function ProductImageZoom({ images, width, height, id = useId() }: Props) {
+function ProductImageZoom({ images, width, height, productName, id = useId() }: Props) {
   const container = `${id}-container`;
 
   return (
@@ -30,7 +32,7 @@ function ProductImageZoom({ images, width, height, id = useId() }: Props) {
               <Image
                 style={{ aspectRatio: `${width} / ${height}` }}
                 src={image.url!}
-                alt={image.alternateName}
+                alt={image.alternateName ?? productName ?? ""}
                 width={width}
                 height={height}
                 className="h-full w-auto rounded-sm"
