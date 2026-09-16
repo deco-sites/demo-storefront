@@ -78,6 +78,34 @@ const decoWorker = createDecoWorkerEntry(serverEntry, {
   // Enforced header — `csp` would only produce the report-only variant.
   securityHeaders: {
     "Content-Security-Policy": CSP_DIRECTIVES.join("; "),
+
+    // Cross-Origin-Embedder-Policy. This is one half of cross-origin
+    // isolation, not the whole thing: `crossOriginIsolated` (and with it the
+    // actual Spectre hardening) also requires
+    // `Cross-Origin-Opener-Policy: same-origin`, which we don't set — see the
+    // last paragraph below.
+    //
+    // `credentialless` instead of `require-corp`: both give the same isolation
+    // semantics, but `require-corp` drops every cross-origin **no-cors**
+    // subresource whose origin doesn't send `Cross-Origin-Resource-Policy`
+    // (`Access-Control-Allow-Origin: *` does not satisfy COEP). The origins this
+    // storefront loads — api/cdn.fontshare.com (Switzer webfont), cdn.shopify.com
+    // (product imagery), decoims.com, *.fbcdn.net — send ACAO `*` but no CORP,
+    // and nothing here requests them with `crossorigin`, so `require-corp` would
+    // break typography and product images site-wide. `credentialless` fetches
+    // those subresources without credentials instead of blocking them.
+    //
+    // No `Cross-Origin-Resource-Policy` header is set: CORP is enforced on
+    // nested navigations too, so emitting it on HTML documents would block the
+    // deco CMS admin preview iframe — the same reason `frame-ancestors` is left
+    // out of the CSP above.
+    //
+    // Note the document only becomes fully `crossOriginIsolated` once
+    // `Cross-Origin-Opener-Policy: same-origin` is also set, which we
+    // deliberately don't do (it would break the admin preview popup/iframe
+    // flow). COEP alone is still a meaningful narrowing of what this document
+    // will embed.
+    "Cross-Origin-Embedder-Policy": "credentialless",
   },
 
   buildSegment: (request) => {
