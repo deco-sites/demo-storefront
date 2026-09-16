@@ -5,6 +5,7 @@ import Bag from "../../components/header/Bag";
 import HeaderNav from "../../components/header/HeaderNav";
 import Menu from "../../components/header/Menu";
 import SignIn from "../../components/header/SignIn";
+import TopBar, { type Props as TopBarProps } from "../../components/header/TopBar";
 import { type SearchbarProps } from "../../components/search/Searchbar/Form";
 import Drawer from "../../components/ui/Drawer";
 import Icon from "../../components/ui/Icon";
@@ -21,6 +22,11 @@ export interface Logo {
 
 export interface SectionProps {
   alerts?: HTMLWidget[];
+  /**
+   * @title Promotional top bar
+   * @description Colorful bar with a promo countdown, coupon and CTA
+   */
+  topBar?: TopBarProps;
   /**
    * @title Navigation items
    * @description Navigation items used both on mobile and desktop menus
@@ -108,6 +114,7 @@ const Mobile = ({ logo }: Props) => (
 
 function Header({
   alerts = [],
+  topBar,
   logo = {
     src: "https://decoims.com/decocms/e8c6326e-e009-4e3c-9787-b2fe25a1b993/deco-logo.png",
     width: 67,
@@ -121,10 +128,9 @@ function Header({
 }: Props) {
   const device = useDevice();
   return (
-    <header
-      role="banner"
-      className="fixed top-0 inset-x-0 z-50"
-    >
+    <header role="banner" className="fixed top-0 inset-x-0 z-50">
+      {topBar?.enabled && <TopBar {...topBar} />}
+
       {alerts.length > 0 && (
         <div className="glass-strong flex h-8 items-center justify-center text-2xs">
           <Alert alerts={alerts} />

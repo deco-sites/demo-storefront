@@ -52,5 +52,29 @@
       "children": []
     }
   ],
-  "loading": "eager"
+  "loading": "eager",
+  "topBar": {
+    "enabled": true,
+    "title": "Color Week",
+    "description": "up to 70% off sitewide",
+    "coupon": "COLOR70",
+    "expiresAt": "2026-12-31T23:59:59.000Z",
+    "expiredText": "Color Week is over — new drops coming soon ✨",
+    "ctaLabel": "Shop now",
+    "ctaHref": "/shirts",
+    "highlights": [
+      {
+        "label": "Free shipping over R$500",
+        "emoji": "🚚"
+      },
+      {
+        "label": "Up to 12x interest-free",
+        "emoji": "💳"
+      },
+      {
+        "label": "30-day free returns",
+        "emoji": "↩️"
+      }
+    ]
+  }
 }
