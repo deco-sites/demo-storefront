@@ -47,7 +47,8 @@ function Card({ label, headline, cta = "Shop Now", href, image, index = 0 }: Pro
         className="absolute inset-0 size-full object-cover transition-transform duration-(--duration-slow) ease-(--ease-out-soft) group-hover:scale-105"
         loading="lazy"
       />
-      <div className="absolute inset-0 bg-black/20" />
+      {/* Scrim strong enough that the white text clears WCAG AA (4.5:1) even over a pure-white photo. */}
+      <div className="absolute inset-0 bg-black/55" />
 
       <span className="relative text-sm font-medium text-white">{label}</span>
 
