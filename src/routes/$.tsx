@@ -2,6 +2,15 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { cmsRouteConfig } from "@decocms/tanstack";
 import { deferredSectionLoader } from "@decocms/tanstack/sdk/deferredSectionLoader";
 import PageSections from "../components/ui/PageSections";
+import { catalogPathExistsServerFn } from "../platform/catalog/catalogPath";
+
+/** The bits of the CMS loader result this route reads directly. */
+interface CmsPageResult {
+  /** Matched CMS page path pattern (`/*`, `/products/:slug`, `/women`, …). */
+  path?: string;
+  /** Requested pathname, without search params. */
+  pagePath?: string;
+}
 
 const routeConfig = cmsRouteConfig({
   siteName: "Storefront-tanstack",
@@ -22,9 +31,23 @@ export const Route = createFileRoute("/$")({
   // 200 — search engines then indexed those phantom pages. A thrown notFound
   // puts the match in `notFound` status, which makes the SSR response carry a
   // real 404 status code (router.state.statusCode).
+  //
+  // `!page` alone is not enough: this site's CMS has TEMPLATE pages — "Category
+  // Page" at `/*` and "Product Page" at `/products/:slug` — and `/*` matches
+  // every path there is, so the loader effectively never returns null and every
+  // phantom URL used to render an empty listing with HTTP 200. `catalogPathExists`
+  // closes that hole by checking the path against the catalog (see catalogPath.ts);
+  // authored pages (`/`, `/women`, `/s`, …) skip the lookup entirely.
   loader: async (ctx: Parameters<typeof routeConfig.loader>[0]) => {
     const page = await routeConfig.loader(ctx);
     if (!page) throw notFound();
+
+    const { path, pagePath } = page as CmsPageResult;
+    const exists = await catalogPathExistsServerFn({
+      data: { pattern: path ?? "", path: pagePath ?? "" },
+    });
+    if (!exists) throw notFound();
+
     return page;
   },
   component: CmsPage,
