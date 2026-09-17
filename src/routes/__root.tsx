@@ -14,6 +14,7 @@ import { getUserServerFn, USER_QUERY_KEY } from "../platform/user";
 import MinicartDrawer from "../components/minicart/MinicartDrawer";
 // @ts-ignore Vite ?url import
 import appCss from "../styles/app.css?url";
+import { SITE_DESCRIPTION, SITE_NAME } from "../constants";
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   beforeLoad: async ({ context }) => {
@@ -38,21 +39,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Storefront-tanstack" },
-      {
-        name: "description",
-        content:
-          "Shop the new season at Storefront-tanstack — apparel, accessories and more, with up to 60% off.",
-      },
+      { title: SITE_NAME },
+      // Safety net: kept even though the home route emits its own description
+      // from the CMS SEO block. TanStack Router dedupes by `name`, so the CMS
+      // value wins when present and this one covers routes/errors without SEO.
+      { name: "description", content: SITE_DESCRIPTION },
       // Open Graph / Twitter defaults so shared links render a preview card.
       { property: "og:type", content: "website" },
-      { property: "og:site_name", content: "Storefront-tanstack" },
-      { property: "og:title", content: "Storefront-tanstack" },
-      {
-        property: "og:description",
-        content:
-          "Shop the new season at Storefront-tanstack — apparel, accessories and more, with up to 60% off.",
-      },
+      { property: "og:site_name", content: SITE_NAME },
+      { property: "og:title", content: SITE_NAME },
+      { property: "og:description", content: SITE_DESCRIPTION },
       {
         property: "og:image",
         content:
