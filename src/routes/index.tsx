@@ -3,7 +3,6 @@ import { cmsHomeRouteConfig, loadCmsPage } from "@decocms/tanstack";
 import { deferredSectionLoader } from "@decocms/tanstack/sdk/deferredSectionLoader";
 import PageSections from "../components/ui/PageSections";
 import { preloadSectionComponents } from "@decocms/blocks/cms";
-import { HOME_SEO_OPTIONS, withOgUrl } from "../sdk/homeHead";
 
 const isServer = typeof document === "undefined";
 
@@ -11,7 +10,8 @@ const isServer = typeof document === "undefined";
 const IGNORED_SEARCH_PARAMS = new Set(["skuId"]);
 
 const baseConfig = cmsHomeRouteConfig({
-  ...HOME_SEO_OPTIONS,
+  defaultTitle: "Storefront-tanstack",
+  siteName: "Storefront-tanstack",
   // Keep the previous route UI visible while the loader re-runs on filter/sort
   // navigation. Without this, framework defaults (pendingMs=200) flash the
   // pending UI and the page looks like a hard reload. The deferred SearchResult
@@ -22,13 +22,20 @@ const baseConfig = cmsHomeRouteConfig({
 
 export const Route = createFileRoute("/")({
   ...baseConfig,
-  // Adds `og:url` while preserving every tag `cmsHomeRouteConfig` emits
-  // (title, description, robots, OG/Twitter) — see `withOgUrl`.
-  head: (ctx: Parameters<typeof baseConfig.head>[0]) =>
-    withOgUrl(
-      baseConfig.head(ctx),
-      (ctx.loaderData as { pageUrl?: string } | null | undefined)?.pageUrl,
-    ),
+  // Ensure the home page always emits an `og:url` tag. `cmsHomeRouteConfig`
+  // only adds it when the CMS page's SEO block sets an explicit canonical
+  // URL, so pages without one (like the home, by default) lose the social
+  // preview when shared. Fall back to the resolved absolute page URL.
+  head: (ctx: Parameters<typeof baseConfig.head>[0]) => {
+    const head = baseConfig.head(ctx);
+    const meta = head.meta ?? [];
+    const pageUrl = (ctx.loaderData as { pageUrl?: string } | null | undefined)?.pageUrl;
+    const hasOgUrl = meta.some((tag: Record<string, string>) => tag.property === "og:url");
+    return {
+      ...head,
+      meta: hasOgUrl || !pageUrl ? meta : [...meta, { property: "og:url", content: pageUrl }],
+    };
+  },
   // Preserve query string so filter/sort/pagination changes reach the loader.
   // Without this, TanStack Router collapses the home route to "/" and skips
   // re-fetching when the user clicks a filter or changes sort order.

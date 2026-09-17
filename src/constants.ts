@@ -1,11 +1,3 @@
-// SEO safety net. Used by the root route's static `head()` and passed to
-// `cmsHomeRouteConfig` as `defaultDescription`, so the home page always emits a
-// `<meta name="description">` in the SSR HTML even when the CMS page has no
-// `seo` block (page not found, loader error, description cleared in the admin).
-export const SITE_NAME = "Storefront-tanstack";
-export const SITE_DESCRIPTION =
-  "Shop the new season at Storefront-tanstack — apparel, accessories and more, with up to 60% off.";
-
 export const MINICART_FORM_ID = "minicart-form";
 export const MINICART_DRAWER_ID = "minicart-drawer";
 
