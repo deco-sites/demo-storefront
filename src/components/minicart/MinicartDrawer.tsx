@@ -10,11 +10,13 @@ export default function MinicartDrawer() {
         className="peer/minicart sr-only"
         aria-label="Cart"
       />
-      {/* Click-outside overlay: pointer-only. It lives outside every landmark,
-          so expose it to nobody — the drawer has its own "Close cart" button. */}
+      {/* Click-outside overlay: pointer-only. It has no text content, so it
+          exposes no name to assistive tech on its own — and it deliberately
+          carries no aria-hidden, because that would conflict with the
+          keyboard-focusable checkbox it labels (aria-hidden-focus). Keyboard
+          users close the drawer with its own "Close cart" button. */}
       <label
         htmlFor={MINICART_DRAWER_ID}
-        aria-hidden="true"
         className="fixed inset-0 z-40 bg-black/40 opacity-0 pointer-events-none transition-opacity duration-200 peer-checked/minicart:opacity-100 peer-checked/minicart:pointer-events-auto"
       />
       <aside
