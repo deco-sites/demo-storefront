@@ -1,5 +1,6 @@
 import Slider from "../../components/ui/Slider";
 import { useId } from "react";
+import { stripInlineColors } from "./stripInlineColors";
 
 export interface Props {
   alerts?: string[];
@@ -20,7 +21,7 @@ function Alert({ alerts = [], interval = 5 }: Props) {
           <Slider.Item key={index} index={index} className="carousel-item">
             <span
               className="w-screen px-5 text-center !text-ink [&_*]:!text-ink"
-              dangerouslySetInnerHTML={{ __html: alert }}
+              dangerouslySetInnerHTML={{ __html: stripInlineColors(alert) }}
             />
           </Slider.Item>
         ))}
