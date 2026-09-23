@@ -2,6 +2,7 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { cmsRouteConfig } from "@decocms/tanstack";
 import { deferredSectionLoader } from "@decocms/tanstack/sdk/deferredSectionLoader";
 import PageSections from "../components/ui/PageSections";
+import { shopifyResourceExistsServerFn } from "../loaders/shopifyResourceExists";
 
 const routeConfig = cmsRouteConfig({
   siteName: "Storefront-tanstack",
@@ -25,6 +26,26 @@ export const Route = createFileRoute("/$")({
   loader: async (ctx: Parameters<typeof routeConfig.loader>[0]) => {
     const page = await routeConfig.loader(ctx);
     if (!page) throw notFound();
+    // Wildcard page blocks match URLs with nothing behind them: "Category
+    // Page" is mapped to `/*` (every URL) and the PDP to `/products/:slug`.
+    // Their sections are lazy, so check the Shopify resource here — otherwise
+    // the empty page ships as a soft-404 (HTTP 200).
+    const p = page as { path?: string };
+    const segments = (ctx.params._splat ?? "").split("/");
+    if (p.path === "/*" && !ctx.deps.search?.q) {
+      const handle = segments[0];
+      if (
+        !handle ||
+        !(await shopifyResourceExistsServerFn({ data: { type: "collection", handle } }))
+      )
+        throw notFound();
+    } else if (p.path === "/products/:slug") {
+      // Same slug → handle parsing as the Shopify PDP loader (`handle-<skuId>`).
+      const parts = (segments[1] ?? "").split("-");
+      const handle = parts.slice(0, Number(parts.at(-1)) ? -1 : undefined).join("-");
+      if (!(await shopifyResourceExistsServerFn({ data: { type: "product", handle } })))
+        throw notFound();
+    }
     return page;
   },
   component: CmsPage,
