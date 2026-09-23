@@ -2,6 +2,7 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { cmsRouteConfig } from "@decocms/tanstack";
 import { deferredSectionLoader } from "@decocms/tanstack/sdk/deferredSectionLoader";
 import PageSections from "../components/ui/PageSections";
+import { collectionExistsServerFn } from "../loaders/collectionExists";
 
 const routeConfig = cmsRouteConfig({
   siteName: "Storefront-tanstack",
@@ -25,6 +26,14 @@ export const Route = createFileRoute("/$")({
   loader: async (ctx: Parameters<typeof routeConfig.loader>[0]) => {
     const page = await routeConfig.loader(ctx);
     if (!page) throw notFound();
+    // The "Category Page" block is mapped to `/*`, so it matches every URL.
+    // Only treat it as a real page when the first path segment is an existing
+    // Shopify collection (or it's a `?q=` search) — otherwise it's a soft-404.
+    const p = page as { path?: string };
+    if (p.path === "/*" && !ctx.deps.search?.q) {
+      const handle = (ctx.params._splat ?? "").split("/")[0];
+      if (!handle || !(await collectionExistsServerFn({ data: handle }))) throw notFound();
+    }
     return page;
   },
   component: CmsPage,

@@ -156,6 +156,10 @@
           "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL2FkZHJlc3MudHM=",
           "namespace": "site"
         },
+        "site/loaders/collectionExists.ts": {
+          "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL2NvbGxlY3Rpb25FeGlzdHMudHM=",
+          "namespace": "site"
+        },
         "site/loaders/productByHandle.ts": {
           "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw==",
           "namespace": "site"
@@ -1081,6 +1085,9 @@
                 "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL2FkZHJlc3MudHM="
               },
               {
+                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL2NvbGxlY3Rpb25FeGlzdHMudHM="
+              },
+              {
                 "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
               },
               {
@@ -1169,6 +1176,9 @@
               },
               {
                 "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL2FkZHJlc3MudHM="
+              },
+              {
+                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL2NvbGxlY3Rpb25FeGlzdHMudHM="
               },
               {
                 "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
@@ -1943,6 +1953,22 @@
               "site/loaders/address.ts"
             ],
             "default": "site/loaders/address.ts"
+          }
+        }
+      },
+      "c2l0ZS9sb2FkZXJzL2NvbGxlY3Rpb25FeGlzdHMudHM=": {
+        "title": "site/loaders/collectionExists.ts",
+        "type": "object",
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "site/loaders/collectionExists.ts"
+            ],
+            "default": "site/loaders/collectionExists.ts"
           }
         }
       },
@@ -7535,6 +7561,9 @@
           },
           {
             "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL2FkZHJlc3MudHM="
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL2NvbGxlY3Rpb25FeGlzdHMudHM="
           },
           {
             "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
