@@ -11,7 +11,13 @@ const status = async (path: string) =>
   (await fetch(new URL(path, BASE), { redirect: "follow" })).status;
 
 test("unknown URLs return 404", { skip: !BASE }, async () => {
-  for (const path of ["/nao-existe-xyz", "/nao-existe-xyz/", "/nao-existe-xyz?a=1", "/a/b/c", "/products/nao-existe"]) {
+  for (const path of [
+    "/nao-existe-xyz",
+    "/nao-existe-xyz/",
+    "/nao-existe-xyz?a=1",
+    "/a/b/c",
+    "/products/nao-existe",
+  ]) {
     assert.equal(await status(path), 404, path);
   }
 });
