@@ -2,7 +2,7 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { cmsRouteConfig } from "@decocms/tanstack";
 import { deferredSectionLoader } from "@decocms/tanstack/sdk/deferredSectionLoader";
 import PageSections from "../components/ui/PageSections";
-import { collectionExistsServerFn } from "../loaders/collectionExists";
+import { shopifyResourceExistsServerFn } from "../loaders/shopifyResourceExists";
 
 const routeConfig = cmsRouteConfig({
   siteName: "Storefront-tanstack",
@@ -26,13 +26,25 @@ export const Route = createFileRoute("/$")({
   loader: async (ctx: Parameters<typeof routeConfig.loader>[0]) => {
     const page = await routeConfig.loader(ctx);
     if (!page) throw notFound();
-    // The "Category Page" block is mapped to `/*`, so it matches every URL.
-    // Only treat it as a real page when the first path segment is an existing
-    // Shopify collection (or it's a `?q=` search) — otherwise it's a soft-404.
+    // Wildcard page blocks match URLs with nothing behind them: "Category
+    // Page" is mapped to `/*` (every URL) and the PDP to `/products/:slug`.
+    // Their sections are lazy, so check the Shopify resource here — otherwise
+    // the empty page ships as a soft-404 (HTTP 200).
     const p = page as { path?: string };
+    const segments = (ctx.params._splat ?? "").split("/");
     if (p.path === "/*" && !ctx.deps.search?.q) {
-      const handle = (ctx.params._splat ?? "").split("/")[0];
-      if (!handle || !(await collectionExistsServerFn({ data: handle }))) throw notFound();
+      const handle = segments[0];
+      if (
+        !handle ||
+        !(await shopifyResourceExistsServerFn({ data: { type: "collection", handle } }))
+      )
+        throw notFound();
+    } else if (p.path === "/products/:slug") {
+      // Same slug → handle parsing as the Shopify PDP loader (`handle-<skuId>`).
+      const parts = (segments[1] ?? "").split("-");
+      const handle = parts.slice(0, Number(parts.at(-1)) ? -1 : undefined).join("-");
+      if (!(await shopifyResourceExistsServerFn({ data: { type: "product", handle } })))
+        throw notFound();
     }
     return page;
   },
