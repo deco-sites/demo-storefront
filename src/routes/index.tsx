@@ -20,6 +20,48 @@ const baseConfig = cmsHomeRouteConfig({
   pendingMinMs: 0,
 });
 
+const SITE_NAME = "Storefront-tanstack";
+const SITE_URL = "https://demo-storefront.decocms.com";
+// Same logo the Header renders (`.deco/blocks/Header.json`).
+const SITE_LOGO = "https://decoims.com/decocms/e8c6326e-e009-4e3c-9787-b2fe25a1b993/deco-logo.png";
+
+// Schema.org structured data for the home page. `sameAs` is intentionally
+// omitted: every social link in `.deco/blocks/Footer.json` is still a "#"
+// placeholder, and pointing search engines at fake profiles is worse than
+// having none. TanStack Router serializes the object with `JSON.stringify`
+// and HTML-escapes it into a `<script type="application/ld+json">` inside
+// `<head>` (see `useTags` in @tanstack/react-router), so no manual escaping
+// is needed here.
+const HOME_JSON_LD = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      name: SITE_NAME,
+      url: SITE_URL,
+      logo: SITE_LOGO,
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      name: SITE_NAME,
+      url: SITE_URL,
+      publisher: { "@id": `${SITE_URL}/#organization` },
+      // Matches the real search form target (`/s?q=<term>`, see
+      // src/components/search/Searchbar/Form.tsx).
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: `${SITE_URL}/s?q={search_term_string}`,
+        },
+        "query-input": "required name=search_term_string",
+      },
+    },
+  ],
+};
+
 export const Route = createFileRoute("/")({
   ...baseConfig,
   // Ensure the home page always emits an `og:url` tag. `cmsHomeRouteConfig`
@@ -31,9 +73,13 @@ export const Route = createFileRoute("/")({
     const meta = head.meta ?? [];
     const pageUrl = (ctx.loaderData as { pageUrl?: string } | null | undefined)?.pageUrl;
     const hasOgUrl = meta.some((tag: Record<string, string>) => tag.property === "og:url");
+    const withOgUrl =
+      hasOgUrl || !pageUrl ? meta : [...meta, { property: "og:url", content: pageUrl }];
     return {
       ...head,
-      meta: hasOgUrl || !pageUrl ? meta : [...meta, { property: "og:url", content: pageUrl }],
+      // `script:ld+json` is TanStack Router's head API for structured data:
+      // it emits a `<script type="application/ld+json">` in `<head>`.
+      meta: [...withOgUrl, { "script:ld+json": HOME_JSON_LD } as unknown as Record<string, string>],
     };
   },
   // Preserve query string so filter/sort/pagination changes reach the loader.
