@@ -99,7 +99,13 @@ export default function HeaderNav({ navItems, logo, shippingNote }: Props) {
         )}
       >
         {logo && (
-          <Link to="/" aria-label="Home" className="mr-2 flex shrink-0 items-center">
+          <Link
+            to="/"
+            // Matches the logo's visible wording (its alt text) instead of
+            // replacing it with a bare "Home" — WCAG 2.5.3.
+            aria-label={`${logo.alt} – Home`}
+            className="mr-2 flex shrink-0 items-center"
+          >
             <Image
               src={logo.src}
               alt={logo.alt}

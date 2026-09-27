@@ -4,6 +4,8 @@ import { clx } from "~/sdk/clx";
 
 export interface Props {
   href: string;
+  /** Product name — the card's visible title, reused as this link's accessible name. */
+  name: string;
   frontUrl: string;
   frontAlt?: string;
   backUrl?: string;
@@ -19,6 +21,7 @@ export interface Props {
 
 export default function ProductCardImage({
   href,
+  name,
   frontUrl,
   frontAlt,
   backUrl,
@@ -34,7 +37,10 @@ export default function ProductCardImage({
     <Link
       to={href}
       preload={prefetch}
-      aria-label="view product"
+      // The card's visible label is the product name, so the image link has to
+      // announce it too — "view product" told screen reader and voice control
+      // users nothing about which product they were on (WCAG 2.5.3).
+      aria-label={name}
       className={clx(
         "absolute top-0 left-0",
         "grid grid-cols-1 grid-rows-1",

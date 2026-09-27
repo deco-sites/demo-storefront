@@ -108,6 +108,7 @@ export default function ProductCard({
         {front && (
           <ProductCardImage
             href={selectedHref}
+            name={title}
             frontUrl={front.url!}
             frontAlt={front.alternateName}
             backUrl={back?.url}

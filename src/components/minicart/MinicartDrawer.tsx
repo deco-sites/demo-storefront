@@ -8,7 +8,7 @@ export default function MinicartDrawer() {
         type="checkbox"
         id={MINICART_DRAWER_ID}
         className="peer/minicart sr-only"
-        aria-label="Cart"
+        aria-label="Your bag"
       />
       {/* Click-outside overlay: pointer-only. It lives outside every landmark,
           so expose it to nobody — the drawer has its own "Close cart" button. */}
