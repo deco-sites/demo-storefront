@@ -2,6 +2,7 @@ import { DecoPageRenderer } from "@decocms/tanstack";
 import type { DeferredSection, ResolvedSection } from "@decocms/blocks/cms";
 import type { Device } from "@decocms/blocks/sdk/useDevice";
 import { mainBounds } from "./splitPageSections";
+import FallbackHeading from "./FallbackHeading";
 
 /**
  * Wraps the CMS page content in a `<main>` landmark.
@@ -37,6 +38,14 @@ interface Props {
    */
   device?: Device;
   loadDeferredSectionFn?: LoadDeferredSectionFn;
+  /**
+   * Visually hidden `<h1>` rendered at the top of `<main>` when the page's CMS
+   * sections don't provide one. See {@link FallbackHeading} — it removes itself
+   * on the client if another `<h1>` is present, so pages whose sections already
+   * emit a heading never end up with two. Opt-in per route: only pass it where
+   * the page's main subject is known (e.g. the home).
+   */
+  fallbackHeading?: string;
 }
 
 export default function PageSections({
@@ -47,6 +56,7 @@ export default function PageSections({
   pageUrl,
   device,
   loadDeferredSectionFn,
+  fallbackHeading,
 }: Props) {
   const eager = sections ?? [];
   const deferred = deferredSections ?? [];
@@ -91,7 +101,10 @@ export default function PageSections({
   return (
     <>
       {render(pick(-Infinity, bounds.first - 1))}
-      <main id="main-content">{render(pick(bounds.first, bounds.last))}</main>
+      <main id="main-content">
+        {fallbackHeading ? <FallbackHeading text={fallbackHeading} /> : null}
+        {render(pick(bounds.first, bounds.last))}
+      </main>
       {render(pick(bounds.last + 1, Infinity))}
     </>
   );
