@@ -24,7 +24,9 @@ export default function Bag({ size = "md" }: { size?: "sm" | "md" }) {
     return (
       <label
         htmlFor={MINICART_DRAWER_ID}
-        aria-label="Open cart"
+        // Icon-only, so it needs a name — "Bag", the same wording the
+        // desktop pill and the drawer heading show (WCAG 2.5.3).
+        aria-label="Bag"
         className="tap-scale relative flex size-10 cursor-pointer items-center justify-center rounded-sm text-ink transition-colors duration-(--duration-fast) hover:bg-white/60"
       >
         {busy ? (

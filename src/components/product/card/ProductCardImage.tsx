@@ -15,6 +15,11 @@ export interface Props {
   /** Router preload strategy for the product link. */
   prefetch?: "intent" | false;
   inStock: boolean;
+  /**
+   * Accessible name for the link — pass the product's visible title so the
+   * announced name matches the card's text (WCAG 2.5.3 Label in Name).
+   */
+  label?: string;
 }
 
 export default function ProductCardImage({
@@ -28,13 +33,14 @@ export default function ProductCardImage({
   preload,
   prefetch = "intent",
   inStock,
+  label,
 }: Props) {
   const aspectRatio = `${width} / ${height}`;
   return (
     <Link
       to={href}
       preload={prefetch}
-      aria-label="view product"
+      aria-label={label || frontAlt || undefined}
       className={clx(
         "absolute top-0 left-0",
         "grid grid-cols-1 grid-rows-1",

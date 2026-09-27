@@ -145,7 +145,7 @@ export default function Minicart() {
         <h2 className="font-medium text-xl">Your bag</h2>
         <label
           htmlFor={MINICART_DRAWER_ID}
-          aria-label="Close cart"
+          aria-label="Close bag"
           className="btn btn-ghost btn-sm no-animation cursor-pointer"
         >
           <Icon id="close" />

@@ -133,6 +133,7 @@ function Header({
 
       <Drawer
         id={SIDEMENU_DRAWER_ID}
+        label="Menu"
         aside={
           <Drawer.Aside title="Menu" drawer={SIDEMENU_DRAWER_ID}>
             {loading === "lazy" ? (
