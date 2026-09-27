@@ -38,10 +38,10 @@
   },
   "mode": "dark",
   "mainColors": {
-    "primary": "#27AE6B",
+    "primary": "#1A7F52",
     "base-100": "#ffffff",
     "secondary": "#FAEABC",
-    "success": "#219259",
+    "success": "#1B7A4A",
     "warning": "#a39e0f",
     "error": "#d10a0a",
     "info": "#3c4cc8",
