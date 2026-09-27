@@ -6,6 +6,20 @@ import { preloadSectionComponents } from "@decocms/blocks/cms";
 
 const isServer = typeof document === "undefined";
 
+// Absolute base used to build `og:url` when the CMS SEO block has no canonical
+// URL and the loader gives us nothing (or a relative path). Social crawlers
+// ignore relative `og:url` values, so this must always resolve to an absolute
+// URL.
+const SITE_ORIGIN = "https://demo-storefront.decocms.com";
+
+function toAbsoluteUrl(value: string | undefined, fallbackPath: string) {
+  try {
+    return new URL(value ?? fallbackPath, SITE_ORIGIN).toString();
+  } catch {
+    return new URL(fallbackPath, SITE_ORIGIN).toString();
+  }
+}
+
 // Variant selection (?skuId=…) is client-side only — don't refetch the page.
 const IGNORED_SEARCH_PARAMS = new Set(["skuId"]);
 
@@ -25,15 +39,20 @@ export const Route = createFileRoute("/")({
   // Ensure the home page always emits an `og:url` tag. `cmsHomeRouteConfig`
   // only adds it when the CMS page's SEO block sets an explicit canonical
   // URL, so pages without one (like the home, by default) lose the social
-  // preview when shared. Fall back to the resolved absolute page URL.
+  // preview when shared. Fall back unconditionally to an absolute URL built
+  // from the loader's page URL, or from the current pathname when the loader
+  // returns null (page not found).
   head: (ctx: Parameters<typeof baseConfig.head>[0]) => {
     const head = baseConfig.head(ctx);
     const meta = head.meta ?? [];
-    const pageUrl = (ctx.loaderData as { pageUrl?: string } | null | undefined)?.pageUrl;
     const hasOgUrl = meta.some((tag: Record<string, string>) => tag.property === "og:url");
+    if (hasOgUrl) return head;
+
+    const pageUrl = (ctx.loaderData as { pageUrl?: string } | null | undefined)?.pageUrl;
+    const pathname = (ctx as { location?: { pathname?: string } }).location?.pathname ?? "/";
     return {
       ...head,
-      meta: hasOgUrl || !pageUrl ? meta : [...meta, { property: "og:url", content: pageUrl }],
+      meta: [...meta, { property: "og:url", content: toAbsoluteUrl(pageUrl, pathname) }],
     };
   },
   // Preserve query string so filter/sort/pagination changes reach the loader.
