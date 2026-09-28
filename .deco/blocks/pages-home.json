@@ -5,9 +5,6 @@
       "__resolveType": "Deco"
     },
     {
-      "__resolveType": "Header"
-    },
-    {
       "__resolveType": "site/sections/Content/Hero.tsx",
       "slides": [
         {
@@ -65,6 +62,9 @@
         "Interest-free installments",
         "Up to 15% off paying cash"
       ]
+    },
+    {
+      "__resolveType": "Header"
     },
     {
       "__resolveType": "site/sections/Product/ProductShelf.tsx",
