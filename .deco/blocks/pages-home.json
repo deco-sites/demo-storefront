@@ -68,11 +68,12 @@
     },
     {
       "__resolveType": "site/sections/Product/ProductShelf.tsx",
-      "title": "Discover Our Featured Picks",
+      "title": "Grupo Rosset",
       "cta": "/mono",
       "products": {
         "__resolveType": "Product List Loader"
-      }
+      },
+      "visibility": "all"
     },
     {
       "__resolveType": "website/flags/multivariate/section.ts",
