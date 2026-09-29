@@ -120,3 +120,5 @@ Disallow: /prodimages/
 Disallow: /private/
 
 Allow: /
+
+Sitemap: https://demo-storefront.decocms.com/sitemap.xml
