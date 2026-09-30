@@ -289,7 +289,7 @@
       },
       {
         "rule": {
-          "__resolveType": "website/matchers/always.ts"
+          "__resolveType": "website/matchers/cookie.ts"
         },
         "value": [
           {
