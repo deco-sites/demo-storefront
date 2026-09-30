@@ -42,7 +42,8 @@ const serverEntry = createServerEntry({ fetch: handler.fetch });
 // hardening comes from `script-src`, `object-src`, `base-uri` and
 // `form-action`. `frame-ancestors` is deliberately omitted so the deco CMS
 // admin can keep rendering the site in its preview iframe; clickjacking is
-// still covered by the default `X-Frame-Options: SAMEORIGIN`.
+// covered by `X-Frame-Options: SAMEORIGIN`, set on every response in
+// `withoutPoweredBy` below.
 const CSP_DIRECTIVES = [
   "default-src 'self' https: data: blob:",
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' cdn.shopify.com *.shopify.com",
@@ -141,16 +142,25 @@ const withoutPoweredBy = <T extends FetchWorker>(worker: T): T => ({
   fetch: async (request: Request, env: never, ctx: never) => {
     const response = await worker.fetch(request, env, ctx);
 
-    // WebSocket upgrades and bodyless responses can't be reconstructed.
-    if (
-      ("webSocket" in response && response.webSocket) ||
-      !response.headers.has("x-powered-by")
-    ) {
+    // WebSocket upgrades can't be reconstructed.
+    if ("webSocket" in response && response.webSocket) {
+      return response;
+    }
+    if (!response.headers.has("x-powered-by") && response.headers.has("x-frame-options")) {
       return response;
     }
 
     const stripped = new Response(response.body, response);
     stripped.headers.delete("x-powered-by");
+    // Clickjacking protection on every response. The framework's default
+    // X-Frame-Options is not emitted, so set it here unless already present.
+    // /deco/render is excluded: it's the endpoint the deco CMS admin embeds
+    // in its cross-origin preview iframe (same reason `frame-ancestors` is
+    // omitted from the CSP above).
+    const isAdminRender = new URL(request.url).pathname === "/deco/render";
+    if (!isAdminRender && !stripped.headers.has("x-frame-options")) {
+      stripped.headers.set("X-Frame-Options", "SAMEORIGIN");
+    }
     return stripped;
   },
 });
