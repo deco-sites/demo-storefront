@@ -146,10 +146,7 @@ const withoutPoweredBy = <T extends FetchWorker>(worker: T): T => ({
     if ("webSocket" in response && response.webSocket) {
       return response;
     }
-    if (
-      !response.headers.has("x-powered-by") &&
-      response.headers.has("x-frame-options")
-    ) {
+    if (!response.headers.has("x-powered-by") && response.headers.has("x-frame-options")) {
       return response;
     }
 
@@ -157,7 +154,11 @@ const withoutPoweredBy = <T extends FetchWorker>(worker: T): T => ({
     stripped.headers.delete("x-powered-by");
     // Clickjacking protection on every response. The framework's default
     // X-Frame-Options is not emitted, so set it here unless already present.
-    if (!stripped.headers.has("x-frame-options")) {
+    // /deco/render is excluded: it's the endpoint the deco CMS admin embeds
+    // in its cross-origin preview iframe (same reason `frame-ancestors` is
+    // omitted from the CSP above).
+    const isAdminRender = new URL(request.url).pathname === "/deco/render";
+    if (!isAdminRender && !stripped.headers.has("x-frame-options")) {
       stripped.headers.set("X-Frame-Options", "SAMEORIGIN");
     }
     return stripped;
