@@ -288,7 +288,7 @@
       },
       {
         "rule": {
-          "__resolveType": "website/matchers/always.ts"
+          "__resolveType": "Teste AB"
         },
         "value": [
           {
