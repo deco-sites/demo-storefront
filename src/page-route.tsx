@@ -35,9 +35,9 @@ export const pageRouteOptions = {
 export type LoadedPage = Omit<OpenedPage, "blocks"> & { blocks: PageBlock[] };
 
 /**
- * Loads the page at a path. While the server renders, block promises stay unawaited, so each block
- * streams in as it's ready. On a client-side navigation the server function answers with every
- * block ready (src/page.functions.ts), so the previous page stays up until the next one is complete.
+ * Loads the page at a path, with every block ready before the page renders (see below). On a
+ * client-side navigation the server function answers with every block ready
+ * (src/page.functions.ts), so the previous page stays up until the next one is complete.
  */
 export async function loadPageAt(
   pathname: string,
@@ -50,7 +50,13 @@ export async function loadPageAt(
     // defer() records the result on the promise, so <Await> renders a ready block without suspending.
     value: defer(block.value instanceof Promise ? block.value : Promise.resolve(block.value)),
   }));
-  if (typeof document !== "undefined") await Promise.all(blocks.map((block) => block.value));
+  // Every block is awaited, on the server too, so each one is in the router's dehydrated state when
+  // the document streams. A block still pending at that point is streamed later as a resolution
+  // script, and on this site (TanStack Start 1.166, block promises returned through the page server
+  // function) the browser's copy of that promise never settled: the section's markup came from the
+  // server but never hydrated (no reveal, no handlers). v7 also resolved every non-deferred section
+  // before rendering the page.
+  await Promise.all(blocks.map((block) => block.value));
   return { ...page, blocks };
 }
 
