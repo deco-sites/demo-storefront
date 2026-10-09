@@ -1,7 +1,8 @@
 import { type ImageWidget } from "~/types/widgets";
 import { Picture, Source } from "~/components/ui/Picture";
-import Section, { type Props as SectionHeaderProps } from "../../components/ui/Section";
-import { type LoadingFallbackProps } from "~/types/deco";
+import Section, {
+  type Props as SectionHeaderProps,
+} from "../../components/ui/Section";
 /**
  * @titleBy alt
  */
@@ -90,10 +91,4 @@ function Gallery({
     </Section.Container>
   );
 }
-export const LoadingFallback = ({ title, cta }: LoadingFallbackProps<Props>) => (
-  <Section.Container>
-    <Section.Header title={title} cta={cta} />
-    <Section.Placeholder height="635px" />;
-  </Section.Container>
-);
 export default Gallery;

@@ -1,5 +1,5 @@
 import { useId } from "react";
-import type { ImageObject } from "@decocms/apps-commerce/types";
+import type { ImageObject } from "../../../vendor/commerce/types";
 import Image from "~/components/ui/Image";
 import Icon from "~/components/ui/Icon";
 import Slider from "../../ui/Slider";

@@ -1,11 +1,11 @@
-import type { Product } from "@decocms/apps-commerce/types";
+import type { Product } from "../../vendor/commerce/types";
 import type { ImageWidget } from "~/types/widgets";
 import Image from "~/components/ui/Image";
 import { Picture, Source } from "~/components/ui/Picture";
 import { Link } from "@tanstack/react-router";
 import { clx } from "~/sdk/clx";
 import { useReveal } from "~/sdk/useReveal";
-import { useOffer } from "@decocms/apps-commerce/sdk/useOffer";
+import { useOffer } from "../../vendor/commerce/sdk/useOffer";
 import Slider from "~/components/ui/Slider";
 import Icon from "~/components/ui/Icon";
 import ProductCardPrice from "~/components/product/card/ProductCardPrice";

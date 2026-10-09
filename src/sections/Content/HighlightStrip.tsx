@@ -3,7 +3,6 @@ import Image from "~/components/ui/Image";
 import { Link } from "@tanstack/react-router";
 import Section, { type Props as SectionHeaderProps } from "../../components/ui/Section";
 import Slider from "../../components/ui/Slider";
-import { type LoadingFallbackProps } from "~/types/deco";
 import { useReveal } from "~/sdk/useReveal";
 
 /** @titleBy label */
@@ -67,9 +66,3 @@ export default function HighlightStrip({ title, cta, items }: Props) {
   );
 }
 
-export const LoadingFallback = ({ title, cta }: LoadingFallbackProps<Props>) => (
-  <Section.Container>
-    <Section.Header title={title} cta={cta} />
-    <Section.Placeholder height="118px" />
-  </Section.Container>
-);

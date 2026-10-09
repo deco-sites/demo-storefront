@@ -1,7 +1,6 @@
 import { type ImageWidget } from "~/types/widgets";
 import Image from "~/components/ui/Image";
 import PoweredByDeco from "~/components/ui/PoweredByDeco";
-import Section from "../../components/ui/Section";
 
 /** @titleBy title */
 interface Item {
@@ -154,8 +153,6 @@ function Footer({
     </footer>
   );
 }
-
-export const LoadingFallback = () => <Section.Placeholder height="380px" />;
 
 export default Footer;
 

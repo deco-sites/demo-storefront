@@ -2,7 +2,6 @@ import { ImageWidget } from "~/types/widgets";
 import Image from "~/components/ui/Image";
 import type { ReactNode } from "react";
 import Icon, { AvailableIcons } from "../../components/ui/Icon";
-import Section from "../../components/ui/Section";
 
 export interface Props {
   header: Header;
@@ -225,7 +224,5 @@ function BaseContainer(props: { children?: ReactNode; background?: Props["backgr
     </div>
   );
 }
-
-export const LoadingFallback = () => <Section.Placeholder height="635px" />;
 
 export default Links;

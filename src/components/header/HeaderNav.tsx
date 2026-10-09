@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import type { SiteNavigationElement } from "@decocms/apps-commerce/types";
+import type { SiteNavigationElement } from "../../vendor/commerce/types";
 import type { ImageWidget } from "~/types/widgets";
 import { clx } from "~/sdk/clx";
 import Icon from "../ui/Icon";

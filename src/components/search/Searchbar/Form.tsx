@@ -3,7 +3,7 @@
  * fetched via HTMX (kept for now — the suggestions migration is its own task).
  */
 import { useEffect, useId, useRef } from "react";
-import { Suggestion } from "@decocms/apps-commerce/types";
+import { Suggestion } from "../../../vendor/commerce/types";
 import { SEARCHBAR_INPUT_FORM_ID, SIDEMENU_DRAWER_ID } from "../../../constants";
 import { useComponent } from "../../../sections/Component";
 import Icon from "../../ui/Icon";

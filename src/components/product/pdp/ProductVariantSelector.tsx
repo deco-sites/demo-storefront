@@ -1,6 +1,6 @@
 import { useRouterState } from "@tanstack/react-router";
-import type { Product } from "@decocms/apps-commerce/types";
-import { useVariantPossibilities } from "@decocms/apps-commerce/sdk/useVariantPossibilities";
+import type { Product } from "../../../vendor/commerce/types";
+import { useVariantPossibilities } from "../../../vendor/commerce/sdk/useVariantPossibilities";
 import { relative } from "../../../sdk/url";
 import { ColorSwatchNavList } from "../ColorSwatch";
 import { SizePillList } from "../SizePill";

@@ -1,4 +1,4 @@
-import { Image, getSrcSet, type FitOptions, type ImageProps } from "@decocms/blocks/hooks";
+import { Image, getSrcSet, type FitOptions, type ImageProps } from "../../vendor/blocks/Image";
 
 export interface PictureSourceProps {
   src: string;

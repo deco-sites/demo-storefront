@@ -1,6 +1,6 @@
 import Icon from "../../components/ui/Icon";
 import Searchbar, { type SearchbarProps } from "../search/Searchbar/Form";
-import type { SiteNavigationElement } from "@decocms/apps-commerce/types";
+import type { SiteNavigationElement } from "../../vendor/commerce/types";
 
 export interface Props {
   navItems?: SiteNavigationElement[];
