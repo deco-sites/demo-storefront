@@ -14,7 +14,9 @@
     "DECO_OTEL_METRICS_ENDPOINT": "",
     "DECO_OTEL_LOGS_ENDPOINT": "",
     "DECO_OTEL_TRACES_ENDPOINT": "",
-    "DECO_FAST_DEPLOY": "0"
+    "DECO_FAST_DEPLOY": "0",
+    "DECO_SITE": "",
+    "DECO_SITE_TOKEN": ""
   },
   "viewports": {
     "mobile": {

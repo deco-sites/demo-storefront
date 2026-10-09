@@ -2,7 +2,7 @@
 
 A [deco.cx](https://deco.cx) storefront built on **TanStack Start + React 19 + Cloudflare Workers**, with Shopify as the commerce backend.
 
-This is a **site repo** — it consumes the [`@decocms/start`](https://www.npmjs.com/package/@decocms/start) framework (CMS bridge, admin protocol, worker entry, edge caching) and [`@decocms/apps`](https://www.npmjs.com/package/@decocms/apps) (commerce loaders/actions). UI, sections, and routes live here.
+This is a **site repo** on the next major of Deco CMS: [`@decocms/blocks`](https://www.npmjs.com/package/@decocms/blocks) reads the content (`createCMS`, `matchRoute`, the `deco` CLI) and [`@decocms/apps-shopify`](https://www.npmjs.com/package/@decocms/apps-shopify) is the thin Shopify client. Everything else is the site's own code: UI, sections, routes, the worker's edge cache, and the commerce loaders and flows (`src/vendor/`).
 
 ## Stack
 
@@ -15,9 +15,9 @@ This is a **site repo** — it consumes the [`@decocms/start`](https://www.npmjs
 | UI | React 19 + React Compiler |
 | Styles | Tailwind CSS v4 + DaisyUI |
 | Build | Vite 7 |
-| Data | TanStack Query + TanStack Store, server functions |
-| Commerce | Shopify Storefront API (via `@decocms/apps/shopify`) |
-| CMS | Deco admin protocol (via `@decocms/start`) |
+| Data | TanStack Query, server functions |
+| Commerce | Shopify Storefront API (via `createShopifyClient` from `@decocms/apps-shopify`) |
+| CMS | Deco CMS (`@decocms/blocks`): content in `.deco/blocks`, block map in `.deco/index.ts` |
 | Deploy | Wrangler (Cloudflare Workers) |
 
 ## Migrating a Deco Fresh storefront to this stack
@@ -77,12 +77,10 @@ Flags:
 | `--verbose` | Show detailed output for every file |
 | `--help`, `-h` | Show help |
 
-After it finishes:
+After it finishes (this is how the Fresh → TanStack step worked in v7; the site has since moved to the next major):
 
 ```sh
 npm install
-npm run generate:blocks
-npm run generate:schema
 npx tsr generate
 npm run dev
 ```
@@ -116,50 +114,56 @@ Open `http://localhost:5173`.
 |---|---|
 | `npm run dev` | Start Vite dev server |
 | `npm run dev:clean` | Wipe Vite/Wrangler/TanStack caches and start fresh |
-| `npm run build` | Generate blocks/schema/sections/loaders/routes, then `vite build` |
+| `npm run build` | `prebuild` (`deco schema && deco content && deco check`), then routes and `vite build` |
 | `npm run preview` | Preview the production build locally |
 | `npm run deploy` | `npm run build` then `wrangler deploy` |
-| `npm run typecheck` | `tsc --noEmit` |
+| `npm run typecheck` | `tsr generate && tsc --noEmit` |
+| `npm test` | Unit tests (`src/**/*.test.ts`) |
 | `npm run format` / `format:check` | Prettier on `src/**/*.{ts,tsx}` |
 | `npm run knip` / `knip:fix` | Find / auto-fix unused exports and files |
 | `npm run tailwind:lint` / `tailwind:fix` | Lint/auto-fix Tailwind class usage |
-| `npm run generate:*` | Re-run a single codegen step (blocks, schema, sections, loaders, routes, invoke) |
+| `npm run generate:routes` | Regenerate `src/routeTree.gen.ts` |
+| `npm run parity:*` | The v7 → v8 parity harness (`parity/README.md`) |
 
 ## Project layout
 
 ```
+.deco/
+├── blocks/               # Saved content, one JSON file per block (source of truth)
+├── index.ts              # The block map: every type content can name (v7 type names)
+└── schema.gen.json       # Editor forms (`deco schema`; committed). blocks.gen.ts is generated and gitignored
 src/
-├── apps/                 # Site app composition (apps/site.ts)
-├── routes/               # TanStack Router file routes (__root, $, index, deco/*, account, login)
+├── cms.ts                # createCMS (explicit params; the site reads its own env)
+├── views.ts              # View registry: section type → component
+├── open-page.server.ts   # matchRoute + one promise per block
+├── page.functions.ts     # The page loader as a server function
+├── page-route.tsx        # Route options shared by `/` and `/$`
+├── head.ts               # <head> from the page SEO and the site-wide SEO defaults
+├── request-state.server.ts # The page being rendered, for block functions (AsyncLocalStorage)
+├── blocks/               # Block functions: commerce loaders, SEO, matchers, section helper
+├── runtime/              # Root document, page view (sections, <main> landmark)
+├── routes/               # TanStack Router file routes (__root, $, index, account, login)
 ├── sections/             # CMS-rendered sections (Header, Footer, Product, Newsletter, …)
 ├── components/           # UI components (header, minicart, product, search, ui, …)
 ├── platform/             # Domain state — TanStack Query hooks + createServerFn actions
-│   ├── cart/             #   cart.{types,actions,hooks,shopify}.ts
-│   ├── user/
-│   └── wishlist/
-├── loaders/              # Site-local CMS loaders (user, wishlist)
-├── actions/              # Site-local invoke handlers (wishlist/submit, shipping/simulate)
-├── hooks/                # useCart, useUser, useWishlist
-├── sdk/                  # signal, clx, debounce, deviceServer, logger
+├── server/               # Edge cache, cache profiles, the site's server functions
+├── loaders/, actions/    # Site loaders and actions (called by blocks and server functions)
+├── vendor/               # Code copied from the v7 packages: Shopify, commerce types, Image
+├── sdk/                  # clx, debounce, device, logger, …
 ├── styles/app.css        # Tailwind v4 entry
-├── setup.ts              # Wires framework + apps + sections (called from worker entry)
-├── setup/                # Section-specific prop enrichment
-├── cache-config.ts       # Edge cache profile overrides
 ├── server.ts             # TanStack Start server entry
-├── worker-entry.ts       # Cloudflare Worker entry: admin protocol, CSP, segmentation, caching
-├── router.tsx            # Router configuration
-├── runtime.ts            # Runtime helpers
-├── context.ts            # Site context
-└── server/cms/           # Generated: blocks.gen.ts, sections.gen.ts (do not edit by hand)
+├── start.ts              # Start middleware (draft cookie)
+├── worker-entry.ts       # Cloudflare Worker entry: CSP, segmentation, edge cache
+└── router.tsx            # Router configuration
 ```
 
 ## How rendering works
 
-1. A request hits `src/worker-entry.ts` → `createDecoWorkerEntry` (admin routes, edge cache, CSP, device segmentation).
-2. Non-admin requests fall through to the TanStack Start server entry (`src/server.ts`).
-3. The catch-all route (`src/routes/$.tsx`) calls the framework's CMS resolver, which loads the page's blocks via `src/server/cms/blocks.gen.ts`.
-4. Blocks resolve to sections under `src/sections/`. Sections receive props enriched by their loader and metadata from `applySectionConventions` in `setup.ts`.
-5. Commerce data (Shopify PDP, PLP, search, cart) comes from `@decocms/apps/shopify` loaders, wired via `autoconfigApps`.
+1. A request hits `src/worker-entry.ts` → `withEdgeCache` (`src/server/edge-cache.ts`): security headers, CSP, device/region segmentation, the edge cache.
+2. The request goes on to the TanStack Start server entry (`src/server.ts`).
+3. The catch-all route (`src/routes/$.tsx`) and the home route call `loadPage`, which finds the page with `matchRoute` (`src/open-page.server.ts`) and starts every block on it.
+4. Each section block returns a descriptor; `src/runtime/PageView.tsx` renders it through `src/views.ts`.
+5. Commerce data (Shopify PDP, PLP, search, cart) comes from the loaders in `src/vendor/shopify`, sent through the v8 Shopify client.
 
 ## Data fetching pattern
 
@@ -179,17 +183,17 @@ For navigation, use `<Link from="@tanstack/react-router" preload="intent">` on i
 
 ## Edge caching
 
-The worker entry applies Cloudflare edge cache profiles (defined in `@decocms/start/sdk/cacheHeaders`):
+The worker entry applies Cloudflare edge cache profiles (defined in `src/server/cache-profiles.ts`):
 
 | URL pattern | Profile | Edge TTL |
 |---|---|---|
-| `/` | static | 1 day |
+| `/` | static | 15 min |
 | `*/p` | product | 5 min |
 | `/s`, `?q=` | search | 60s |
 | `/cart`, `/checkout` | private | none |
 | Everything else | listing | 2 min |
 
-Override per-route in `src/cache-config.ts`.
+Change a profile or a URL rule in `src/server/cache-profiles.ts`.
 
 ## Deployment
 
@@ -201,6 +205,10 @@ CI/CD is automatic (see [`.github/workflows/README.md`](./.github/workflows/READ
 - **`deploy.yml`** — on push to `main`, runs `wrangler deploy` with `BUILD_HASH` injected.
 
 Required repo secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
+
+The build runs `deco check` (`prebuild`): content it rejects fails the build, and with it the deploy.
+Worker secrets: `DECO_SITE_TOKEN` (with the `DECO_SITE` var, Studio releases go live without a deploy)
+and `OTEL_EXPORTER_OTLP_HEADERS` (the collector's auth header); see `wrangler.jsonc`.
 
 To deploy manually from your machine:
 
