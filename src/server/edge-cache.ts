@@ -385,6 +385,9 @@ export function withEdgeCache(serverEntry: Handler, options: EdgeCacheOptions): 
 
     const dress = (resp: Response, xCache: string, extra?: Record<string, string>): Response => {
       const out = new Response(resp.body, resp);
+      // Cloudflare's Cache API adds its own status to a matched response; v7 kept its entries
+      // serialized (@decocms/blocks responseCache), so a HIT carried only the headers stored.
+      out.headers.delete("cf-cache-status");
       for (const [k, v] of Object.entries(cacheHeaders(profile))) out.headers.set(k, v);
       out.headers.set("CDN-Cache-Control", "no-store");
       out.headers.set("X-Cache", xCache);

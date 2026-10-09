@@ -69,8 +69,8 @@ export async function openPage(href: string, request: Request) {
     return {
       name: page.name,
       seo: seo ?? undefined,
-      // The page's absolute URL without its query string (the home's og:url fallback).
-      url: url.origin + url.pathname,
+      // The page's absolute URL, query string included, as v7's `pageUrl` (the home's og:url fallback).
+      url: url.href,
       device,
       profile,
       blocks,
