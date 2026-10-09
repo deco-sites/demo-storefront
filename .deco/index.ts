@@ -22,6 +22,9 @@ import { loader as wishlistLoader } from "../src/sections/Product/Wishlist";
 import { loader as instagramPostsLoader } from "../src/sections/Social/InstagramPosts";
 import productByHandle from "../src/loaders/productByHandle";
 import shopifyProductList from "../src/vendor/shopify/loaders/ProductList";
+import shopifyRelatedProducts, {
+  type Props as RelatedProductsProps,
+} from "../src/vendor/shopify/loaders/RelatedProducts";
 import websiteGoogleFonts from "../src/vendor/website/loaders/fonts/googleFonts";
 
 /** The site's page: the built-in fields, with SEO for the site's head builder and descriptor sections. */
@@ -141,13 +144,15 @@ export default {
   "commerce/sections/Seo/SeoPDPV2.tsx": seoDetailsPage,
 
   // Commerce data, over the Shopify upstream client
+  // In v7's order, which is the order the editor lists them in a product picker.
+  "site/loaders/productByHandle.ts": productByHandle,
   "shopify/loaders/ProductDetailsPage.ts": shopifyProductDetailsPage,
   "shopify/loaders/ProductList.ts": shopifyProductList,
   "shopify/loaders/ProductListingPage.ts": shopifyProductListingPage,
+  "shopify/loaders/RelatedProducts.ts": (props: RelatedProductsProps) => shopifyRelatedProducts(props),
   "commerce/loaders/product/extensions/listingPage.ts": listingPageExtensions,
   "commerce/loaders/product/extensions/detailsPage.ts": detailsPageExtensions,
   "website/loaders/fonts/googleFonts.ts": websiteGoogleFonts,
-  "site/loaders/productByHandle.ts": productByHandle,
   resolved,
 
   // Matchers

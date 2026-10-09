@@ -129,6 +129,14 @@
         }
       },
       "loaders": {
+        "website/sections/Seo/SeoV2.tsx": {
+          "$ref": "#/definitions/d2Vic2l0ZS9zZWN0aW9ucy9TZW8vU2VvVjIudHN4",
+          "namespace": "website"
+        },
+        "site/loaders/productByHandle.ts": {
+          "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw==",
+          "namespace": "site"
+        },
         "shopify/loaders/ProductDetailsPage.ts": {
           "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3REZXRhaWxzUGFnZS50cw==",
           "namespace": "shopify"
@@ -139,6 +147,10 @@
         },
         "shopify/loaders/ProductListingPage.ts": {
           "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0aW5nUGFnZS50cw==",
+          "namespace": "shopify"
+        },
+        "shopify/loaders/RelatedProducts.ts": {
+          "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw==",
           "namespace": "shopify"
         },
         "commerce/loaders/product/extensions/listingPage.ts": {
@@ -152,10 +164,6 @@
         "website/loaders/fonts/googleFonts.ts": {
           "$ref": "#/definitions/d2Vic2l0ZS9sb2FkZXJzL2ZvbnRzL2dvb2dsZUZvbnRzLnRz",
           "namespace": "website"
-        },
-        "site/loaders/productByHandle.ts": {
-          "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw==",
-          "namespace": "site"
         },
         "resolved": {
           "$ref": "#/definitions/cmVzb2x2ZWQ=",
@@ -241,10 +249,6 @@
         }
       },
       "content": {
-        "website/sections/Seo/SeoV2.tsx": {
-          "$ref": "#/definitions/d2Vic2l0ZS9zZWN0aW9ucy9TZW8vU2VvVjIudHN4",
-          "namespace": "website"
-        },
         "cms-settings": {
           "$ref": "#/definitions/Y21zLXNldHRpbmdz",
           "namespace": "deco"
@@ -400,35 +404,57 @@
             "nullable": true,
             "title": "Description"
           },
-          "titleTemplate": {
-            "type": "string",
-            "nullable": true,
-            "title": "TitleTemplate"
-          },
-          "descriptionTemplate": {
-            "type": "string",
-            "nullable": true,
-            "title": "DescriptionTemplate"
-          },
-          "image": {
-            "type": "string",
-            "nullable": true,
-            "title": "Image"
-          },
           "canonical": {
             "type": "string",
             "nullable": true,
-            "title": "Canonical"
+            "title": "Canonical URL"
+          },
+          "favicon": {
+            "type": "string",
+            "nullable": true,
+            "title": "Favicon",
+            "format": "image-uri"
           },
           "noIndexing": {
             "type": "boolean",
             "nullable": true,
-            "title": "NoIndexing"
+            "title": "No Indexing"
+          },
+          "titleTemplate": {
+            "type": "string",
+            "nullable": true,
+            "title": "Title Template"
+          },
+          "descriptionTemplate": {
+            "type": "string",
+            "nullable": true,
+            "title": "Description Template"
           },
           "type": {
             "type": "string",
             "nullable": true,
-            "title": "Type"
+            "title": "Page Type"
+          },
+          "image": {
+            "type": "string",
+            "nullable": true,
+            "title": "OG Image",
+            "format": "image-uri"
+          },
+          "themeColor": {
+            "type": "string",
+            "nullable": true,
+            "title": "Theme Color",
+            "format": "color"
+          },
+          "jsonLDs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": {}
+            },
+            "nullable": true,
+            "title": "JSON-LD Structured Data"
           }
         }
       },
@@ -466,10 +492,13 @@
                 "title": "Inline data"
               },
               {
+                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+              },
+              {
                 "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
               },
               {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
               }
             ],
             "title": "Products"
@@ -1083,10 +1112,13 @@
                 "title": "Inline data"
               },
               {
+                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+              },
+              {
                 "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
               },
               {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
               }
             ],
             "nullable": true,
@@ -1105,10 +1137,13 @@
                 "title": "Inline data"
               },
               {
+                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+              },
+              {
                 "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
               },
               {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
               }
             ],
             "nullable": true,
@@ -1171,10 +1206,13 @@
                 "title": "Inline data"
               },
               {
+                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+              },
+              {
                 "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
               },
               {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
               }
             ],
             "nullable": true,
@@ -1541,10 +1579,13 @@
                 "title": "Inline data"
               },
               {
+                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+              },
+              {
                 "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
               },
               {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
               }
             ],
             "description": "Indicates a {@link https://schema.org/Product Product} that is a member of this {@link https://schema.org/ProductGroup ProductGroup} (or {@link https://schema.org/ProductModel ProductModel}).",
@@ -1791,10 +1832,13 @@
                 "title": "Inline data"
               },
               {
+                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+              },
+              {
                 "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
               },
               {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
               }
             ],
             "nullable": true,
@@ -1813,10 +1857,13 @@
                 "title": "Inline data"
               },
               {
+                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+              },
+              {
                 "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
               },
               {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
               }
             ],
             "nullable": true,
@@ -1873,10 +1920,13 @@
                 "title": "Inline data"
               },
               {
+                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+              },
+              {
                 "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
               },
               {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
               }
             ],
             "nullable": true,
@@ -3365,19 +3415,43 @@
                 ]
               }
             },
-            "title": "JsonLD"
+            "title": "Data Source"
           },
           "title": {
             "type": "string",
             "nullable": true,
-            "title": "Title"
+            "title": "Title Override"
           },
           "description": {
             "type": "string",
             "nullable": true,
-            "title": "Description"
+            "title": "Description Override"
+          },
+          "noIndexing": {
+            "type": "boolean",
+            "nullable": true,
+            "title": "Disable indexing"
+          },
+          "configJsonLD": {
+            "type": "object",
+            "properties": {
+              "removeVideos": {
+                "type": "boolean",
+                "nullable": true,
+                "title": "Remove videos"
+              },
+              "ignoreStructuredData": {
+                "type": "boolean",
+                "nullable": true,
+                "title": "Ignore Structured Data",
+                "description": "By default, Structured Data (JSON-LD) is sent to everyone. Turn this on to omit it for regular visitors while crawlers and bots still receive the full Structured Data. When this block is the page's SEO source, the product fetch is also skipped for visitors, so the page loads faster. Some integrations may rely on Structured Data being present for all users."
+              }
+            },
+            "nullable": true,
+            "title": "Structured Data"
           }
-        }
+        },
+        "description": "v7's `commerce/sections/Seo/SeoPLPV2.tsx`."
       },
       "Y29tbWVyY2Uvc2VjdGlvbnMvU2VvL1Nlb1BMUFYyLnRzeA==": {
         "title": "commerce/sections/Seo/SeoPLPV2.tsx",
@@ -3457,28 +3531,36 @@
                 ]
               }
             },
-            "title": "JsonLD"
+            "title": "Data Source"
           },
-          "jsonLDs": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "additionalProperties": {}
-            },
+          "omitVariants": {
+            "type": "boolean",
             "nullable": true,
-            "title": "JsonLDs"
+            "title": "Omit variants"
           },
           "title": {
             "type": "string",
             "nullable": true,
-            "title": "Title"
+            "title": "Title Override"
           },
           "description": {
             "type": "string",
             "nullable": true,
-            "title": "Description"
+            "title": "Description Override"
+          },
+          "noIndexing": {
+            "type": "boolean",
+            "nullable": true,
+            "title": "Disable indexing"
+          },
+          "ignoreStructuredData": {
+            "type": "boolean",
+            "nullable": true,
+            "title": "Ignore Structured Data",
+            "description": "By default, Structured Data (JSON-LD) is sent to everyone. Turn this on to omit it for regular visitors while crawlers and bots still receive the full Structured Data. When this block is the page's SEO source, the product fetch is also skipped for visitors, so the page loads faster. Some integrations may rely on Structured Data being present for all users."
           }
-        }
+        },
+        "description": "v7's `commerce/sections/Seo/SeoPDPV2.tsx`."
       },
       "Y29tbWVyY2Uvc2VjdGlvbnMvU2VvL1Nlb1BEUFYyLnRzeA==": {
         "title": "commerce/sections/Seo/SeoPDPV2.tsx",
@@ -3498,6 +3580,29 @@
               "commerce/sections/Seo/SeoPDPV2.tsx"
             ],
             "default": "commerce/sections/Seo/SeoPDPV2.tsx"
+          }
+        }
+      },
+      "c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw==": {
+        "title": "site/loaders/productByHandle.ts",
+        "description": "Returns the pinned product as a single-item list, so it drops straight into any prop typed `Product[] | null`.",
+        "type": "object",
+        "required": [
+          "__resolveType",
+          "handle"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "site/loaders/productByHandle.ts"
+            ],
+            "default": "site/loaders/productByHandle.ts"
+          },
+          "handle": {
+            "type": "string",
+            "title": "Product handle",
+            "description": "The product's URL handle/slug (e.g. \"high-top-canvas-shoes\") — pins an exact product instead of relying on a search query."
           }
         }
       },
@@ -3792,6 +3897,55 @@
           }
         }
       },
+      "c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw==": {
+        "title": "shopify/loaders/RelatedProducts.ts",
+        "type": "object",
+        "required": [
+          "__resolveType",
+          "slug"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "shopify/loaders/RelatedProducts.ts"
+            ],
+            "default": "shopify/loaders/RelatedProducts.ts"
+          },
+          "slug": {
+            "type": "string",
+            "title": "Slug"
+          },
+          "count": {
+            "type": "number",
+            "nullable": true,
+            "title": "Count"
+          },
+          "metafields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "namespace": {
+                  "type": "string",
+                  "title": "Namespace"
+                },
+                "key": {
+                  "type": "string",
+                  "title": "Key"
+                }
+              },
+              "required": [
+                "namespace",
+                "key"
+              ],
+              "title": "{{{key}}}"
+            },
+            "nullable": true,
+            "title": "Metafields"
+          }
+        }
+      },
       "Y29tbWVyY2UvbG9hZGVycy9wcm9kdWN0L2V4dGVuc2lvbnMvbGlzdGluZ1BhZ2UudHM=": {
         "title": "commerce/loaders/product/extensions/listingPage.ts",
         "type": "object",
@@ -3837,10 +3991,13 @@
                 "title": "Inline data"
               },
               {
+                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+              },
+              {
                 "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
               },
               {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
               }
             ],
             "nullable": true,
@@ -3893,10 +4050,13 @@
                 "title": "Inline data"
               },
               {
+                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+              },
+              {
                 "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
               },
               {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
               }
             ],
             "nullable": true,
@@ -3972,29 +4132,6 @@
           }
         }
       },
-      "c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw==": {
-        "title": "site/loaders/productByHandle.ts",
-        "description": "Returns the pinned product as a single-item list, so it drops straight into any prop typed `Product[] | null`.",
-        "type": "object",
-        "required": [
-          "__resolveType",
-          "handle"
-        ],
-        "properties": {
-          "__resolveType": {
-            "type": "string",
-            "enum": [
-              "site/loaders/productByHandle.ts"
-            ],
-            "default": "site/loaders/productByHandle.ts"
-          },
-          "handle": {
-            "type": "string",
-            "title": "Product handle",
-            "description": "The product's URL handle/slug (e.g. \"high-top-canvas-shoes\") — pins an exact product instead of relying on a search query."
-          }
-        }
-      },
       "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@Suggestion": {
         "type": "object",
         "properties": {
@@ -4019,10 +4156,13 @@
                 "title": "Inline data"
               },
               {
+                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+              },
+              {
                 "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
               },
               {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
               }
             ],
             "nullable": true,
@@ -4549,10 +4689,13 @@
                       "title": "Inline data"
                     },
                     {
+                      "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                    },
+                    {
                       "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
                     },
                     {
-                      "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                      "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
                     }
                   ],
                   "nullable": true,
@@ -7982,10 +8125,13 @@
                 "title": "Inline data"
               },
               {
+                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+              },
+              {
                 "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
               },
               {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
               }
             ],
             "nullable": true,
@@ -8066,10 +8212,13 @@
                       "title": "Inline data"
                     },
                     {
+                      "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                    },
+                    {
                       "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
                     },
                     {
-                      "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                      "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
                     }
                   ],
                   "nullable": true,
@@ -9637,6 +9786,12 @@
             "$ref": "#/definitions/Resolvable"
           },
           {
+            "$ref": "#/definitions/d2Vic2l0ZS9zZWN0aW9ucy9TZW8vU2VvVjIudHN4"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+          },
+          {
             "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3REZXRhaWxzUGFnZS50cw=="
           },
           {
@@ -9646,6 +9801,9 @@
             "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0aW5nUGFnZS50cw=="
           },
           {
+            "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
+          },
+          {
             "$ref": "#/definitions/Y29tbWVyY2UvbG9hZGVycy9wcm9kdWN0L2V4dGVuc2lvbnMvbGlzdGluZ1BhZ2UudHM="
           },
           {
@@ -9653,9 +9811,6 @@
           },
           {
             "$ref": "#/definitions/d2Vic2l0ZS9sb2FkZXJzL2ZvbnRzL2dvb2dsZUZvbnRzLnRz"
-          },
-          {
-            "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
           },
           {
             "$ref": "#/definitions/cmVzb2x2ZWQ="
@@ -9717,9 +9872,6 @@
         "anyOf": [
           {
             "$ref": "#/definitions/Resolvable"
-          },
-          {
-            "$ref": "#/definitions/d2Vic2l0ZS9zZWN0aW9ucy9TZW8vU2VvVjIudHN4"
           },
           {
             "$ref": "#/definitions/Y21zLXNldHRpbmdz"
