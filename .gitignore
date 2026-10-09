@@ -31,3 +31,9 @@ vite.config.timestamp_*
 # IDE
 .vscode/
 .idea/
+
+# Parity harness (local outputs)
+parity/runs/
+parity/.server.log
+parity/baseline/
+parity/results/

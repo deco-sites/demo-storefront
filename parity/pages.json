@@ -1,0 +1,572 @@
+{
+  "$comment": "Parity manifest: routes x viewports, feature flows and text responses. See parity/README.md.",
+  "fixedTime": "2030-01-01T12:00:00.000Z",
+  "randomSeed": 1337,
+  "locale": "en-US",
+  "timezone": "UTC",
+  "ports": {
+    "site": 5340,
+    "upstream": 5347
+  },
+  "siteEnv": {
+    "DECO_OTEL": "off",
+    "OTEL_EXPORTER_OTLP_ENDPOINT": "",
+    "DECO_OTEL_METRICS_ENDPOINT": "",
+    "DECO_OTEL_LOGS_ENDPOINT": "",
+    "DECO_OTEL_TRACES_ENDPOINT": "",
+    "DECO_FAST_DEPLOY": "0"
+  },
+  "viewports": {
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 1,
+      "isMobile": true,
+      "hasTouch": true,
+      "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1"
+    },
+    "desktop": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 1,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+    }
+  },
+  "thirdParty": {
+    "$comment": "No analytics collector is configured on this site (site.json trackingIds is empty, no lilstts SDK). Every third-party browser request is replayed from the per-case HAR; `block` stays available for beacons.",
+    "block": []
+  },
+  "decoEventsRecorder": {
+    "$comment": "The analytics contract here is window.DECO.events.dispatch (ANALYTICS_SCRIPT data-event observers, the search form's `search` event). parity/lib/capture.mjs wraps dispatch from an init script and every call lands in the snapshot's `analytics.events`.",
+    "enabled": true
+  },
+  "ignoreHeaders": [],
+  "approvedDifferences": [],
+  "pages": [
+    {
+      "id": "home",
+      "path": "/"
+    },
+    {
+      "id": "home-utm",
+      "path": "/?utm_source=parity&utm_medium=test"
+    },
+    {
+      "id": "landing-women",
+      "path": "/women"
+    },
+    {
+      "id": "landing-men",
+      "path": "/men"
+    },
+    {
+      "id": "landing-kids",
+      "path": "/kids"
+    },
+    {
+      "id": "landing-accessories",
+      "path": "/accessories"
+    },
+    {
+      "id": "landing-home-and-living",
+      "path": "/home-and-living"
+    },
+    {
+      "id": "plp-shirts",
+      "path": "/shirts"
+    },
+    {
+      "id": "plp-stickers",
+      "path": "/stickers"
+    },
+    {
+      "id": "plp-hoodies",
+      "path": "/hoodies-sweatshirts"
+    },
+    {
+      "id": "plp-shirts-sorted",
+      "path": "/shirts?sort=price:asc"
+    },
+    {
+      "id": "plp-empty-collection",
+      "path": "/clearance"
+    },
+    {
+      "id": "search",
+      "path": "/s?q=shirt"
+    },
+    {
+      "id": "search-no-results",
+      "path": "/s?q=zzzznotfound"
+    },
+    {
+      "id": "pdp-variants",
+      "path": "/products/t-shirt-44363187880113"
+    },
+    {
+      "id": "pdp-woman-t-shirt",
+      "path": "/products/woman-t-shirt-44379963949233"
+    },
+    {
+      "id": "pdp-single-variant",
+      "path": "/products/its-not-a-bug-44073295904945"
+    },
+    {
+      "id": "pdp-out-of-stock",
+      "path": "/products/deco-tee-47781418401969"
+    },
+    {
+      "id": "pdp-sticker",
+      "path": "/products/deco-44073287385265"
+    },
+    {
+      "id": "pdp-not-found",
+      "path": "/products/does-not-exist-1"
+    },
+    {
+      "id": "offline",
+      "path": "/offline"
+    },
+    {
+      "id": "login",
+      "path": "/login"
+    },
+    {
+      "id": "account-anonymous",
+      "path": "/account"
+    },
+    {
+      "id": "not-found",
+      "path": "/this-page-does-not-exist/x/y"
+    },
+    {
+      "id": "not-found-single",
+      "path": "/nonexistent-xyz"
+    },
+    {
+      "id": "sitemap-xml-page",
+      "path": "/sitemap.xml",
+      "$comment": "v7 has no sitemap: /sitemap.xml is served by the /* catch-all Category page (200 HTML). Parity reproduces that page."
+    }
+  ],
+  "flows": [
+    {
+      "id": "search-submit",
+      "steps": [
+        {
+          "goto": "/"
+        },
+        {
+          "click": "label[for=sidemenu-drawer][aria-label='Open menu'] >> visible=true"
+        },
+        {
+          "settle": true,
+          "scroll": false
+        },
+        {
+          "type": [
+            "input[name=q] >> visible=true",
+            "shirt"
+          ]
+        },
+        {
+          "settle": true,
+          "scroll": false
+        },
+        {
+          "capture": "menu-search-typed",
+          "fullPage": false,
+          "scroll": false
+        },
+        {
+          "press": [
+            "input[name=q] >> visible=true",
+            "Enter"
+          ]
+        },
+        {
+          "waitForURL": "**/s?q=shirt**"
+        },
+        {
+          "url": "resultsUrl"
+        },
+        {
+          "capture": "results"
+        }
+      ]
+    },
+    {
+      "id": "plp-filter",
+      "steps": [
+        {
+          "goto": "/shirts"
+        },
+        {
+          "click": "label[for]:has-text('Filters') >> visible=true",
+          "viewports": [
+            "mobile"
+          ]
+        },
+        {
+          "settle": true,
+          "scroll": false,
+          "viewports": [
+            "mobile"
+          ]
+        },
+        {
+          "capture": "filters-open",
+          "fullPage": false,
+          "scroll": false,
+          "viewports": [
+            "mobile"
+          ]
+        },
+        {
+          "click": "aside a[rel=nofollow] >> visible=true"
+        },
+        {
+          "waitForURL": "**/shirts?**"
+        },
+        {
+          "url": "filteredUrl"
+        },
+        {
+          "capture": "filtered"
+        }
+      ],
+      "blocked": "v7 live bug (main 928488a and https://demo-storefront.deco-cx.workers.dev/ alike): every PLP and search page renders '12 of 0 results' with no products, no filters and no pagination, so this flow cannot run on v7. The breadcrumb/view_item_list item_list_id is '/', i.e. the Shopify PLP loader resolves the page URL to '/' and queries an empty collection handle. Not run, not compared; decision for the product owner (fix on v8 = a product change, reported as PENDING)."
+    },
+    {
+      "id": "plp-sort",
+      "steps": [
+        {
+          "goto": "/shirts"
+        },
+        {
+          "select": [
+            "select[name=sort] >> visible=true",
+            "price-descending"
+          ]
+        },
+        {
+          "waitForURL": "**sort=price-descending**"
+        },
+        {
+          "url": "sortedUrl"
+        },
+        {
+          "capture": "sorted"
+        }
+      ]
+    },
+    {
+      "id": "plp-show-more",
+      "steps": [
+        {
+          "goto": "/stickers"
+        },
+        {
+          "click": "a[rel=next] >> visible=true"
+        },
+        {
+          "waitForURL": "**/stickers?**"
+        },
+        {
+          "url": "page2Url"
+        },
+        {
+          "capture": "page2"
+        }
+      ],
+      "blocked": "v7 live bug (main 928488a and https://demo-storefront.deco-cx.workers.dev/ alike): every PLP and search page renders '12 of 0 results' with no products, no filters and no pagination, so this flow cannot run on v7. The breadcrumb/view_item_list item_list_id is '/', i.e. the Shopify PLP loader resolves the page URL to '/' and queries an empty collection handle. Not run, not compared; decision for the product owner (fix on v8 = a product change, reported as PENDING)."
+    },
+    {
+      "id": "plp-to-pdp-spa-nav",
+      "steps": [
+        {
+          "goto": "/shirts"
+        },
+        {
+          "click": "a[href^='/products/'] >> visible=true"
+        },
+        {
+          "waitForURL": "**/products/**"
+        },
+        {
+          "url": "pdpUrl"
+        },
+        {
+          "capture": "pdp"
+        }
+      ],
+      "blocked": "v7 live bug (main 928488a and https://demo-storefront.deco-cx.workers.dev/ alike): every PLP and search page renders '12 of 0 results' with no products, no filters and no pagination, so this flow cannot run on v7. The breadcrumb/view_item_list item_list_id is '/', i.e. the Shopify PLP loader resolves the page URL to '/' and queries an empty collection handle. Not run, not compared; decision for the product owner (fix on v8 = a product change, reported as PENDING)."
+    },
+    {
+      "id": "home-to-pdp-spa-nav",
+      "steps": [
+        {
+          "goto": "/"
+        },
+        {
+          "click": "a[href^='/products/'] >> visible=true"
+        },
+        {
+          "waitForURL": "**/products/**"
+        },
+        {
+          "url": "pdpUrl"
+        },
+        {
+          "capture": "pdp"
+        }
+      ]
+    },
+    {
+      "id": "header-nav-spa",
+      "viewports": [
+        "desktop"
+      ],
+      "steps": [
+        {
+          "goto": "/"
+        },
+        {
+          "click": "header nav a[href='/shirts'] >> visible=true"
+        },
+        {
+          "waitForURL": "**/shirts"
+        },
+        {
+          "url": "plpUrl"
+        },
+        {
+          "capture": "shirts"
+        }
+      ]
+    },
+    {
+      "id": "header-mega-menu",
+      "viewports": [
+        "desktop"
+      ],
+      "steps": [
+        {
+          "goto": "/"
+        },
+        {
+          "hover": "header nav a:has-text('More') >> visible=true"
+        },
+        {
+          "settle": true,
+          "scroll": false
+        },
+        {
+          "capture": "more-open",
+          "fullPage": false,
+          "scroll": false
+        }
+      ]
+    },
+    {
+      "id": "pdp-variant-select",
+      "steps": [
+        {
+          "goto": "/products/t-shirt-44363187880113"
+        },
+        {
+          "click": "a[aria-label^='Size: ']:not([aria-current]) >> visible=true"
+        },
+        {
+          "waitForURL": "**/products/**"
+        },
+        {
+          "url": "variantUrl"
+        },
+        {
+          "capture": "variant"
+        },
+        {
+          "click": "a[aria-label^='Color: ']:not([aria-current]) >> visible=true"
+        },
+        {
+          "url": "variant2Url"
+        },
+        {
+          "capture": "variant2"
+        }
+      ]
+    },
+    {
+      "id": "add-to-cart-minicart",
+      "steps": [
+        {
+          "goto": "/products/t-shirt-44363187880113"
+        },
+        {
+          "click": "button:has-text('Add to cart') >> visible=true"
+        },
+        {
+          "waitFor": "button:has-text('Added!') >> visible=true"
+        },
+        {
+          "settle": true,
+          "scroll": false
+        },
+        {
+          "capture": "added",
+          "fullPage": false,
+          "scroll": false
+        },
+        {
+          "click": "label[for=minicart-drawer] >> visible=true"
+        },
+        {
+          "waitFor": "aside[aria-label='Your bag'] a:has-text('Begin Checkout') >> visible=true"
+        },
+        {
+          "settle": true,
+          "scroll": false
+        },
+        {
+          "capture": "minicart",
+          "fullPage": false,
+          "scroll": false
+        },
+        {
+          "attr": {
+            "name": "checkoutUrl",
+            "selector": "aside[aria-label='Your bag'] a:has-text('Begin Checkout')",
+            "attr": "href"
+          }
+        },
+        {
+          "text": {
+            "name": "bagLabel",
+            "selector": "label[for=minicart-drawer] >> visible=true"
+          }
+        },
+        {
+          "click": "aside[aria-label='Your bag'] button[aria-label='Increase quantity'] >> visible=true"
+        },
+        {
+          "settle": true,
+          "scroll": false
+        },
+        {
+          "capture": "minicart-qty2",
+          "fullPage": false,
+          "scroll": false
+        },
+        {
+          "click": "aside[aria-label='Your bag'] button[aria-label='Remove item'] >> visible=true"
+        },
+        {
+          "settle": true,
+          "scroll": false
+        },
+        {
+          "capture": "minicart-empty",
+          "fullPage": false,
+          "scroll": false
+        },
+        {
+          "text": {
+            "name": "bagLabelAfterRemove",
+            "selector": "label[for=minicart-drawer] >> visible=true"
+          }
+        }
+      ]
+    },
+    {
+      "id": "login-link",
+      "steps": [
+        {
+          "goto": "/"
+        },
+        {
+          "click": "header a[href='/login'] >> visible=true"
+        },
+        {
+          "waitForURL": "**/login"
+        },
+        {
+          "capture": "login"
+        }
+      ]
+    },
+    {
+      "id": "mobile-menu",
+      "viewports": [
+        "mobile"
+      ],
+      "steps": [
+        {
+          "goto": "/"
+        },
+        {
+          "click": "label[for=sidemenu-drawer][aria-label='Open menu'] >> visible=true"
+        },
+        {
+          "settle": true,
+          "scroll": false
+        },
+        {
+          "capture": "menu",
+          "fullPage": false,
+          "scroll": false
+        }
+      ]
+    }
+  ],
+  "texts": [
+    {
+      "id": "robots-txt",
+      "path": "/robots.txt"
+    },
+    {
+      "id": "sitemap-xml",
+      "path": "/sitemap.xml"
+    },
+    {
+      "id": "redirect-trailing-slash-plp",
+      "path": "/shirts/"
+    },
+    {
+      "id": "redirect-trailing-slash-pdp",
+      "path": "/products/t-shirt-44363187880113/"
+    },
+    {
+      "id": "redirect-trailing-slash-query",
+      "path": "/s/?q=shirt"
+    },
+    {
+      "id": "not-found-html",
+      "path": "/this-page-does-not-exist/x/y"
+    },
+    {
+      "id": "pdp-not-found-html",
+      "path": "/products/does-not-exist-1"
+    },
+    {
+      "id": "favicon",
+      "path": "/favicon.ico",
+      "binary": true
+    }
+  ],
+  "$fixedTimeNote": "Must be in the FUTURE relative to the wall clock: the server clock is frozen to it and cookies (cart, 7-day expiry) are dated from it, while Chromium's cookie jar uses real time. Re-record before 2030-01-08.",
+  "chromiumArgs": [
+    "--font-render-hinting=none",
+    "--disable-skia-runtime-opts",
+    "--force-color-profile=srgb",
+    "--disable-lcd-text",
+    "--disable-gpu",
+    "--disable-gpu-rasterization",
+    "--disable-threaded-animation",
+    "--disable-threaded-scrolling",
+    "--disable-checker-imaging",
+    "--disable-partial-raster",
+    "--run-all-compositor-stages-before-draw"
+  ],
+  "$approvalsComment": "Approvals are PER SITE. This harness was ported from storefront-tanstack, whose product-owner approvals do NOT carry over: this site starts with none. Only the product owner adds entries here (ignoreHeaders / approvedDifferences, see parity/README.md); an agent never does."
+}
