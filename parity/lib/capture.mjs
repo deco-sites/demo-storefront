@@ -356,6 +356,7 @@ export async function runCase({ browser, manifest, kase, baseURL, mode, harPath,
             case "select": await page.locator(arg[0]).first().selectOption(arg[1], { timeout: t }); break;
             case "check": await page.locator(arg).first().check({ timeout: t }); break;
             case "hover": await page.locator(arg).first().hover({ timeout: t }); break;
+            case "scrollIntoView": await page.locator(arg).first().scrollIntoViewIfNeeded({ timeout: t }); break;
             case "waitFor": await page.locator(arg).first().waitFor({ state: "visible", timeout: t }); break;
             case "waitForURL": await page.waitForURL(arg, { timeout: t }); break;
             case "settle": await settle(page, { scroll: step.scroll }); break;

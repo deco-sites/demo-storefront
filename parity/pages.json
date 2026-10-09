@@ -309,6 +309,13 @@
           "goto": "/"
         },
         {
+          "scrollIntoView": "a[href^='/products/'] >> visible=true"
+        },
+        {
+          "settle": true,
+          "scroll": false
+        },
+        {
           "click": "a[href^='/products/'] >> visible=true"
         },
         {
@@ -320,7 +327,8 @@
         {
           "capture": "pdp"
         }
-      ]
+      ],
+      "$comment": "The card is scrolled into view and the page settled BEFORE the click, so the shelf's view_item_list (IntersectionObserver) always fires on '/', never racing the SPA navigation."
     },
     {
       "id": "header-nav-spa",
