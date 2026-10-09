@@ -228,23 +228,26 @@ async function compare() {
       passed: report.filter((r) => r.ok).length,
       failed: report.filter((r) => !r.ok).length,
       upstreamMisses: upstream.misses,
+      pending: [...new Set(report.flatMap((r) => r.pending ?? []))],
       cases: report,
     };
+    // `--strict` also fails on differences still pending the product owner's approval.
+    const pass = summary.failed === 0 && (!has("strict") || summary.pending.length === 0);
     fs.writeFileSync(path.join(outRoot, "summary.json"), JSON.stringify(summary, null, 2) + "\n");
     const md = [
       `# Parity compare ${label}`,
       ``,
       `target: ${baseURL}  `,
-      `result: **${summary.failed === 0 ? "PASS" : "FAIL"}** — ${summary.passed}/${summary.total} cases identical, upstream misses: ${upstream.misses.length}`,
+      `result: **${pass ? "PASS" : "FAIL"}** — ${summary.passed}/${summary.total} cases identical${summary.pending.length ? ` (${summary.pending.length} PENDING approval: ${summary.pending.join(", ")})` : ""}, upstream misses: ${upstream.misses.length}`,
       ``,
       `| case | result | details |`,
       `|---|---|---|`,
-      ...report.map((r) => `| ${r.id} | ${r.ok ? "ok" : "**DIFF**"} | ${[...r.problems, ...(r.approved?.length ? [`approved: ${r.approved.join(", ")}`] : [])].join("; ").replace(/\|/g, "\\|")} |`),
+      ...report.map((r) => `| ${r.id} | ${r.ok ? (r.pending?.length ? "PENDING" : "ok") : "**DIFF**"} | ${[...r.problems, ...(r.approved?.length ? [`approved: ${r.approved.join(", ")}`] : []), ...(r.pending?.length ? [`pending approval: ${r.pending.join(", ")}`] : [])].join("; ").replace(/\|/g, "\\|")} |`),
       ``,
     ].join("\n");
     fs.writeFileSync(path.join(outRoot, "summary.md"), md);
     log(md);
-    process.exitCode = summary.failed === 0 && (!has("strict-upstream") || upstream.misses.length === 0) ? 0 : 1;
+    process.exitCode = pass && (!has("strict-upstream") || upstream.misses.length === 0) ? 0 : 1;
   } finally {
     if (site) await site.stop();
     await upstream.close();
@@ -272,6 +275,6 @@ if (cmd === "record") await record();
 else if (cmd === "probe") await probe();
 else if (cmd === "compare") await compare();
 else {
-  console.error("usage: node parity/run.mjs <record|compare> [--target url] [--only ids] [--label name] [--rebuild] [--upstream-passthrough] [--strict-upstream]");
+  console.error("usage: node parity/run.mjs <record|compare> [--target url] [--only ids] [--label name] [--rebuild] [--upstream-passthrough] [--strict-upstream] [--strict]");
   process.exit(2);
 }

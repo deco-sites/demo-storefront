@@ -72,6 +72,14 @@ function ruleMatches(rule, baseVal, actVal, actSnap) {
     const expected = [...new Set([...baseVal, ...rule.addsOnly])].sort();
     return rule.addsOnly.every((x) => !baseVal.includes(x)) && same(actVal, expected);
   }
+  if ("replace" in rule) {
+    // The baseline value with each [from, to] string replaced in order (on its JSON text) is exactly the
+    // actual value: e.g. URLs v7 built on a placeholder origin that v8 builds on the page's.
+    if (baseVal === ABSENT || actVal === ABSENT) return false;
+    let text = JSON.stringify(baseVal);
+    for (const [from, to] of rule.replace) text = text.split(from).join(to);
+    return text === JSON.stringify(actVal);
+  }
   if ("mask" in rule) {
     // Strings equal once every `mask` match is blanked. The recorder truncates long values at a fixed
     // length, so a masked value may be cut at a different point: one must be a prefix of the other.
@@ -86,24 +94,27 @@ function ruleMatches(rule, baseVal, actVal, actSnap) {
 
 /**
  * Applies pages.json `approvedDifferences` to one case. Each rule names the cases and the one snapshot
- * field it covers, and says exactly what the new value must be (`actual`, `actualSameAs`, `addsOnly`
- * or `mask`; `baseline` pins the old value too). Where the capture matches, the field is reset to the
+ * field it covers, and says exactly what the new value must be (`actual`, `actualSameAs`, `addsOnly`,
+ * `replace` or `mask`; `baseline` pins the old value too). Where the capture matches, the field is reset to the
  * baseline value so the text comparison sees no difference; anything else on that field still fails.
- * Returns the ids of the rules that applied, for the report.
+ * A rule with `"status": "pending"` is explained but not signed off yet: it applies the same way, is
+ * reported as PENDING, and fails `compare --strict`. Only the product owner removes the status.
+ * Returns `{ approved, pending }` rule ids, for the report.
  */
 function applyApprovals(id, base, act, rules) {
   const applied = new Set();
+  const pending = new Set();
   for (const rule of rules ?? []) {
     if (!rule.cases.includes(id)) continue;
     for (const leaf of pairs(base, act, rule.path.split("."))) {
       if (same(leaf.base, leaf.act)) continue;
       if (ruleMatches(rule, leaf.base, leaf.act, act)) {
         leaf.set(leaf.base === ABSENT ? ABSENT : structuredClone(leaf.base));
-        applied.add(rule.id);
+        (rule.status === "pending" ? pending : applied).add(rule.id);
       }
     }
   }
-  return [...applied];
+  return { approved: [...applied], pending: [...pending] };
 }
 
 const toText = (snap, raw) => JSON.stringify(snap, null, 2) + (raw.endsWith("\n") ? "\n" : "");
@@ -111,6 +122,7 @@ const toText = (snap, raw) => JSON.stringify(snap, null, 2) + (raw.endsWith("\n"
 export function compareCase({ id, fileId, error, baseDir, actualDir, outRoot, ignoreHeaders, approvedDifferences }) {
   const problems = [];
   let approved = [];
+  let pending = [];
   const diffDir = path.join(outRoot, "diff");
   if (error) problems.push(`capture error: ${error}`);
 
@@ -149,7 +161,7 @@ export function compareCase({ id, fileId, error, baseDir, actualDir, outRoot, ig
     const act = JSON.parse(rawA);
     dropIgnoredHeaders(base, ignoreHeaders);
     dropIgnoredHeaders(act, ignoreHeaders);
-    approved = applyApprovals(id, base, act, approvedDifferences);
+    ({ approved, pending } = applyApprovals(id, base, act, approvedDifferences));
     const tb = toText(base, rawB);
     const ta = toText(act, rawA);
     if (tb !== ta) {
@@ -158,5 +170,5 @@ export function compareCase({ id, fileId, error, baseDir, actualDir, outRoot, ig
       problems.push(`snapshot differs (diff/${fileId}.snapshot.diff)`);
     }
   }
-  return { id, ok: problems.length === 0, problems, approved };
+  return { id, ok: problems.length === 0, problems, approved, pending };
 }
