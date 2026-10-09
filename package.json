@@ -30,7 +30,9 @@
     "parity:build": "npm run generate:blocks && npm run generate:sections && npm run generate:loaders && npm run generate:schema && tsr generate && vite build --config parity/vite.config.ts && touch dist/server/.parity-build",
     "parity:record": "node parity/run.mjs record",
     "parity:compare": "node parity/run.mjs compare",
-    "parity:probe": "node parity/run.mjs probe"
+    "parity:probe": "node parity/run.mjs probe",
+    "predev": "deco schema && deco content",
+    "prebuild": "deco schema && deco content && deco check"
   },
   "author": "deco.cx",
   "license": "MIT",
@@ -38,7 +40,7 @@
     "@decocms/apps-commerce": "^7.64.3",
     "@decocms/apps-shopify": "^7.64.3",
     "@decocms/apps-vtex": "^7.64.3",
-    "@decocms/blocks": "^7.64.3",
+    "@decocms/blocks": "8.1.0-next.7",
     "@decocms/blocks-admin": "^7.64.3",
     "@decocms/blocks-cli": "^7.64.3",
     "@decocms/tanstack": "^7.64.3",

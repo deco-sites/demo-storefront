@@ -19,7 +19,7 @@ import { registerImageQuality } from "@decocms/blocks/hooks";
 import { createSiteSetup } from "@decocms/blocks/setup";
 import { createAdminSetup } from "@decocms/blocks-admin/setup";
 import { autoconfigApps, type AppRegistry } from "@decocms/blocks-admin/apps";
-import { createInstrumentedFetch } from "@decocms/blocks/sdk/instrumentedFetch";
+import { createInstrumentedFetch } from "@decocms/blocks/fetch";
 import { initShopifyFromBlocks, setShopifyFetch } from "@decocms/apps-shopify";
 import { SHOPIFY_REGISTRY_ENTRY } from "@decocms/apps-shopify/registry";
 import * as shopifyMod from "@decocms/apps-shopify/mod";
@@ -81,7 +81,7 @@ createAdminSetup({
 });
 
 // -- Shopify wiring --
-setShopifyFetch(createInstrumentedFetch("shopify"));
+setShopifyFetch(createInstrumentedFetch({ provider: "shopify" }));
 
 // -- Convention-driven section registration --
 applySectionConventions({
@@ -111,7 +111,7 @@ await autoconfigApps(generatedBlocks, APP_REGISTRY);
 // To work around it, the home/catch-all loaders forward the real page URL
 // in the `x-deco-page-url` header so we can read it back here.
 import { RequestContext } from "@decocms/blocks/sdk/requestContext";
-import productListingPageLoader from "@decocms/apps-shopify/loaders/ProductListingPage";
+import productListingPageLoader from "./vendor/shopify/loaders/ProductListingPage";
 
 const SHOPIFY_PLP_KEY = "shopify/loaders/ProductListingPage";
 

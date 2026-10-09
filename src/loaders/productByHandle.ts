@@ -1,8 +1,8 @@
 import type { Product } from "@decocms/apps-commerce/types";
 import { RequestContext } from "@decocms/blocks/sdk/requestContext";
-import { getShopifyClient } from "@decocms/apps-shopify/client";
-import { GetProduct } from "@decocms/apps-shopify/utils/storefront/queries";
-import { toProduct, type ProductShopify } from "@decocms/apps-shopify/utils/transform";
+import { getShopifyClient } from "../vendor/shopify/client";
+import { GetProduct } from "../vendor/shopify/utils/storefront/queries";
+import { toProduct, type ProductShopify } from "../vendor/shopify/utils/transform";
 
 export interface Props {
   /**
