@@ -43,7 +43,612 @@
     "enabled": true
   },
   "ignoreHeaders": [],
-  "approvedDifferences": [],
+  "approvedDifferences": [
+    {
+      "id": "ssr-jsonld-first-html",
+      "status": "pending",
+      "approval": "PENDING product-owner approval (not approved). v8 has no async rendering: the migration unwraps v7's Lazy wrappers, so the sections' JSON-LD is in the first server HTML; v7 added it only after hydration (its SSR had none). Rule: the SSR JSON-LD must equal the hydrated DOM's, which is compared on its own.",
+      "cases": [
+        "landing-women@mobile",
+        "landing-women@desktop",
+        "landing-men@mobile",
+        "landing-men@desktop",
+        "landing-kids@mobile",
+        "landing-kids@desktop",
+        "landing-accessories@mobile",
+        "landing-accessories@desktop",
+        "landing-home-and-living@mobile",
+        "landing-home-and-living@desktop",
+        "pdp-variants@mobile",
+        "pdp-variants@desktop",
+        "pdp-woman-t-shirt@mobile",
+        "pdp-woman-t-shirt@desktop",
+        "pdp-single-variant@mobile",
+        "pdp-single-variant@desktop",
+        "pdp-out-of-stock@mobile",
+        "pdp-out-of-stock@desktop",
+        "pdp-sticker@mobile",
+        "pdp-sticker@desktop"
+      ],
+      "path": "ssr.jsonLd",
+      "baseline": [],
+      "actualSameAs": "dom.jsonLd"
+    },
+    {
+      "id": "plp-page-url",
+      "status": "pending",
+      "approval": "PENDING product-owner approval (not approved). v7 called the Shopify listing loader without the page URL (it fell back to https://localhost), so the list id, breadcrumb and product links in JSON-LD and analytics carried https://localhost. v8 passes the page URL: the same values on the site's own origin and path.",
+      "cases": [
+        "landing-women@mobile",
+        "landing-women@desktop"
+      ],
+      "path": "dom.jsonLd",
+      "replace": [
+        [
+          "\"https://localhost/\"",
+          "\"{origin}/women\""
+        ],
+        [
+          "https://localhost/",
+          "{origin}/"
+        ]
+      ]
+    },
+    {
+      "id": "plp-page-url",
+      "status": "pending",
+      "approval": "PENDING product-owner approval (not approved). v7 called the Shopify listing loader without the page URL (it fell back to https://localhost), so the list id, breadcrumb and product links in JSON-LD and analytics carried https://localhost. v8 passes the page URL: the same values on the site's own origin and path.",
+      "cases": [
+        "landing-women@mobile",
+        "landing-women@desktop"
+      ],
+      "path": "analytics.events",
+      "replace": [
+        [
+          "\"https://localhost/\"",
+          "\"{origin}/women\""
+        ],
+        [
+          "https://localhost/",
+          "{origin}/"
+        ]
+      ]
+    },
+    {
+      "id": "plp-page-url",
+      "status": "pending",
+      "approval": "PENDING product-owner approval (not approved). v7 called the Shopify listing loader without the page URL (it fell back to https://localhost), so the list id, breadcrumb and product links in JSON-LD and analytics carried https://localhost. v8 passes the page URL: the same values on the site's own origin and path.",
+      "cases": [
+        "landing-men@mobile",
+        "landing-men@desktop"
+      ],
+      "path": "dom.jsonLd",
+      "replace": [
+        [
+          "\"https://localhost/\"",
+          "\"{origin}/men\""
+        ],
+        [
+          "https://localhost/",
+          "{origin}/"
+        ]
+      ]
+    },
+    {
+      "id": "plp-page-url",
+      "status": "pending",
+      "approval": "PENDING product-owner approval (not approved). v7 called the Shopify listing loader without the page URL (it fell back to https://localhost), so the list id, breadcrumb and product links in JSON-LD and analytics carried https://localhost. v8 passes the page URL: the same values on the site's own origin and path.",
+      "cases": [
+        "landing-men@mobile",
+        "landing-men@desktop"
+      ],
+      "path": "analytics.events",
+      "replace": [
+        [
+          "\"https://localhost/\"",
+          "\"{origin}/men\""
+        ],
+        [
+          "https://localhost/",
+          "{origin}/"
+        ]
+      ]
+    },
+    {
+      "id": "plp-page-url",
+      "status": "pending",
+      "approval": "PENDING product-owner approval (not approved). v7 called the Shopify listing loader without the page URL (it fell back to https://localhost), so the list id, breadcrumb and product links in JSON-LD and analytics carried https://localhost. v8 passes the page URL: the same values on the site's own origin and path.",
+      "cases": [
+        "landing-kids@mobile",
+        "landing-kids@desktop"
+      ],
+      "path": "dom.jsonLd",
+      "replace": [
+        [
+          "\"https://localhost/\"",
+          "\"{origin}/kids\""
+        ],
+        [
+          "https://localhost/",
+          "{origin}/"
+        ]
+      ]
+    },
+    {
+      "id": "plp-page-url",
+      "status": "pending",
+      "approval": "PENDING product-owner approval (not approved). v7 called the Shopify listing loader without the page URL (it fell back to https://localhost), so the list id, breadcrumb and product links in JSON-LD and analytics carried https://localhost. v8 passes the page URL: the same values on the site's own origin and path.",
+      "cases": [
+        "landing-kids@mobile",
+        "landing-kids@desktop"
+      ],
+      "path": "analytics.events",
+      "replace": [
+        [
+          "\"https://localhost/\"",
+          "\"{origin}/kids\""
+        ],
+        [
+          "https://localhost/",
+          "{origin}/"
+        ]
+      ]
+    },
+    {
+      "id": "plp-page-url",
+      "status": "pending",
+      "approval": "PENDING product-owner approval (not approved). v7 called the Shopify listing loader without the page URL (it fell back to https://localhost), so the list id, breadcrumb and product links in JSON-LD and analytics carried https://localhost. v8 passes the page URL: the same values on the site's own origin and path.",
+      "cases": [
+        "landing-accessories@mobile",
+        "landing-accessories@desktop"
+      ],
+      "path": "dom.jsonLd",
+      "replace": [
+        [
+          "\"https://localhost/\"",
+          "\"{origin}/accessories\""
+        ],
+        [
+          "https://localhost/",
+          "{origin}/"
+        ]
+      ]
+    },
+    {
+      "id": "plp-page-url",
+      "status": "pending",
+      "approval": "PENDING product-owner approval (not approved). v7 called the Shopify listing loader without the page URL (it fell back to https://localhost), so the list id, breadcrumb and product links in JSON-LD and analytics carried https://localhost. v8 passes the page URL: the same values on the site's own origin and path.",
+      "cases": [
+        "landing-accessories@mobile",
+        "landing-accessories@desktop"
+      ],
+      "path": "analytics.events",
+      "replace": [
+        [
+          "\"https://localhost/\"",
+          "\"{origin}/accessories\""
+        ],
+        [
+          "https://localhost/",
+          "{origin}/"
+        ]
+      ]
+    },
+    {
+      "id": "plp-page-url",
+      "status": "pending",
+      "approval": "PENDING product-owner approval (not approved). v7 called the Shopify listing loader without the page URL (it fell back to https://localhost), so the list id, breadcrumb and product links in JSON-LD and analytics carried https://localhost. v8 passes the page URL: the same values on the site's own origin and path.",
+      "cases": [
+        "landing-home-and-living@mobile",
+        "landing-home-and-living@desktop"
+      ],
+      "path": "dom.jsonLd",
+      "replace": [
+        [
+          "\"https://localhost/\"",
+          "\"{origin}/home-and-living\""
+        ],
+        [
+          "https://localhost/",
+          "{origin}/"
+        ]
+      ]
+    },
+    {
+      "id": "plp-page-url",
+      "status": "pending",
+      "approval": "PENDING product-owner approval (not approved). v7 called the Shopify listing loader without the page URL (it fell back to https://localhost), so the list id, breadcrumb and product links in JSON-LD and analytics carried https://localhost. v8 passes the page URL: the same values on the site's own origin and path.",
+      "cases": [
+        "landing-home-and-living@mobile",
+        "landing-home-and-living@desktop"
+      ],
+      "path": "analytics.events",
+      "replace": [
+        [
+          "\"https://localhost/\"",
+          "\"{origin}/home-and-living\""
+        ],
+        [
+          "https://localhost/",
+          "{origin}/"
+        ]
+      ]
+    },
+    {
+      "id": "home-mobile-no-cart-cookie",
+      "status": "pending",
+      "approval": "PENDING product-owner approval (not approved). v7 shared one QueryClient across requests, so the first page an isolate rendered created a Shopify cart during SSR and answered Set-Cookie: cart with Cache-Control private (in the recording, home@mobile, the first case). v8 creates no cart while a document renders, so the page is public and edge-cached like every other home render.",
+      "cases": [
+        "home@mobile"
+      ],
+      "path": "headers.cache-control",
+      "baseline": "private, no-cache, no-store, must-revalidate",
+      "actual": "public, max-age=120, s-maxage=900, stale-while-revalidate=1800, stale-if-error=7200"
+    },
+    {
+      "id": "home-mobile-no-cart-cookie",
+      "status": "pending",
+      "approval": "PENDING product-owner approval (not approved). v7 shared one QueryClient across requests, so the first page an isolate rendered created a Shopify cart during SSR and answered Set-Cookie: cart with Cache-Control private (in the recording, home@mobile, the first case). v8 creates no cart while a document renders, so the page is public and edge-cached like every other home render.",
+      "cases": [
+        "home@mobile"
+      ],
+      "path": "headers.set-cookie(names)",
+      "baseline": [
+        "cart"
+      ],
+      "actual": "$absent"
+    },
+    {
+      "id": "home-mobile-no-cart-cookie",
+      "status": "pending",
+      "approval": "PENDING product-owner approval (not approved). v7 shared one QueryClient across requests, so the first page an isolate rendered created a Shopify cart during SSR and answered Set-Cookie: cart with Cache-Control private (in the recording, home@mobile, the first case). v8 creates no cart while a document renders, so the page is public and edge-cached like every other home render.",
+      "cases": [
+        "home@mobile"
+      ],
+      "path": "headers.x-cache-profile",
+      "baseline": "$absent",
+      "actual": "static"
+    },
+    {
+      "id": "home-mobile-no-cart-cookie",
+      "status": "pending",
+      "approval": "PENDING product-owner approval (not approved). v7 shared one QueryClient across requests, so the first page an isolate rendered created a Shopify cart during SSR and answered Set-Cookie: cart with Cache-Control private (in the recording, home@mobile, the first case). v8 creates no cart while a document renders, so the page is public and edge-cached like every other home render.",
+      "cases": [
+        "home@mobile"
+      ],
+      "path": "headers.x-cache-segment",
+      "baseline": "$absent",
+      "actual": "mobile|r=SP"
+    },
+    {
+      "id": "home-mobile-no-cart-cookie",
+      "status": "pending",
+      "approval": "PENDING product-owner approval (not approved). v7 shared one QueryClient across requests, so the first page an isolate rendered created a Shopify cart during SSR and answered Set-Cookie: cart with Cache-Control private (in the recording, home@mobile, the first case). v8 creates no cart while a document renders, so the page is public and edge-cached like every other home render.",
+      "cases": [
+        "home@mobile"
+      ],
+      "path": "headers.x-cache-version",
+      "baseline": "$absent",
+      "actual": "<build-id>"
+    },
+    {
+      "id": "home-utm-mobile-from-cache",
+      "status": "pending",
+      "approval": "PENDING product-owner approval (not approved). Follows from home-mobile-no-cart-cookie: v7 never cached home@mobile, so /?utm_* rendered fresh (og:url with the query); v8 serves the cached home (tracking params are left out of the cache key, as in v7), with og:url {origin}/ and the client-side head order v7 had on desktop.",
+      "cases": [
+        "home-utm@mobile"
+      ],
+      "path": "headers.x-deco-stored-at",
+      "baseline": "$absent",
+      "actual": "1893499200000"
+    },
+    {
+      "id": "home-utm-mobile-from-cache",
+      "status": "pending",
+      "approval": "PENDING product-owner approval (not approved). Follows from home-mobile-no-cart-cookie: v7 never cached home@mobile, so /?utm_* rendered fresh (og:url with the query); v8 serves the cached home (tracking params are left out of the cache key, as in v7), with og:url {origin}/ and the client-side head order v7 had on desktop.",
+      "cases": [
+        "home-utm@mobile"
+      ],
+      "path": "ssr.head",
+      "baseline": {
+        "lang": "en",
+        "dataTheme": "light",
+        "title": "Demo Storefront — New Season, Up to 60% Off | deco.cx",
+        "meta": [
+          {
+            "charset": "utf-8"
+          },
+          {
+            "name": "viewport",
+            "content": "width=device-width, initial-scale=1"
+          },
+          {
+            "property": "og:site_name",
+            "content": "Storefront-tanstack"
+          },
+          {
+            "name": "description",
+            "content": "Shop the new season at Demo Storefront: shirts, denim, accessories and more. Free shipping on orders over $50 and interest-free installments. | deco.cx"
+          },
+          {
+            "name": "robots",
+            "content": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+          },
+          {
+            "property": "og:title",
+            "content": "Demo Storefront — New Season, Up to 60% Off | deco.cx"
+          },
+          {
+            "property": "og:description",
+            "content": "Shop the new season at Demo Storefront: shirts, denim, accessories and more. Free shipping on orders over $50 and interest-free installments. | deco.cx"
+          },
+          {
+            "property": "og:image",
+            "content": "https://decoims.com/demo-storefront/2026/07/57440993-8c68-4943-9084-1c947c1d0fd5-banner1.png?quality=original"
+          },
+          {
+            "property": "og:type",
+            "content": "website"
+          },
+          {
+            "name": "twitter:card",
+            "content": "summary_large_image"
+          },
+          {
+            "name": "twitter:title",
+            "content": "Demo Storefront — New Season, Up to 60% Off | deco.cx"
+          },
+          {
+            "name": "twitter:description",
+            "content": "Shop the new season at Demo Storefront: shirts, denim, accessories and more. Free shipping on orders over $50 and interest-free installments. | deco.cx"
+          },
+          {
+            "name": "twitter:image",
+            "content": "https://decoims.com/demo-storefront/2026/07/57440993-8c68-4943-9084-1c947c1d0fd5-banner1.png?quality=original"
+          },
+          {
+            "property": "og:url",
+            "content": "{origin}/?utm_source=parity&utm_medium=test"
+          }
+        ],
+        "links": [
+          {
+            "rel": "preconnect",
+            "href": "https://api.fontshare.com"
+          },
+          {
+            "rel": "icon",
+            "href": "/favicon.ico"
+          }
+        ]
+      },
+      "actual": {
+        "lang": "en",
+        "dataTheme": "light",
+        "title": "Demo Storefront — New Season, Up to 60% Off | deco.cx",
+        "meta": [
+          {
+            "charset": "utf-8"
+          },
+          {
+            "name": "viewport",
+            "content": "width=device-width, initial-scale=1"
+          },
+          {
+            "property": "og:site_name",
+            "content": "Storefront-tanstack"
+          },
+          {
+            "name": "description",
+            "content": "Shop the new season at Demo Storefront: shirts, denim, accessories and more. Free shipping on orders over $50 and interest-free installments. | deco.cx"
+          },
+          {
+            "name": "robots",
+            "content": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+          },
+          {
+            "property": "og:title",
+            "content": "Demo Storefront — New Season, Up to 60% Off | deco.cx"
+          },
+          {
+            "property": "og:description",
+            "content": "Shop the new season at Demo Storefront: shirts, denim, accessories and more. Free shipping on orders over $50 and interest-free installments. | deco.cx"
+          },
+          {
+            "property": "og:image",
+            "content": "https://decoims.com/demo-storefront/2026/07/57440993-8c68-4943-9084-1c947c1d0fd5-banner1.png?quality=original"
+          },
+          {
+            "property": "og:type",
+            "content": "website"
+          },
+          {
+            "name": "twitter:card",
+            "content": "summary_large_image"
+          },
+          {
+            "name": "twitter:title",
+            "content": "Demo Storefront — New Season, Up to 60% Off | deco.cx"
+          },
+          {
+            "name": "twitter:description",
+            "content": "Shop the new season at Demo Storefront: shirts, denim, accessories and more. Free shipping on orders over $50 and interest-free installments. | deco.cx"
+          },
+          {
+            "name": "twitter:image",
+            "content": "https://decoims.com/demo-storefront/2026/07/57440993-8c68-4943-9084-1c947c1d0fd5-banner1.png?quality=original"
+          },
+          {
+            "property": "og:url",
+            "content": "{origin}/"
+          }
+        ],
+        "links": [
+          {
+            "rel": "preconnect",
+            "href": "https://api.fontshare.com"
+          },
+          {
+            "rel": "icon",
+            "href": "/favicon.ico"
+          }
+        ]
+      }
+    },
+    {
+      "id": "home-utm-mobile-from-cache",
+      "status": "pending",
+      "approval": "PENDING product-owner approval (not approved). Follows from home-mobile-no-cart-cookie: v7 never cached home@mobile, so /?utm_* rendered fresh (og:url with the query); v8 serves the cached home (tracking params are left out of the cache key, as in v7), with og:url {origin}/ and the client-side head order v7 had on desktop.",
+      "cases": [
+        "home-utm@mobile"
+      ],
+      "path": "dom.head",
+      "baseline": {
+        "lang": "en",
+        "dataTheme": "light",
+        "title": "Demo Storefront — New Season, Up to 60% Off | deco.cx",
+        "meta": [
+          {
+            "charset": "utf-8"
+          },
+          {
+            "name": "viewport",
+            "content": "width=device-width, initial-scale=1"
+          },
+          {
+            "property": "og:site_name",
+            "content": "Storefront-tanstack"
+          },
+          {
+            "name": "description",
+            "content": "Shop the new season at Demo Storefront: shirts, denim, accessories and more. Free shipping on orders over $50 and interest-free installments. | deco.cx"
+          },
+          {
+            "name": "robots",
+            "content": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+          },
+          {
+            "property": "og:title",
+            "content": "Demo Storefront — New Season, Up to 60% Off | deco.cx"
+          },
+          {
+            "property": "og:description",
+            "content": "Shop the new season at Demo Storefront: shirts, denim, accessories and more. Free shipping on orders over $50 and interest-free installments. | deco.cx"
+          },
+          {
+            "property": "og:image",
+            "content": "https://decoims.com/demo-storefront/2026/07/57440993-8c68-4943-9084-1c947c1d0fd5-banner1.png?quality=original"
+          },
+          {
+            "property": "og:type",
+            "content": "website"
+          },
+          {
+            "name": "twitter:card",
+            "content": "summary_large_image"
+          },
+          {
+            "name": "twitter:title",
+            "content": "Demo Storefront — New Season, Up to 60% Off | deco.cx"
+          },
+          {
+            "name": "twitter:description",
+            "content": "Shop the new season at Demo Storefront: shirts, denim, accessories and more. Free shipping on orders over $50 and interest-free installments. | deco.cx"
+          },
+          {
+            "name": "twitter:image",
+            "content": "https://decoims.com/demo-storefront/2026/07/57440993-8c68-4943-9084-1c947c1d0fd5-banner1.png?quality=original"
+          },
+          {
+            "property": "og:url",
+            "content": "{origin}/?utm_source=parity&utm_medium=test"
+          }
+        ],
+        "links": [
+          {
+            "rel": "preconnect",
+            "href": "https://api.fontshare.com"
+          },
+          {
+            "rel": "icon",
+            "href": "/favicon.ico"
+          }
+        ]
+      },
+      "actual": {
+        "lang": "en",
+        "dataTheme": "light",
+        "title": "Demo Storefront — New Season, Up to 60% Off | deco.cx",
+        "meta": [
+          {
+            "charset": "utf-8"
+          },
+          {
+            "name": "viewport",
+            "content": "width=device-width, initial-scale=1"
+          },
+          {
+            "property": "og:site_name",
+            "content": "Storefront-tanstack"
+          },
+          {
+            "name": "robots",
+            "content": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+          },
+          {
+            "property": "og:type",
+            "content": "website"
+          },
+          {
+            "name": "description",
+            "content": "Shop the new season at Demo Storefront: shirts, denim, accessories and more. Free shipping on orders over $50 and interest-free installments. | deco.cx"
+          },
+          {
+            "property": "og:title",
+            "content": "Demo Storefront — New Season, Up to 60% Off | deco.cx"
+          },
+          {
+            "property": "og:description",
+            "content": "Shop the new season at Demo Storefront: shirts, denim, accessories and more. Free shipping on orders over $50 and interest-free installments. | deco.cx"
+          },
+          {
+            "property": "og:image",
+            "content": "https://decoims.com/demo-storefront/2026/07/57440993-8c68-4943-9084-1c947c1d0fd5-banner1.png?quality=original"
+          },
+          {
+            "name": "twitter:card",
+            "content": "summary_large_image"
+          },
+          {
+            "name": "twitter:title",
+            "content": "Demo Storefront — New Season, Up to 60% Off | deco.cx"
+          },
+          {
+            "name": "twitter:description",
+            "content": "Shop the new season at Demo Storefront: shirts, denim, accessories and more. Free shipping on orders over $50 and interest-free installments. | deco.cx"
+          },
+          {
+            "name": "twitter:image",
+            "content": "https://decoims.com/demo-storefront/2026/07/57440993-8c68-4943-9084-1c947c1d0fd5-banner1.png?quality=original"
+          },
+          {
+            "property": "og:url",
+            "content": "{origin}/?utm_source=parity&utm_medium=test"
+          }
+        ],
+        "links": [
+          {
+            "rel": "preconnect",
+            "href": "https://api.fontshare.com"
+          },
+          {
+            "rel": "icon",
+            "href": "/favicon.ico"
+          }
+        ]
+      }
+    }
+  ],
   "pages": [
     {
       "id": "home",
