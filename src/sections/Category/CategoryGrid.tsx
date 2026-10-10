@@ -3,7 +3,6 @@ import Image from "~/components/ui/Image";
 import Section, { type Props as SectionHeaderProps } from "../../components/ui/Section";
 import Slider from "../../components/ui/Slider";
 import { clx } from "~/sdk/clx";
-import { type LoadingFallbackProps } from "~/types/deco";
 import { Link } from "@tanstack/react-router";
 import { useReveal } from "~/sdk/useReveal";
 
@@ -71,10 +70,4 @@ function CategoryGrid({ title, cta, items }: Props) {
     </Section.Container>
   );
 }
-export const LoadingFallback = ({ title, cta }: LoadingFallbackProps<Props>) => (
-  <Section.Container>
-    <Section.Header title={title} cta={cta} />
-    <Section.Placeholder height="320px" />
-  </Section.Container>
-);
 export default CategoryGrid;

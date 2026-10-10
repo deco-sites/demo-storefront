@@ -44,26 +44,8 @@ function Container({ className: _class, ...props }: React.JSX.IntrinsicElements[
   return (
     <div
       {...props}
-      className={clx(
-        "flex w-full flex-col gap-6 px-3 py-8 sm:py-14",
-        _class?.toString(),
-      )}
+      className={clx("flex w-full flex-col gap-6 px-3 py-8 sm:py-14", _class?.toString())}
     />
-  );
-}
-
-function Placeholder({ height, className: _class }: { height: string; className?: string }) {
-  return (
-    <div
-      style={{
-        height,
-        containIntrinsicSize: height,
-        contentVisibility: "auto",
-      }}
-      className={clx("flex justify-center items-center", _class)}
-    >
-      <span className="loading loading-spinner" />
-    </div>
   );
 }
 
@@ -72,6 +54,5 @@ function Section() {}
 Section.Container = Container;
 Section.Header = Header;
 Section.Tabbed = Tabbed;
-Section.Placeholder = Placeholder;
 
 export default Section;

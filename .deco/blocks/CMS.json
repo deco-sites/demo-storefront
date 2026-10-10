@@ -1,0 +1,13 @@
+{
+  "__resolveType": "cms-settings",
+  "preview": {
+    "hosts": [
+      "demo-storefront.deco.site",
+      "demo-storefront.deco-cx.workers.dev",
+      "localhost:5173"
+    ]
+  },
+  "telemetry": {
+    "errorSampleRate": 0.1
+  }
+}

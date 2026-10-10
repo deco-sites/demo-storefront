@@ -81,6 +81,4 @@ function Banner({ title, description, priceLabel, price, images, cta, visibility
   );
 }
 
-export const LoadingFallback = () => <Section.Placeholder height="461px" />;
-
 export default Banner;

@@ -1,10 +1,5 @@
-import { RequestContext } from "@decocms/blocks/sdk/requestContext";
 import { usePlatform } from "../../apps/site";
-import {
-  type Address,
-  type AddressBookState,
-  EMPTY_ADDRESS_BOOK,
-} from "../../platform/address/address.types";
+import { type Address, type AddressBookState } from "../../platform/address/address.types";
 import { readAddressCookie, serializeAddressCookie } from "../../platform/address/cookie";
 
 export type AddressInput = Omit<Address, "id"> & { id?: string };
@@ -14,14 +9,17 @@ export type AddressOp =
   | { op: "remove"; id: string }
   | { op: "setDefault"; id: string };
 
-async function action(props: AddressOp, req?: Request): Promise<AddressBookState> {
+async function action(
+  props: AddressOp,
+  request: Request,
+  responseHeaders: Headers,
+): Promise<AddressBookState> {
   const platform = usePlatform();
   if (platform === "vtex" || platform === "wake") {
     // TODO(consumer): wire the real platform address endpoints here.
   }
 
-  const request = req ?? RequestContext.current?.request;
-  const current = request ? readAddressCookie(request) : EMPTY_ADDRESS_BOOK;
+  const current = readAddressCookie(request);
   let addresses = [...current.addresses];
 
   if (props.op === "save") {
@@ -53,7 +51,7 @@ async function action(props: AddressOp, req?: Request): Promise<AddressBookState
   }
 
   const next: AddressBookState = { addresses };
-  RequestContext.responseHeaders.append("Set-Cookie", serializeAddressCookie(next));
+  responseHeaders.append("Set-Cookie", serializeAddressCookie(next));
   return next;
 }
 

@@ -1,0 +1,45 @@
+{
+  "id": "plp-sort@mobile",
+  "steps": {
+    "sorted": {
+      "url": "/shirts?sort=price-descending",
+      "title": "Storefront | deco.cx"
+    }
+  },
+  "values": {
+    "status:/shirts": 200,
+    "sortedUrl": "/shirts?sort=price-descending"
+  },
+  "analytics": {
+    "views": [],
+    "events": [
+      {
+        "name": "view_item_list",
+        "path": "/shirts",
+        "props": {
+          "item_list_id": "/shirts",
+          "item_list_name": "shirts",
+          "items": []
+        }
+      },
+      {
+        "name": "view_item_list",
+        "path": "/shirts?sort=price-descending",
+        "props": {
+          "item_list_id": "/shirts",
+          "item_list_name": "shirts",
+          "items": []
+        }
+      }
+    ]
+  },
+  "thirdPartyRequests": [
+    "GET https://api.fontshare.com/v2/css",
+    "GET https://cdn.fontshare.com/wf/5SZVFDB7V52TI6ULVC6J3WQZQCIZVDV5/ODYPSTCUDMKSTYIPTV4CLQ7URIK7XYBJ/YS3VPNVO4B3TOJMEXDGFZQ4TLZGGSRZC.woff2",
+    "GET https://cdn.fontshare.com/wf/BLNB4FAQFNK56DWWNF7PMGTCOTZHOEII/ST3WKSSDMBK2MIQQO3MAVYWLF4FTOLFV/6IN5WOLRCYP4G4MOCOHOMXNON6Q7MDAR.woff2",
+    "GET https://cdn.fontshare.com/wf/OYB4CXKJQXKTNSLJMTDQOIVUL2V5EL7S/WYO2P7DQVV5RNXGMCUO2HL4RJP4VFUAS/6XPIMU23OJVRY676OG5YVJMWEHWICATX.woff2",
+    "GET https://decoims.com/decocms/e8c6326e-e009-4e3c-9787-b2fe25a1b993/deco-logo.png",
+    "GET https://decoims.com/image",
+    "GET https://decoims.com/storefront-tanstack/b37f70f2-4a04-44d8-8d12-a6cba50b7785/1742560260738-f1faab73-e4ff-4037-b7c4-5d02bd0b1209.png"
+  ]
+}

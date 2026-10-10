@@ -1,5 +1,5 @@
-import type { ProductDetailsPage } from "@decocms/apps-commerce/types";
-import { BreadcrumbJsonLd, ProductJsonLd } from "@decocms/blocks/hooks";
+import type { ProductDetailsPage } from "../../vendor/commerce/types";
+import { BreadcrumbJsonLd, ProductJsonLd } from "../../vendor/blocks/JsonLd";
 import ProductHero, { type HeroCopyConfig } from "../../components/product/pdp/ProductHero";
 import type { GalleryConfig } from "../../components/product/pdp/ProductGallery";
 import type { VariantSelectorConfig } from "../../components/product/pdp/ProductVariantSelector";
@@ -84,5 +84,3 @@ export default function ProductDetails({
     </div>
   );
 }
-
-export const LoadingFallback = () => <Section.Placeholder height="635px" />;

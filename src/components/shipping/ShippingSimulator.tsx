@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { formatPrice } from "@decocms/apps-commerce/sdk/formatPrice";
-import { invoke } from "../../runtime";
+import { formatPrice } from "../../vendor/commerce/sdk/formatPrice";
+import { simulateShippingServerFn } from "../../server/site.functions";
 import type { ShippingMethod, ShippingSimulation } from "../../actions/shipping/simulate";
 import Button from "../ui/Button";
 
@@ -92,8 +92,7 @@ export default function ShippingSimulator({ postalCode = {}, copy = {}, locale }
   const digitCount = value.replace(/\D/g, "").length;
 
   const mutation = useMutation<ShippingSimulation, Error, { postalCode: string }>({
-    mutationFn: (input) =>
-      invoke.site.actions.shipping.simulate(input) as Promise<ShippingSimulation>,
+    mutationFn: (input) => simulateShippingServerFn({ data: input }),
   });
 
   const onChange = (raw: string) => {

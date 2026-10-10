@@ -4,7 +4,6 @@ import { Link } from "@tanstack/react-router";
 import { clx } from "~/sdk/clx";
 import { useReveal } from "~/sdk/useReveal";
 import { useState } from "react";
-import { type LoadingFallbackProps } from "~/types/deco";
 
 export interface PromoCard {
   /** @title Eyebrow label */
@@ -29,7 +28,14 @@ export interface Props {
   tabs: PromoTab[];
 }
 
-function Card({ label, headline, cta = "Shop Now", href, image, index = 0 }: PromoCard & { index?: number }) {
+function Card({
+  label,
+  headline,
+  cta = "Shop Now",
+  href,
+  image,
+  index = 0,
+}: PromoCard & { index?: number }) {
   const ref = useReveal<HTMLAnchorElement>();
   return (
     <Link
@@ -70,7 +76,9 @@ export default function PromoGrid({ title, tabs = [] }: Props) {
   return (
     <div className="flex flex-col items-center gap-6 px-3 py-8 sm:py-14">
       {title && (
-        <h2 className="max-w-xl text-center text-display font-medium text-ink sm:text-3xl">{title}</h2>
+        <h2 className="max-w-xl text-center text-display font-medium text-ink sm:text-3xl">
+          {title}
+        </h2>
       )}
 
       {tabs.length > 1 && (
@@ -99,9 +107,3 @@ export default function PromoGrid({ title, tabs = [] }: Props) {
     </div>
   );
 }
-
-export const LoadingFallback = ({ title }: LoadingFallbackProps<Props>) => (
-  <div className="flex flex-col items-center gap-6 px-3 py-8 sm:py-14">
-    {title && <h2 className="text-center text-display font-medium text-ink">{title}</h2>}
-  </div>
-);
