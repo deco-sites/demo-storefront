@@ -647,6 +647,44 @@
           }
         ]
       }
+    },
+    {
+      "id": "home-shelf-images-load",
+      "status": "pending",
+      "approval": "PENDING product-owner approval (not approved). The home's tabbed shelf was inside a v7 Lazy wrapper, so its first tab's six product images loaded only once it scrolled near; v8 renders it with the page, and the browser fetches those lazy images on desktop flows that leave the home before scrolling. The HARs were recorded on v7, which never requested them, so they are listed under harMisses.",
+      "cases": [
+        "home-to-pdp-spa-nav@desktop",
+        "header-mega-menu@desktop",
+        "login-link@desktop"
+      ],
+      "path": "thirdPartyRequests",
+      "addsOnly": [
+        "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/ChatGPT_Image_Jul_27_2026_07_44_32_PM_1ecc4532-f4d7-402f-89ad-94e95cb54947.png",
+        "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/OrganicBucketHat01.png",
+        "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/OrganicBucketHat02.png",
+        "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/hatwhite1.png",
+        "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/hatwhite2.png"
+      ]
+    },
+    {
+      "id": "home-shelf-images-load",
+      "status": "pending",
+      "approval": "PENDING product-owner approval (not approved). The home's tabbed shelf was inside a v7 Lazy wrapper, so its first tab's six product images loaded only once it scrolled near; v8 renders it with the page, and the browser fetches those lazy images on desktop flows that leave the home before scrolling. The HARs were recorded on v7, which never requested them, so they are listed under harMisses.",
+      "cases": [
+        "home-to-pdp-spa-nav@desktop",
+        "header-mega-menu@desktop",
+        "login-link@desktop"
+      ],
+      "path": "harMisses",
+      "baseline": "$absent",
+      "actual": [
+        "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/ChatGPT_Image_Jul_27_2026_07_44_32_PM_1ecc4532-f4d7-402f-89ad-94e95cb54947.png",
+        "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/OrganicBucketHat01.png",
+        "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/OrganicBucketHat02.png",
+        "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/hatwhite1.png",
+        "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/hatwhite2.png",
+        "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/image_f0ad58ea-f114-4b03-a8ff-611f4b34f5af.png"
+      ]
     }
   ],
   "pages": [
