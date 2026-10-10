@@ -1,287 +1,274 @@
 {
   "name": "Home Page",
+  "path": "/",
+  "seo": {
+    "__resolveType": "website/sections/Seo/SeoV2.tsx",
+    "title": "deco for capybaras",
+    "description": "Clothes made for capybaras to wear, in a capybara world. Dressed for doing nothing.",
+    "image": "/capy/img/b-rain-d@2x.webp"
+  },
   "sections": [
     {
-      "__resolveType": "Deco"
+      "__resolveType": "Header",
+      "theme": "night"
     },
     {
-      "__resolveType": "Header"
+      "__resolveType": "site/sections/Capy/HeroScene.tsx",
+      "image": {
+        "src": "/capy/img/b-rain-d.webp",
+        "alt": "Tião in the deep green Rio Raincoat sitting on the wet edge of an infinity pool after the rain, a rainbow over Sugarloaf.",
+        "position": "64% 50%",
+        "positionMobile": "76% 50%"
+      },
+      "kicker": {
+        "motif": "meander",
+        "text": "New · Rio"
+      },
+      "title": "Dressed for doing nothing.",
+      "titleTone": "Even in the rain.",
+      "lede": "The Rio Raincoat. Recycled ripstop, taped seams and a hood with ear ports, for capybaras who stay out when the sky opens.",
+      "primaryCta": {
+        "label": "Shop Rio",
+        "href": "/collections/rio"
+      },
+      "secondaryCta": {
+        "label": "Discover the raincoat",
+        "href": "/products/rio-raincoat"
+      },
+      "weather": {
+        "city": "Rio",
+        "airC": 27,
+        "waterC": 24
+      }
     },
     {
-      "__resolveType": "site/sections/Content/Hero.tsx",
-      "slides": [
+      "__resolveType": "site/sections/Capy/IntroStatement.tsx",
+      "text": "Three collections for a capybara’s day. The sun, the river and the soak.",
+      "collections": [
         {
-          "image": "https://decoims.com/demo-storefront/2026/07/57440993-8c68-4943-9084-1c947c1d0fd5-banner1.png?quality=original",
-          "mobileImage": "https://decoims.com/demo-storefront/2026/07/611a7feb-6906-4d6e-9965-ca2bcf0e7081-banner1-mob.png",
-          "headline": "NEW SEASON, UP TO 60% OFF",
-          "href": "/s?q=shoes&page=0",
-          "product": {
-            "__resolveType": "site/loaders/productByHandle.ts",
-            "handle": "deco-tee"
-          }
+          "handle": "sol",
+          "href": "#sol"
         },
         {
-          "image": "https://decoims.com/demo-storefront/2026/07/ba0261c3-bee6-40bd-b7a4-ce12083c7be5-banner2.png",
-          "mobileImage": "https://decoims.com/demo-storefront/2026/07/9b92f808-9ae1-40ed-8a88-8a9929347647-banner2-mob.png",
-          "headline": "THE DENIM EDIT IS HERE",
-          "href": "/s?q=jeans",
-          "product": {
-            "__resolveType": "site/loaders/productByHandle.ts",
-            "handle": "deco-cap"
-          }
+          "handle": "rio",
+          "href": "#rio"
         },
         {
-          "image": "https://decoims.com/demo-storefront/2026/07/5a5dbcb8-eaaa-494f-8476-f32a029facf3-banner3.png",
-          "mobileImage": "https://decoims.com/demo-storefront/2026/07/62941bd2-b774-4445-8533-2ca6db199f15-banner3-mob.png",
-          "headline": "ACCESSORIES THAT FINISH THE LOOK",
-          "href": "/accessories",
-          "product": {
-            "__resolveType": "site/loaders/productByHandle.ts",
-            "handle": "deco-sweatpants"
-          }
+          "handle": "onsen",
+          "href": "#onsen"
         }
-      ],
-      "interval": 6,
-      "categories": [
-        {
-          "label": "Shirts",
-          "href": "/shirts",
-          "image": "https://decoims.com/demo-storefront/2026/07/dcd77bbd-4969-4186-aaaa-d8bc9e4b84c1-chatgpt-image-jul-27-2026-06_54_44-pm.png"
-        },
-        {
-          "label": "Accessories",
-          "href": "/accessories",
-          "image": "https://decoims.com/demo-storefront/2026/07/543e04d2-011d-4cc2-8875-46a1a08bef3d-accessories.png"
-        },
-        {
-          "label": "Stickers",
-          "href": "/stickers",
-          "image": "https://decoims.com/demo-storefront/2026/07/6df3a538-085e-4243-93a8-0b961b99ae26-stickers.png"
-        }
-      ],
-      "infoBullets": [
-        "Free shipping on orders over $50",
-        "Up to $40 off your first order",
-        "Interest-free installments",
-        "Up to 15% off paying cash"
       ]
     },
     {
-      "__resolveType": "site/sections/Product/ProductShelf.tsx",
-      "title": "Discover Our Featured Picks",
-      "cta": "/mono",
+      "__resolveType": "site/sections/Capy/CollectionScene.tsx",
+      "variant": "photo",
+      "collection": "sol",
+      "image": {
+        "src": "/capy/img/b-sol-d.webp",
+        "alt": "Two capybaras in Sand and Lime linen ponchos grazing in the patterned shade of a cobogó wall.",
+        "position": "70% 50%",
+        "positionMobile": "78% 50%"
+      },
+      "title": "Shade you can wear.",
+      "body": "Linen, canvas and UV protection for the long afternoon.",
+      "primaryCta": {
+        "label": "Shop Sol",
+        "href": "/collections/sol"
+      },
+      "link": {
+        "label": "The Sol Linen Poncho",
+        "href": "/products/sol-linen-poncho"
+      },
+      "credit": "Sol Linen Poncho in Sand and Lime"
+    },
+    {
+      "__resolveType": "site/sections/Capy/CollectionScene.tsx",
+      "variant": "products",
+      "collection": "rio",
+      "title": "Built for wet days.",
+      "body": "Water-ready pieces for wading, drifting and storms.",
+      "primaryCta": {
+        "label": "Shop Rio",
+        "href": "/collections/rio"
+      },
+      "link": {
+        "label": "Field notes",
+        "href": "#riverbank"
+      },
       "products": {
-        "__resolveType": "Product List Loader"
+        "__resolveType": "shopify/loaders/ProductList.ts",
+        "props": {
+          "collection": "rio",
+          "count": 3,
+          "sort": ""
+        }
+      },
+      "order": [
+        "boia-swim-vest",
+        "passo-four-paw-sandals",
+        "rio-raincoat"
+      ],
+      "colors": [
+        "Pool Mint",
+        "Charcoal",
+        "Marigold"
+      ]
+    },
+    {
+      "__resolveType": "site/sections/Capy/CollectionScene.tsx",
+      "variant": "photo-night",
+      "collection": "onsen",
+      "image": {
+        "src": "/capy/img/b-onsen-d.webp",
+        "alt": "Three capybaras soaking in a steaming hot spring at dusk, one in the Yuzu Bucket Hat, yuzu floating.",
+        "position": "50% 62%",
+        "positionMobile": "66% 50%"
+      },
+      "title": "Hot water below. Cool head above.",
+      "body": "Terry and waffle for the soak, and the nap after it.",
+      "primaryCta": {
+        "label": "Shop Onsen",
+        "href": "/collections/onsen"
+      },
+      "link": {
+        "label": "Why yuzu",
+        "href": "#riverbank"
       }
     },
     {
-      "__resolveType": "website/flags/multivariate/section.ts",
-      "variants": [
+      "__resolveType": "site/sections/Capy/ProductRail.tsx",
+      "title": "Meet the herd.",
+      "products": {
+        "__resolveType": "shopify/loaders/ProductList.ts",
+        "props": {
+          "collection": "the-herd",
+          "count": 12,
+          "sort": ""
+        }
+      },
+      "order": [
+        "sol-linen-poncho",
+        "yuzu-bucket-hat",
+        "onsen-waffle-robe",
+        "largo-sunglasses",
+        "passeio-grazing-vest",
+        "boia-swim-vest",
+        "passo-four-paw-sandals",
+        "rio-raincoat"
+      ],
+      "link": {
+        "label": "Shop all eight",
+        "href": "/collections/the-herd"
+      }
+    },
+    {
+      "__resolveType": "site/sections/Capy/Manifesto.tsx",
+      "image": {
+        "src": "/capy/img/s-cobogo.webp",
+        "alt": "Tião looking through the cut-outs of a cobogó wall in marigold, mint and lilac.",
+        "position": "58% 50%"
+      },
+      "caption": "The cobogó wall, Rio.",
+      "title": "Cut for a wide back and four steady paws.",
+      "body": "The capybara never rushes. It waits for the sun, wades into the river and sits with the herd until evening. We make clothes for that life. Linen that dries on the bank. Raincoats that welcome the storm. Robes for the long soak with the yuzu floating by. Nothing is loud and nothing is hurried.",
+      "link": {
+        "label": "How we size",
+        "href": "#sizing"
+      }
+    },
+    {
+      "__resolveType": "site/sections/Capy/SizingStory.tsx",
+      "title": "Pup, Adult or Big Boss.",
+      "body": "Three sizes, graded from real body measurements. Measure around the widest part of the barrel, just behind the front legs. If girth and back disagree, girth wins.",
+      "image": {
+        "src": "/capy/img/j-sizing.webp",
+        "alt": "Three capybaras in Sand linen ponchos standing in a row: a large adult, Tião and a pup.",
+        "position": "50% 64%",
+        "positionMobile": "50% 66%"
+      },
+      "labels": [
         {
-          "value": {
-            "__resolveType": "site/sections/Category/CategoryGrid.tsx",
-            "title": "Departments",
-            "cta": "/all",
-            "items": [
-              {
-                "label": "Shirts",
-                "href": "/shirts",
-                "image": "https://decoims.com/storefront-tanstack/5ad15dbc-205a-4546-9801-5d18ed393caa/1742560225714-38c33c9f-14a1-4048-973b-dc2a75caf1fa.png"
-              },
-              {
-                "href": "/hoodies-sweatshirts",
-                "label": "Hoodies & Sweatshirts",
-                "image": "https://decoims.com/storefront-tanstack/24f19e67-c8f4-4601-8c86-379a92747535/1742560227121-f6bea2b8-b248-4b42-9246-6e924a0acc8b.png"
-              },
-              {
-                "href": "/jackets-outerwear",
-                "label": "Jackets & Outerwear",
-                "image": "https://decoims.com/storefront-tanstack/adfa8d1d-9a08-427b-ab0a-32dec0cc8fc3/1742560228502-1b0ecaa2-9a13-4de2-bf17-5196948ed128.png"
-              },
-              {
-                "href": "/bottoms",
-                "label": "Bottoms",
-                "image": "https://decoims.com/storefront-tanstack/048e3ef7-c5c6-41b7-aa3a-7b3822502d41/1742560231577-d0433c00-cd26-4638-b519-0cb64b9f82e8.png"
-              },
-              {
-                "href": "/accessories",
-                "label": "Accessories",
-                "image": "https://decoims.com/storefront-tanstack/ba682b53-64d8-44b7-8e57-18d02f5dcf5a/1742560230067-92129655-fe40-4b29-8fdb-e7f71e67a5d1.png"
-              },
-              {
-                "href": "/stickers",
-                "label": "Stickers",
-                "image": "https://decoims.com/storefront-tanstack/ba682b53-64d8-44b7-8e57-18d02f5dcf5a/1742560230067-92129655-fe40-4b29-8fdb-e7f71e67a5d1.png"
-              }
-            ]
+          "name": "Big Boss",
+          "weight": "50–70 kg",
+          "girth": "Girth 115–135 cm",
+          "x": 27
+        },
+        {
+          "name": "Adult",
+          "weight": "25–50 kg",
+          "girth": "Girth 90–115 cm",
+          "x": 58,
+          "model": "Tião, 48 kg"
+        },
+        {
+          "name": "Pup",
+          "weight": "up to 25 kg",
+          "girth": "Girth 55–90 cm",
+          "x": 79
+        }
+      ],
+      "cta": {
+        "label": "Open the size guide",
+        "href": "/collections/the-herd"
+      }
+    },
+    {
+      "__resolveType": "site/sections/Capy/JournalCards.tsx",
+      "title": "Riverbank.",
+      "dek": "Notes from the slow life.",
+      "link": {
+        "label": "All notes",
+        "href": "#riverbank"
+      },
+      "posts": [
+        {
+          "category": "Ritual",
+          "title": "Why yuzu belongs in the bath",
+          "dek": "A winter custom from Japanese hot springs, and why we built a hat around it.",
+          "href": "/products/yuzu-bucket-hat",
+          "image": {
+            "src": "/capy/img/l-pdp-rob.webp",
+            "alt": "Tião asleep in the Steam White robe on a wooden deck by a steaming hot spring, a yuzu beside him.",
+            "position": "60% 50%"
+          }
+        },
+        {
+          "category": "Field notes",
+          "title": "A raincoat test in the Pantanal",
+          "dek": "Four capybaras, three days of rain, one taped seam that failed.",
+          "href": "/products/rio-raincoat",
+          "image": {
+            "src": "/capy/img/l-pdp-pon.webp",
+            "alt": "Tião resting in the patterned shade of the cobogó wall beside the pool.",
+            "position": "14% 60%"
           },
-          "rule": {
-            "__resolveType": "website/matchers/never.ts"
+          "scale": 1.35
+        },
+        {
+          "category": "Sizing",
+          "title": "Pup, Adult or Big Boss?",
+          "dek": "Three sizes, measured around the widest part of the barrel.",
+          "href": "#sizing",
+          "type": {
+            "big": "48",
+            "unit": "kg",
+            "caption": "Tião is 108 cm around and wears Adult."
           }
         }
       ]
     },
     {
-      "__resolveType": "site/sections/Images/Banner.tsx",
-      "title": "Capybara Helper",
-      "cta": {
-        "label": "Shop now",
-        "href": "/s?q=jeans"
-      },
-      "price": "79,99",
-      "priceLabel": "Starting at",
-      "images": {
-        "desktop": "https://decoims.com/demo-storefront/2026/07/161c9ecb-ceea-4562-bc55-01a2967dc4f2-banner4.png",
-        "mobile": "https://decoims.com/demo-storefront/2026/07/fdcd0e46-2eb0-4d3f-9de2-ec8b7d6b8fc0-banner4-mob.png"
-      }
-    },
-    {
-      "__resolveType": "site/sections/Product/ProductShelfTabbed.tsx",
-      "title": "Hottest Deals",
-      "tabs": [
-        {
-          "products": {
-            "__resolveType": "shopify/loaders/ProductList.ts",
-            "props": {
-              "sort": "",
-              "query": "hat and bag",
-              "count": 10
-            },
-            "filters": {
-              "tags": [],
-              "productTypes": [],
-              "productVendors": [],
-              "variantOptions": []
-            }
-          },
-          "title": "Accessories"
-        },
-        {
-          "products": {
-            "__resolveType": "shopify/loaders/ProductList.ts",
-            "props": {
-              "sort": "",
-              "query": "Shirts",
-              "count": 10
-            },
-            "filters": {
-              "tags": [],
-              "productTypes": [],
-              "productVendors": [],
-              "variantOptions": []
-            }
-          },
-          "title": "Fashion"
-        },
-        {
-          "products": {
-            "__resolveType": "shopify/loaders/ProductList.ts",
-            "props": {
-              "sort": "",
-              "query": "stickers",
-              "count": 10
-            },
-            "filters": {
-              "tags": [],
-              "productTypes": [],
-              "productVendors": [],
-              "variantOptions": []
-            }
-          },
-          "title": "Stickers"
-        }
-      ]
-    },
-    {
-      "__resolveType": "site/sections/Content/PromoGrid.tsx",
-      "title": "Combine tecnologia avançada, design elegante e desempenho",
-      "tabs": [
-        {
-          "label": "Melhores Ofertas",
-          "cards": [
-            {
-              "label": "Moto Watch Fit",
-              "headline": "Seu estilo, seu tempo",
-              "cta": "Shop Now",
-              "href": "/s?q=watch",
-              "image": "https://decoims.com/storefront-tanstack/24f19e67-c8f4-4601-8c86-379a92747535/1742560227121-f6bea2b8-b248-4b42-9246-6e924a0acc8b.png"
-            },
-            {
-              "label": "Motorola Razr™",
-              "headline": "Brilho e atitude com Motorola Razr™",
-              "cta": "Shop Now",
-              "href": "/s?q=razr",
-              "image": "https://decoims.com/storefront-tanstack/5ad15dbc-205a-4546-9801-5d18ed393caa/1742560225714-38c33c9f-14a1-4048-973b-dc2a75caf1fa.png"
-            },
-            {
-              "label": "Edge 60 Fusion",
-              "headline": "Desafie seus limites com Edge 60 Fusion",
-              "cta": "Shop Now",
-              "href": "/s?q=edge-60-fusion",
-              "image": "https://decoims.com/storefront-tanstack/adfa8d1d-9a08-427b-ab0a-32dec0cc8fc3/1742560228502-1b0ecaa2-9a13-4de2-bf17-5196948ed128.png"
-            }
-          ]
-        },
-        {
-          "label": "Lançamentos",
-          "cards": [
-            {
-              "label": "Moto Watch Fit",
-              "headline": "Seu estilo, seu tempo",
-              "cta": "Shop Now",
-              "href": "/s?q=watch",
-              "image": "https://decoims.com/storefront-tanstack/ba682b53-64d8-44b7-8e57-18d02f5dcf5a/1742560230067-92129655-fe40-4b29-8fdb-e7f71e67a5d1.png"
-            },
-            {
-              "label": "Motorola Razr™",
-              "headline": "Brilho e atitude com Motorola Razr™",
-              "cta": "Shop Now",
-              "href": "/s?q=razr",
-              "image": "https://decoims.com/storefront-tanstack/24f19e67-c8f4-4601-8c86-379a92747535/1742560227121-f6bea2b8-b248-4b42-9246-6e924a0acc8b.png"
-            },
-            {
-              "label": "Edge 60 Fusion",
-              "headline": "Desafie seus limites com Edge 60 Fusion",
-              "cta": "Shop Now",
-              "href": "/s?q=edge-60-fusion",
-              "image": "https://decoims.com/storefront-tanstack/5ad15dbc-205a-4546-9801-5d18ed393caa/1742560225714-38c33c9f-14a1-4048-973b-dc2a75caf1fa.png"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "__resolveType": "site/sections/Newsletter/Newsletter.tsx",
-      "form": {
-        "label": "Sign up",
-        "placeholder": "Email address"
-      },
-      "notices": {
-        "empty": {
-          "title": "Get top deals, latest trends, and more.",
-          "description": "Receive our news and promotions in advance. Enjoy and get 10% off your first purchase. For more information click here."
-        },
-        "success": {
-          "title": "Thank you for subscribing!",
-          "description": "You’re now signed up to receive the latest news, trends, and exclusive promotions directly to your inbox. Stay tuned!"
-        },
-        "failed": {
-          "title": "Oops!. Something went wrong!",
-          "description": "Something went wrong. Please try again. If the problem persists, please contact us."
-        }
-      }
+      "__resolveType": "site/sections/Capy/Newsletter.tsx",
+      "title": "Slow news, monthly.",
+      "titleTone": "One letter. No hurry.",
+      "body": "New pieces, field notes from the riverbank and the odd yuzu. Once a month, never more.",
+      "placeholder": "Your email",
+      "ctaLabel": "Subscribe",
+      "note": "Unsubscribe whenever you like. We won’t take it personally."
     },
     {
       "__resolveType": "Footer"
     }
   ],
-  "__resolveType": "website/pages/Page.tsx",
-  "path": "/",
-  "seo": {
-    "__resolveType": "website/sections/Seo/SeoV2.tsx",
-    "title": "Demo Storefront — New Season, Up to 60% Off",
-    "description": "Shop the new season at Demo Storefront: shirts, denim, accessories and more. Free shipping on orders over $50 and interest-free installments.",
-    "image": "https://decoims.com/demo-storefront/2026/07/57440993-8c68-4943-9084-1c947c1d0fd5-banner1.png?quality=original",
-    "type": "website"
-  }
+  "__resolveType": "website/pages/Page.tsx"
 }

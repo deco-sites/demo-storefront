@@ -1,10 +1,9 @@
 {
-  "name": "Search Page",
-  "path": "/s",
+  "name": "Collection Page",
+  "path": "/collections/:handle",
   "seo": {
     "__resolveType": "website/sections/Seo/SeoV2.tsx",
-    "title": "Search · deco for capybaras",
-    "noIndexing": true
+    "titleTemplate": "%s · deco for capybaras"
   },
   "sections": [
     {
@@ -117,8 +116,22 @@
         "Adult",
         "Big Boss"
       ],
-      "promo": null,
-      "emptyText": "Nothing by that name in the herd."
+      "promo": {
+        "position": 5,
+        "image": {
+          "src": "/capy/img/p-rio-pas-char.webp",
+          "alt": "Tião standing in four Charcoal Passo sandals."
+        },
+        "background": "#f2e9dc",
+        "collection": "rio",
+        "petal": true,
+        "title": "Four paws. One set.",
+        "body": "Free size swap, within 30 days. Passo Four-Paw Sandals, R$ 349.",
+        "link": {
+          "label": "See the sandals",
+          "href": "/products/passo-four-paw-sandals?color=Charcoal"
+        }
+      }
     },
     {
       "__resolveType": "site/sections/Capy/CollectionCards.tsx",
