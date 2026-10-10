@@ -16,6 +16,11 @@
   "tail_consumers": [
     { "service": "deco-otel-tail" }
   ],
+  // The Workers version (deployment id), sent as `service.version` with DECO_SITE_NAME as
+  // `service.name` and DECO_ENV_NAME as `deployment.environment.name` (src/cms.ts), as v7 did.
+  "version_metadata": {
+    "binding": "CF_VERSION_METADATA"
+  },
   // Telemetry (/next/telemetry#choose-where-telemetry-goes): with DECO_SITE and DECO_SITE_TOKEN set,
   // the hosted Deco CMS collector; otherwise the standard OTEL_EXPORTER_OTLP_ENDPOINT (src/cms.ts reads
   // it and OTEL_EXPORTER_OTLP_HEADERS and passes them to createCMS), the same collector v7 sent to

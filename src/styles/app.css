@@ -14,9 +14,10 @@
 @source not "../../.deco/index.ts";
 @source not "../../.deco/schema.gen.json";
 /* Utilities v7's stylesheet had from code the migration removed (the v7 generated metadata, the
-   home route fallback, and the sections' LoadingFallback placeholders for v7's Lazy wrapper): kept
-   so the stylesheet stays exactly what the site shipped. */
-@source inline("lowercase normal-case text-4xl text-base-content/40 mt-2 tooltip h-[120px] sm:h-[200px] sm:min-h-[600px] hero");
+   home route fallback, the sections' LoadingFallback placeholders for v7's Lazy wrapper, and the
+   word "stack" in the README's old migration section, which gave DaisyUI's .stack): kept so the
+   stylesheet stays exactly what the site shipped. */
+@source inline("lowercase normal-case text-4xl text-base-content/40 mt-2 tooltip h-[120px] sm:h-[200px] sm:min-h-[600px] hero stack");
 @plugin "daisyui";
 @plugin "daisyui/theme" {
   name: "light";

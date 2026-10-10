@@ -43,15 +43,20 @@
     "enabled": true
   },
   "ignoreHeaders": [],
-  "$volatileHarMissesComment": "Harness noise, not approvals: entries dropped from harMisses on both sides for the listed cases. Chromium's full-page capture (captureBeyondViewport) sometimes re-runs <picture> source selection against a transient narrow frame, so the home's mobile <source> candidates (Hero slides, Banner) are requested and aborted on some captures of the same build and not on others (seen on one v8 build: pass, pass, fail in a row; PARITY_DEBUG_MISSES=1 prints the full URLs). Pixels and thirdPartyRequests still compare.",
+  "$volatileHarMissesComment": "Harness noise, NOT approvals, and reported as PENDING whenever one changes a result (--strict fails then). Entries are full request URLs: the home's mobile <source> images (Hero slides and the Banner, the `-mob` files), only on desktop captures. Chromium's full-page capture (captureBeyondViewport) sometimes re-runs <picture> source selection against a transient narrow frame, so those images are requested and aborted on some captures of the same build and not on others: v7 requested all four on every capture so far (the baseline, v7-self runs), one v8 build went pass, pass, fail in a row. Dropped from harMisses on both sides for the listed cases; pixels and thirdPartyRequests still compare. PARITY_DEBUG_MISSES=1 prints every aborted URL.",
   "volatileHarMisses": [
     {
+      "id": "home-desktop-mobile-sources",
+      "status": "pending",
       "cases": [
         "home@desktop",
         "home-utm@desktop"
       ],
       "entries": [
-        "GET https://decoims.com/image"
+        "GET https://decoims.com/image?fit=cover&width=686&height=480&quality=high&src=demo-storefront/2026/07/fdcd0e46-2eb0-4d3f-9de2-ec8b7d6b8fc0-banner4-mob.png",
+        "GET https://decoims.com/image?fit=cover&width=720&height=900&quality=high&src=demo-storefront/2026/07/611a7feb-6906-4d6e-9965-ca2bcf0e7081-banner1-mob.png",
+        "GET https://decoims.com/image?fit=cover&width=720&height=900&quality=high&src=demo-storefront/2026/07/62941bd2-b774-4445-8533-2ca6db199f15-banner3-mob.png",
+        "GET https://decoims.com/image?fit=cover&width=720&height=900&quality=high&src=demo-storefront/2026/07/9b92f808-9ae1-40ed-8a88-8a9929347647-banner2-mob.png"
       ]
     }
   ],
@@ -690,13 +695,49 @@
       "path": "harMisses",
       "baseline": "$absent",
       "actual": [
-        "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/ChatGPT_Image_Jul_27_2026_07_44_32_PM_1ecc4532-f4d7-402f-89ad-94e95cb54947.png",
-        "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/OrganicBucketHat01.png",
-        "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/OrganicBucketHat02.png",
-        "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/hatwhite1.png",
-        "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/hatwhite2.png",
-        "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/image_f0ad58ea-f114-4b03-a8ff-611f4b34f5af.png"
+        "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/ChatGPT_Image_Jul_27_2026_07_44_32_PM_1ecc4532-f4d7-402f-89ad-94e95cb54947.png?v=1785193199&width=372&height=498&crop=center",
+        "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/OrganicBucketHat01.png?v=1718376053&width=372&height=498&crop=center",
+        "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/OrganicBucketHat02.png?v=1718376053&width=372&height=498&crop=center",
+        "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/hatwhite1.png?v=1720561913&width=372&height=498&crop=center",
+        "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/hatwhite2.png?v=1720561913&width=372&height=498&crop=center",
+        "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/image_f0ad58ea-f114-4b03-a8ff-611f4b34f5af.png?v=1785193203&width=372&height=498&crop=center"
       ]
+    }
+  ],
+  "$pendingBaselinesComment": "NOT approvals. A pendingBaselines rule covers cases whose whole page differs from v7 for an explained reason the product owner hasn't signed off: compare checks those cases against the v8 capture pinned in `dir` (node parity/run.mjs record-pending --rule <id>, which records the upstream/HAR fixtures v7 never needed into that dir) and reports them PENDING, never ok; --strict fails on them; --no-pending compares them with the v7 baseline instead. `dir`/README.md lists how each case differs from v7. Only the product owner signs one off; an agent only adds them.",
+  "pendingBaselines": [
+    {
+      "id": "listing-gets-page-url",
+      "status": "pending",
+      "reason": "PENDING product-owner approval (not approved). On v7 the Shopify listing loader never got the page URL (it fell back to https://localhost), so every category, search, catch-all and /sitemap.xml page asked Shopify for the collection \"\" and showed \"12 of 0\" results, live too. v8 passes the page URL: the breadcrumb names the collection or the query, the listing JSON-LD carries the collection's title and description, and the page lists the collection's products. The store's catalog was replaced on 2026-10-10 (its old collections are empty now), so the capture pinned here, recorded after that, shows today's empty collections: identical to v7 except the breadcrumb and the JSON-LD. parity/pending/listing-live-before-catalog-change/ has v8 captured live on 2026-10-09, before the change, listing the products (7 shirts, filters, sort).",
+      "cases": [
+        "plp-shirts@mobile",
+        "plp-shirts@desktop",
+        "plp-stickers@mobile",
+        "plp-stickers@desktop",
+        "plp-hoodies@mobile",
+        "plp-hoodies@desktop",
+        "plp-shirts-sorted@mobile",
+        "plp-shirts-sorted@desktop",
+        "plp-empty-collection@mobile",
+        "plp-empty-collection@desktop",
+        "search@mobile",
+        "search@desktop",
+        "search-no-results@mobile",
+        "search-no-results@desktop",
+        "not-found@mobile",
+        "not-found@desktop",
+        "not-found-single@mobile",
+        "not-found-single@desktop",
+        "sitemap-xml-page@mobile",
+        "sitemap-xml-page@desktop",
+        "search-submit@mobile",
+        "search-submit@desktop",
+        "plp-sort@mobile",
+        "plp-sort@desktop",
+        "header-nav-spa@desktop"
+      ],
+      "dir": "parity/pending/listing-gets-page-url"
     }
   ],
   "pages": [

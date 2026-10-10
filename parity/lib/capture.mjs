@@ -216,8 +216,10 @@ export function makeContextOptions(manifest, vpName) {
  * @param {string} p.baseURL
  * @param {"record"|"replay"} p.mode
  * @param {string} p.harPath
+ * @param {{path:string, update:boolean}} [p.extraHar]  a second HAR tried after `harPath`: replayed, or
+ *   (update) recorded from the live network for what `harPath` doesn't have (`record-pending`)
  */
-export async function runCase({ browser, manifest, kase, baseURL, mode, harPath, log }) {
+export async function runCase({ browser, manifest, kase, baseURL, mode, harPath, extraHar, log }) {
   const origin = new URL(baseURL).origin;
   const screenshots = [];
   const snapshot = { id: kase.id };
@@ -249,12 +251,24 @@ export async function runCase({ browser, manifest, kase, baseURL, mode, harPath,
   //      and listed (routeFromHAR's own notFound:"abort" hangs the request).
   const harMisses = new Set();
   const thirdPartyRe = new RegExp(`^(?!${escapeRe(origin)})https?://`);
-  if (mode !== "record") {
+  if (mode !== "record" && !extraHar?.update) {
     await ctx.route(thirdPartyRe, (route) => {
       const u = new URL(route.request().url());
-      harMisses.add(`${route.request().method()} ${u.origin}${u.pathname}`);
+      // The full URL (query included): an image proxy such as decoims.com/image names the image in
+      // its query, so origin + path alone would lump every image of the page into one entry.
+      harMisses.add(`${route.request().method()} ${u.origin}${u.pathname}${u.search}`);
       if (process.env.PARITY_DEBUG_MISSES) console.error(`[har-miss] ${kase.id} ${route.request().method()} ${u.href}`);
       return route.abort("internetdisconnected");
+    });
+  }
+  // 2b: a second HAR, tried when the per-case one has no entry (a pending baseline's own fixtures).
+  if (extraHar) {
+    await ctx.routeFromHAR(extraHar.path, {
+      url: thirdPartyRe,
+      update: extraHar.update,
+      updateContent: "embed",
+      updateMode: "minimal",
+      notFound: "fallback",
     });
   }
   // 2nd: replay (or record, in record mode) from the per-case HAR.

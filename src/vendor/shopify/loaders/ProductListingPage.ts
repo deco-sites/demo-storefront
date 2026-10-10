@@ -44,6 +44,20 @@ export interface Props {
   pageHref?: string;
 }
 
+/**
+ * A failed Storefront API call (network error, HTTP error, GraphQL error) lists nothing instead of
+ * failing the section: the page keeps its breadcrumb, filters and sort bar with "0 results", the
+ * state v7 showed, rather than dropping the whole listing section.
+ */
+async function orEmpty<T>(query: Promise<T>, what: string): Promise<T | undefined> {
+  try {
+    return await query;
+  } catch (error) {
+    console.error(`[shopify] ${what} failed; listing no products`, error);
+    return undefined;
+  }
+}
+
 export default async function productListingPageLoader(
   props: Props,
   url?: URL,
@@ -74,50 +88,56 @@ export default async function productListingPageLoader(
   const sort = pageUrl.searchParams.get("sort") ?? "";
 
   if (isSearch) {
-    const data = await client.query<{
-      search: ProductConnection & { totalCount?: number; productFilters?: FilterNode[] };
-    }>(SearchProducts, {
-      ...(!endCursor && { first: count }),
-      ...(endCursor && { last: count }),
-      ...(startCursor && { after: startCursor }),
-      ...(endCursor && { before: endCursor }),
-      query,
-      productFilters: getFiltersByUrl(pageUrl),
-      identifiers: metafields,
-      ...searchSortShopify[sort],
-    });
+    const data = await orEmpty(
+      client.query<{
+        search: ProductConnection & { totalCount?: number; productFilters?: FilterNode[] };
+      }>(SearchProducts, {
+        ...(!endCursor && { first: count }),
+        ...(endCursor && { last: count }),
+        ...(startCursor && { after: startCursor }),
+        ...(endCursor && { before: endCursor }),
+        query,
+        productFilters: getFiltersByUrl(pageUrl),
+        identifiers: metafields,
+        ...searchSortShopify[sort],
+      }),
+      "search",
+    );
 
-    shopifyProducts = data.search;
-    shopifyFilters = data.search?.productFilters;
-    records = data.search?.totalCount;
-    hasNextPage = Boolean(data.search?.pageInfo.hasNextPage);
-    hasPreviousPage = Boolean(data.search?.pageInfo.hasPreviousPage);
+    shopifyProducts = data?.search;
+    shopifyFilters = data?.search?.productFilters;
+    records = data?.search?.totalCount;
+    hasNextPage = Boolean(data?.search?.pageInfo.hasNextPage);
+    hasPreviousPage = Boolean(data?.search?.pageInfo.hasPreviousPage);
   } else {
     const pathname = props.collectionName || pageUrl.pathname.split("/")[1];
 
-    const data = await client.query<{
-      collection?: {
-        title?: string;
-        description?: string;
-        products: ProductConnection;
-      };
-    }>(ProductsByCollection, {
-      ...(!endCursor && { first: count }),
-      ...(endCursor && { last: count }),
-      ...(startCursor && { after: startCursor }),
-      ...(endCursor && { before: endCursor }),
-      identifiers: metafields,
-      handle: pathname,
-      filters: getFiltersByUrl(pageUrl),
-      ...sortShopify[sort],
-    });
+    const data = await orEmpty(
+      client.query<{
+        collection?: {
+          title?: string;
+          description?: string;
+          products: ProductConnection;
+        };
+      }>(ProductsByCollection, {
+        ...(!endCursor && { first: count }),
+        ...(endCursor && { last: count }),
+        ...(startCursor && { after: startCursor }),
+        ...(endCursor && { before: endCursor }),
+        identifiers: metafields,
+        handle: pathname,
+        filters: getFiltersByUrl(pageUrl),
+        ...sortShopify[sort],
+      }),
+      "collection",
+    );
 
-    shopifyProducts = data.collection?.products;
-    shopifyFilters = data.collection?.products?.filters;
-    hasNextPage = Boolean(data.collection?.products.pageInfo.hasNextPage);
-    hasPreviousPage = Boolean(data.collection?.products.pageInfo.hasPreviousPage);
-    collectionTitle = data.collection?.title;
-    collectionDescription = data.collection?.description;
+    shopifyProducts = data?.collection?.products;
+    shopifyFilters = data?.collection?.products?.filters;
+    hasNextPage = Boolean(data?.collection?.products.pageInfo.hasNextPage);
+    hasPreviousPage = Boolean(data?.collection?.products.pageInfo.hasPreviousPage);
+    collectionTitle = data?.collection?.title;
+    collectionDescription = data?.collection?.description;
   }
 
   const products = shopifyProducts?.nodes?.map((p) => toProduct(p, p.variants.nodes[0], pageUrl));

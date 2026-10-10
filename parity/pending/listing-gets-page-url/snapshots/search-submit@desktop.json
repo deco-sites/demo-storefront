@@ -1,0 +1,60 @@
+{
+  "id": "search-submit@desktop",
+  "steps": {
+    "menu-search-typed": {
+      "url": "/",
+      "title": "Demo Storefront — New Season, Up to 60% Off | deco.cx"
+    },
+    "results": {
+      "url": "/s?q=shirt",
+      "title": "Storefront | deco.cx"
+    }
+  },
+  "values": {
+    "status:/": 200,
+    "resultsUrl": "/s?q=shirt"
+  },
+  "analytics": {
+    "views": [],
+    "events": [
+      {
+        "name": "search",
+        "path": "/",
+        "props": {
+          "search_term": "shirt"
+        }
+      },
+      {
+        "name": "view_item_list",
+        "path": "/s?q=shirt",
+        "props": {
+          "item_list_id": "{origin}/s?q=shirt",
+          "item_list_name": "shirt",
+          "items": []
+        }
+      }
+    ]
+  },
+  "thirdPartyRequests": [
+    "GET https://api.fontshare.com/v2/css",
+    "GET https://cdn.fontshare.com/wf/5SZVFDB7V52TI6ULVC6J3WQZQCIZVDV5/ODYPSTCUDMKSTYIPTV4CLQ7URIK7XYBJ/YS3VPNVO4B3TOJMEXDGFZQ4TLZGGSRZC.woff2",
+    "GET https://cdn.fontshare.com/wf/BLNB4FAQFNK56DWWNF7PMGTCOTZHOEII/ST3WKSSDMBK2MIQQO3MAVYWLF4FTOLFV/6IN5WOLRCYP4G4MOCOHOMXNON6Q7MDAR.woff2",
+    "GET https://cdn.fontshare.com/wf/OYB4CXKJQXKTNSLJMTDQOIVUL2V5EL7S/WYO2P7DQVV5RNXGMCUO2HL4RJP4VFUAS/6XPIMU23OJVRY676OG5YVJMWEHWICATX.woff2",
+    "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/ChatGPT_Image_Jul_27_2026_05_43_37_PM_08be1f13-f559-4d18-afc6-6f019b05e312.png",
+    "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/ChatGPT_Image_Jul_27_2026_07_02_39_PM_052f1c2d-1eba-4521-ba9b-1a7c7ba0de3b.png",
+    "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/ChatGPT_Image_Jul_27_2026_07_44_32_PM_1ecc4532-f4d7-402f-89ad-94e95cb54947.png",
+    "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/OrganicBucketHat01.png",
+    "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/OrganicBucketHat02.png",
+    "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/codedeco-1.png",
+    "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/cookiecapybaramonster-12.png",
+    "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/d-12.png",
+    "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/deco-12_6f3e1e94-66e9-4a91-a929-8b05e2038d1f.png",
+    "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/decocommunity-12.png",
+    "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/decocx-12.png",
+    "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/hatwhite1.png",
+    "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/hatwhite2.png",
+    "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/image_f0ad58ea-f114-4b03-a8ff-611f4b34f5af.png",
+    "GET https://decoims.com/image",
+    "GET https://decoims.com/storefront-tanstack/b37f70f2-4a04-44d8-8d12-a6cba50b7785/1742560260738-f1faab73-e4ff-4037-b7c4-5d02bd0b1209.png"
+  ]
+}

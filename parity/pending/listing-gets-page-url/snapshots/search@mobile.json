@@ -1,0 +1,233 @@
+{
+  "id": "search@mobile",
+  "status": 200,
+  "headers": {
+    "cache-control": "public, max-age=0, s-maxage=60, stale-while-revalidate=120, stale-if-error=600",
+    "cdn-cache-control": "no-store",
+    "content-security-policy": "default-src 'self' https: data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' cdn.shopify.com *.shopify.com; img-src 'self' data: blob: decoims.com cdn.shopify.com *.shopify.com *.myshopify.com *.fbcdn.net; connect-src 'self' *.myshopify.com cdn.shopify.com decoims.com graph.instagram.com; frame-src 'self' *.shopify.com; style-src 'self' 'unsafe-inline' api.fontshare.com fonts.googleapis.com; font-src 'self' data: cdn.fontshare.com api.fontshare.com fonts.gstatic.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self' *.myshopify.com *.shopify.com",
+    "content-type": "text/html; charset=utf-8",
+    "cross-origin-opener-policy": "same-origin-allow-popups",
+    "link": "</assets/app-CIckAda9.css>; rel=preload; as=style",
+    "permissions-policy": "camera=(), microphone=(), geolocation=()",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+    "vary": "Accept-Encoding",
+    "x-cache-profile": "search",
+    "x-cache-segment": "mobile|r=SP",
+    "x-cache-version": "<build-id>",
+    "x-content-type-options": "nosniff",
+    "x-xss-protection": "1; mode=block"
+  },
+  "ssr": {
+    "head": {
+      "lang": "en",
+      "dataTheme": "light",
+      "title": "Storefront | deco.cx",
+      "meta": [
+        {
+          "charset": "utf-8"
+        },
+        {
+          "name": "viewport",
+          "content": "width=device-width, initial-scale=1"
+        },
+        {
+          "property": "og:site_name",
+          "content": "Storefront-tanstack"
+        },
+        {
+          "name": "description",
+          "content": "Build profitable websites with deco.cx | deco.cx"
+        },
+        {
+          "name": "robots",
+          "content": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+        },
+        {
+          "property": "og:title",
+          "content": "Storefront | deco.cx"
+        },
+        {
+          "property": "og:description",
+          "content": "Build profitable websites with deco.cx | deco.cx"
+        },
+        {
+          "property": "og:image",
+          "content": "https://decoims.com/storefront-tanstack/bfe00763-d6fa-40f0-9fa9-77e6769fe02d/1742560188441-74d13a55-4c18-4a5c-8cb4-dcaa27aae923.png"
+        },
+        {
+          "property": "og:type",
+          "content": "website"
+        },
+        {
+          "name": "twitter:card",
+          "content": "summary_large_image"
+        },
+        {
+          "name": "twitter:title",
+          "content": "Storefront | deco.cx"
+        },
+        {
+          "name": "twitter:description",
+          "content": "Build profitable websites with deco.cx | deco.cx"
+        },
+        {
+          "name": "twitter:image",
+          "content": "https://decoims.com/storefront-tanstack/bfe00763-d6fa-40f0-9fa9-77e6769fe02d/1742560188441-74d13a55-4c18-4a5c-8cb4-dcaa27aae923.png"
+        }
+      ],
+      "links": [
+        {
+          "rel": "preconnect",
+          "href": "https://api.fontshare.com"
+        },
+        {
+          "rel": "icon",
+          "href": "/favicon.ico"
+        }
+      ]
+    },
+    "jsonLd": [
+      {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "url": "{origin}/s",
+        "name": "",
+        "description": "",
+        "numberOfItems": 0,
+        "itemListElement": []
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "shirt",
+            "item": "{origin}/s?q=shirt"
+          }
+        ],
+        "numberOfItems": 1
+      }
+    ]
+  },
+  "dom": {
+    "head": {
+      "lang": "en",
+      "dataTheme": "light",
+      "title": "Storefront | deco.cx",
+      "meta": [
+        {
+          "charset": "utf-8"
+        },
+        {
+          "name": "viewport",
+          "content": "width=device-width, initial-scale=1"
+        },
+        {
+          "property": "og:site_name",
+          "content": "Storefront-tanstack"
+        },
+        {
+          "name": "description",
+          "content": "Build profitable websites with deco.cx | deco.cx"
+        },
+        {
+          "name": "robots",
+          "content": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+        },
+        {
+          "property": "og:title",
+          "content": "Storefront | deco.cx"
+        },
+        {
+          "property": "og:description",
+          "content": "Build profitable websites with deco.cx | deco.cx"
+        },
+        {
+          "property": "og:image",
+          "content": "https://decoims.com/storefront-tanstack/bfe00763-d6fa-40f0-9fa9-77e6769fe02d/1742560188441-74d13a55-4c18-4a5c-8cb4-dcaa27aae923.png"
+        },
+        {
+          "property": "og:type",
+          "content": "website"
+        },
+        {
+          "name": "twitter:card",
+          "content": "summary_large_image"
+        },
+        {
+          "name": "twitter:title",
+          "content": "Storefront | deco.cx"
+        },
+        {
+          "name": "twitter:description",
+          "content": "Build profitable websites with deco.cx | deco.cx"
+        },
+        {
+          "name": "twitter:image",
+          "content": "https://decoims.com/storefront-tanstack/bfe00763-d6fa-40f0-9fa9-77e6769fe02d/1742560188441-74d13a55-4c18-4a5c-8cb4-dcaa27aae923.png"
+        }
+      ],
+      "links": [
+        {
+          "rel": "preconnect",
+          "href": "https://api.fontshare.com"
+        },
+        {
+          "rel": "icon",
+          "href": "/favicon.ico"
+        }
+      ]
+    },
+    "jsonLd": [
+      {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "url": "{origin}/s",
+        "name": "",
+        "description": "",
+        "numberOfItems": 0,
+        "itemListElement": []
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "shirt",
+            "item": "{origin}/s?q=shirt"
+          }
+        ],
+        "numberOfItems": 1
+      }
+    ]
+  },
+  "finalUrl": "/s?q=shirt",
+  "analytics": {
+    "views": [],
+    "events": [
+      {
+        "name": "view_item_list",
+        "path": "/s?q=shirt",
+        "props": {
+          "item_list_id": "{origin}/s?q=shirt",
+          "item_list_name": "shirt",
+          "items": []
+        }
+      }
+    ]
+  },
+  "thirdPartyRequests": [
+    "GET https://api.fontshare.com/v2/css",
+    "GET https://cdn.fontshare.com/wf/5SZVFDB7V52TI6ULVC6J3WQZQCIZVDV5/ODYPSTCUDMKSTYIPTV4CLQ7URIK7XYBJ/YS3VPNVO4B3TOJMEXDGFZQ4TLZGGSRZC.woff2",
+    "GET https://cdn.fontshare.com/wf/BLNB4FAQFNK56DWWNF7PMGTCOTZHOEII/ST3WKSSDMBK2MIQQO3MAVYWLF4FTOLFV/6IN5WOLRCYP4G4MOCOHOMXNON6Q7MDAR.woff2",
+    "GET https://cdn.fontshare.com/wf/OYB4CXKJQXKTNSLJMTDQOIVUL2V5EL7S/WYO2P7DQVV5RNXGMCUO2HL4RJP4VFUAS/6XPIMU23OJVRY676OG5YVJMWEHWICATX.woff2",
+    "GET https://decoims.com/decocms/e8c6326e-e009-4e3c-9787-b2fe25a1b993/deco-logo.png",
+    "GET https://decoims.com/image",
+    "GET https://decoims.com/storefront-tanstack/b37f70f2-4a04-44d8-8d12-a6cba50b7785/1742560260738-f1faab73-e4ff-4037-b7c4-5d02bd0b1209.png"
+  ]
+}

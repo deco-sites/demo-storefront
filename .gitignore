@@ -36,3 +36,5 @@ parity/runs/
 parity/.server.log
 parity/baseline/
 parity/results/
+parity/pending/*/har/
+parity/pending/*/upstream.json

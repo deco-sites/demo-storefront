@@ -6,8 +6,6 @@
  * `createDecoWorkerEntry` from @decocms/tanstack. Shopify checkout runs on Shopify's hosted checkout
  * (or the store's domain) and needs no reverse proxy: every commerce call goes through the
  * Storefront API (GraphQL) from the server.
- *
- * MANUAL REVIEW: Add site-specific CSP domains (analytics, CDN, tag managers).
  */
 import handler, { createServerEntry } from "@tanstack/react-start/server-entry";
 import { withEdgeCache } from "./server/edge-cache";
@@ -28,8 +26,12 @@ const serverEntry = createServerEntry({ fetch: handler.fetch });
 // `default-src` is intentionally broad (https:) so resource types with no
 // explicit directive — media, manifest, prefetch — keep working; the XSS
 // hardening comes from `script-src`, `object-src`, `base-uri` and
-// `form-action`. `frame-ancestors` is deliberately omitted so the site editor
-// can keep rendering the site in its preview iframe.
+// `form-action`. `frame-ancestors` is omitted, and no X-Frame-Options is sent
+// either, so any origin may frame the site, exactly as on v7 (the parity
+// baseline's headers show neither). Adding
+// `frame-ancestors 'self' https://studio.decocms.com https://*.deco.studio`
+// would stop clickjacking and keep the site editor's preview iframe working; it
+// is left for the product owner to decide (parity/README.md).
 const CSP_DIRECTIVES = [
   "default-src 'self' https: data: blob:",
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' cdn.shopify.com *.shopify.com",
@@ -42,7 +44,6 @@ const CSP_DIRECTIVES = [
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self' *.myshopify.com *.shopify.com",
-  // TODO: Add site-specific domains (analytics, CDN, tag managers)
 ];
 
 export default withEdgeCache(serverEntry, {

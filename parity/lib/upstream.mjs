@@ -13,6 +13,11 @@
  * A key never seen for the current case falls back to the first recording of
  * that key from any case (the worker's in-memory caches can move a call to a
  * different case when only a subset of cases runs).
+ *
+ * A pending baseline (pages.json `pendingBaselines`) brings a second store, used
+ * only for its own cases and only for keys the main store doesn't have: the
+ * requests the new version makes that the old one never did. `record-pending`
+ * fills it from the live upstream (`recordFallback`); compare replays it.
  */
 import { createHash } from "node:crypto";
 import fs from "node:fs";
@@ -25,7 +30,7 @@ function keyOf(method, url, body) {
   return `${method} ${url} ${h}`;
 }
 
-export async function startUpstream({ port, mode, storePath, passthroughOnMiss = false, log = () => {} }) {
+export async function startUpstream({ port, mode, storePath, passthroughOnMiss = false, fallback, log = () => {} }) {
   /** @type {{version:number, entries: Record<string, Array<{case:string,status:number,headers:Record<string,string|string[]>,body:string}>>}} */
   let store = { version: 1, entries: {} };
   if (mode === "replay") {
@@ -35,17 +40,25 @@ export async function startUpstream({ port, mode, storePath, passthroughOnMiss =
   const counters = new Map();
   const misses = [];
   const served = [];
+  const fallbackServed = [];
 
-  function pick(key) {
-    const list = store.entries[key];
+  // fallback: { storePath, cases: Set<string>, record: boolean }
+  /** @type {typeof store} */
+  let fbStore = { version: 1, entries: {} };
+  if (fallback && fs.existsSync(fallback.storePath)) fbStore = JSON.parse(fs.readFileSync(fallback.storePath, "utf8"));
+  const fbCounters = new Map();
+
+  function pickFrom(st, ctrs, key) {
+    const list = st.entries[key];
     if (!list || list.length === 0) return null;
     const mine = list.filter((e) => e.case === currentCase);
     if (mine.length === 0) return list[0];
     const ck = `${currentCase}\u0000${key}`;
-    const n = counters.get(ck) ?? 0;
-    counters.set(ck, n + 1);
+    const n = ctrs.get(ck) ?? 0;
+    ctrs.set(ck, n + 1);
     return mine[Math.min(n, mine.length - 1)];
   }
+  const pick = (key) => pickFrom(store, counters, key);
 
   async function forward(method, url, headers, body) {
     const h = {};
@@ -86,9 +99,22 @@ export async function startUpstream({ port, mode, storePath, passthroughOnMiss =
         (store.entries[key] ??= []).push({ case: currentCase, ...entry });
       } else {
         entry = pick(key);
+        if (!entry && fallback?.cases.has(currentCase)) {
+          // In a fallback store only the case's own recordings count: no borrowing from other cases.
+          entry = fbStore.entries[key]?.some((e) => e.case === currentCase) ? pickFrom(fbStore, fbCounters, key) : null;
+          if (!entry && fallback.record) {
+            entry = await forward(req.method, target, req.headers, body);
+            (fbStore.entries[key] ??= []).push({ case: currentCase, ...entry });
+            // Counted as served, so a later identical request in this case replays the next entry.
+            const ck = `${currentCase}\u0000${key}`;
+            fbCounters.set(ck, (fbCounters.get(ck) ?? 0) + 1);
+          }
+          if (entry) fallbackServed.push({ case: currentCase, key });
+        }
         if (!entry) {
           misses.push({ case: currentCase, key });
           log(`[upstream] MISS ${currentCase} ${key}`);
+          if (process.env.PARITY_DEBUG_MISSES) log(`[upstream]   body ${body.toString("utf8").slice(0, 200)} … ${body.toString("utf8").slice(-400)}`);
           if (passthroughOnMiss) entry = await forward(req.method, target, req.headers, body);
           else {
             res.writeHead(599, { "content-type": "text/plain", "x-parity-miss": "1" }).end("parity upstream: no recording");
@@ -117,7 +143,13 @@ export async function startUpstream({ port, mode, storePath, passthroughOnMiss =
     },
     misses,
     served,
+    fallbackServed,
     save() {
+      if (fallback?.record) {
+        const sorted = {};
+        for (const k of Object.keys(fbStore.entries).sort()) sorted[k] = fbStore.entries[k];
+        fs.writeFileSync(fallback.storePath, JSON.stringify({ version: 1, entries: sorted }, null, 1) + "\n");
+      }
       if (mode !== "record") return;
       const sorted = {};
       for (const k of Object.keys(store.entries).sort()) sorted[k] = store.entries[k];

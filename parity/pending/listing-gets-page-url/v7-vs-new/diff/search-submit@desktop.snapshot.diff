@@ -1,0 +1,33 @@
+31-           "item_list_id": "/",
+31+           "item_list_id": "{origin}/s?q=shirt",
+32-           "item_list_name": "",
+32+           "item_list_name": "shirt",
+45-     "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/codedeco-1.png",
+45+     "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/ChatGPT_Image_Jul_27_2026_07_44_32_PM_1ecc4532-f4d7-402f-89ad-94e95cb54947.png",
+46-     "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/cookiecapybaramonster-12.png",
+46+     "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/OrganicBucketHat01.png",
+47-     "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/d-12.png",
+47+     "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/OrganicBucketHat02.png",
+48-     "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/deco-12_6f3e1e94-66e9-4a91-a929-8b05e2038d1f.png",
+48+     "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/codedeco-1.png",
+49-     "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/decocommunity-12.png",
+49+     "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/cookiecapybaramonster-12.png",
+50-     "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/decocx-12.png",
+50+     "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/d-12.png",
+51-     "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/image_f0ad58ea-f114-4b03-a8ff-611f4b34f5af.png",
+51+     "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/deco-12_6f3e1e94-66e9-4a91-a929-8b05e2038d1f.png",
+52-     "GET https://decoims.com/image",
+52+     "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/decocommunity-12.png",
+53-     "GET https://decoims.com/storefront-tanstack/b37f70f2-4a04-44d8-8d12-a6cba50b7785/1742560260738-f1faab73-e4ff-4037-b7c4-5d02bd0b1209.png"
+53+     "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/decocx-12.png",
+54-   ]
+54+     "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/hatwhite1.png",
+55- }
+55+     "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/hatwhite2.png",
+56- 
+56+     "GET https://cdn.shopify.com/s/files/1/0584/1338/3857/files/image_f0ad58ea-f114-4b03-a8ff-611f4b34f5af.png",
+57+     "GET https://decoims.com/image",
+58+     "GET https://decoims.com/storefront-tanstack/b37f70f2-4a04-44d8-8d12-a6cba50b7785/1742560260738-f1faab73-e4ff-4037-b7c4-5d02bd0b1209.png"
+59+   ]
+60+ }
+61+ 
