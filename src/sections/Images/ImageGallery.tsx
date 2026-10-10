@@ -1,8 +1,6 @@
 import { type ImageWidget } from "~/types/widgets";
 import { Picture, Source } from "~/components/ui/Picture";
-import Section, {
-  type Props as SectionHeaderProps,
-} from "../../components/ui/Section";
+import Section, { type Props as SectionHeaderProps } from "../../components/ui/Section";
 /**
  * @titleBy alt
  */

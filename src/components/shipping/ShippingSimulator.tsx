@@ -91,11 +91,7 @@ export default function ShippingSimulator({ postalCode = {}, copy = {}, locale }
   const [value, setValue] = useState("");
   const digitCount = value.replace(/\D/g, "").length;
 
-  const mutation = useMutation<
-    ShippingSimulation,
-    Error,
-    { postalCode: string }
-  >({
+  const mutation = useMutation<ShippingSimulation, Error, { postalCode: string }>({
     mutationFn: (input) => simulateShippingServerFn({ data: input }),
   });
 

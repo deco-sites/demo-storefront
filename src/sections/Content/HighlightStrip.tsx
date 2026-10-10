@@ -65,4 +65,3 @@ export default function HighlightStrip({ title, cta, items }: Props) {
     </Section.Container>
   );
 }
-

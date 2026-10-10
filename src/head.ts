@@ -54,11 +54,7 @@ function withSiteDefaults(pageSeo: PageSeo | undefined): PageSeo {
 
 export function buildHead(page: { name?: string; seo?: PageSeo } | undefined) {
   const seo = page ? withSiteDefaults(page.seo) : undefined;
-  const title = seo?.title
-    ? seo.title
-    : page?.name
-      ? `${page.name} | ${SITE_NAME}`
-      : SITE_NAME;
+  const title = seo?.title ? seo.title : page?.name ? `${page.name} | ${SITE_NAME}` : SITE_NAME;
   const description = seo?.description || undefined;
   const image = seo?.image;
   const canonical = seo?.canonical;

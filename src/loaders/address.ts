@@ -1,7 +1,5 @@
 import { usePlatform } from "../apps/site";
-import {
-  type AddressBookState,
-} from "../platform/address/address.types";
+import { type AddressBookState } from "../platform/address/address.types";
 import { readAddressCookie } from "../platform/address/cookie";
 
 async function loader(req: Request): Promise<AddressBookState> {

@@ -149,7 +149,8 @@ export default {
   "shopify/loaders/ProductDetailsPage.ts": shopifyProductDetailsPage,
   "shopify/loaders/ProductList.ts": shopifyProductList,
   "shopify/loaders/ProductListingPage.ts": shopifyProductListingPage,
-  "shopify/loaders/RelatedProducts.ts": (props: RelatedProductsProps) => shopifyRelatedProducts(props),
+  "shopify/loaders/RelatedProducts.ts": (props: RelatedProductsProps) =>
+    shopifyRelatedProducts(props),
   "commerce/loaders/product/extensions/listingPage.ts": listingPageExtensions,
   "commerce/loaders/product/extensions/detailsPage.ts": detailsPageExtensions,
   "website/loaders/fonts/googleFonts.ts": websiteGoogleFonts,

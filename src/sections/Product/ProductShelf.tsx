@@ -1,14 +1,10 @@
 import type { Product } from "../../vendor/commerce/types";
 import { mapProductToAnalyticsItem } from "../../vendor/commerce/utils/productToAnalyticsItem";
 import ProductSlider from "../../components/product/ProductSlider";
-import Section, {
-  Props as SectionHeaderProps,
-} from "../../components/ui/Section";
+import Section, { Props as SectionHeaderProps } from "../../components/ui/Section";
 import { useOffer } from "../../vendor/commerce/sdk/useOffer";
 import { useSendEvent } from "../../sdk/useSendEvent";
-import DeviceVisible, {
-  type VisibilityConfig,
-} from "../../components/ui/DeviceVisible";
+import DeviceVisible, { type VisibilityConfig } from "../../components/ui/DeviceVisible";
 export interface Props extends SectionHeaderProps, VisibilityConfig {
   products: Product[] | null;
 }

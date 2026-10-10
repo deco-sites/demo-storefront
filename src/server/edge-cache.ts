@@ -215,7 +215,8 @@ export function withEdgeCache(serverEntry: Handler, options: EdgeCacheOptions): 
   const safeCookies = new Set(options.safeCookies ?? DEFAULT_SAFE_COOKIES);
   const securityHeaders: Record<string, string> = {
     ...SECURITY_HEADERS,
-    "Content-Security-Policy": options.enforcedCsp ?? `frame-ancestors ${FRAME_ANCESTORS.join(" ")}`,
+    "Content-Security-Policy":
+      options.enforcedCsp ?? `frame-ancestors ${FRAME_ANCESTORS.join(" ")}`,
     ...(options.csp?.length
       ? { "Content-Security-Policy-Report-Only": options.csp.join("; ") }
       : {}),

@@ -1,8 +1,5 @@
 import { usePlatform } from "../../apps/site";
-import {
-  type Address,
-  type AddressBookState,
-} from "../../platform/address/address.types";
+import { type Address, type AddressBookState } from "../../platform/address/address.types";
 import { readAddressCookie, serializeAddressCookie } from "../../platform/address/cookie";
 
 export type AddressInput = Omit<Address, "id"> & { id?: string };

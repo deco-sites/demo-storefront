@@ -1,11 +1,6 @@
 import { usePlatform } from "../../apps/site";
-import {
-  type WishlistState,
-} from "../../platform/wishlist";
-import {
-  readWishlistCookie,
-  serializeWishlistCookie,
-} from "../../loaders/_cookie";
+import { type WishlistState } from "../../platform/wishlist";
+import { readWishlistCookie, serializeWishlistCookie } from "../../loaders/_cookie";
 
 interface Props {
   productID: string;

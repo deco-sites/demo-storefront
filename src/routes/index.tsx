@@ -14,7 +14,8 @@ export const Route = createFileRoute("/")({
     const pageUrl = loaderData?.url;
     return {
       ...head,
-      meta: hasOgUrl || !pageUrl ? head.meta : [...head.meta, { property: "og:url", content: pageUrl }],
+      meta:
+        hasOgUrl || !pageUrl ? head.meta : [...head.meta, { property: "og:url", content: pageUrl }],
     };
   },
   headers: ({ loaderData }) => pageHeaders(loaderData),
