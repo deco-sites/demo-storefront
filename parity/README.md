@@ -72,6 +72,7 @@ The app origin is replaced with `{origin}` in every snapshot, so a target on ano
 | Network idle | The harness uses its own quiet tracker: a request counts as done once its headers arrive. Playwright's `networkidle` counts a request as in flight until its body is read, so responses whose bodies the client never reads (seen on storefront-tanstack's wishlist invoke) would keep it from firing. |
 | Edge cache / KV state | `.wrangler/state` is wiped on every server start. `DECO_FAST_DEPLOY=0` makes the content the bundled `.deco/blocks` at the recorded git sha, which is the pinned content revision. `DECO_OTEL=off` stops local runs from sending telemetry to production ingest. |
 | Workers `request.cf` (region, city, colo) | The local Workers runtime fills `request.cf` from `node_modules/.mf/cf.json`, fetched for the machine's current network location (and refetched after 30 days). The region feeds the cache segment (`x-cache-segment: …\|r=SP`); this site's `buildSegment` splits the cache by region. `parity/lib/server.mjs` pins it instead: on every start it copies `parity/runtime/cf.json` (São Paulo, the location the baseline was recorded with) to `.wrangler/parity-cf.json` and points `CLOUDFLARE_CF_FETCH_PATH` at it. The fresh copy matters because the runtime also refetches a pinned file older than 30 days. |
+| Screenshot-triggered image requests | Chromium's full-page capture (`captureBeyondViewport`) sometimes re-runs `<picture>` source selection against a transient narrow frame, so a desktop capture of the home requests the mobile `<source>` images (Hero slides, Banner) and the harness aborts them, on some runs of the same build and not on others. `volatileHarMisses` in `pages.json` drops those entries from `harMisses` on both sides for the cases it lists. It is harness noise, not an approval: pixels and `thirdPartyRequests` still compare. `PARITY_DEBUG_MISSES=1` prints the full URL of every aborted request. |
 | Rendering | Chromium is pinned through `playwright@1.59.0` (headless shell). It runs software-only, with no GPU raster and no threaded animation or scrolling (`chromiumArgs` in `pages.json`). It also uses sRGB, `--font-render-hinting=none`, `--disable-lcd-text`, a fixed locale (en-US), timezone (UTC) and color scheme (light). Baselines are platform-specific: `baseline/meta.json` records the OS/arch they were recorded on (the current baseline: linux-x64), so compare on the same OS/arch. |
 
 `fixedTime` must be in the future relative to the wall clock. The worker dates the 7-day cart cookie from the frozen clock, but Chromium's cookie jar uses real time, so a past `fixedTime` silently drops the cart cookie and add to cart fails. The current value is `2030-01-01T12:00Z`, so re-record before 2030-01-08.
@@ -109,7 +110,7 @@ Analytics snapshot shape: `{ views, events }`. `views` lists pageviews in order.
 
 ## Pending for the product owner (v7 → v8, `feat/next-major`)
 
-Nothing below is approved. Each item is either a `"status": "pending"` rule in `pages.json` or, where a rule can't express it, listed here with screenshots. Last full compare: `parity/runs/v8-6` (local, not committed): 48/75 identical, 25 PENDING, 27 DIFF (the listing family below, plus one replay flake).
+Nothing below is approved. Each item is either a `"status": "pending"` rule in `pages.json` or, where a rule can't express it, listed here with screenshots. Last full compare: `parity/runs/v8-8` (local, not committed): 50/75 cases pass at threshold 0 (25 identical, 25 identical once the pending rules apply), 25 DIFF, all of them the listing family below. Run with `--strict`, the 25 PENDING cases fail too.
 
 Pending rules (compare prints them; `--strict` fails on them):
 
@@ -121,7 +122,8 @@ Pending rules (compare prints them; `--strict` fails on them):
 Not expressible as a rule:
 
 - **Working listing and search pages.** On v7 every category, search, catch-all and `/sitemap.xml` page shows "12 of 0 results" (the listing loader never got the page URL). v8 lists the products. v8's listing requests were never recorded on v7, so these cases miss in replay and differ in pixels: `plp-*`, `search*`, `not-found*`, `sitemap-xml-page`, `search-submit`, `header-nav-spa`, and `plp-sort` (its sort select only exists with results). `parity/pending/` has v8 captured live (`v8-live-*`) next to v7's recording (`v7-*`). The three flows marked `blocked` on v7 (filter, show more, listing → product) can run on v8.
-- **Replay flake:** `home@desktop` / `home-utm@desktop` intermittently differ only in `harMisses` (`GET https://decoims.com/image`, a request v7's own HAR lacks); a rerun of the two cases passes (2 of 3 reruns, with other harness runs on the machine).
+
+Site editor protocol (checked by hand against `deco serve --port 4653 --preview localhost:5340` with `vite dev` on 5340): `describe` (working tree, writable, preview URL), `schema.get` (and `ifNoneMatch` answering `notModified`), `blocks.list` (38 blocks, no diagnostics), `blocks.apply` with a stale `ifMatch` (refused with the current version), then an edit to the home's Newsletter title that the dev server rendered without a restart, then the original block restored through `blocks.apply`: same version and revision as before, and the file byte-identical (`git status` clean).
 
 Behaviour changes outside the compare:
 
