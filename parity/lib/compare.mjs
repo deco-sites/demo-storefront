@@ -33,16 +33,33 @@ function dropIgnoredHeaders(snap, ignoreHeaders) {
 }
 
 /**
- * Drops pages.json `volatileHarMisses` entries ({ cases, entries }) from `harMisses` on both sides.
- * Harness noise only (not a product difference): Chromium's full-page capture (captureBeyondViewport)
- * sometimes re-runs <picture> source selection against a transient narrow frame, so the mobile
- * <source> candidates get requested and aborted, or not, on the same build.
+ * Drops pages.json `volatileHarMisses` entries ({ id, status, cases, entries }) from `harMisses` on both
+ * sides. Entries are full request URLs (`GET https://decoims.com/image?src=…`), so only the named images
+ * are dropped. Chromium's full-page capture (captureBeyondViewport) sometimes re-runs <picture> source
+ * selection against a transient narrow frame, so the mobile <source> candidates get requested and
+ * aborted, or not, on the same build. It is not an approval: a rule that changes the outcome (the two
+ * sides' `harMisses` differ before the drop and not after) is reported like a pending rule, so
+ * `--strict` fails on it until the product owner signs it off.
+ * Returns the ids of the rules that changed the outcome.
  */
-function dropVolatileHarMisses(id, snap, volatile) {
-  if (!volatile?.length || !Array.isArray(snap.harMisses)) return;
-  const drop = new Set(volatile.filter((v) => v.cases.includes(id)).flatMap((v) => v.entries));
-  snap.harMisses = snap.harMisses.filter((m) => !drop.has(m));
-  if (!snap.harMisses.length) delete snap.harMisses;
+function dropVolatileHarMisses(id, base, act, volatile) {
+  const rules = (volatile ?? []).filter((v) => v.cases.includes(id));
+  if (!rules.length) return [];
+  const before = same(base.harMisses ?? null, act.harMisses ?? null);
+  const used = [];
+  for (const rule of rules) {
+    const drop = new Set(rule.entries);
+    let changed = false;
+    for (const snap of [base, act]) {
+      if (!Array.isArray(snap.harMisses)) continue;
+      const kept = snap.harMisses.filter((m) => !drop.has(m));
+      if (kept.length !== snap.harMisses.length) changed = true;
+      snap.harMisses = kept;
+      if (!kept.length) delete snap.harMisses;
+    }
+    if (changed && !before && same(base.harMisses ?? null, act.harMisses ?? null)) used.push(rule);
+  }
+  return used;
 }
 
 const ABSENT = "$absent";
@@ -132,10 +149,14 @@ function applyApprovals(id, base, act, rules) {
 
 const toText = (snap, raw) => JSON.stringify(snap, null, 2) + (raw.endsWith("\n") ? "\n" : "");
 
-export function compareCase({ id, fileId, error, baseDir, actualDir, outRoot, ignoreHeaders, approvedDifferences, volatileHarMisses }) {
+export function compareCase({ id, fileId, error, baseDir, actualDir, outRoot, ignoreHeaders, approvedDifferences, volatileHarMisses, pendingBaseline }) {
   const problems = [];
   let approved = [];
   let pending = [];
+  // A case under a pending baseline compares against that baseline (the new version's own pinned
+  // capture), not the old version's: identical means "the difference the product owner is asked about,
+  // and nothing else", which is PENDING, never ok.
+  if (pendingBaseline) pending.push(pendingBaseline.id);
   const diffDir = path.join(outRoot, "diff");
   if (error) problems.push(`capture error: ${error}`);
 
@@ -174,9 +195,11 @@ export function compareCase({ id, fileId, error, baseDir, actualDir, outRoot, ig
     const act = JSON.parse(rawA);
     dropIgnoredHeaders(base, ignoreHeaders);
     dropIgnoredHeaders(act, ignoreHeaders);
-    dropVolatileHarMisses(id, base, volatileHarMisses);
-    dropVolatileHarMisses(id, act, volatileHarMisses);
-    ({ approved, pending } = applyApprovals(id, base, act, approvedDifferences));
+    const volatileUsed = dropVolatileHarMisses(id, base, act, volatileHarMisses);
+    const applied = applyApprovals(id, base, act, approvedDifferences);
+    approved = applied.approved;
+    for (const rule of volatileUsed) (rule.status === "pending" ? applied.pending : approved).push(rule.id);
+    pending.push(...applied.pending);
     const tb = toText(base, rawB);
     const ta = toText(act, rawA);
     if (tb !== ta) {
