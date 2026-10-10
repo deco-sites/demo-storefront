@@ -37,10 +37,26 @@ const otlpHeaders = (raw: string | undefined) => {
 
 const otlpEndpoint = env.OTEL_EXPORTER_OTLP_ENDPOINT as string | undefined;
 
+/**
+ * v7's telemetry identity (/next/telemetry): `service.name` from DECO_SITE_NAME, the environment from
+ * DECO_ENV_NAME and `service.version` from the Workers version (the `CF_VERSION_METADATA` binding),
+ * as v7's `instrumentWorker` set them. Unset values keep the SDK's defaults.
+ */
+const resource = Object.fromEntries(
+  Object.entries({
+    "service.name": env.DECO_SITE_NAME as string | undefined,
+    "deployment.environment.name": env.DECO_ENV_NAME as string | undefined,
+    "service.version": (env.CF_VERSION_METADATA as { id?: string } | undefined)?.id,
+  }).filter((entry): entry is [string, string] => typeof entry[1] === "string" && entry[1] !== ""),
+);
+
 const options = {
   blocks,
   site,
   token,
+  // `vite dev` keeps local files even with hosted releases on. Releases of @decocms/blocks after
+  // 8.1.0-next.7 take it from here instead of reading NODE_ENV; earlier ones ignore it.
+  dev: import.meta.env.DEV,
   // The hosted collector when the site is connected (the token sends there); otherwise the standard
   // OTEL_EXPORTER_OTLP_ENDPOINT/HEADERS, if set (/next/telemetry#choose-where-telemetry-goes). The SDK
   // reads no environment variables, so the site passes them. `vite dev` sends nothing, so local work
@@ -48,11 +64,12 @@ const options = {
   ...(import.meta.env.DEV
     ? { telemetry: false as const }
     : hosted || !otlpEndpoint
-      ? {}
+      ? { telemetry: { resource } }
       : {
           telemetry: {
             endpoint: otlpEndpoint,
             headers: otlpHeaders(env.OTEL_EXPORTER_OTLP_HEADERS as string | undefined),
+            resource,
           },
         }),
 };
