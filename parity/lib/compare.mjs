@@ -32,6 +32,19 @@ function dropIgnoredHeaders(snap, ignoreHeaders) {
   }
 }
 
+/**
+ * Drops pages.json `volatileHarMisses` entries ({ cases, entries }) from `harMisses` on both sides.
+ * Harness noise only (not a product difference): Chromium's full-page capture (captureBeyondViewport)
+ * sometimes re-runs <picture> source selection against a transient narrow frame, so the mobile
+ * <source> candidates get requested and aborted, or not, on the same build.
+ */
+function dropVolatileHarMisses(id, snap, volatile) {
+  if (!volatile?.length || !Array.isArray(snap.harMisses)) return;
+  const drop = new Set(volatile.filter((v) => v.cases.includes(id)).flatMap((v) => v.entries));
+  snap.harMisses = snap.harMisses.filter((m) => !drop.has(m));
+  if (!snap.harMisses.length) delete snap.harMisses;
+}
+
 const ABSENT = "$absent";
 const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
@@ -119,7 +132,7 @@ function applyApprovals(id, base, act, rules) {
 
 const toText = (snap, raw) => JSON.stringify(snap, null, 2) + (raw.endsWith("\n") ? "\n" : "");
 
-export function compareCase({ id, fileId, error, baseDir, actualDir, outRoot, ignoreHeaders, approvedDifferences }) {
+export function compareCase({ id, fileId, error, baseDir, actualDir, outRoot, ignoreHeaders, approvedDifferences, volatileHarMisses }) {
   const problems = [];
   let approved = [];
   let pending = [];
@@ -161,6 +174,8 @@ export function compareCase({ id, fileId, error, baseDir, actualDir, outRoot, ig
     const act = JSON.parse(rawA);
     dropIgnoredHeaders(base, ignoreHeaders);
     dropIgnoredHeaders(act, ignoreHeaders);
+    dropVolatileHarMisses(id, base, volatileHarMisses);
+    dropVolatileHarMisses(id, act, volatileHarMisses);
     ({ approved, pending } = applyApprovals(id, base, act, approvedDifferences));
     const tb = toText(base, rawB);
     const ta = toText(act, rawA);

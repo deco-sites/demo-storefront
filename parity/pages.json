@@ -43,6 +43,18 @@
     "enabled": true
   },
   "ignoreHeaders": [],
+  "$volatileHarMissesComment": "Harness noise, not approvals: entries dropped from harMisses on both sides for the listed cases. Chromium's full-page capture (captureBeyondViewport) sometimes re-runs <picture> source selection against a transient narrow frame, so the home's mobile <source> candidates (Hero slides, Banner) are requested and aborted on some captures of the same build and not on others (seen on one v8 build: pass, pass, fail in a row; PARITY_DEBUG_MISSES=1 prints the full URLs). Pixels and thirdPartyRequests still compare.",
+  "volatileHarMisses": [
+    {
+      "cases": [
+        "home@desktop",
+        "home-utm@desktop"
+      ],
+      "entries": [
+        "GET https://decoims.com/image"
+      ]
+    }
+  ],
   "approvedDifferences": [
     {
       "id": "ssr-jsonld-first-html",
