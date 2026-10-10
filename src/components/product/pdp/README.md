@@ -29,7 +29,7 @@ It declares the editable `Props` and delegates rendering to `ProductHero`.
 
 ## How the "instant variant swap" works
 
-`@decocms/start`'s `createDecoRouter` ships with `defaultPreload: "intent"`. Every
+The router (`src/router.tsx`) is created with `defaultPreload: "intent"`. Every
 `<Link>` in the app fires the route loader ~50 ms after the pointer lands on it.
 The TanStack catch-all route already resolves a product URL server-side, so by the
 time the user clicks a variant swatch the data is already in the router cache — the

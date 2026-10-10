@@ -124,12 +124,11 @@ const TRACKING_PARAMS = new Set([
   "ttclid",
   "srsltid",
 ]);
-const DEFAULT_SAFE_COOKIES = [
-  "vtex_is_session",
-  "vtex_is_anonymous",
-  "vtex_segment",
-  "_deco_bucket",
-];
+/**
+ * Cookies a cacheable response may set. v7's list also named VTEX's session cookies, which this
+ * Shopify site never sets; `_deco_bucket` (an A/B test bucket) is kept.
+ */
+const DEFAULT_SAFE_COOKIES = ["_deco_bucket"];
 
 declare const __BUILD_HASH__: string | undefined;
 
