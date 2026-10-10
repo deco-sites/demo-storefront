@@ -1,0 +1,6 @@
+{
+  "__resolveType": "redirect",
+  "from": "/products/dev-mode-tee",
+  "to": "/collections/the-herd",
+  "permanent": false
+}

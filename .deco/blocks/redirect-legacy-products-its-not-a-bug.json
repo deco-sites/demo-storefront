@@ -1,0 +1,6 @@
+{
+  "__resolveType": "redirect",
+  "from": "/products/its-not-a-bug",
+  "to": "/collections/the-herd",
+  "permanent": false
+}

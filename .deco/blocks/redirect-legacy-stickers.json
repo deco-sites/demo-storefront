@@ -1,0 +1,6 @@
+{
+  "__resolveType": "redirect",
+  "from": "/stickers",
+  "to": "/collections/the-herd",
+  "permanent": false
+}
