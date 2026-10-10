@@ -106,3 +106,38 @@ A rule with `"status": "pending"` is a difference that is explained but **not ap
 Tailwind v4 detects class names in every non-ignored file of the repo, so text in `parity/` (selectors, step names) would otherwise add CSS to the site build and change pixels. `src/styles/app.css` therefore has `@source not "../../parity";`. The migrated site needs the same exclusion. `x-cache-version` (the git sha of the build) is snapshotted as `<build-id>`: its presence is checked, its value is not.
 
 Analytics snapshot shape: `{ views, events }`. `views` lists pageviews in order. `events` is the sorted, de-duplicated set of `{name, path, props}`: view-triggered events (e.g. `view_item_list`) fire from IntersectionObservers, so their count and order vary with scroll timing, while which events fire with which payloads is stable.
+
+## Pending for the product owner (v7 → v8, `feat/next-major`)
+
+Nothing below is approved. Each item is either a `"status": "pending"` rule in `pages.json` or, where a rule can't express it, listed here with screenshots. Last full compare: `parity/runs/v8-6` (local, not committed): 48/75 identical, 25 PENDING, 27 DIFF (the listing family below, plus one replay flake).
+
+Pending rules (compare prints them; `--strict` fails on them):
+
+- `ssr-jsonld-first-html` (landing pages, product pages): JSON-LD of sections v7 wrapped in Lazy is in the first server HTML.
+- `plp-page-url` (landing pages): JSON-LD and analytics URLs are on the site's origin and path instead of `https://localhost`.
+- `home-mobile-no-cart-cookie` (`home@mobile`) and `home-utm-mobile-from-cache` (`home-utm@mobile`): v7 created a cart during the first SSR of an isolate and served that page private; v8 doesn't, so the home is edge-cached.
+- `home-shelf-images-load` (desktop flows from the home): the tabbed shelf's first-tab images load without scrolling.
+
+Not expressible as a rule:
+
+- **Working listing and search pages.** On v7 every category, search, catch-all and `/sitemap.xml` page shows "12 of 0 results" (the listing loader never got the page URL). v8 lists the products. v8's listing requests were never recorded on v7, so these cases miss in replay and differ in pixels: `plp-*`, `search*`, `not-found*`, `sitemap-xml-page`, `search-submit`, `header-nav-spa`, and `plp-sort` (its sort select only exists with results). `parity/pending/` has v8 captured live (`v8-live-*`) next to v7's recording (`v7-*`). The three flows marked `blocked` on v7 (filter, show more, listing → product) can run on v8.
+- **Replay flake:** `home@desktop` / `home-utm@desktop` intermittently differ only in `harMisses` (`GET https://decoims.com/image`, a request v7's own HAR lacks); a rerun of the two cases passes (2 of 3 reruns, with other harness runs on the machine).
+
+Behaviour changes outside the compare:
+
+- `withABTesting` (the `SITES_KV` worker split between this worker and a fallback origin) is gone; v8 has no equivalent.
+- Telemetry: v7's `instrumentWorker` (`DECO_OTEL_*`, `CF_VERSION_METADATA`) is replaced by `createCMS({ telemetry })` to the same collector (`OTEL_EXPORTER_OTLP_ENDPOINT` + the `OTEL_EXPORTER_OTLP_HEADERS` secret); no Analytics Engine metrics.
+- Fast deploy (`DECO_FAST_DEPLOY` + `DECO_KV`) becomes hosted releases: `DECO_SITE` is set, and they stay off until `DECO_SITE_TOKEN` is set as a secret.
+- Drafts: with no `preview.hosts` in a `CMS` block, every host may preview (v7 allowed only `demo-storefront.deco.site` and `demo-storefront.deco-cx.workers.dev`).
+- Signed-in shoppers are detected by the `secure_customer_sig` cookie their sign-in sets (v7 looked for `customerAccessToken`, which nothing set), so their pages bypass the edge cache.
+- The `site`, `deco-shopify`, `deco-htmx` and `deco-analytics` blocks are gone with their editor forms; their settings are code or env.
+- `LiveControls` (the editor bridge and the `.` shortcut to Studio) is kept as a vendored copy; decide whether v8 Studio needs it.
+
+Editor forms (v7 `forms/live-meta.json` vs v8 `.deco/schema.gen.json`), after keeping v7's SEO forms and product pickers:
+
+- Lists lose "Select from saved" where no saved block fits (Hero slides, CategoryBanner and ImageGallery banners, Carousel images, HighlightStrip items, PromoGrid cards, ShoppableBanner pins, LinkTree social, Header nav items).
+- Product pickers gain an "Inline data" option; the SEO sections' Data Source offers only the matching listing/product loaders, wrapped in lazy (v7 offered every loader); ProductDetails/SearchResult/Wishlist `page` pickers offer the loader, its extension wrapper and inline data (v7: the loader only).
+- Literal order: CookieConsent's Banner position (`Expanded, Left, Center, Right`, v7 `Left, Center, Right, Expanded`) and Theme's Mode (`dark, light`, v7 `light, dark`) follow source order.
+- CampaignTimer's Expires at is `format: date-time` (v7 `datetime`).
+- Theme's Font is a lazy block; the PDP loader's `slug` is no longer required (it comes from the route).
+- Section pickers no longer list Lazy, Seo, SeoV2, Component and multivariate/section.
