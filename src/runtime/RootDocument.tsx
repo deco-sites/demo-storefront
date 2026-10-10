@@ -166,7 +166,7 @@ export function RootDocument({ children }: { children?: ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body className="bg-base-200 text-base-content" suppressHydrationWarning>
+      <body className="capy" suppressHydrationWarning>
         <ScriptOnce children={EVENTS_BOOTSTRAP} />
         <NavigationProgress />
         {/* A plain div, not <main>: the page wraps its content sections in <main id="main-content">
