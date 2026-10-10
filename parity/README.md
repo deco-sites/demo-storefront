@@ -22,6 +22,12 @@ Other flags:
 - `--label` names the run directory.
 - `--upstream-passthrough` sends server-side requests that have no recording to the live upstream instead of returning an HTTP 599.
 - `--strict-upstream` fails the run when any server-side request has no recording.
+- `--strict` fails the run on anything still pending the product owner (pending rules, pending baselines, a volatile drop that changed a result).
+- `--no-pending` compares every case with the v7 baseline and ignores `pendingBaselines`: a v7 self-compare, or the raw v7-vs-v8 picture.
+
+`node parity/run.mjs record --capture-only` re-runs only the second pass of `record` (below): the baseline screens and snapshots are captured again, in replay, from the fixtures already in `parity/baseline`. Use it on the v7 build after a snapshot format change; no live traffic.
+
+`node parity/run.mjs record-pending --rule <id>` (`npm run parity:record-pending -- --rule <id>`) pins the v8 output for a `pendingBaselines` rule into its `dir`; see "Pending baselines" below.
 
 `node parity/run.mjs probe --only <ids>` runs cases live into `parity/runs/probe/` without touching the baseline. Use it while writing new flows. `node parity/serve.mjs [--record]` keeps the parity server running so you can debug by hand.
 
@@ -29,9 +35,9 @@ Compare output goes to `parity/runs/<label>/`, which git ignores. It contains:
 
 - `actual/`: the new captures.
 - `diff/`: a red-pixel PNG per differing screenshot and a `.snapshot.diff` per differing JSON snapshot.
-- `summary.json` and `summary.md`.
+- `summary.json` and `summary.md`, which count **ok**, **PENDING** and **DIFF** cases separately. A PENDING case is identical only once a difference the product owner has not approved is applied; it is never counted as ok.
 
-Compare exits non-zero on any pixel difference, any size difference, any snapshot difference, or any missing capture.
+Compare exits non-zero on any pixel difference, any size difference, any snapshot difference, or any missing capture, and with `--strict` on anything PENDING.
 
 ## What is captured (`parity/pages.json`)
 
@@ -70,9 +76,9 @@ The app origin is replaced with `{origin}` in every snapshot, so a target on ano
 | Animations, transitions, caret | `parity/lib/determinism.js` puts `animation:none; transition:none` (`!important`) inside `@layer parity`, as the first node of `<head>`. It re-inserts that style after hydration removes it, because only an earlier cascade layer can override `!important` rules inside Tailwind v4 / DaisyUI 5 layers. Any animation that still starts is finished immediately, or cancelled if it is infinite or scroll-driven. Screenshots use `animations: "disabled"` and `caret: "hide"`, plus `reducedMotion: reduce`. Each capture repeats until two consecutive frames are byte-identical. |
 | Lazy / deferred sections and lazy images | Before every full-page capture the harness scrolls the page in 80% steps until its height stops growing. It then waits for the network to go quiet, `document.fonts.ready`, every `<img>` to finish loading and `decode()`, and a stable layout height over consecutive frames. |
 | Network idle | The harness uses its own quiet tracker: a request counts as done once its headers arrive. Playwright's `networkidle` counts a request as in flight until its body is read, so responses whose bodies the client never reads (seen on storefront-tanstack's wishlist invoke) would keep it from firing. |
-| Edge cache / KV state | `.wrangler/state` is wiped on every server start. `DECO_FAST_DEPLOY=0` makes the content the bundled `.deco/blocks` at the recorded git sha, which is the pinned content revision. `DECO_OTEL=off` stops local runs from sending telemetry to production ingest. |
+| Edge cache / content / telemetry | `.wrangler/state` is wiped on every server start. Content is the bundled `.deco/blocks` at the build's git sha, the pinned content revision: on v7 through `DECO_FAST_DEPLOY=0`; on v8 through empty `DECO_SITE` and `DECO_SITE_TOKEN` (no hosted releases). Telemetry stays local: on v7 `DECO_OTEL=off` and empty `DECO_OTEL_*_ENDPOINT`; on v8 an empty `OTEL_EXPORTER_OTLP_ENDPOINT` and no token, so `createCMS` has nowhere to send. `siteEnv` in `pages.json` sets all of them, for both sides. |
 | Workers `request.cf` (region, city, colo) | The local Workers runtime fills `request.cf` from `node_modules/.mf/cf.json`, fetched for the machine's current network location (and refetched after 30 days). The region feeds the cache segment (`x-cache-segment: …\|r=SP`); this site's `buildSegment` splits the cache by region. `parity/lib/server.mjs` pins it instead: on every start it copies `parity/runtime/cf.json` (São Paulo, the location the baseline was recorded with) to `.wrangler/parity-cf.json` and points `CLOUDFLARE_CF_FETCH_PATH` at it. The fresh copy matters because the runtime also refetches a pinned file older than 30 days. |
-| Screenshot-triggered image requests | Chromium's full-page capture (`captureBeyondViewport`) sometimes re-runs `<picture>` source selection against a transient narrow frame, so a desktop capture of the home requests the mobile `<source>` images (Hero slides, Banner) and the harness aborts them, on some runs of the same build and not on others. `volatileHarMisses` in `pages.json` drops those entries from `harMisses` on both sides for the cases it lists. It is harness noise, not an approval: pixels and `thirdPartyRequests` still compare. `PARITY_DEBUG_MISSES=1` prints the full URL of every aborted request. |
+| Screenshot-triggered image requests | Chromium's full-page capture (`captureBeyondViewport`) sometimes re-runs `<picture>` source selection against a transient narrow frame, so a desktop capture of the home requests the mobile `<source>` images (the four `-mob` Hero/Banner files) and the harness aborts them, on some runs of the same build and not on others. `harMisses` entries are full URLs, so `volatileHarMisses` in `pages.json` names exactly those four and drops only them, on both sides, for `home@desktop` and `home-utm@desktop`. It has `"status": "pending"`: when a drop changes a case's result, the case is reported PENDING (rule `home-desktop-mobile-sources`) and `--strict` fails. Pixels and `thirdPartyRequests` still compare. `PARITY_DEBUG_MISSES=1` prints the full URL of every aborted request. |
 | Rendering | Chromium is pinned through `playwright@1.59.0` (headless shell). It runs software-only, with no GPU raster and no threaded animation or scrolling (`chromiumArgs` in `pages.json`). It also uses sRGB, `--font-render-hinting=none`, `--disable-lcd-text`, a fixed locale (en-US), timezone (UTC) and color scheme (light). Baselines are platform-specific: `baseline/meta.json` records the OS/arch they were recorded on (the current baseline: linux-x64), so compare on the same OS/arch. |
 
 `fixedTime` must be in the future relative to the wall clock. The worker dates the 7-day cart cookie from the frozen clock, but Chromium's cookie jar uses real time, so a past `fixedTime` silently drops the cart cookie and add to cart fails. The current value is `2030-01-01T12:00Z`, so re-record before 2030-01-08.
@@ -89,7 +95,7 @@ The baseline is therefore itself a replayed run, captured under exactly the cond
 The v8 site must:
 
 1. Load `parity/runtime/worker-shim.js` first in its worker entry, for example through the same Vite plugin. Without it, the target fetches live data instead of the recorded fixtures.
-2. Run with `PARITY_UPSTREAM=http://127.0.0.1:5347`, `PARITY_NOW` and `PARITY_SEED` from `pages.json`, `DECO_OTEL=off`, and the same content revision.
+2. Run with `PARITY_UPSTREAM=http://127.0.0.1:5347`, `PARITY_NOW` and `PARITY_SEED` from `pages.json`, the `siteEnv` of `pages.json`, and the same content revision.
 
 Then run `npm run parity:compare -- --target <url>`. While compare runs, it serves the replay proxy on port 5347.
 
@@ -102,6 +108,12 @@ Both are applied to the baseline and the new capture at compare time, so approvi
 
 A rule with `"status": "pending"` is a difference that is explained but **not approved**: it applies like an approval, the summary prints the case as `PENDING`, and `npm run parity:compare -- --strict` fails until the product owner approves it by deleting the `status` field. Agents add pending rules; only the product owner removes the status.
 
+### Pending baselines
+
+Some v8 pages differ from v7 as a whole, for one explained reason, in ways a field rule can't express (the listing pages below). `pendingBaselines` in `pages.json` lists such a rule with its `cases` and a `dir`. Compare checks those cases against the v8 capture pinned in that `dir` instead of the v7 baseline: identical is reported **PENDING** (never ok), anything else is a DIFF, so a regression on those pages still fails. `--strict` fails on them; `--no-pending` compares them with v7 again.
+
+`record-pending --rule <id>` makes the pinned capture. Its first pass serves v7's recordings where they exist and records only what they lack from the live upstream, at the fixed time: server-side requests into `<dir>/upstream.json` (used only for that rule's cases and only on a miss in v7's store) and browser third parties into `<dir>/har/` (tried after the case's v7 HAR). Its second pass replays everything and writes `<dir>/screens` and `<dir>/snapshots`, plus `<dir>/README.md` and `<dir>/v7-vs-new/diff/` (red-pixel PNGs and snapshot diffs) showing how each case differs from v7. Like `parity/baseline`, the recorded fixtures (`har/`, `upstream.json`) aren't committed; the screens, snapshots and diffs are.
+
 ## Tailwind and the harness
 
 Tailwind v4 detects class names in every non-ignored file of the repo, so text in `parity/` (selectors, step names) would otherwise add CSS to the site build and change pixels. `src/styles/app.css` therefore has `@source not "../../parity";`. The migrated site needs the same exclusion. `x-cache-version` (the git sha of the build) is snapshotted as `<build-id>`: its presence is checked, its value is not.
@@ -110,7 +122,16 @@ Analytics snapshot shape: `{ views, events }`. `views` lists pageviews in order.
 
 ## Pending for the product owner (v7 → v8, `feat/next-major`)
 
-Nothing below is approved. Each item is either a `"status": "pending"` rule in `pages.json` or, where a rule can't express it, listed here with screenshots. Last full compare: `parity/runs/v8-8` (local, not committed): 50/75 cases pass at threshold 0 (25 identical, 25 identical once the pending rules apply), 25 DIFF, all of them the listing family below. Run with `--strict`, the 25 PENDING cases fail too.
+Nothing below is approved. Each item is a `"status": "pending"` entry in `pages.json` (a rule, a pending baseline or the volatile list) or, where none can express it, listed here.
+
+Last full compares (local, not committed): `v8-9` and `v8-10`, the v8 build against the v7 baseline (`npm run parity:compare`):
+
+- `v8-10` (final): **25 ok, 50 PENDING, 0 DIFF** of 75; 2 upstream misses (below). With `--strict` it fails on the 50 PENDING cases; with `--strict-upstream`, on the 2 misses.
+- `v8-9`, the run before it: 25 ok, 47 PENDING, 3 DIFF. The 3 DIFFs were `home-shelf-images-load`'s rule still naming the images by origin + path after `harMisses` moved to full URLs; the rule now names the same six images by full URL (`v8-10`). The 25 `listing-gets-page-url` cases matched their pinned capture in both runs.
+
+The 2 upstream misses are one request in `pdp-variant-select` (mobile and desktop): after the Color click, v8 loads `/products/insulated-tumbler-with-a-straw-…`, a card in the page's shelf, through `loadPage`, and that page's Shopify query was never recorded on v7, so it answers 599. It is most likely a router `intent` preload (the request carries that page's path, a second after the click): the cursor stays where the click left it while the harness scrolls the page for the full-page capture, and the shelf card passes under it. v7's product shelf was inside a Lazy wrapper, rendered later, which would explain why v7 never sent it. Nothing rendered or snapshotted changes (the case is ok on pixels and snapshot). Moving the cursor away before each capture would remove it, but changes the v7 capture too (a new baseline and new self-compares); listed here instead.
+
+Harness proof on the current harness: `v7-self-3` and `v7-self-4`, the v7 build against its own baseline with `--no-pending --strict --strict-upstream`: 75 ok, 0 PENDING, 0 DIFF, 0 upstream misses each. The baseline was re-captured from its fixtures (`record --capture-only`) for the full-URL `harMisses` and is pixel- and snapshot-identical to the earlier one apart from that field.
 
 Pending rules (compare prints them; `--strict` fails on them):
 
@@ -118,19 +139,22 @@ Pending rules (compare prints them; `--strict` fails on them):
 - `plp-page-url` (landing pages): JSON-LD and analytics URLs are on the site's origin and path instead of `https://localhost`.
 - `home-mobile-no-cart-cookie` (`home@mobile`) and `home-utm-mobile-from-cache` (`home-utm@mobile`): v7 created a cart during the first SSR of an isolate and served that page private; v8 doesn't, so the home is edge-cached.
 - `home-shelf-images-load` (desktop flows from the home): the tabbed shelf's first-tab images load without scrolling.
+- `home-desktop-mobile-sources` (volatile list, `home@desktop`, `home-utm@desktop`): the four mobile `<source>` images a desktop full-page capture sometimes requests; reported only on a run where dropping them changed the result.
 
-Not expressible as a rule:
+Pending baseline `listing-gets-page-url` (25 cases: `plp-*`, `search*`, `not-found*`, `sitemap-xml-page`, `search-submit`, `plp-sort`, `header-nav-spa`): on v7 every category, search, catch-all and `/sitemap.xml` page showed "12 of 0 results", live too, because the listing loader never got the page URL. v8 passes it. The Shopify catalog was replaced on 2026-10-10 and the old collections are empty now, so the pinned v8 capture shows them empty as well: against v7 it differs only in the breadcrumb (the collection or query is named), the listing JSON-LD (the collection's title and description, the page URL) and `view_item_list`'s list name and id; `search-submit` and `header-nav-spa` also carry `home-shelf-images-load`. `parity/pending/listing-gets-page-url/README.md` lists every case with its pixel count, `v7-vs-new/diff/` has the diffs, and `parity/pending/listing-live-before-catalog-change/` has v8 captured live on 2026-10-09, listing the products (filters, sort, 7 shirts). With products, the three flows marked `blocked` on v7 (filter, show more, listing → product) can run on v8; they aren't in the compare.
 
-- **Working listing and search pages.** On v7 every category, search, catch-all and `/sitemap.xml` page shows "12 of 0 results" (the listing loader never got the page URL). v8 lists the products. v8's listing requests were never recorded on v7, so these cases miss in replay and differ in pixels: `plp-*`, `search*`, `not-found*`, `sitemap-xml-page`, `search-submit`, `header-nav-spa`, and `plp-sort` (its sort select only exists with results). `parity/pending/` has v8 captured live (`v8-live-*`) next to v7's recording (`v7-*`). The three flows marked `blocked` on v7 (filter, show more, listing → product) can run on v8.
+Not expressible as a rule, for the product owner to decide:
 
-Site editor protocol (checked by hand against `deco serve --port 4653 --preview localhost:5340` with `vite dev` on 5340): `describe` (working tree, writable, preview URL), `schema.get` (and `ifNoneMatch` answering `notModified`), `blocks.list` (38 blocks, no diagnostics), `blocks.apply` with a stale `ifMatch` (refused with the current version), then an edit to the home's Newsletter title that the dev server rendered without a restart, then the original block restored through `blocks.apply`: same version and revision as before, and the file byte-identical (`git status` clean).
+- **Clickjacking.** Neither v7 nor v8 sends `frame-ancestors` or `X-Frame-Options` when the site sets its own enforced CSP (the baseline headers show neither, despite a v7 comment claiming `X-Frame-Options: SAMEORIGIN`), so any origin can frame the store. Adding `frame-ancestors 'self' https://studio.decocms.com https://*.deco.studio` to the CSP in `src/worker-entry.ts` would stop it and keep the site editor's preview; it changes the `content-security-policy` header of 55 cases, so it isn't done without your call.
+
+Site editor protocol: `parity/editor-check.mjs` drives `deco serve --port 4653 --preview http://localhost:5340` the way the site editor does, against `vite dev` on 5340 (`parity/runs/editor-check.log`, local): `describe` (working tree, writable, preview URL, server `deco-cli` 8.1.0-next.7); `schema.get` (131 definitions) and again with `ifNoneMatch` (`notModified`); `blocks.list` (39 blocks, 0 diagnostics); `blocks.apply` with a stale `ifMatch` (refused, with the current version); an edit of the home's Newsletter title, which `vite dev` rendered without a restart; the original block put back through `blocks.apply` (the block's version and the content revision equal the starting ones, the file is byte-identical, `git status` clean). All 12 steps passed.
 
 Behaviour changes outside the compare:
 
 - `withABTesting` (the `SITES_KV` worker split between this worker and a fallback origin) is gone; v8 has no equivalent.
-- Telemetry: v7's `instrumentWorker` (`DECO_OTEL_*`, `CF_VERSION_METADATA`) is replaced by `createCMS({ telemetry })` to the same collector (`OTEL_EXPORTER_OTLP_ENDPOINT` + the `OTEL_EXPORTER_OTLP_HEADERS` secret); no Analytics Engine metrics.
+- Telemetry: v7's `instrumentWorker` (`DECO_OTEL_*`) is replaced by `createCMS({ telemetry })` to the same collector (`OTEL_EXPORTER_OTLP_ENDPOINT` + the `OTEL_EXPORTER_OTLP_HEADERS` secret), with v7's identity: `service.name` from `DECO_SITE_NAME`, `deployment.environment.name` from `DECO_ENV_NAME`, `service.version` from the `CF_VERSION_METADATA` binding. Errors are sampled at 0.1 as v7's `DECO_OTEL_ERROR_PROMOTION_RATE` did (`telemetry.errorSampleRate` in the `CMS` block). Lost: `DECO_OTEL_LOGS_MIN_LEVEL=debug` (v8 sends error logs only, no debug/info logs), the per-signal endpoints, and the Analytics Engine metrics (the dataset was never enabled on this site).
 - Fast deploy (`DECO_FAST_DEPLOY` + `DECO_KV`) becomes hosted releases: `DECO_SITE` is set, and they stay off until `DECO_SITE_TOKEN` is set as a secret.
-- Drafts: with no `preview.hosts` in a `CMS` block, every host may preview (v7 allowed only `demo-storefront.deco.site` and `demo-storefront.deco-cx.workers.dev`).
+- Drafts: the `CMS` block keeps v7's preview hosts, `demo-storefront.deco.site` and `demo-storefront.deco-cx.workers.dev`, and adds `localhost:5173` (`vite dev`) so a draft can be previewed locally; that host is new.
 - Signed-in shoppers are detected by the `secure_customer_sig` cookie their sign-in sets (v7 looked for `customerAccessToken`, which nothing set), so their pages bypass the edge cache.
 - The `site`, `deco-shopify`, `deco-htmx` and `deco-analytics` blocks are gone with their editor forms; their settings are code or env.
 - `LiveControls` (the editor bridge and the `.` shortcut to Studio) is kept as a vendored copy; decide whether v8 Studio needs it.

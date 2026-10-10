@@ -53,7 +53,7 @@ const d = await client.describe();
 step(!!d, `describe: ${JSON.stringify(d)}`);
 
 const s1 = await client.schemaGet();
-step(!s1.notModified && s1.version !== null, `schema.get: version ${s1.version}, ${Object.keys(s1.schema?.definitions ?? {}).length} definitions`);
+step(!s1.notModified && s1.version !== null, `schema.get: version ${s1.version}, ${Object.keys(s1.schema?.schema?.definitions ?? {}).length} definitions`);
 const s2 = await client.schemaGet({ ifNoneMatch: s1.version });
 step(s2.notModified === true, `schema.get ifNoneMatch=${s1.version}: notModified=${s2.notModified}`);
 
