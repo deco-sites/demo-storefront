@@ -51,6 +51,16 @@ test("home shape: Header first", () => {
   assert.deepEqual(mainBounds(sections), { first: 2, last: 3 });
 });
 
+test("capybara redesign shape: the Capy Header and Footer are landmarks", () => {
+  const sections = page([
+    "site/sections/Capy/Header.tsx",
+    "site/sections/Capy/HeroScene.tsx",
+    "site/sections/Capy/Newsletter.tsx",
+    "site/sections/Capy/Footer.tsx",
+  ]);
+  assert.deepEqual(mainBounds(sections), { first: 1, last: 2 });
+});
+
 test("no landmark sections at all: everything goes inside main", () => {
   const sections = page(["site/sections/Content/Hero.tsx", "site/sections/Content/Faq.tsx"]);
   assert.deepEqual(mainBounds(sections), { first: 0, last: 1 });

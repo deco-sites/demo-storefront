@@ -1,0 +1,6 @@
+{
+  "__resolveType": "redirect",
+  "from": "/products/id-rather-be-coding",
+  "to": "/collections/the-herd",
+  "permanent": false
+}

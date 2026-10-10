@@ -2,7 +2,6 @@ import { createRootRouteWithContext } from "@tanstack/react-router";
 import type { QueryClient } from "@tanstack/react-query";
 import { CART_QUERY_KEY, getCartServerFn } from "../platform/cart";
 import { getUserServerFn, USER_QUERY_KEY } from "../platform/user";
-import MinicartDrawer from "../components/minicart/MinicartDrawer";
 import { RootDocument } from "../runtime/RootDocument";
 // @ts-ignore Vite ?url import
 import appCss from "../styles/app.css?url";
@@ -29,34 +28,34 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Storefront-tanstack" },
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
+      { title: "deco for capybaras" },
       {
         name: "description",
         content:
-          "Shop the new season at Storefront-tanstack — apparel, accessories and more, with up to 60% off.",
+          "Clothes made for capybaras to wear, in a capybara world. Dressed for doing nothing.",
       },
+      { name: "theme-color", content: "#f6f1e7" },
       // Open Graph / Twitter defaults so shared links render a preview card.
       { property: "og:type", content: "website" },
-      { property: "og:site_name", content: "Storefront-tanstack" },
-      { property: "og:title", content: "Storefront-tanstack" },
+      { property: "og:site_name", content: "deco for capybaras" },
+      { property: "og:title", content: "deco for capybaras" },
       {
         property: "og:description",
         content:
-          "Shop the new season at Storefront-tanstack — apparel, accessories and more, with up to 60% off.",
+          "Clothes made for capybaras to wear, in a capybara world. Dressed for doing nothing.",
       },
-      {
-        property: "og:image",
-        content:
-          "https://decoims.com/demo-storefront/2026/07/57440993-8c68-4943-9084-1c947c1d0fd5-banner1.png",
-      },
+      { property: "og:image", content: "/capy/img/b-rain-d@2x.webp" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
-      { rel: "preconnect", href: "https://api.fontshare.com" },
+      // The redesign's typeface, self-hosted (public/capy/fonts).
       {
-        rel: "stylesheet",
-        href: "https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap",
+        rel: "preload",
+        href: "/capy/fonts/Switzer-Variable.woff2",
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
       },
       { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.ico" },
@@ -67,8 +66,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootLayout() {
   return (
-    <RootDocument>
-      <MinicartDrawer />
-    </RootDocument>
+    // The bag drawer renders with the Header section (src/sections/Capy/Header.tsx), which carries
+    // its editable settings.
+    <RootDocument />
   );
 }

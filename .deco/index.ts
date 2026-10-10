@@ -20,8 +20,19 @@ import { loader as categoryBannerLoader } from "../src/sections/Category/Categor
 import { loader as searchResultLoader } from "../src/sections/Product/SearchResult";
 import { loader as wishlistLoader } from "../src/sections/Product/Wishlist";
 import { loader as instagramPostsLoader } from "../src/sections/Social/InstagramPosts";
+import { loader as capyHeaderLoader } from "../src/sections/Capy/Header";
+import { loader as capyCollectionSceneLoader } from "../src/sections/Capy/CollectionScene";
+import { loader as capyProductRailLoader } from "../src/sections/Capy/ProductRail";
+import { loader as capyCollectionHeaderLoader } from "../src/loaders/capyCollectionHeader";
+import { loader as capyProductListingLoader } from "../src/sections/Capy/ProductListing";
+import { loader as capyProductDetailsLoader } from "../src/sections/Capy/ProductDetails";
+import { loader as capyLifestyleBannerLoader } from "../src/sections/Capy/LifestyleBanner";
+import { loader as capyProductShelfLoader } from "../src/sections/Capy/ProductShelf";
 import productByHandle from "../src/loaders/productByHandle";
-import shopifyProductList from "../src/vendor/shopify/loaders/ProductList";
+import shopifyProductList, {
+  type Props as ShopifyProductListProps,
+} from "../src/vendor/shopify/loaders/ProductList";
+import { withDecoMetafields } from "../src/sdk/capyProduct";
 import shopifyRelatedProducts, {
   type Props as RelatedProductsProps,
 } from "../src/vendor/shopify/loaders/RelatedProducts";
@@ -117,6 +128,65 @@ const whatsApp = section<typeof import("../src/sections/Social/WhatsApp")>(
   "site/sections/Social/WhatsApp.tsx",
 );
 
+
+// The capybara redesign (src/sections/Capy): every block of the new home, collection and product pages.
+const capyHeader = section<typeof import("../src/sections/Capy/Header")>(
+  "site/sections/Capy/Header.tsx",
+  capyHeaderLoader,
+);
+const capyFooter = section<typeof import("../src/sections/Capy/Footer")>(
+  "site/sections/Capy/Footer.tsx",
+);
+const capyNewsletter = section<typeof import("../src/sections/Capy/Newsletter")>(
+  "site/sections/Capy/Newsletter.tsx",
+);
+const capyHeroScene = section<typeof import("../src/sections/Capy/HeroScene")>(
+  "site/sections/Capy/HeroScene.tsx",
+);
+const capyIntroStatement = section<typeof import("../src/sections/Capy/IntroStatement")>(
+  "site/sections/Capy/IntroStatement.tsx",
+);
+const capyCollectionScene = section<typeof import("../src/sections/Capy/CollectionScene")>(
+  "site/sections/Capy/CollectionScene.tsx",
+  capyCollectionSceneLoader,
+);
+const capyProductRail = section<typeof import("../src/sections/Capy/ProductRail")>(
+  "site/sections/Capy/ProductRail.tsx",
+  capyProductRailLoader,
+);
+const capyManifesto = section<typeof import("../src/sections/Capy/Manifesto")>(
+  "site/sections/Capy/Manifesto.tsx",
+);
+const capySizingStory = section<typeof import("../src/sections/Capy/SizingStory")>(
+  "site/sections/Capy/SizingStory.tsx",
+);
+const capyJournalCards = section<typeof import("../src/sections/Capy/JournalCards")>(
+  "site/sections/Capy/JournalCards.tsx",
+);
+const capyCollectionHeader = section<typeof import("../src/loaders/capyCollectionHeader")>(
+  "site/sections/Capy/CollectionHeader.tsx",
+  capyCollectionHeaderLoader,
+);
+const capyProductListing = section<typeof import("../src/sections/Capy/ProductListing")>(
+  "site/sections/Capy/ProductListing.tsx",
+  capyProductListingLoader,
+);
+const capyCollectionCards = section<typeof import("../src/sections/Capy/CollectionCards")>(
+  "site/sections/Capy/CollectionCards.tsx",
+);
+const capyProductDetails = section<typeof import("../src/sections/Capy/ProductDetails")>(
+  "site/sections/Capy/ProductDetails.tsx",
+  capyProductDetailsLoader,
+);
+const capyLifestyleBanner = section<typeof import("../src/sections/Capy/LifestyleBanner")>(
+  "site/sections/Capy/LifestyleBanner.tsx",
+  capyLifestyleBannerLoader,
+);
+const capyProductShelf = section<typeof import("../src/sections/Capy/ProductShelf")>(
+  "site/sections/Capy/ProductShelf.tsx",
+  capyProductShelfLoader,
+);
+
 /**
  * The theme section. v7 never rendered it on this site (its Google Fonts loader had no
  * implementation, so the section dropped out of every page), and the pages' colors and fonts come
@@ -147,7 +217,9 @@ export default {
   // In v7's order, which is the order the editor lists them in a product picker.
   "site/loaders/productByHandle.ts": productByHandle,
   "shopify/loaders/ProductDetailsPage.ts": shopifyProductDetailsPage,
-  "shopify/loaders/ProductList.ts": shopifyProductList,
+  // Every product loader also asks for the `deco.*` metafields the redesign reads (src/sdk/capyProduct.ts).
+  "shopify/loaders/ProductList.ts": (props: ShopifyProductListProps) =>
+    shopifyProductList({ ...props, metafields: withDecoMetafields(props.metafields) }),
   "shopify/loaders/ProductListingPage.ts": shopifyProductListingPage,
   "shopify/loaders/RelatedProducts.ts": (props: RelatedProductsProps) =>
     shopifyRelatedProducts(props),
@@ -189,4 +261,20 @@ export default {
   "site/sections/Social/InstagramPosts.tsx": instagramPosts,
   "site/sections/Social/WhatsApp.tsx": whatsApp,
   "site/sections/Theme/Theme.tsx": theme,
+  "site/sections/Capy/Header.tsx": capyHeader,
+  "site/sections/Capy/Footer.tsx": capyFooter,
+  "site/sections/Capy/Newsletter.tsx": capyNewsletter,
+  "site/sections/Capy/HeroScene.tsx": capyHeroScene,
+  "site/sections/Capy/IntroStatement.tsx": capyIntroStatement,
+  "site/sections/Capy/CollectionScene.tsx": capyCollectionScene,
+  "site/sections/Capy/ProductRail.tsx": capyProductRail,
+  "site/sections/Capy/Manifesto.tsx": capyManifesto,
+  "site/sections/Capy/SizingStory.tsx": capySizingStory,
+  "site/sections/Capy/JournalCards.tsx": capyJournalCards,
+  "site/sections/Capy/CollectionHeader.tsx": capyCollectionHeader,
+  "site/sections/Capy/ProductListing.tsx": capyProductListing,
+  "site/sections/Capy/CollectionCards.tsx": capyCollectionCards,
+  "site/sections/Capy/ProductDetails.tsx": capyProductDetails,
+  "site/sections/Capy/LifestyleBanner.tsx": capyLifestyleBanner,
+  "site/sections/Capy/ProductShelf.tsx": capyProductShelf,
 } satisfies Blocks;

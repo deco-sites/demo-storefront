@@ -126,6 +126,70 @@
         "site/sections/Theme/Theme.tsx": {
           "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9UaGVtZS9UaGVtZS50c3g=",
           "namespace": "site"
+        },
+        "site/sections/Capy/Header.tsx": {
+          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0hlYWRlci50c3g=",
+          "namespace": "site"
+        },
+        "site/sections/Capy/Footer.tsx": {
+          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0Zvb3Rlci50c3g=",
+          "namespace": "site"
+        },
+        "site/sections/Capy/Newsletter.tsx": {
+          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L05ld3NsZXR0ZXIudHN4",
+          "namespace": "site"
+        },
+        "site/sections/Capy/HeroScene.tsx": {
+          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0hlcm9TY2VuZS50c3g=",
+          "namespace": "site"
+        },
+        "site/sections/Capy/IntroStatement.tsx": {
+          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0ludHJvU3RhdGVtZW50LnRzeA==",
+          "namespace": "site"
+        },
+        "site/sections/Capy/CollectionScene.tsx": {
+          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25TY2VuZS50c3g=",
+          "namespace": "site"
+        },
+        "site/sections/Capy/ProductRail.tsx": {
+          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RSYWlsLnRzeA==",
+          "namespace": "site"
+        },
+        "site/sections/Capy/Manifesto.tsx": {
+          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L01hbmlmZXN0by50c3g=",
+          "namespace": "site"
+        },
+        "site/sections/Capy/SizingStory.tsx": {
+          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1NpemluZ1N0b3J5LnRzeA==",
+          "namespace": "site"
+        },
+        "site/sections/Capy/JournalCards.tsx": {
+          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0pvdXJuYWxDYXJkcy50c3g=",
+          "namespace": "site"
+        },
+        "site/sections/Capy/CollectionHeader.tsx": {
+          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25IZWFkZXIudHN4",
+          "namespace": "site"
+        },
+        "site/sections/Capy/ProductListing.tsx": {
+          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RMaXN0aW5nLnRzeA==",
+          "namespace": "site"
+        },
+        "site/sections/Capy/CollectionCards.tsx": {
+          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25DYXJkcy50c3g=",
+          "namespace": "site"
+        },
+        "site/sections/Capy/ProductDetails.tsx": {
+          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3REZXRhaWxzLnRzeA==",
+          "namespace": "site"
+        },
+        "site/sections/Capy/LifestyleBanner.tsx": {
+          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0xpZmVzdHlsZUJhbm5lci50c3g=",
+          "namespace": "site"
+        },
+        "site/sections/Capy/ProductShelf.tsx": {
+          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RTaGVsZi50c3g=",
+          "namespace": "site"
         }
       },
       "loaders": {
@@ -531,11 +595,14 @@
       "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@BreadcrumbList": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string",
+          "image": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+            },
             "nullable": true,
-            "description": "The name of the item.",
-            "title": "Name"
+            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+            "title": "Image"
           },
           "@id": {
             "type": "string",
@@ -573,15 +640,6 @@
             "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
             "title": "Identifier"
           },
-          "image": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
-            },
-            "nullable": true,
-            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-            "title": "Image"
-          },
           "video": {
             "type": "array",
             "items": {
@@ -589,6 +647,12 @@
             },
             "nullable": true,
             "title": "Video"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name of the item.",
+            "title": "Name"
           },
           "sameAs": {
             "type": "string",
@@ -623,11 +687,14 @@
                   "description": "The position of an item in a series or sequence of items.",
                   "title": "Position"
                 },
-                "name": {
-                  "type": "string",
+                "image": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+                  },
                   "nullable": true,
-                  "description": "The name of the item.",
-                  "title": "Name"
+                  "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+                  "title": "Image"
                 },
                 "@id": {
                   "type": "string",
@@ -665,15 +732,6 @@
                   "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
                   "title": "Identifier"
                 },
-                "image": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
-                  },
-                  "nullable": true,
-                  "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-                  "title": "Image"
-                },
                 "video": {
                   "type": "array",
                   "items": {
@@ -681,6 +739,12 @@
                   },
                   "nullable": true,
                   "title": "Video"
+                },
+                "name": {
+                  "type": "string",
+                  "nullable": true,
+                  "description": "The name of the item.",
+                  "title": "Name"
                 },
                 "sameAs": {
                   "type": "string",
@@ -753,11 +817,14 @@
             "description": "A thumbnail image relevant to the Thing",
             "title": "ThumbnailUrl"
           },
-          "name": {
-            "type": "string",
+          "image": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
             "nullable": true,
-            "description": "The name of the item.",
-            "title": "Name"
+            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+            "title": "Image"
           },
           "@id": {
             "type": "string",
@@ -795,15 +862,6 @@
             "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
             "title": "Identifier"
           },
-          "image": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            },
-            "nullable": true,
-            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-            "title": "Image"
-          },
           "video": {
             "type": "array",
             "items": {
@@ -811,6 +869,12 @@
             },
             "nullable": true,
             "title": "Video"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name of the item.",
+            "title": "Name"
           },
           "sameAs": {
             "type": "string",
@@ -865,11 +929,14 @@
             "description": "A thumbnail image relevant to the Thing",
             "title": "ThumbnailUrl"
           },
-          "name": {
-            "type": "string",
+          "image": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+            },
             "nullable": true,
-            "description": "The name of the item.",
-            "title": "Name"
+            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+            "title": "Image"
           },
           "@id": {
             "type": "string",
@@ -907,15 +974,6 @@
             "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
             "title": "Identifier"
           },
-          "image": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
-            },
-            "nullable": true,
-            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-            "title": "Image"
-          },
           "video": {
             "type": "array",
             "items": {
@@ -923,6 +981,12 @@
             },
             "nullable": true,
             "title": "Video"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name of the item.",
+            "title": "Name"
           },
           "sameAs": {
             "type": "string",
@@ -1227,11 +1291,14 @@
             "nullable": true,
             "title": "Questions"
           },
-          "name": {
-            "type": "string",
+          "image": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+            },
             "nullable": true,
-            "description": "The name of the item.",
-            "title": "Name"
+            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+            "title": "Image"
           },
           "@id": {
             "type": "string",
@@ -1269,15 +1336,6 @@
             "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
             "title": "Identifier"
           },
-          "image": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
-            },
-            "nullable": true,
-            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-            "title": "Image"
-          },
           "video": {
             "type": "array",
             "items": {
@@ -1285,6 +1343,12 @@
             },
             "nullable": true,
             "title": "Video"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name of the item.",
+            "title": "Name"
           },
           "sameAs": {
             "type": "string",
@@ -1355,11 +1419,14 @@
             "description": "A secondary value that provides additional information on the original value, e.g. a reference temperature or a type of measurement.",
             "title": "ValueReference"
           },
-          "name": {
-            "type": "string",
+          "image": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+            },
             "nullable": true,
-            "description": "The name of the item.",
-            "title": "Name"
+            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+            "title": "Image"
           },
           "@id": {
             "type": "string",
@@ -1397,15 +1464,6 @@
             "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
             "title": "Identifier"
           },
-          "image": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
-            },
-            "nullable": true,
-            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-            "title": "Image"
-          },
           "video": {
             "type": "array",
             "items": {
@@ -1413,6 +1471,12 @@
             },
             "nullable": true,
             "title": "Video"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name of the item.",
+            "title": "Name"
           },
           "sameAs": {
             "type": "string",
@@ -1484,11 +1548,14 @@
             "description": "Brand's image url",
             "title": "Logo"
           },
-          "name": {
-            "type": "string",
+          "image": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+            },
             "nullable": true,
-            "description": "The name of the item.",
-            "title": "Name"
+            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+            "title": "Image"
           },
           "@id": {
             "type": "string",
@@ -1526,15 +1593,6 @@
             "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
             "title": "Identifier"
           },
-          "image": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
-            },
-            "nullable": true,
-            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-            "title": "Image"
-          },
           "video": {
             "type": "array",
             "items": {
@@ -1542,6 +1600,12 @@
             },
             "nullable": true,
             "title": "Video"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name of the item.",
+            "title": "Name"
           },
           "sameAs": {
             "type": "string",
@@ -1610,11 +1674,14 @@
             "description": "docs https://schema.org/gtin",
             "title": "Model"
           },
-          "name": {
-            "type": "string",
+          "image": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+            },
             "nullable": true,
-            "description": "The name of the item.",
-            "title": "Name"
+            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+            "title": "Image"
           },
           "@id": {
             "type": "string",
@@ -1652,15 +1719,6 @@
             "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
             "title": "Identifier"
           },
-          "image": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
-            },
-            "nullable": true,
-            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-            "title": "Image"
-          },
           "video": {
             "type": "array",
             "items": {
@@ -1668,6 +1726,12 @@
             },
             "nullable": true,
             "title": "Video"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name of the item.",
+            "title": "Name"
           },
           "sameAs": {
             "type": "string",
@@ -1697,11 +1761,14 @@
       "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ProductLeaf": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string",
+          "image": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+            },
             "nullable": true,
-            "description": "The name of the item.",
-            "title": "Name"
+            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+            "title": "Image"
           },
           "@id": {
             "type": "string",
@@ -1739,15 +1806,6 @@
             "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
             "title": "Identifier"
           },
-          "image": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
-            },
-            "nullable": true,
-            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-            "title": "Image"
-          },
           "video": {
             "type": "array",
             "items": {
@@ -1755,6 +1813,12 @@
             },
             "nullable": true,
             "title": "Video"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name of the item.",
+            "title": "Name"
           },
           "sameAs": {
             "type": "string",
@@ -2103,11 +2167,14 @@
             "description": "Specifies a MerchantReturnPolicy that may be applicable.",
             "title": "HasMerchantReturnPolicy"
           },
-          "name": {
-            "type": "string",
+          "image": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+            },
             "nullable": true,
-            "description": "The name of the item.",
-            "title": "Name"
+            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+            "title": "Image"
           },
           "@id": {
             "type": "string",
@@ -2145,15 +2212,6 @@
             "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
             "title": "Identifier"
           },
-          "image": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
-            },
-            "nullable": true,
-            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-            "title": "Image"
-          },
           "video": {
             "type": "array",
             "items": {
@@ -2161,6 +2219,12 @@
             },
             "nullable": true,
             "title": "Video"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name of the item.",
+            "title": "Name"
           },
           "sameAs": {
             "type": "string",
@@ -2240,11 +2304,19 @@
             "description": "This property specifies the minimal quantity and rounding increment that will be the basis for the billing. The unit of measurement is specified by the unitCode property.",
             "title": "BillingIncrement"
           },
-          "name": {
-            "type": "string",
+          "price": {
+            "type": "number",
+            "description": "The offer price of a product, or of a price component when attached to PriceSpecification and its subtypes.\n\nUsage guidelines:\n- Use the {@link https://schema.org/priceCurrency priceCurrency} property (with standard formats: {@link http://en.wikipedia.org/wiki/ISO_4217 ISO 4217 currency format} e.g. \"USD\"; {@link https://en.wikipedia.org/wiki/List_of_cryptocurrencies Ticker symbol} for cryptocurrencies e.g. \"BTC\"; well known names for {@link https://en.wikipedia.org/wiki/Local_exchange_trading_system Local Exchange Tradings Systems} (LETS) and other currency types e.g. \"Ithaca HOUR\") instead of including {@link http://en.wikipedia.org/wiki/Dollar_sign#Currencies_that_use_the_dollar_or_peso_sign ambiguous symbols} such as '$' in the value.\n- Use '.' (Unicode 'FULL STOP' (U+002E)) rather than ',' to indicate a decimal point. Avoid using these symbols as a readability separator.\n- Note that both {@link http://www.w3.org/TR/xhtml-rdfa-primer/#using-the-content-attribute RDFa} and Microdata syntax allow the use of a \"content=\" attribute for publishing simple machine-readable values alongside more human-friendly formatting.\n- Use values from 0123456789 (Unicode 'DIGIT ZERO' (U+0030) to 'DIGIT NINE' (U+0039)) rather than superficially similiar Unicode symbols.",
+            "title": "Price"
+          },
+          "image": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+            },
             "nullable": true,
-            "description": "The name of the item.",
-            "title": "Name"
+            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+            "title": "Image"
           },
           "@id": {
             "type": "string",
@@ -2282,15 +2354,6 @@
             "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
             "title": "Identifier"
           },
-          "image": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
-            },
-            "nullable": true,
-            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-            "title": "Image"
-          },
           "video": {
             "type": "array",
             "items": {
@@ -2298,6 +2361,12 @@
             },
             "nullable": true,
             "title": "Video"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name of the item.",
+            "title": "Name"
           },
           "sameAs": {
             "type": "string",
@@ -2322,11 +2391,6 @@
             "nullable": true,
             "description": "The interval and unit of measurement of ordering quantities for which the offer or price specification is valid. This allows e.g. specifying that a certain freight charge is valid only for a certain quantity.",
             "title": "EligibleQuantity"
-          },
-          "price": {
-            "type": "number",
-            "description": "The offer price of a product, or of a price component when attached to PriceSpecification and its subtypes.\n\nUsage guidelines:\n- Use the {@link https://schema.org/priceCurrency priceCurrency} property (with standard formats: {@link http://en.wikipedia.org/wiki/ISO_4217 ISO 4217 currency format} e.g. \"USD\"; {@link https://en.wikipedia.org/wiki/List_of_cryptocurrencies Ticker symbol} for cryptocurrencies e.g. \"BTC\"; well known names for {@link https://en.wikipedia.org/wiki/Local_exchange_trading_system Local Exchange Tradings Systems} (LETS) and other currency types e.g. \"Ithaca HOUR\") instead of including {@link http://en.wikipedia.org/wiki/Dollar_sign#Currencies_that_use_the_dollar_or_peso_sign ambiguous symbols} such as '$' in the value.\n- Use '.' (Unicode 'FULL STOP' (U+002E)) rather than ',' to indicate a decimal point. Avoid using these symbols as a readability separator.\n- Note that both {@link http://www.w3.org/TR/xhtml-rdfa-primer/#using-the-content-attribute RDFa} and Microdata syntax allow the use of a \"content=\" attribute for publishing simple machine-readable values alongside more human-friendly formatting.\n- Use values from 0123456789 (Unicode 'DIGIT ZERO' (U+0030) to 'DIGIT NINE' (U+0039)) rather than superficially similiar Unicode symbols.",
-            "title": "Price"
           },
           "priceCurrency": {
             "type": "string",
@@ -2473,11 +2537,14 @@
             "description": "Amount of shipping costs for product returns (for any reason). Applicable when property returnFees equals ReturnShippingFees.",
             "title": "ReturnShippingFeesAmount"
           },
-          "name": {
-            "type": "string",
+          "image": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+            },
             "nullable": true,
-            "description": "The name of the item.",
-            "title": "Name"
+            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+            "title": "Image"
           },
           "@id": {
             "type": "string",
@@ -2515,15 +2582,6 @@
             "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
             "title": "Identifier"
           },
-          "image": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
-            },
-            "nullable": true,
-            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-            "title": "Image"
-          },
           "video": {
             "type": "array",
             "items": {
@@ -2531,6 +2589,12 @@
             },
             "nullable": true,
             "title": "Video"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name of the item.",
+            "title": "Name"
           },
           "sameAs": {
             "type": "string",
@@ -2602,11 +2666,14 @@
             "description": "The value of a QuantitativeValue (including Observation) or property value node.",
             "title": "Value"
           },
-          "name": {
-            "type": "string",
+          "image": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+            },
             "nullable": true,
-            "description": "The name of the item.",
-            "title": "Name"
+            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+            "title": "Image"
           },
           "@id": {
             "type": "string",
@@ -2644,15 +2711,6 @@
             "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
             "title": "Identifier"
           },
-          "image": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
-            },
-            "nullable": true,
-            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-            "title": "Image"
-          },
           "video": {
             "type": "array",
             "items": {
@@ -2660,6 +2718,12 @@
             },
             "nullable": true,
             "title": "Video"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name of the item.",
+            "title": "Name"
           },
           "sameAs": {
             "type": "string",
@@ -2790,11 +2854,14 @@
             "description": "Medias",
             "title": "Media"
           },
-          "name": {
-            "type": "string",
+          "image": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+            },
             "nullable": true,
-            "description": "The name of the item.",
-            "title": "Name"
+            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+            "title": "Image"
           },
           "@id": {
             "type": "string",
@@ -2832,15 +2899,6 @@
             "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
             "title": "Identifier"
           },
-          "image": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
-            },
-            "nullable": true,
-            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-            "title": "Image"
-          },
           "video": {
             "type": "array",
             "items": {
@@ -2848,6 +2906,12 @@
             },
             "nullable": true,
             "title": "Video"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name of the item.",
+            "title": "Name"
           },
           "sameAs": {
             "type": "string",
@@ -2896,6 +2960,15 @@
             "description": "Author location",
             "title": "Location"
           },
+          "image": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+            },
+            "nullable": true,
+            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+            "title": "Image"
+          },
           "@id": {
             "type": "string",
             "nullable": true,
@@ -2931,15 +3004,6 @@
             "nullable": true,
             "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
             "title": "Identifier"
-          },
-          "image": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
-            },
-            "nullable": true,
-            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-            "title": "Image"
           },
           "video": {
             "type": "array",
@@ -3095,6 +3159,15 @@
             "description": "Author of the",
             "title": "Author"
           },
+          "image": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+            },
+            "nullable": true,
+            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+            "title": "Image"
+          },
           "@id": {
             "type": "string",
             "nullable": true,
@@ -3130,15 +3203,6 @@
             "nullable": true,
             "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
             "title": "Identifier"
-          },
-          "image": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
-            },
-            "nullable": true,
-            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-            "title": "Image"
           },
           "video": {
             "type": "array",
@@ -3201,11 +3265,14 @@
             "description": "Author of the",
             "title": "Author"
           },
-          "name": {
-            "type": "string",
+          "image": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+            },
             "nullable": true,
-            "description": "The name of the item.",
-            "title": "Name"
+            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+            "title": "Image"
           },
           "@id": {
             "type": "string",
@@ -3243,15 +3310,6 @@
             "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
             "title": "Identifier"
           },
-          "image": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
-            },
-            "nullable": true,
-            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-            "title": "Image"
-          },
           "video": {
             "type": "array",
             "items": {
@@ -3259,6 +3317,12 @@
             },
             "nullable": true,
             "title": "Video"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name of the item.",
+            "title": "Name"
           },
           "sameAs": {
             "type": "string",
@@ -5335,11 +5399,10 @@
                               "description": "A thumbnail image relevant to the Thing",
                               "title": "ThumbnailUrl"
                             },
-                            "name": {
-                              "type": "string",
-                              "nullable": true,
-                              "description": "The name of the item.",
-                              "title": "Name"
+                            "image": {
+                              "type": "object",
+                              "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+                              "title": "Image"
                             },
                             "@id": {
                               "type": "string",
@@ -5376,11 +5439,6 @@
                               "nullable": true,
                               "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
                               "title": "Identifier"
-                            },
-                            "image": {
-                              "type": "object",
-                              "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-                              "title": "Image"
                             },
                             "video": {
                               "type": "array",
@@ -5423,11 +5481,10 @@
                                     "description": "A thumbnail image relevant to the Thing",
                                     "title": "ThumbnailUrl"
                                   },
-                                  "name": {
-                                    "type": "string",
-                                    "nullable": true,
-                                    "description": "The name of the item.",
-                                    "title": "Name"
+                                  "image": {
+                                    "type": "object",
+                                    "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+                                    "title": "Image"
                                   },
                                   "@id": {
                                     "type": "string",
@@ -5465,14 +5522,15 @@
                                     "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
                                     "title": "Identifier"
                                   },
-                                  "image": {
-                                    "type": "object",
-                                    "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-                                    "title": "Image"
-                                  },
                                   "video": {
                                     "type": "object",
                                     "title": "Video"
+                                  },
+                                  "name": {
+                                    "type": "string",
+                                    "nullable": true,
+                                    "description": "The name of the item.",
+                                    "title": "Name"
                                   },
                                   "sameAs": {
                                     "type": "string",
@@ -5490,6 +5548,12 @@
                               },
                               "nullable": true,
                               "title": "Video"
+                            },
+                            "name": {
+                              "type": "string",
+                              "nullable": true,
+                              "description": "The name of the item.",
+                              "title": "Name"
                             },
                             "sameAs": {
                               "type": "string",
@@ -5573,11 +5637,10 @@
                                     "description": "A thumbnail image relevant to the Thing",
                                     "title": "ThumbnailUrl"
                                   },
-                                  "name": {
-                                    "type": "string",
-                                    "nullable": true,
-                                    "description": "The name of the item.",
-                                    "title": "Name"
+                                  "image": {
+                                    "type": "object",
+                                    "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+                                    "title": "Image"
                                   },
                                   "@id": {
                                     "type": "string",
@@ -5614,11 +5677,6 @@
                                     "nullable": true,
                                     "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
                                     "title": "Identifier"
-                                  },
-                                  "image": {
-                                    "type": "object",
-                                    "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-                                    "title": "Image"
                                   },
                                   "video": {
                                     "type": "array",
@@ -5661,11 +5719,10 @@
                                           "description": "A thumbnail image relevant to the Thing",
                                           "title": "ThumbnailUrl"
                                         },
-                                        "name": {
-                                          "type": "string",
-                                          "nullable": true,
-                                          "description": "The name of the item.",
-                                          "title": "Name"
+                                        "image": {
+                                          "type": "object",
+                                          "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+                                          "title": "Image"
                                         },
                                         "@id": {
                                           "type": "string",
@@ -5703,14 +5760,15 @@
                                           "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
                                           "title": "Identifier"
                                         },
-                                        "image": {
-                                          "type": "object",
-                                          "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-                                          "title": "Image"
-                                        },
                                         "video": {
                                           "type": "object",
                                           "title": "Video"
+                                        },
+                                        "name": {
+                                          "type": "string",
+                                          "nullable": true,
+                                          "description": "The name of the item.",
+                                          "title": "Name"
                                         },
                                         "sameAs": {
                                           "type": "string",
@@ -5728,6 +5786,12 @@
                                     },
                                     "nullable": true,
                                     "title": "Video"
+                                  },
+                                  "name": {
+                                    "type": "string",
+                                    "nullable": true,
+                                    "description": "The name of the item.",
+                                    "title": "Name"
                                   },
                                   "sameAs": {
                                     "type": "string",
@@ -5811,11 +5875,10 @@
                                           "description": "A thumbnail image relevant to the Thing",
                                           "title": "ThumbnailUrl"
                                         },
-                                        "name": {
-                                          "type": "string",
-                                          "nullable": true,
-                                          "description": "The name of the item.",
-                                          "title": "Name"
+                                        "image": {
+                                          "type": "object",
+                                          "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+                                          "title": "Image"
                                         },
                                         "@id": {
                                           "type": "string",
@@ -5852,11 +5915,6 @@
                                           "nullable": true,
                                           "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
                                           "title": "Identifier"
-                                        },
-                                        "image": {
-                                          "type": "object",
-                                          "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-                                          "title": "Image"
                                         },
                                         "video": {
                                           "type": "array",
@@ -5899,11 +5957,10 @@
                                                 "description": "A thumbnail image relevant to the Thing",
                                                 "title": "ThumbnailUrl"
                                               },
-                                              "name": {
-                                                "type": "string",
-                                                "nullable": true,
-                                                "description": "The name of the item.",
-                                                "title": "Name"
+                                              "image": {
+                                                "type": "object",
+                                                "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+                                                "title": "Image"
                                               },
                                               "@id": {
                                                 "type": "string",
@@ -5941,14 +5998,15 @@
                                                 "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
                                                 "title": "Identifier"
                                               },
-                                              "image": {
-                                                "type": "object",
-                                                "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-                                                "title": "Image"
-                                              },
                                               "video": {
                                                 "type": "object",
                                                 "title": "Video"
+                                              },
+                                              "name": {
+                                                "type": "string",
+                                                "nullable": true,
+                                                "description": "The name of the item.",
+                                                "title": "Name"
                                               },
                                               "sameAs": {
                                                 "type": "string",
@@ -5966,6 +6024,12 @@
                                           },
                                           "nullable": true,
                                           "title": "Video"
+                                        },
+                                        "name": {
+                                          "type": "string",
+                                          "nullable": true,
+                                          "description": "The name of the item.",
+                                          "title": "Name"
                                         },
                                         "sameAs": {
                                           "type": "string",
@@ -6049,11 +6113,10 @@
                                                 "description": "A thumbnail image relevant to the Thing",
                                                 "title": "ThumbnailUrl"
                                               },
-                                              "name": {
-                                                "type": "string",
-                                                "nullable": true,
-                                                "description": "The name of the item.",
-                                                "title": "Name"
+                                              "image": {
+                                                "type": "object",
+                                                "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+                                                "title": "Image"
                                               },
                                               "@id": {
                                                 "type": "string",
@@ -6090,11 +6153,6 @@
                                                 "nullable": true,
                                                 "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
                                                 "title": "Identifier"
-                                              },
-                                              "image": {
-                                                "type": "object",
-                                                "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-                                                "title": "Image"
                                               },
                                               "video": {
                                                 "type": "array",
@@ -6137,11 +6195,10 @@
                                                       "description": "A thumbnail image relevant to the Thing",
                                                       "title": "ThumbnailUrl"
                                                     },
-                                                    "name": {
-                                                      "type": "string",
-                                                      "nullable": true,
-                                                      "description": "The name of the item.",
-                                                      "title": "Name"
+                                                    "image": {
+                                                      "type": "object",
+                                                      "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+                                                      "title": "Image"
                                                     },
                                                     "@id": {
                                                       "type": "string",
@@ -6179,14 +6236,15 @@
                                                       "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
                                                       "title": "Identifier"
                                                     },
-                                                    "image": {
-                                                      "type": "object",
-                                                      "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-                                                      "title": "Image"
-                                                    },
                                                     "video": {
                                                       "type": "object",
                                                       "title": "Video"
+                                                    },
+                                                    "name": {
+                                                      "type": "string",
+                                                      "nullable": true,
+                                                      "description": "The name of the item.",
+                                                      "title": "Name"
                                                     },
                                                     "sameAs": {
                                                       "type": "string",
@@ -6204,6 +6262,12 @@
                                                 },
                                                 "nullable": true,
                                                 "title": "Video"
+                                              },
+                                              "name": {
+                                                "type": "string",
+                                                "nullable": true,
+                                                "description": "The name of the item.",
+                                                "title": "Name"
                                               },
                                               "sameAs": {
                                                 "type": "string",
@@ -6287,11 +6351,10 @@
                                                       "description": "A thumbnail image relevant to the Thing",
                                                       "title": "ThumbnailUrl"
                                                     },
-                                                    "name": {
-                                                      "type": "string",
-                                                      "nullable": true,
-                                                      "description": "The name of the item.",
-                                                      "title": "Name"
+                                                    "image": {
+                                                      "type": "object",
+                                                      "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+                                                      "title": "Image"
                                                     },
                                                     "@id": {
                                                       "type": "string",
@@ -6328,11 +6391,6 @@
                                                       "nullable": true,
                                                       "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
                                                       "title": "Identifier"
-                                                    },
-                                                    "image": {
-                                                      "type": "object",
-                                                      "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-                                                      "title": "Image"
                                                     },
                                                     "video": {
                                                       "type": "array",
@@ -6375,11 +6433,10 @@
                                                             "description": "A thumbnail image relevant to the Thing",
                                                             "title": "ThumbnailUrl"
                                                           },
-                                                          "name": {
-                                                            "type": "string",
-                                                            "nullable": true,
-                                                            "description": "The name of the item.",
-                                                            "title": "Name"
+                                                          "image": {
+                                                            "type": "object",
+                                                            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+                                                            "title": "Image"
                                                           },
                                                           "@id": {
                                                             "type": "string",
@@ -6417,14 +6474,15 @@
                                                             "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
                                                             "title": "Identifier"
                                                           },
-                                                          "image": {
-                                                            "type": "object",
-                                                            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-                                                            "title": "Image"
-                                                          },
                                                           "video": {
                                                             "type": "object",
                                                             "title": "Video"
+                                                          },
+                                                          "name": {
+                                                            "type": "string",
+                                                            "nullable": true,
+                                                            "description": "The name of the item.",
+                                                            "title": "Name"
                                                           },
                                                           "sameAs": {
                                                             "type": "string",
@@ -6442,6 +6500,12 @@
                                                       },
                                                       "nullable": true,
                                                       "title": "Video"
+                                                    },
+                                                    "name": {
+                                                      "type": "string",
+                                                      "nullable": true,
+                                                      "description": "The name of the item.",
+                                                      "title": "Name"
                                                     },
                                                     "sameAs": {
                                                       "type": "string",
@@ -6550,11 +6614,10 @@
                         "description": "A thumbnail image relevant to the Thing",
                         "title": "ThumbnailUrl"
                       },
-                      "name": {
-                        "type": "string",
-                        "nullable": true,
-                        "description": "The name of the item.",
-                        "title": "Name"
+                      "image": {
+                        "type": "object",
+                        "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+                        "title": "Image"
                       },
                       "@id": {
                         "type": "string",
@@ -6591,11 +6654,6 @@
                         "nullable": true,
                         "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
                         "title": "Identifier"
-                      },
-                      "image": {
-                        "type": "object",
-                        "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-                        "title": "Image"
                       },
                       "video": {
                         "type": "array",
@@ -6638,11 +6696,10 @@
                               "description": "A thumbnail image relevant to the Thing",
                               "title": "ThumbnailUrl"
                             },
-                            "name": {
-                              "type": "string",
-                              "nullable": true,
-                              "description": "The name of the item.",
-                              "title": "Name"
+                            "image": {
+                              "type": "object",
+                              "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+                              "title": "Image"
                             },
                             "@id": {
                               "type": "string",
@@ -6680,14 +6737,15 @@
                               "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
                               "title": "Identifier"
                             },
-                            "image": {
-                              "type": "object",
-                              "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-                              "title": "Image"
-                            },
                             "video": {
                               "type": "object",
                               "title": "Video"
+                            },
+                            "name": {
+                              "type": "string",
+                              "nullable": true,
+                              "description": "The name of the item.",
+                              "title": "Name"
                             },
                             "sameAs": {
                               "type": "string",
@@ -6705,6 +6763,12 @@
                         },
                         "nullable": true,
                         "title": "Video"
+                      },
+                      "name": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "The name of the item.",
+                        "title": "Name"
                       },
                       "sameAs": {
                         "type": "string",
@@ -8935,6 +8999,2033 @@
           }
         }
       },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L0hlYWRlci50c3g=@Props": {
+        "type": "object",
+        "properties": {
+          "logo": {
+            "type": "string",
+            "nullable": true,
+            "format": "image-uri",
+            "title": "Logo"
+          },
+          "subline": {
+            "type": "string",
+            "nullable": true,
+            "title": "Sub-line next to the logo"
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "title": "Label"
+                },
+                "href": {
+                  "type": "string",
+                  "title": "Link"
+                }
+              },
+              "required": [
+                "label",
+                "href"
+              ]
+            },
+            "nullable": true,
+            "title": "Links"
+          },
+          "showSearch": {
+            "type": "boolean",
+            "nullable": true,
+            "title": "Show search"
+          },
+          "showAccount": {
+            "type": "boolean",
+            "nullable": true,
+            "title": "Show account"
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "night",
+              "paper"
+            ],
+            "nullable": true,
+            "title": "Theme",
+            "description": "night: transparent over a dark hero until the page scrolls. paper: paper glass."
+          },
+          "searchPlaceholder": {
+            "type": "string",
+            "nullable": true,
+            "title": "Search placeholder"
+          },
+          "minicart": {
+            "type": "object",
+            "properties": {
+              "freeDeliveryThreshold": {
+                "type": "number",
+                "nullable": true,
+                "title": "Free delivery threshold",
+                "description": "Cart subtotal (in the store currency) that unlocks free delivery. 0 hides the bar."
+              },
+              "freeDeliveryText": {
+                "type": "string",
+                "nullable": true,
+                "title": "Text after the missing amount"
+              },
+              "freeDeliveryUnlocked": {
+                "type": "string",
+                "nullable": true,
+                "title": "Text once free delivery is unlocked"
+              },
+              "crossSellTitle": {
+                "type": "string",
+                "nullable": true,
+                "title": "Cross-sell title"
+              },
+              "note": {
+                "type": "string",
+                "nullable": true,
+                "title": "Note under the subtotal"
+              },
+              "emptyText": {
+                "type": "string",
+                "nullable": true,
+                "title": "Empty bag text"
+              },
+              "emptyLink": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string",
+                    "title": "Label"
+                  },
+                  "href": {
+                    "type": "string",
+                    "title": "Href"
+                  }
+                },
+                "required": [
+                  "label",
+                  "href"
+                ],
+                "nullable": true,
+                "title": "Empty bag link"
+              }
+            },
+            "nullable": true,
+            "title": "Bag drawer"
+          },
+          "crossSell": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/Resolvable"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@Product"
+                },
+                "title": "Inline data"
+              },
+              {
+                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+              },
+              {
+                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
+              },
+              {
+                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
+              }
+            ],
+            "nullable": true,
+            "title": "Bag cross-sell",
+            "description": "Two products offered in the bag drawer."
+          }
+        }
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L0hlYWRlci50c3g=": {
+        "title": "site/sections/Capy/Header.tsx",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0hlYWRlci50c3g=@Props"
+          }
+        ],
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "site/sections/Capy/Header.tsx"
+            ],
+            "default": "site/sections/Capy/Header.tsx"
+          }
+        }
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L0Zvb3Rlci50c3g=@Props": {
+        "type": "object",
+        "properties": {
+          "about": {
+            "type": "string",
+            "nullable": true,
+            "title": "About"
+          },
+          "columns": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "title": "Title"
+                },
+                "links": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "label": {
+                        "type": "string",
+                        "title": "Label"
+                      },
+                      "href": {
+                        "type": "string",
+                        "title": "Link"
+                      }
+                    },
+                    "required": [
+                      "label",
+                      "href"
+                    ]
+                  },
+                  "title": "Links"
+                }
+              },
+              "required": [
+                "title",
+                "links"
+              ]
+            },
+            "nullable": true,
+            "title": "Columns"
+          },
+          "closingLine": {
+            "type": "string",
+            "nullable": true,
+            "title": "Closing line"
+          },
+          "legal": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "title": "Legal lines"
+          },
+          "logo": {
+            "type": "string",
+            "nullable": true,
+            "format": "image-uri",
+            "title": "Logo"
+          },
+          "subline": {
+            "type": "string",
+            "nullable": true,
+            "title": "Sub-line next to the logo"
+          },
+          "logoWidth": {
+            "type": "number",
+            "nullable": true,
+            "title": "Logo width (px)"
+          }
+        }
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L0Zvb3Rlci50c3g=": {
+        "title": "site/sections/Capy/Footer.tsx",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0Zvb3Rlci50c3g=@Props"
+          }
+        ],
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "site/sections/Capy/Footer.tsx"
+            ],
+            "default": "site/sections/Capy/Footer.tsx"
+          }
+        }
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L05ld3NsZXR0ZXIudHN4@Props": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true,
+            "title": "Title"
+          },
+          "titleTone": {
+            "type": "string",
+            "nullable": true,
+            "title": "Second line (muted)"
+          },
+          "body": {
+            "type": "string",
+            "nullable": true,
+            "title": "Body"
+          },
+          "placeholder": {
+            "type": "string",
+            "nullable": true,
+            "title": "Email placeholder"
+          },
+          "ctaLabel": {
+            "type": "string",
+            "nullable": true,
+            "title": "Button label"
+          },
+          "note": {
+            "type": "string",
+            "nullable": true,
+            "title": "Note under the field"
+          },
+          "thanks": {
+            "type": "string",
+            "nullable": true,
+            "title": "Thank-you message"
+          }
+        }
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L05ld3NsZXR0ZXIudHN4": {
+        "title": "site/sections/Capy/Newsletter.tsx",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L05ld3NsZXR0ZXIudHN4@Props"
+          }
+        ],
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "site/sections/Capy/Newsletter.tsx"
+            ],
+            "default": "site/sections/Capy/Newsletter.tsx"
+          }
+        }
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L0hlcm9TY2VuZS50c3g=@Props": {
+        "type": "object",
+        "properties": {
+          "image": {
+            "type": "object",
+            "properties": {
+              "src": {
+                "type": "string",
+                "format": "image-uri",
+                "title": "Image"
+              },
+              "alt": {
+                "type": "string",
+                "title": "Alt text"
+              },
+              "position": {
+                "type": "string",
+                "nullable": true,
+                "title": "Focal point",
+                "description": "CSS object-position, e.g. \"64% 50%\"."
+              },
+              "positionMobile": {
+                "type": "string",
+                "nullable": true,
+                "title": "Focal point on phones",
+                "description": "CSS object-position on screens up to 720px wide."
+              }
+            },
+            "required": [
+              "src",
+              "alt"
+            ],
+            "description": "An editable image. Files under /capy/img get their 2x copy automatically.",
+            "title": "Image"
+          },
+          "kicker": {
+            "type": "object",
+            "properties": {
+              "motif": {
+                "type": "string",
+                "enum": [
+                  "ring",
+                  "meander",
+                  "quatre",
+                  "petal"
+                ],
+                "nullable": true,
+                "title": "Motif"
+              },
+              "text": {
+                "type": "string",
+                "title": "Text"
+              }
+            },
+            "required": [
+              "text"
+            ],
+            "nullable": true,
+            "title": "Kicker"
+          },
+          "title": {
+            "type": "string",
+            "title": "Headline"
+          },
+          "titleTone": {
+            "type": "string",
+            "nullable": true,
+            "title": "Headline, second tone (lime)"
+          },
+          "lede": {
+            "type": "string",
+            "nullable": true,
+            "title": "Lede"
+          },
+          "primaryCta": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "title": "Label"
+              },
+              "href": {
+                "type": "string",
+                "title": "Link"
+              }
+            },
+            "required": [
+              "label",
+              "href"
+            ],
+            "description": "A link with a label: buttons and underlined links.",
+            "nullable": true,
+            "title": "Primary button"
+          },
+          "secondaryCta": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "title": "Label"
+              },
+              "href": {
+                "type": "string",
+                "title": "Link"
+              }
+            },
+            "required": [
+              "label",
+              "href"
+            ],
+            "description": "A link with a label: buttons and underlined links.",
+            "nullable": true,
+            "title": "Secondary button"
+          },
+          "weather": {
+            "type": "object",
+            "properties": {
+              "city": {
+                "type": "string",
+                "title": "City"
+              },
+              "airC": {
+                "type": "number",
+                "title": "Air (°C)"
+              },
+              "waterC": {
+                "type": "number",
+                "title": "Water (°C)"
+              }
+            },
+            "required": [
+              "city",
+              "airC",
+              "waterC"
+            ],
+            "nullable": true,
+            "title": "Weather pill"
+          }
+        },
+        "required": [
+          "image",
+          "title"
+        ]
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L0hlcm9TY2VuZS50c3g=": {
+        "title": "site/sections/Capy/HeroScene.tsx",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0hlcm9TY2VuZS50c3g=@Props"
+          }
+        ],
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "site/sections/Capy/HeroScene.tsx"
+            ],
+            "default": "site/sections/Capy/HeroScene.tsx"
+          }
+        }
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L0ludHJvU3RhdGVtZW50LnRzeA==@Props": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "title": "Statement"
+          },
+          "collections": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "handle": {
+                  "type": "string",
+                  "enum": [
+                    "sol",
+                    "rio",
+                    "onsen"
+                  ],
+                  "title": "Collection"
+                },
+                "href": {
+                  "type": "string",
+                  "title": "Link"
+                }
+              },
+              "required": [
+                "handle",
+                "href"
+              ]
+            },
+            "nullable": true,
+            "title": "Collection tags"
+          }
+        },
+        "required": [
+          "text"
+        ]
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L0ludHJvU3RhdGVtZW50LnRzeA==": {
+        "title": "site/sections/Capy/IntroStatement.tsx",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0ludHJvU3RhdGVtZW50LnRzeA==@Props"
+          }
+        ],
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "site/sections/Capy/IntroStatement.tsx"
+            ],
+            "default": "site/sections/Capy/IntroStatement.tsx"
+          }
+        }
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25TY2VuZS50c3g=@Props": {
+        "type": "object",
+        "properties": {
+          "variant": {
+            "type": "string",
+            "enum": [
+              "photo",
+              "photo-night",
+              "products"
+            ],
+            "title": "Layout"
+          },
+          "collection": {
+            "type": "string",
+            "enum": [
+              "sol",
+              "rio",
+              "onsen"
+            ],
+            "title": "Collection"
+          },
+          "anchor": {
+            "type": "string",
+            "nullable": true,
+            "title": "Anchor",
+            "description": "id for in-page links (e.g. \"rio\" for /#rio)."
+          },
+          "image": {
+            "type": "object",
+            "properties": {
+              "src": {
+                "type": "string",
+                "format": "image-uri",
+                "title": "Image"
+              },
+              "alt": {
+                "type": "string",
+                "title": "Alt text"
+              },
+              "position": {
+                "type": "string",
+                "nullable": true,
+                "title": "Focal point",
+                "description": "CSS object-position, e.g. \"64% 50%\"."
+              },
+              "positionMobile": {
+                "type": "string",
+                "nullable": true,
+                "title": "Focal point on phones",
+                "description": "CSS object-position on screens up to 720px wide."
+              }
+            },
+            "required": [
+              "src",
+              "alt"
+            ],
+            "description": "An editable image. Files under /capy/img get their 2x copy automatically.",
+            "nullable": true,
+            "title": "Image (photo layouts)"
+          },
+          "title": {
+            "type": "string",
+            "title": "Headline"
+          },
+          "body": {
+            "type": "string",
+            "nullable": true,
+            "title": "Body"
+          },
+          "primaryCta": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "title": "Label"
+              },
+              "href": {
+                "type": "string",
+                "title": "Link"
+              }
+            },
+            "required": [
+              "label",
+              "href"
+            ],
+            "description": "A link with a label: buttons and underlined links.",
+            "nullable": true,
+            "title": "Button"
+          },
+          "link": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "title": "Label"
+              },
+              "href": {
+                "type": "string",
+                "title": "Link"
+              }
+            },
+            "required": [
+              "label",
+              "href"
+            ],
+            "description": "A link with a label: buttons and underlined links.",
+            "nullable": true,
+            "title": "Link"
+          },
+          "credit": {
+            "type": "string",
+            "nullable": true,
+            "title": "Photo credit line"
+          },
+          "products": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/Resolvable"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@Product"
+                },
+                "title": "Inline data"
+              },
+              {
+                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+              },
+              {
+                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
+              },
+              {
+                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
+              }
+            ],
+            "nullable": true,
+            "title": "Products (products layout)",
+            "description": "The first one is the lead."
+          },
+          "order": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "title": "Order",
+            "description": "Product handles to show first, in this order (the first is the lead)."
+          },
+          "colors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "title": "Colour per product",
+            "description": "Colour names, in the order of the products (e.g. Pool Mint, Charcoal, Marigold)."
+          },
+          "field": {
+            "type": "string",
+            "nullable": true,
+            "format": "color",
+            "title": "Field colour"
+          }
+        },
+        "required": [
+          "variant",
+          "collection",
+          "title"
+        ]
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25TY2VuZS50c3g=": {
+        "title": "site/sections/Capy/CollectionScene.tsx",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25TY2VuZS50c3g=@Props"
+          }
+        ],
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "site/sections/Capy/CollectionScene.tsx"
+            ],
+            "default": "site/sections/Capy/CollectionScene.tsx"
+          }
+        }
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RSYWlsLnRzeA==@Props": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "products": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/Resolvable"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@Product"
+                },
+                "title": "Inline data"
+              },
+              {
+                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+              },
+              {
+                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
+              },
+              {
+                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
+              }
+            ],
+            "nullable": true,
+            "title": "Products"
+          },
+          "order": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "title": "Order",
+            "description": "Product handles to show first, in this order. The rest follow."
+          },
+          "link": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "title": "Label"
+              },
+              "href": {
+                "type": "string",
+                "title": "Link"
+              }
+            },
+            "required": [
+              "label",
+              "href"
+            ],
+            "description": "A link with a label: buttons and underlined links.",
+            "nullable": true,
+            "title": "Link"
+          }
+        },
+        "required": [
+          "title",
+          "products"
+        ]
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RSYWlsLnRzeA==": {
+        "title": "site/sections/Capy/ProductRail.tsx",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RSYWlsLnRzeA==@Props"
+          }
+        ],
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "site/sections/Capy/ProductRail.tsx"
+            ],
+            "default": "site/sections/Capy/ProductRail.tsx"
+          }
+        }
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L01hbmlmZXN0by50c3g=@Props": {
+        "type": "object",
+        "properties": {
+          "image": {
+            "type": "object",
+            "properties": {
+              "src": {
+                "type": "string",
+                "format": "image-uri",
+                "title": "Image"
+              },
+              "alt": {
+                "type": "string",
+                "title": "Alt text"
+              },
+              "position": {
+                "type": "string",
+                "nullable": true,
+                "title": "Focal point",
+                "description": "CSS object-position, e.g. \"64% 50%\"."
+              },
+              "positionMobile": {
+                "type": "string",
+                "nullable": true,
+                "title": "Focal point on phones",
+                "description": "CSS object-position on screens up to 720px wide."
+              }
+            },
+            "required": [
+              "src",
+              "alt"
+            ],
+            "description": "An editable image. Files under /capy/img get their 2x copy automatically.",
+            "title": "Image"
+          },
+          "caption": {
+            "type": "string",
+            "nullable": true,
+            "title": "Caption"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "body": {
+            "type": "string",
+            "nullable": true,
+            "title": "Body",
+            "format": "textarea"
+          },
+          "link": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "title": "Label"
+              },
+              "href": {
+                "type": "string",
+                "title": "Link"
+              }
+            },
+            "required": [
+              "label",
+              "href"
+            ],
+            "description": "A link with a label: buttons and underlined links.",
+            "nullable": true,
+            "title": "Link"
+          }
+        },
+        "required": [
+          "image",
+          "title"
+        ]
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L01hbmlmZXN0by50c3g=": {
+        "title": "site/sections/Capy/Manifesto.tsx",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L01hbmlmZXN0by50c3g=@Props"
+          }
+        ],
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "site/sections/Capy/Manifesto.tsx"
+            ],
+            "default": "site/sections/Capy/Manifesto.tsx"
+          }
+        }
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L1NpemluZ1N0b3J5LnRzeA==@Props": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "body": {
+            "type": "string",
+            "nullable": true,
+            "title": "Body"
+          },
+          "image": {
+            "type": "object",
+            "properties": {
+              "src": {
+                "type": "string",
+                "format": "image-uri",
+                "title": "Image"
+              },
+              "alt": {
+                "type": "string",
+                "title": "Alt text"
+              },
+              "position": {
+                "type": "string",
+                "nullable": true,
+                "title": "Focal point",
+                "description": "CSS object-position, e.g. \"64% 50%\"."
+              },
+              "positionMobile": {
+                "type": "string",
+                "nullable": true,
+                "title": "Focal point on phones",
+                "description": "CSS object-position on screens up to 720px wide."
+              }
+            },
+            "required": [
+              "src",
+              "alt"
+            ],
+            "description": "An editable image. Files under /capy/img get their 2x copy automatically.",
+            "title": "Image"
+          },
+          "labels": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "title": "Size"
+                },
+                "weight": {
+                  "type": "string",
+                  "title": "Weight"
+                },
+                "girth": {
+                  "type": "string",
+                  "nullable": true,
+                  "title": "Girth"
+                },
+                "x": {
+                  "type": "number",
+                  "title": "Position",
+                  "description": "Centre of the label, in % of the image width."
+                },
+                "model": {
+                  "type": "string",
+                  "nullable": true,
+                  "title": "House model badge (e.g. \"Tião, 48 kg\")"
+                }
+              },
+              "required": [
+                "name",
+                "weight",
+                "x"
+              ]
+            },
+            "nullable": true,
+            "title": "Labels"
+          },
+          "cta": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "title": "Label"
+              },
+              "href": {
+                "type": "string",
+                "title": "Link"
+              }
+            },
+            "required": [
+              "label",
+              "href"
+            ],
+            "description": "A link with a label: buttons and underlined links.",
+            "nullable": true,
+            "title": "Button"
+          },
+          "anchor": {
+            "type": "string",
+            "nullable": true,
+            "title": "Anchor"
+          }
+        },
+        "required": [
+          "title",
+          "image"
+        ]
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L1NpemluZ1N0b3J5LnRzeA==": {
+        "title": "site/sections/Capy/SizingStory.tsx",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1NpemluZ1N0b3J5LnRzeA==@Props"
+          }
+        ],
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "site/sections/Capy/SizingStory.tsx"
+            ],
+            "default": "site/sections/Capy/SizingStory.tsx"
+          }
+        }
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L0pvdXJuYWxDYXJkcy50c3g=@Props": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "dek": {
+            "type": "string",
+            "nullable": true,
+            "title": "Dek"
+          },
+          "link": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "title": "Label"
+              },
+              "href": {
+                "type": "string",
+                "title": "Link"
+              }
+            },
+            "required": [
+              "label",
+              "href"
+            ],
+            "description": "A link with a label: buttons and underlined links.",
+            "nullable": true,
+            "title": "Link"
+          },
+          "posts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "string",
+                  "nullable": true,
+                  "title": "Category"
+                },
+                "title": {
+                  "type": "string",
+                  "title": "Title"
+                },
+                "dek": {
+                  "type": "string",
+                  "nullable": true,
+                  "title": "Dek"
+                },
+                "href": {
+                  "type": "string",
+                  "nullable": true,
+                  "title": "Link"
+                },
+                "image": {
+                  "type": "object",
+                  "properties": {
+                    "src": {
+                      "type": "string",
+                      "format": "image-uri",
+                      "title": "Image"
+                    },
+                    "alt": {
+                      "type": "string",
+                      "title": "Alt text"
+                    },
+                    "position": {
+                      "type": "string",
+                      "nullable": true,
+                      "title": "Focal point",
+                      "description": "CSS object-position, e.g. \"64% 50%\"."
+                    },
+                    "positionMobile": {
+                      "type": "string",
+                      "nullable": true,
+                      "title": "Focal point on phones",
+                      "description": "CSS object-position on screens up to 720px wide."
+                    }
+                  },
+                  "required": [
+                    "src",
+                    "alt"
+                  ],
+                  "description": "An editable image. Files under /capy/img get their 2x copy automatically.",
+                  "nullable": true,
+                  "title": "Photo"
+                },
+                "scale": {
+                  "type": "number",
+                  "nullable": true,
+                  "title": "Photo zoom",
+                  "description": "1 = fit. Zooms around the focal point."
+                },
+                "type": {
+                  "type": "object",
+                  "properties": {
+                    "big": {
+                      "type": "string",
+                      "title": "Big number"
+                    },
+                    "unit": {
+                      "type": "string",
+                      "nullable": true,
+                      "title": "Unit"
+                    },
+                    "caption": {
+                      "type": "string",
+                      "nullable": true,
+                      "title": "Caption"
+                    }
+                  },
+                  "required": [
+                    "big"
+                  ],
+                  "nullable": true,
+                  "title": "Type card",
+                  "description": "Used instead of a photo when set."
+                }
+              },
+              "required": [
+                "title"
+              ]
+            },
+            "nullable": true,
+            "title": "Posts"
+          },
+          "anchor": {
+            "type": "string",
+            "nullable": true,
+            "title": "Anchor"
+          }
+        },
+        "required": [
+          "title"
+        ]
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L0pvdXJuYWxDYXJkcy50c3g=": {
+        "title": "site/sections/Capy/JournalCards.tsx",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0pvdXJuYWxDYXJkcy50c3g=@Props"
+          }
+        ],
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "site/sections/Capy/JournalCards.tsx"
+            ],
+            "default": "site/sections/Capy/JournalCards.tsx"
+          }
+        }
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25IZWFkZXIudHN4@Props": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true,
+            "title": "Title override"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "title": "Description override"
+          },
+          "showTabs": {
+            "type": "boolean",
+            "nullable": true,
+            "title": "Show collection tabs"
+          },
+          "tabs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "handle": {
+                  "type": "string",
+                  "title": "Collection handle"
+                },
+                "label": {
+                  "type": "string",
+                  "title": "Label"
+                },
+                "description": {
+                  "type": "string",
+                  "nullable": true,
+                  "title": "Description",
+                  "description": "Shown under the title on this collection's page instead of Shopify's description."
+                }
+              },
+              "required": [
+                "handle",
+                "label"
+              ]
+            },
+            "nullable": true,
+            "title": "Tabs"
+          }
+        }
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25IZWFkZXIudHN4": {
+        "title": "site/sections/Capy/CollectionHeader.tsx",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25IZWFkZXIudHN4@Props"
+          }
+        ],
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "site/sections/Capy/CollectionHeader.tsx"
+            ],
+            "default": "site/sections/Capy/CollectionHeader.tsx"
+          }
+        }
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RMaXN0aW5nLnRzeA==@Props": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/Resolvable"
+              },
+              {
+                "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ProductListingPage",
+                "title": "Inline data"
+              },
+              {
+                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0aW5nUGFnZS50cw=="
+              },
+              {
+                "$ref": "#/definitions/Y29tbWVyY2UvbG9hZGVycy9wcm9kdWN0L2V4dGVuc2lvbnMvbGlzdGluZ1BhZ2UudHM="
+              }
+            ],
+            "nullable": true,
+            "title": "Products"
+          },
+          "colorFamilies": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "title": "Name"
+                },
+                "swatch": {
+                  "type": "string",
+                  "format": "color",
+                  "title": "Swatch"
+                },
+                "matches": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "title": "Variant colours",
+                  "description": "Variant colour names that belong to this family (e.g. Lime, Lime/Green)."
+                }
+              },
+              "required": [
+                "name",
+                "swatch",
+                "matches"
+              ]
+            },
+            "nullable": true,
+            "title": "Colour families"
+          },
+          "sizes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "title": "Sizes"
+          },
+          "promo": {
+            "type": "object",
+            "properties": {
+              "position": {
+                "type": "number",
+                "nullable": true,
+                "title": "Position",
+                "description": "The grid slot the tile starts at (1 = first)."
+              },
+              "image": {
+                "type": "object",
+                "properties": {
+                  "src": {
+                    "type": "string",
+                    "format": "image-uri",
+                    "title": "Image"
+                  },
+                  "alt": {
+                    "type": "string",
+                    "title": "Alt text"
+                  },
+                  "position": {
+                    "type": "string",
+                    "nullable": true,
+                    "title": "Focal point",
+                    "description": "CSS object-position, e.g. \"64% 50%\"."
+                  },
+                  "positionMobile": {
+                    "type": "string",
+                    "nullable": true,
+                    "title": "Focal point on phones",
+                    "description": "CSS object-position on screens up to 720px wide."
+                  }
+                },
+                "required": [
+                  "src",
+                  "alt"
+                ],
+                "description": "An editable image. Files under /capy/img get their 2x copy automatically.",
+                "title": "Image"
+              },
+              "background": {
+                "type": "string",
+                "nullable": true,
+                "format": "color",
+                "title": "Backdrop colour"
+              },
+              "collection": {
+                "type": "string",
+                "enum": [
+                  "sol",
+                  "rio",
+                  "onsen"
+                ],
+                "nullable": true,
+                "title": "Collection tag"
+              },
+              "petal": {
+                "type": "boolean",
+                "nullable": true,
+                "title": "Show the petal motif"
+              },
+              "title": {
+                "type": "string",
+                "title": "Title"
+              },
+              "body": {
+                "type": "string",
+                "nullable": true,
+                "title": "Body"
+              },
+              "link": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string",
+                    "title": "Label"
+                  },
+                  "href": {
+                    "type": "string",
+                    "title": "Link"
+                  }
+                },
+                "required": [
+                  "label",
+                  "href"
+                ],
+                "description": "A link with a label: buttons and underlined links.",
+                "nullable": true,
+                "title": "Link"
+              }
+            },
+            "required": [
+              "image",
+              "title"
+            ],
+            "nullable": true,
+            "title": "Promo tile"
+          },
+          "emptyText": {
+            "type": "string",
+            "nullable": true,
+            "title": "Empty result text"
+          },
+          "emptyLink": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "title": "Label"
+              },
+              "href": {
+                "type": "string",
+                "title": "Link"
+              }
+            },
+            "required": [
+              "label",
+              "href"
+            ],
+            "description": "A link with a label: buttons and underlined links.",
+            "nullable": true,
+            "title": "Empty result link"
+          }
+        },
+        "required": [
+          "page"
+        ]
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RMaXN0aW5nLnRzeA==": {
+        "title": "site/sections/Capy/ProductListing.tsx",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RMaXN0aW5nLnRzeA==@Props"
+          }
+        ],
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "site/sections/Capy/ProductListing.tsx"
+            ],
+            "default": "site/sections/Capy/ProductListing.tsx"
+          }
+        }
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25DYXJkcy50c3g=@Props": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true,
+            "title": "Title"
+          },
+          "cards": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "collection": {
+                  "type": "string",
+                  "enum": [
+                    "sol",
+                    "rio",
+                    "onsen"
+                  ],
+                  "title": "Collection"
+                },
+                "title": {
+                  "type": "string",
+                  "title": "Title"
+                },
+                "linkLabel": {
+                  "type": "string",
+                  "title": "Link label"
+                },
+                "href": {
+                  "type": "string",
+                  "title": "Link"
+                },
+                "image": {
+                  "type": "object",
+                  "properties": {
+                    "src": {
+                      "type": "string",
+                      "format": "image-uri",
+                      "title": "Image"
+                    },
+                    "alt": {
+                      "type": "string",
+                      "title": "Alt text"
+                    },
+                    "position": {
+                      "type": "string",
+                      "nullable": true,
+                      "title": "Focal point",
+                      "description": "CSS object-position, e.g. \"64% 50%\"."
+                    },
+                    "positionMobile": {
+                      "type": "string",
+                      "nullable": true,
+                      "title": "Focal point on phones",
+                      "description": "CSS object-position on screens up to 720px wide."
+                    }
+                  },
+                  "required": [
+                    "src",
+                    "alt"
+                  ],
+                  "description": "An editable image. Files under /capy/img get their 2x copy automatically.",
+                  "title": "Image"
+                }
+              },
+              "required": [
+                "collection",
+                "title",
+                "linkLabel",
+                "href",
+                "image"
+              ]
+            },
+            "nullable": true,
+            "title": "Cards"
+          }
+        }
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25DYXJkcy50c3g=": {
+        "title": "site/sections/Capy/CollectionCards.tsx",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25DYXJkcy50c3g=@Props"
+          }
+        ],
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "site/sections/Capy/CollectionCards.tsx"
+            ],
+            "default": "site/sections/Capy/CollectionCards.tsx"
+          }
+        }
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3REZXRhaWxzLnRzeA==@Props": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/Resolvable"
+              },
+              {
+                "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ProductDetailsPage",
+                "title": "Inline data"
+              },
+              {
+                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3REZXRhaWxzUGFnZS50cw=="
+              },
+              {
+                "$ref": "#/definitions/Y29tbWVyY2UvbG9hZGVycy9wcm9kdWN0L2V4dGVuc2lvbnMvZGV0YWlsc1BhZ2UudHM="
+              }
+            ],
+            "nullable": true,
+            "title": "Product"
+          },
+          "colorPrompt": {
+            "type": "object",
+            "properties": {
+              "question": {
+                "type": "string",
+                "title": "Question"
+              },
+              "hint": {
+                "type": "string",
+                "nullable": true,
+                "title": "Hint"
+              }
+            },
+            "required": [
+              "question"
+            ],
+            "nullable": true,
+            "title": "Colour question"
+          },
+          "sizePrompt": {
+            "type": "object",
+            "properties": {
+              "question": {
+                "type": "string",
+                "title": "Question"
+              },
+              "hint": {
+                "type": "string",
+                "nullable": true,
+                "title": "Hint"
+              }
+            },
+            "required": [
+              "question"
+            ],
+            "nullable": true,
+            "title": "Size question"
+          },
+          "sizes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "title": "Size name (as in Shopify)"
+                },
+                "range": {
+                  "type": "string",
+                  "title": "Weight range"
+                },
+                "bar": {
+                  "type": "number",
+                  "title": "Bar length",
+                  "description": "Relative width of the size bar: 1, 1.4, 1.8."
+                }
+              },
+              "required": [
+                "name",
+                "range",
+                "bar"
+              ]
+            },
+            "nullable": true,
+            "title": "Sizes"
+          },
+          "sizeGuide": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "title": "Label"
+              },
+              "href": {
+                "type": "string",
+                "title": "Link"
+              }
+            },
+            "required": [
+              "label",
+              "href"
+            ],
+            "description": "A link with a label: buttons and underlined links.",
+            "nullable": true,
+            "title": "Size guide link"
+          },
+          "defaultSize": {
+            "type": "string",
+            "nullable": true,
+            "title": "Default size",
+            "description": "Selected when the page opens."
+          },
+          "detailCrops": {
+            "type": "object",
+            "properties": {
+              "first": {
+                "type": "string",
+                "title": "First"
+              },
+              "second": {
+                "type": "string",
+                "title": "Second"
+              }
+            },
+            "required": [
+              "first",
+              "second"
+            ],
+            "nullable": true,
+            "title": "Detail crops",
+            "description": "Where the two detail crops zoom into the packshot (CSS transform-origin)."
+          },
+          "shippingNote": {
+            "type": "string",
+            "nullable": true,
+            "title": "Delivery line"
+          },
+          "materialsTitle": {
+            "type": "string",
+            "nullable": true,
+            "title": "Materials title (accordion, text from the product)"
+          },
+          "accordion": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "title": "Title"
+                },
+                "body": {
+                  "type": "string",
+                  "title": "Text",
+                  "format": "textarea"
+                }
+              },
+              "required": [
+                "title",
+                "body"
+              ]
+            },
+            "nullable": true,
+            "title": "More accordion items"
+          },
+          "notFound": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "title": "Title"
+              },
+              "body": {
+                "type": "string",
+                "nullable": true,
+                "title": "Body"
+              },
+              "link": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string",
+                    "title": "Label"
+                  },
+                  "href": {
+                    "type": "string",
+                    "title": "Link"
+                  }
+                },
+                "required": [
+                  "label",
+                  "href"
+                ],
+                "description": "A link with a label: buttons and underlined links.",
+                "nullable": true,
+                "title": "Link"
+              }
+            },
+            "required": [
+              "title"
+            ],
+            "nullable": true,
+            "title": "Not found text"
+          }
+        },
+        "required": [
+          "page"
+        ]
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3REZXRhaWxzLnRzeA==": {
+        "title": "site/sections/Capy/ProductDetails.tsx",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3REZXRhaWxzLnRzeA==@Props"
+          }
+        ],
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "site/sections/Capy/ProductDetails.tsx"
+            ],
+            "default": "site/sections/Capy/ProductDetails.tsx"
+          }
+        }
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L0xpZmVzdHlsZUJhbm5lci50c3g=@Props": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/Resolvable"
+              },
+              {
+                "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ProductDetailsPage",
+                "title": "Inline data"
+              },
+              {
+                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3REZXRhaWxzUGFnZS50cw=="
+              },
+              {
+                "$ref": "#/definitions/Y29tbWVyY2UvbG9hZGVycy9wcm9kdWN0L2V4dGVuc2lvbnMvZGV0YWlsc1BhZ2UudHM="
+              }
+            ],
+            "nullable": true,
+            "title": "Product (uses its lifestyle shot and tagline)"
+          },
+          "image": {
+            "type": "object",
+            "properties": {
+              "src": {
+                "type": "string",
+                "format": "image-uri",
+                "title": "Image"
+              },
+              "alt": {
+                "type": "string",
+                "title": "Alt text"
+              },
+              "position": {
+                "type": "string",
+                "nullable": true,
+                "title": "Focal point",
+                "description": "CSS object-position, e.g. \"64% 50%\"."
+              },
+              "positionMobile": {
+                "type": "string",
+                "nullable": true,
+                "title": "Focal point on phones",
+                "description": "CSS object-position on screens up to 720px wide."
+              }
+            },
+            "required": [
+              "src",
+              "alt"
+            ],
+            "description": "An editable image. Files under /capy/img get their 2x copy automatically.",
+            "nullable": true,
+            "title": "Image (when the product has none)"
+          },
+          "meta": {
+            "type": "string",
+            "nullable": true,
+            "title": "Caption line",
+            "description": "On a product page, {color} is replaced by the product's first colour."
+          },
+          "title": {
+            "type": "string",
+            "nullable": true,
+            "title": "Title (when the product has no tagline)"
+          },
+          "position": {
+            "type": "string",
+            "enum": [
+              "top-right",
+              "top-left"
+            ],
+            "nullable": true,
+            "title": "Caption position"
+          }
+        }
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L0xpZmVzdHlsZUJhbm5lci50c3g=": {
+        "title": "site/sections/Capy/LifestyleBanner.tsx",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0xpZmVzdHlsZUJhbm5lci50c3g=@Props"
+          }
+        ],
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "site/sections/Capy/LifestyleBanner.tsx"
+            ],
+            "default": "site/sections/Capy/LifestyleBanner.tsx"
+          }
+        }
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RTaGVsZi50c3g=@Props": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "products": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/Resolvable"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@Product"
+                },
+                "title": "Inline data"
+              },
+              {
+                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+              },
+              {
+                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
+              },
+              {
+                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
+              }
+            ],
+            "nullable": true,
+            "title": "Products"
+          },
+          "order": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "title": "Order",
+            "description": "Product handles to show first, in this order."
+          },
+          "count": {
+            "type": "number",
+            "nullable": true,
+            "title": "How many"
+          },
+          "link": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "title": "Label"
+              },
+              "href": {
+                "type": "string",
+                "title": "Link"
+              }
+            },
+            "required": [
+              "label",
+              "href"
+            ],
+            "description": "A link with a label: buttons and underlined links.",
+            "nullable": true,
+            "title": "Link"
+          }
+        },
+        "required": [
+          "title",
+          "products"
+        ]
+      },
+      "c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RTaGVsZi50c3g=": {
+        "title": "site/sections/Capy/ProductShelf.tsx",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RTaGVsZi50c3g=@Props"
+          }
+        ],
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "site/sections/Capy/ProductShelf.tsx"
+            ],
+            "default": "site/sections/Capy/ProductShelf.tsx"
+          }
+        }
+      },
       "bGF6eQ==": {
         "title": "lazy",
         "description": "Resolves its value only when the function calls it",
@@ -9648,6 +11739,70 @@
           {
             "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9UaGVtZS9UaGVtZS50c3g=",
             "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9UaGVtZS9UaGVtZS50c3g=@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0hlYWRlci50c3g=",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0hlYWRlci50c3g=@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0Zvb3Rlci50c3g=",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0Zvb3Rlci50c3g=@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L05ld3NsZXR0ZXIudHN4",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L05ld3NsZXR0ZXIudHN4@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0hlcm9TY2VuZS50c3g=",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0hlcm9TY2VuZS50c3g=@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0ludHJvU3RhdGVtZW50LnRzeA==",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0ludHJvU3RhdGVtZW50LnRzeA==@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25TY2VuZS50c3g=",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25TY2VuZS50c3g=@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RSYWlsLnRzeA==",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RSYWlsLnRzeA==@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L01hbmlmZXN0by50c3g=",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L01hbmlmZXN0by50c3g=@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1NpemluZ1N0b3J5LnRzeA==",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1NpemluZ1N0b3J5LnRzeA==@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0pvdXJuYWxDYXJkcy50c3g=",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0pvdXJuYWxDYXJkcy50c3g=@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25IZWFkZXIudHN4",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25IZWFkZXIudHN4@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RMaXN0aW5nLnRzeA==",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RMaXN0aW5nLnRzeA==@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25DYXJkcy50c3g=",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25DYXJkcy50c3g=@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3REZXRhaWxzLnRzeA==",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3REZXRhaWxzLnRzeA==@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0xpZmVzdHlsZUJhbm5lci50c3g=",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0xpZmVzdHlsZUJhbm5lci50c3g=@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RTaGVsZi50c3g=",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RTaGVsZi50c3g=@Props"
           }
         ]
       }
@@ -9777,6 +11932,70 @@
           {
             "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9UaGVtZS9UaGVtZS50c3g=",
             "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9UaGVtZS9UaGVtZS50c3g=@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0hlYWRlci50c3g=",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0hlYWRlci50c3g=@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0Zvb3Rlci50c3g=",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0Zvb3Rlci50c3g=@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L05ld3NsZXR0ZXIudHN4",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L05ld3NsZXR0ZXIudHN4@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0hlcm9TY2VuZS50c3g=",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0hlcm9TY2VuZS50c3g=@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0ludHJvU3RhdGVtZW50LnRzeA==",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0ludHJvU3RhdGVtZW50LnRzeA==@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25TY2VuZS50c3g=",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25TY2VuZS50c3g=@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RSYWlsLnRzeA==",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RSYWlsLnRzeA==@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L01hbmlmZXN0by50c3g=",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L01hbmlmZXN0by50c3g=@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1NpemluZ1N0b3J5LnRzeA==",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1NpemluZ1N0b3J5LnRzeA==@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0pvdXJuYWxDYXJkcy50c3g=",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0pvdXJuYWxDYXJkcy50c3g=@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25IZWFkZXIudHN4",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25IZWFkZXIudHN4@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RMaXN0aW5nLnRzeA==",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RMaXN0aW5nLnRzeA==@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25DYXJkcy50c3g=",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25DYXJkcy50c3g=@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3REZXRhaWxzLnRzeA==",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3REZXRhaWxzLnRzeA==@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0xpZmVzdHlsZUJhbm5lci50c3g=",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0xpZmVzdHlsZUJhbm5lci50c3g=@Props"
+          },
+          {
+            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RTaGVsZi50c3g=",
+            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RTaGVsZi50c3g=@Props"
           }
         ]
       },

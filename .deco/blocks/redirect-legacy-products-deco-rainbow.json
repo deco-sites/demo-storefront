@@ -1,0 +1,6 @@
+{
+  "__resolveType": "redirect",
+  "from": "/products/deco-rainbow",
+  "to": "/collections/the-herd",
+  "permanent": false
+}
