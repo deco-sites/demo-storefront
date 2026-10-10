@@ -114,6 +114,7 @@ export async function startUpstream({ port, mode, storePath, passthroughOnMiss =
         if (!entry) {
           misses.push({ case: currentCase, key });
           log(`[upstream] MISS ${currentCase} ${key}`);
+          if (process.env.PARITY_DEBUG_MISSES) log(`[upstream]   body ${body.toString("utf8").slice(0, 200)} … ${body.toString("utf8").slice(-400)}`);
           if (passthroughOnMiss) entry = await forward(req.method, target, req.headers, body);
           else {
             res.writeHead(599, { "content-type": "text/plain", "x-parity-miss": "1" }).end("parity upstream: no recording");
