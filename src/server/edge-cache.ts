@@ -25,7 +25,7 @@
  *   `CDN-Cache-Control: no-store`, so Cloudflare's own CDN never caches what this wrapper didn't;
  * - `vite dev` skips the edge cache, so a content edit shows on the next load.
  */
-import { cms } from "../cms";
+import { cms, draftPointer } from "../cms";
 import {
   type CacheProfileName,
   cacheHeaders,
@@ -197,9 +197,13 @@ function dedupeSetCookies(response: Response): void {
   for (const c of last.values()) response.headers.append("set-cookie", c);
 }
 
-/** A draft preview (`?__draft=` or the draft cookie, read the framework's way): never cached. */
-async function isDraft(request: Request, url: URL): Promise<boolean> {
-  return url.searchParams.has("__draft") || (await cms.draftPointer(request)) !== null;
+/**
+ * A draft preview (a valid `?__draft=` pointer or the draft cookie, on a host allowed to preview, read
+ * the framework's way): never cached. Only a pointer the CMS accepts bypasses the cache, as in v7, so
+ * `?__draft=x` on production can't push every request past the edge cache to the origin.
+ */
+async function isDraft(request: Request): Promise<boolean> {
+  return (await draftPointer(request)) !== null;
 }
 
 function isServerFn(url: URL): boolean {
@@ -335,7 +339,7 @@ export function withEdgeCache(serverEntry: Handler, options: EdgeCacheOptions): 
       !import.meta.env.DEV &&
       request.method === "GET" &&
       !BYPASS_PATHS.some((p) => url.pathname.startsWith(p)) &&
-      !(await isDraft(request, url));
+      !(await isDraft(request));
     // A private profile still goes through the path below, which never stores it (`edge.isPublic`
     // is false) and never serves it from the cache: only public profiles are looked up.
 
