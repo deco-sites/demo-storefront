@@ -253,6 +253,7 @@ export async function runCase({ browser, manifest, kase, baseURL, mode, harPath,
     await ctx.route(thirdPartyRe, (route) => {
       const u = new URL(route.request().url());
       harMisses.add(`${route.request().method()} ${u.origin}${u.pathname}`);
+      if (process.env.PARITY_DEBUG_MISSES) console.error(`[har-miss] ${kase.id} ${route.request().method()} ${u.href}`);
       return route.abort("internetdisconnected");
     });
   }
