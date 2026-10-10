@@ -10251,6 +10251,12 @@
                 "label": {
                   "type": "string",
                   "title": "Label"
+                },
+                "description": {
+                  "type": "string",
+                  "nullable": true,
+                  "title": "Description",
+                  "description": "Shown under the title on this collection's page instead of Shopify's description."
                 }
               },
               "required": [

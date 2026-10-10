@@ -25,7 +25,8 @@
       "tabs": [
         {
           "handle": "the-herd",
-          "label": "All"
+          "label": "All",
+          "description": "Everything deco makes, in one place. Eight pieces in three collections, cut for Pup, Adult and Big Boss."
         },
         {
           "handle": "sol",

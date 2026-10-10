@@ -49,7 +49,7 @@ export async function loader(props: Props): Promise<ViewProps> {
     (query
       ? undefined
       : current
-        ? current.description || undefined
+        ? tabs.find((t) => t.handle === handle)?.description || current.description || undefined
         : handle
           ? "This collection has wandered off."
           : undefined);
@@ -58,6 +58,9 @@ export async function loader(props: Props): Promise<ViewProps> {
     description,
     crumb: query ? "Search" : (current?.title ?? props.title ?? "Collection"),
     current: handle,
-    tabs: tabs.map((t) => ({ ...t, count: data[alias(t.handle)]?.products.nodes.length })),
+    tabs: tabs.map(({ description: _d, ...t }) => ({
+      ...t,
+      count: data[alias(t.handle)]?.products.nodes.length,
+    })),
   };
 }

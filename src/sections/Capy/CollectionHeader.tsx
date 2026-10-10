@@ -12,6 +12,11 @@ export interface Tab {
   handle: string;
   /** @title Label */
   label: string;
+  /**
+   * @title Description
+   * @description Shown under the title on this collection's page instead of Shopify's description.
+   */
+  description?: string;
 }
 
 export interface Props {

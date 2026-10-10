@@ -202,7 +202,7 @@ export default function Minicart({
         tabIndex={-1}
       />
       <label htmlFor={MINICART_DRAWER_ID} className="scrim" aria-hidden="true" />
-      <aside className="bagdrawer" role="dialog" aria-modal="true" aria-label="Your bag">
+      <aside className="bagdrawer veil" role="dialog" aria-modal="true" aria-label="Your bag">
         <div className="drawer-head">
           <h2 className="h3">
             Your bag{" "}
