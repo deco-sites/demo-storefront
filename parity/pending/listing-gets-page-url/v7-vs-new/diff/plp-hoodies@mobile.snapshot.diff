@@ -1,0 +1,265 @@
+90-     "jsonLd": []
+90+     "jsonLd": [
+91-   },
+91+       {
+92-   "dom": {
+92+         "@context": "https://schema.org",
+93-     "head": {
+93+         "@type": "ItemList",
+94-       "lang": "en",
+94+         "url": "{origin}/hoodies-sweatshirts",
+95-       "dataTheme": "light",
+95+         "name": "Hoodies & Sweatshirts",
+96-       "title": "Storefront | deco.cx",
+96+         "description": "Stay warm, stay Deco. Premium hoodies and sweatshirts built for comfort and style.",
+97-       "meta": [
+97+         "numberOfItems": 0,
+98-         {
+98+         "itemListElement": []
+99-           "charset": "utf-8"
+99+       },
+100-         },
+100+       {
+101-         {
+101+         "@context": "https://schema.org",
+102-           "name": "viewport",
+102+         "@type": "BreadcrumbList",
+103-           "content": "width=device-width, initial-scale=1"
+103+         "itemListElement": [
+104-         },
+104+           {
+105-         {
+105+             "@type": "ListItem",
+106-           "property": "og:site_name",
+106+             "position": 2,
+107-           "content": "Storefront-tanstack"
+107+             "name": "hoodies-sweatshirts",
+108-         },
+108+             "item": "/hoodies-sweatshirts"
+109-         {
+109+           }
+110-           "name": "description",
+110+         ],
+111-           "content": "Build profitable websites with deco.cx | deco.cx"
+111+         "numberOfItems": 1
+112-         },
+112+       }
+113-         {
+113+     ]
+114-           "name": "robots",
+114+   },
+115-           "content": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+115+   "dom": {
+116-         },
+116+     "head": {
+117-         {
+117+       "lang": "en",
+118-           "property": "og:title",
+118+       "dataTheme": "light",
+119-           "content": "Storefront | deco.cx"
+119+       "title": "Storefront | deco.cx",
+120-         },
+120+       "meta": [
+122-           "property": "og:description",
+122+           "charset": "utf-8"
+123-           "content": "Build profitable websites with deco.cx | deco.cx"
+123+         },
+124-         },
+124+         {
+125-         {
+125+           "name": "viewport",
+126-           "property": "og:image",
+126+           "content": "width=device-width, initial-scale=1"
+127-           "content": "https://decoims.com/storefront-tanstack/bfe00763-d6fa-40f0-9fa9-77e6769fe02d/1742560188441-74d13a55-4c18-4a5c-8cb4-dcaa27aae923.png"
+127+         },
+128-         },
+128+         {
+129-         {
+129+           "property": "og:site_name",
+130-           "property": "og:type",
+130+           "content": "Storefront-tanstack"
+131-           "content": "website"
+131+         },
+132-         },
+132+         {
+133-         {
+133+           "name": "description",
+134-           "name": "twitter:card",
+134+           "content": "Build profitable websites with deco.cx | deco.cx"
+135-           "content": "summary_large_image"
+135+         },
+136-         },
+136+         {
+137-         {
+137+           "name": "robots",
+138-           "name": "twitter:title",
+138+           "content": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+139-           "content": "Storefront | deco.cx"
+139+         },
+140-         },
+140+         {
+141-         {
+141+           "property": "og:title",
+142-           "name": "twitter:description",
+142+           "content": "Storefront | deco.cx"
+143-           "content": "Build profitable websites with deco.cx | deco.cx"
+143+         },
+144-         },
+144+         {
+145-         {
+145+           "property": "og:description",
+146-           "name": "twitter:image",
+146+           "content": "Build profitable websites with deco.cx | deco.cx"
+147-           "content": "https://decoims.com/storefront-tanstack/bfe00763-d6fa-40f0-9fa9-77e6769fe02d/1742560188441-74d13a55-4c18-4a5c-8cb4-dcaa27aae923.png"
+147+         },
+148-         }
+148+         {
+149-       ],
+149+           "property": "og:image",
+150-       "links": [
+150+           "content": "https://decoims.com/storefront-tanstack/bfe00763-d6fa-40f0-9fa9-77e6769fe02d/1742560188441-74d13a55-4c18-4a5c-8cb4-dcaa27aae923.png"
+151-         {
+151+         },
+152-           "rel": "preconnect",
+152+         {
+153-           "href": "https://api.fontshare.com"
+153+           "property": "og:type",
+154-         },
+154+           "content": "website"
+155-         {
+155+         },
+156-           "rel": "icon",
+156+         {
+157-           "href": "/favicon.ico"
+157+           "name": "twitter:card",
+158-         }
+158+           "content": "summary_large_image"
+159-       ]
+159+         },
+160-     },
+160+         {
+161-     "jsonLd": [
+161+           "name": "twitter:title",
+162-       {
+162+           "content": "Storefront | deco.cx"
+163-         "@context": "https://schema.org",
+163+         },
+164-         "@type": "ItemList",
+164+         {
+165-         "url": "https://localhost/",
+165+           "name": "twitter:description",
+166-         "name": "",
+166+           "content": "Build profitable websites with deco.cx | deco.cx"
+167-         "description": "",
+167+         },
+168-         "numberOfItems": 0,
+168+         {
+169-         "itemListElement": []
+169+           "name": "twitter:image",
+170-       },
+170+           "content": "https://decoims.com/storefront-tanstack/bfe00763-d6fa-40f0-9fa9-77e6769fe02d/1742560188441-74d13a55-4c18-4a5c-8cb4-dcaa27aae923.png"
+171-       {
+171+         }
+172-         "@context": "https://schema.org",
+172+       ],
+173-         "@type": "BreadcrumbList",
+173+       "links": [
+174-         "itemListElement": [
+174+         {
+175-           {
+175+           "rel": "preconnect",
+176-             "@type": "ListItem",
+176+           "href": "https://api.fontshare.com"
+177-             "position": 2,
+177+         },
+178-             "name": "",
+178+         {
+179-             "item": "/"
+179+           "rel": "icon",
+180-           }
+180+           "href": "/favicon.ico"
+181-         ],
+181+         }
+182-         "numberOfItems": 1
+182+       ]
+183-       }
+183+     },
+184-     ]
+184+     "jsonLd": [
+185-   },
+185+       {
+186-   "finalUrl": "/hoodies-sweatshirts",
+186+         "@context": "https://schema.org",
+187-   "analytics": {
+187+         "@type": "ItemList",
+188-     "views": [],
+188+         "url": "{origin}/hoodies-sweatshirts",
+189-     "events": [
+189+         "name": "Hoodies & Sweatshirts",
+190-       {
+190+         "description": "Stay warm, stay Deco. Premium hoodies and sweatshirts built for comfort and style.",
+191-         "name": "view_item_list",
+191+         "numberOfItems": 0,
+192-         "path": "/hoodies-sweatshirts",
+192+         "itemListElement": []
+193-         "props": {
+193+       },
+194-           "item_list_id": "/",
+194+       {
+195-           "item_list_name": "",
+195+         "@context": "https://schema.org",
+196-           "items": []
+196+         "@type": "BreadcrumbList",
+197-         }
+197+         "itemListElement": [
+198-       }
+198+           {
+199-     ]
+199+             "@type": "ListItem",
+200-   },
+200+             "position": 2,
+201-   "thirdPartyRequests": [
+201+             "name": "hoodies-sweatshirts",
+202-     "GET https://api.fontshare.com/v2/css",
+202+             "item": "/hoodies-sweatshirts"
+203-     "GET https://cdn.fontshare.com/wf/5SZVFDB7V52TI6ULVC6J3WQZQCIZVDV5/ODYPSTCUDMKSTYIPTV4CLQ7URIK7XYBJ/YS3VPNVO4B3TOJMEXDGFZQ4TLZGGSRZC.woff2",
+203+           }
+204-     "GET https://cdn.fontshare.com/wf/BLNB4FAQFNK56DWWNF7PMGTCOTZHOEII/ST3WKSSDMBK2MIQQO3MAVYWLF4FTOLFV/6IN5WOLRCYP4G4MOCOHOMXNON6Q7MDAR.woff2",
+204+         ],
+205-     "GET https://cdn.fontshare.com/wf/OYB4CXKJQXKTNSLJMTDQOIVUL2V5EL7S/WYO2P7DQVV5RNXGMCUO2HL4RJP4VFUAS/6XPIMU23OJVRY676OG5YVJMWEHWICATX.woff2",
+205+         "numberOfItems": 1
+206-     "GET https://decoims.com/decocms/e8c6326e-e009-4e3c-9787-b2fe25a1b993/deco-logo.png",
+206+       }
+207-     "GET https://decoims.com/image",
+207+     ]
+208-     "GET https://decoims.com/storefront-tanstack/b37f70f2-4a04-44d8-8d12-a6cba50b7785/1742560260738-f1faab73-e4ff-4037-b7c4-5d02bd0b1209.png"
+208+   },
+209-   ]
+209+   "finalUrl": "/hoodies-sweatshirts",
+210- }
+210+   "analytics": {
+211- 
+211+     "views": [],
+212+     "events": [
+213+       {
+214+         "name": "view_item_list",
+215+         "path": "/hoodies-sweatshirts",
+216+         "props": {
+217+           "item_list_id": "/hoodies-sweatshirts",
+218+           "item_list_name": "hoodies-sweatshirts",
+219+           "items": []
+220+         }
+221+       }
+222+     ]
+223+   },
+224+   "thirdPartyRequests": [
+225+     "GET https://api.fontshare.com/v2/css",
+226+     "GET https://cdn.fontshare.com/wf/5SZVFDB7V52TI6ULVC6J3WQZQCIZVDV5/ODYPSTCUDMKSTYIPTV4CLQ7URIK7XYBJ/YS3VPNVO4B3TOJMEXDGFZQ4TLZGGSRZC.woff2",
+227+     "GET https://cdn.fontshare.com/wf/BLNB4FAQFNK56DWWNF7PMGTCOTZHOEII/ST3WKSSDMBK2MIQQO3MAVYWLF4FTOLFV/6IN5WOLRCYP4G4MOCOHOMXNON6Q7MDAR.woff2",
+228+     "GET https://cdn.fontshare.com/wf/OYB4CXKJQXKTNSLJMTDQOIVUL2V5EL7S/WYO2P7DQVV5RNXGMCUO2HL4RJP4VFUAS/6XPIMU23OJVRY676OG5YVJMWEHWICATX.woff2",
+229+     "GET https://decoims.com/decocms/e8c6326e-e009-4e3c-9787-b2fe25a1b993/deco-logo.png",
+230+     "GET https://decoims.com/image",
+231+     "GET https://decoims.com/storefront-tanstack/b37f70f2-4a04-44d8-8d12-a6cba50b7785/1742560260738-f1faab73-e4ff-4037-b7c4-5d02bd0b1209.png"
+232+   ]
+233+ }
+234+ 
