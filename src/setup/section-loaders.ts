@@ -29,6 +29,12 @@ const cachedInstagramLoader = createCachedLoader(
 );
 
 registerSectionLoaders({
+  // Theme's color math (colorjs.io) runs here on the server; the dynamic
+  // import keeps it in a lazy chunk the browser never requests.
+  "site/sections/Theme/Theme.tsx": async (props: any) => {
+    const { computeThemeVariables } = await import("~/sections/Theme/variables");
+    return { ...props, variables: computeThemeVariables(props) };
+  },
   "site/sections/Newsletter/Newsletter.tsx": async (props: any, req: Request) => {
     const mod: any = await import("~/sections/Newsletter/Newsletter");
     return typeof mod.loader === "function" ? mod.loader(props, req) : props;
