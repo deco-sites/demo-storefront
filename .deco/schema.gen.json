@@ -1,7 +1,7 @@
 {
   "major": 1,
   "blocksMajor": 8,
-  "version": "8.1.0-next.7",
+  "version": "8.1.0",
   "namespace": "site",
   "site": "demo-storefront",
   "manifest": {
@@ -820,7 +820,7 @@
           "image": {
             "type": "array",
             "items": {
-              "type": "object"
+              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
             },
             "nullable": true,
             "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
@@ -977,7 +977,7 @@
           "video": {
             "type": "array",
             "items": {
-              "type": "object"
+              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@VideoObject"
             },
             "nullable": true,
             "title": "Video"
@@ -5400,7 +5400,11 @@
                               "title": "ThumbnailUrl"
                             },
                             "image": {
-                              "type": "object",
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+                              },
+                              "nullable": true,
                               "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
                               "title": "Image"
                             },
@@ -5482,7 +5486,11 @@
                                     "title": "ThumbnailUrl"
                                   },
                                   "image": {
-                                    "type": "object",
+                                    "type": "array",
+                                    "items": {
+                                      "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+                                    },
+                                    "nullable": true,
                                     "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
                                     "title": "Image"
                                   },
@@ -5523,7 +5531,11 @@
                                     "title": "Identifier"
                                   },
                                   "video": {
-                                    "type": "object",
+                                    "type": "array",
+                                    "items": {
+                                      "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@VideoObject"
+                                    },
+                                    "nullable": true,
                                     "title": "Video"
                                   },
                                   "name": {
@@ -5638,7 +5650,11 @@
                                     "title": "ThumbnailUrl"
                                   },
                                   "image": {
-                                    "type": "object",
+                                    "type": "array",
+                                    "items": {
+                                      "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+                                    },
+                                    "nullable": true,
                                     "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
                                     "title": "Image"
                                   },
@@ -5720,7 +5736,11 @@
                                           "title": "ThumbnailUrl"
                                         },
                                         "image": {
-                                          "type": "object",
+                                          "type": "array",
+                                          "items": {
+                                            "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+                                          },
+                                          "nullable": true,
                                           "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
                                           "title": "Image"
                                         },
@@ -5761,7 +5781,11 @@
                                           "title": "Identifier"
                                         },
                                         "video": {
-                                          "type": "object",
+                                          "type": "array",
+                                          "items": {
+                                            "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@VideoObject"
+                                          },
+                                          "nullable": true,
                                           "title": "Video"
                                         },
                                         "name": {
@@ -5876,7 +5900,11 @@
                                           "title": "ThumbnailUrl"
                                         },
                                         "image": {
-                                          "type": "object",
+                                          "type": "array",
+                                          "items": {
+                                            "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+                                          },
+                                          "nullable": true,
                                           "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
                                           "title": "Image"
                                         },
@@ -5958,7 +5986,11 @@
                                                 "title": "ThumbnailUrl"
                                               },
                                               "image": {
-                                                "type": "object",
+                                                "type": "array",
+                                                "items": {
+                                                  "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+                                                },
+                                                "nullable": true,
                                                 "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
                                                 "title": "Image"
                                               },
@@ -5999,7 +6031,11 @@
                                                 "title": "Identifier"
                                               },
                                               "video": {
-                                                "type": "object",
+                                                "type": "array",
+                                                "items": {
+                                                  "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@VideoObject"
+                                                },
+                                                "nullable": true,
                                                 "title": "Video"
                                               },
                                               "name": {
@@ -6114,7 +6150,11 @@
                                                 "title": "ThumbnailUrl"
                                               },
                                               "image": {
-                                                "type": "object",
+                                                "type": "array",
+                                                "items": {
+                                                  "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+                                                },
+                                                "nullable": true,
                                                 "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
                                                 "title": "Image"
                                               },
@@ -6196,7 +6236,11 @@
                                                       "title": "ThumbnailUrl"
                                                     },
                                                     "image": {
-                                                      "type": "object",
+                                                      "type": "array",
+                                                      "items": {
+                                                        "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+                                                      },
+                                                      "nullable": true,
                                                       "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
                                                       "title": "Image"
                                                     },
@@ -6237,7 +6281,11 @@
                                                       "title": "Identifier"
                                                     },
                                                     "video": {
-                                                      "type": "object",
+                                                      "type": "array",
+                                                      "items": {
+                                                        "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@VideoObject"
+                                                      },
+                                                      "nullable": true,
                                                       "title": "Video"
                                                     },
                                                     "name": {
@@ -6352,7 +6400,11 @@
                                                       "title": "ThumbnailUrl"
                                                     },
                                                     "image": {
-                                                      "type": "object",
+                                                      "type": "array",
+                                                      "items": {
+                                                        "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+                                                      },
+                                                      "nullable": true,
                                                       "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
                                                       "title": "Image"
                                                     },
@@ -6434,7 +6486,11 @@
                                                             "title": "ThumbnailUrl"
                                                           },
                                                           "image": {
-                                                            "type": "object",
+                                                            "type": "array",
+                                                            "items": {
+                                                              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+                                                            },
+                                                            "nullable": true,
                                                             "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
                                                             "title": "Image"
                                                           },
@@ -6475,7 +6531,11 @@
                                                             "title": "Identifier"
                                                           },
                                                           "video": {
-                                                            "type": "object",
+                                                            "type": "array",
+                                                            "items": {
+                                                              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@VideoObject"
+                                                            },
+                                                            "nullable": true,
                                                             "title": "Video"
                                                           },
                                                           "name": {
@@ -6615,7 +6675,11 @@
                         "title": "ThumbnailUrl"
                       },
                       "image": {
-                        "type": "object",
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+                        },
+                        "nullable": true,
                         "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
                         "title": "Image"
                       },
@@ -6697,7 +6761,11 @@
                               "title": "ThumbnailUrl"
                             },
                             "image": {
-                              "type": "object",
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+                              },
+                              "nullable": true,
                               "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
                               "title": "Image"
                             },
@@ -6738,7 +6806,11 @@
                               "title": "Identifier"
                             },
                             "video": {
-                              "type": "object",
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@VideoObject"
+                              },
+                              "nullable": true,
                               "title": "Video"
                             },
                             "name": {
@@ -8071,15 +8143,18 @@
                   },
                   {
                     "type": "string",
-                    "const": "intent"
+                    "const": "intent",
+                    "default": "intent"
                   },
                   {
                     "type": "string",
-                    "const": "viewport"
+                    "const": "viewport",
+                    "default": "viewport"
                   },
                   {
                     "type": "string",
-                    "const": "render"
+                    "const": "render",
+                    "default": "render"
                   }
                 ],
                 "nullable": true,
