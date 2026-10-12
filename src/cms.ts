@@ -54,8 +54,8 @@ const options = {
   blocks,
   site,
   token,
-  // `vite dev` keeps local files even with hosted releases on. Releases of @decocms/blocks after
-  // 8.1.0-next.7 take it from here instead of reading NODE_ENV; earlier ones ignore it.
+  // `vite dev` keeps local files even with hosted releases on. The SDK reads no NODE_ENV; it takes
+  // local development from this option.
   dev: import.meta.env.DEV,
   // The hosted collector when the site is connected (the token sends there); otherwise the standard
   // OTEL_EXPORTER_OTLP_ENDPOINT/HEADERS, if set (/next/telemetry#choose-where-telemetry-goes). The SDK
