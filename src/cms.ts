@@ -83,6 +83,9 @@ export const cms = createCMS({ ...options, content });
 if (import.meta.hot) {
   import.meta.hot.accept("../.deco/blocks.gen", (next) => {
     if (next) createCMS({ ...options, content: next.default });
+    // Only now does a request render the saved content: open pages reload on this event
+    // (vite.config.ts, site-content-reload), not on the file change.
+    import.meta.hot?.send("site:content-updated");
   });
 }
 
