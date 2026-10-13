@@ -7,6 +7,9 @@ import path from "path";
 
 const srcDir = path.resolve(__dirname, "src");
 
+/** The event src/cms.ts sends from the worker once a save's content is in the CMS. */
+const CONTENT_UPDATED = "site:content-updated";
+
 /**
  * The build's id for edge-cache keys and the X-Cache-Version header: the time this build ran, so every
  * build (even two of the same commit) gets its own cache entries.
@@ -72,13 +75,16 @@ export default defineConfig({
     {
       // `deco serve` (the site editor's local server) rewrites .deco/blocks.gen.ts on every save.
       // Only the worker imports it, so Vite swaps it on the server and leaves open pages as they
-      // were: reload them, so the editor's preview (and any tab) shows the saved content.
+      // were: reload them, so the editor's preview (and any tab) shows the saved content. Not on the
+      // file change itself: the worker re-imports the content a moment later, and a page reloaded
+      // before that renders the previous save. src/cms.ts sends CONTENT_UPDATED once the new
+      // content is in the CMS, and only then do open pages reload.
       name: "site-content-reload",
       apply: "serve",
-      hotUpdate({ file, server }) {
-        if (this.environment.name !== "ssr") return;
-        if (path.resolve(file) !== path.resolve(__dirname, ".deco/blocks.gen.ts")) return;
-        server.environments.client.hot.send({ type: "full-reload" });
+      configureServer(server) {
+        server.environments.ssr?.hot.on(CONTENT_UPDATED, () => {
+          server.environments.client.hot.send({ type: "full-reload" });
+        });
       },
     },
     {
