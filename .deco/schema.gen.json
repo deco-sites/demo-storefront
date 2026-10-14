@@ -1,7 +1,7 @@
 {
   "major": 1,
   "blocksMajor": 8,
-  "version": "8.2.2",
+  "version": "8.2.3",
   "namespace": "site",
   "site": "demo-storefront",
   "manifest": {
