@@ -124,10 +124,12 @@ Analytics snapshot shape: `{ views, events }`. `views` lists pageviews in order.
 
 Nothing below is approved. Each item is a `"status": "pending"` entry in `pages.json` (a rule, a pending baseline or the volatile list) or, where none can express it, listed here.
 
-Last full compares (local, not committed): `v8-9` and `v8-10`, the v8 build against the v7 baseline (`npm run parity:compare`):
+Product owner rule (2026-10-14): the migration is back-end only, so every page must render exactly what production (main) renders, with zero differing pixels. Last full compares (local, not committed), the v8 build at HEAD against the v7 baseline (main `928488a`):
 
-- `v8-10` (final): **25 ok, 50 PENDING, 0 DIFF** of 75; 2 upstream misses (below). With `--strict` it fails on the 50 PENDING cases; with `--strict-upstream`, on the 2 misses.
-- `v8-9`, the run before it: 25 ok, 47 PENDING, 3 DIFF. The 3 DIFFs were `home-shelf-images-load`'s rule still naming the images by origin + path after `harMisses` moved to full URLs; the rule now names the same six images by full URL (`v8-10`). The 25 `listing-gets-page-url` cases matched their pinned capture in both runs.
+- `zero-2` (`npm run parity:compare`): **28 ok, 47 PENDING, 0 DIFF** of 75, 77 screenshots, 0 differing pixels; 2 upstream misses (below). Every PENDING case is pixel-identical; what is pending is a snapshot field (headers, SSR JSON-LD, third-party request lists), listed below.
+- `zero-1` (`--no-pending`, every case against v7): 0 differing pixels in all 77 screenshots; its 22 DIFFs were snapshot-only (the SSR JSON-LD and home-shelf image requests of the listing cases, now in the pending rules below).
+
+The listing pages (`plp-*`, `search*`, `not-found*`, `sitemap-xml-page`, `search-submit`, `plp-sort`, `header-nav-spa`) used to differ from v7 in pixels: v8 passed the page URL to the Shopify listing loader, v7 never did (it fell back to `https://localhost/`, so every category, search and catch-all page shows "0 results" with an empty breadcrumb, live too). `src/blocks/commerce.ts` now calls the loader as v7 did, so those pages are pixel- and snapshot-identical apart from the SSR JSON-LD. Passing `pageState().url` there is the fix, a product change for after the migration; `parity/pending/listing-live-before-catalog-change/` shows what it renders (v8 live on 2026-10-09, with products).
 
 The 2 upstream misses are one request in `pdp-variant-select` (mobile and desktop): after the Color click, v8 loads `/products/insulated-tumbler-with-a-straw-…`, a card in the page's shelf, through `loadPage`, and that page's Shopify query was never recorded on v7, so it answers 599. It is most likely a router `intent` preload (the request carries that page's path, a second after the click): the cursor stays where the click left it while the harness scrolls the page for the full-page capture, and the shelf card passes under it. v7's product shelf was inside a Lazy wrapper, rendered later, which would explain why v7 never sent it. Nothing rendered or snapshotted changes (the case is ok on pixels and snapshot). Moving the cursor away before each capture would remove it, but changes the v7 capture too (a new baseline and new self-compares); listed here instead.
 
@@ -135,13 +137,10 @@ Harness proof on the current harness: `v7-self-3` and `v7-self-4`, the v7 build 
 
 Pending rules (compare prints them; `--strict` fails on them):
 
-- `ssr-jsonld-first-html` (landing pages, product pages): JSON-LD of sections v7 wrapped in Lazy is in the first server HTML.
-- `plp-page-url` (landing pages): JSON-LD and analytics URLs are on the site's origin and path instead of `https://localhost`.
+- `ssr-jsonld-first-html` (landing, listing and product pages): JSON-LD of sections v7 wrapped in Lazy is in the first server HTML.
 - `home-mobile-no-cart-cookie` (`home@mobile`) and `home-utm-mobile-from-cache` (`home-utm@mobile`): v7 created a cart during the first SSR of an isolate and served that page private; v8 doesn't, so the home is edge-cached.
-- `home-shelf-images-load` (desktop flows from the home): the tabbed shelf's first-tab images load without scrolling.
+- `home-shelf-images-load` (desktop flows from the home, including `search-submit` and `header-nav-spa`): the tabbed shelf's first-tab images load without scrolling.
 - `home-desktop-mobile-sources` (volatile list, `home@desktop`, `home-utm@desktop`): the four mobile `<source>` images a desktop full-page capture sometimes requests; reported only on a run where dropping them changed the result.
-
-Pending baseline `listing-gets-page-url` (25 cases: `plp-*`, `search*`, `not-found*`, `sitemap-xml-page`, `search-submit`, `plp-sort`, `header-nav-spa`): on v7 every category, search, catch-all and `/sitemap.xml` page showed "12 of 0 results", live too, because the listing loader never got the page URL. v8 passes it. The Shopify catalog was replaced on 2026-10-10 and the old collections are empty now, so the pinned v8 capture shows them empty as well: against v7 it differs only in the breadcrumb (the collection or query is named), the listing JSON-LD (the collection's title and description, the page URL) and `view_item_list`'s list name and id; `search-submit` and `header-nav-spa` also carry `home-shelf-images-load`. `parity/pending/listing-gets-page-url/README.md` lists every case with its pixel count, `v7-vs-new/diff/` has the diffs, and `parity/pending/listing-live-before-catalog-change/` has v8 captured live on 2026-10-09, listing the products (filters, sort, 7 shirts). With products, the three flows marked `blocked` on v7 (filter, show more, listing → product) can run on v8; they aren't in the compare.
 
 Not expressible as a rule, for the product owner to decide:
 

@@ -13,11 +13,16 @@ import productDetailsPageLoader, {
 import { pageState } from "../request-state.server";
 
 /**
- * Shopify's product listing page reads filters, sort and pagination from the page URL, which a block
- * function doesn't get as an argument: it reads it from the page being rendered.
+ * Shopify's product listing page, called the way production (v7, main) calls it: without the page
+ * URL. v7's setup.ts registered a wrapper meant to forward the URL, but the content resolves the
+ * loader through the commerce listingPage extension, which never reached that wrapper, so the loader
+ * fell back to `https://localhost/`: every category, search and catch-all page asks Shopify for the
+ * collection "" and shows "0 results" with an empty breadcrumb, live too. The migration keeps the
+ * pages exactly as production renders them (back-end only, pixel-identical); passing
+ * `pageState().url` here is the fix, a product change left for after the migration.
  */
 export const shopifyProductListingPage = (props: ProductListingPageProps) =>
-  productListingPageLoader(props, pageState().url);
+  productListingPageLoader(props);
 
 /** v7's commerce extension wrappers. No extensions are saved, so each returns its data as is. */
 export const listingPageExtensions = (props: {
