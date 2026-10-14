@@ -1,4 +1,5 @@
 import { cloudflare } from "@cloudflare/vite-plugin";
+import { decoContent } from "@decocms/blocks/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
@@ -6,9 +7,6 @@ import { defineConfig } from "vite";
 import path from "path";
 
 const srcDir = path.resolve(__dirname, "src");
-
-/** The event src/cms.ts sends from the worker once a save's content is in the CMS. */
-const CONTENT_UPDATED = "site:content-updated";
 
 /**
  * The build's id for edge-cache keys and the X-Cache-Version header: the time this build ran, so every
@@ -72,21 +70,9 @@ export default defineConfig({
         return { define: { __BUILD_HASH__: JSON.stringify(buildHash(command)) } };
       },
     },
-    {
-      // `deco serve` (the site editor's local server) rewrites .deco/blocks.gen.ts on every save.
-      // Only the worker imports it, so Vite swaps it on the server and leaves open pages as they
-      // were: reload them, so the editor's preview (and any tab) shows the saved content. Not on the
-      // file change itself: the worker re-imports the content a moment later, and a page reloaded
-      // before that renders the previous save. src/cms.ts sends CONTENT_UPDATED once the new
-      // content is in the CMS, and only then do open pages reload.
-      name: "site-content-reload",
-      apply: "serve",
-      configureServer(server) {
-        server.environments.ssr?.hot.on(CONTENT_UPDATED, () => {
-          server.environments.client.hot.send({ type: "full-reload" });
-        });
-      },
-    },
+    // `vite dev`: a block saved in the site editor (`deco serve`) goes into the CMS src/cms.ts
+    // created, and open pages reload once the server has it.
+    decoContent(),
     {
       name: "site-manual-chunks",
       config(_cfg, { command }) {
