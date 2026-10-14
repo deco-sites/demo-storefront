@@ -15,31 +15,98 @@
       "__resolveType": "Header"
     },
     {
-      "__resolveType": "site/sections/Product/ProductDetails.tsx",
+      "__resolveType": "site/sections/Capy/ProductDetails.tsx",
       "page": {
         "__resolveType": "PDP Loader"
-      }
+      },
+      "colorPrompt": {
+        "question": "Color.",
+        "hint": "Pick your mood."
+      },
+      "sizePrompt": {
+        "question": "Size.",
+        "hint": "Fits every capybara."
+      },
+      "sizes": [
+        {
+          "name": "Pup",
+          "range": "up to 25 kg",
+          "bar": 1
+        },
+        {
+          "name": "Adult",
+          "range": "25–50 kg",
+          "bar": 1.4
+        },
+        {
+          "name": "Big Boss",
+          "range": "50–70 kg",
+          "bar": 1.8
+        }
+      ],
+      "sizeGuide": {
+        "label": "Size guide",
+        "href": "/#sizing"
+      },
+      "defaultSize": "Adult",
+      "detailCrops": {
+        "first": "50% 40%",
+        "second": "50% 92%"
+      },
+      "shippingNote": "Free delivery to every riverbank over R$ 400.",
+      "materialsTitle": "Materials & care",
+      "accordion": [
+        {
+          "title": "Delivery",
+          "body": "Free delivery to every riverbank over R$ 400. Orders leave the workshop in Rio within two working days."
+        },
+        {
+          "title": "Returns & size swaps",
+          "body": "Free size swap within 30 days. If Pup turned out to be Adult, we send the next size before you post the first one back."
+        }
+      ]
     },
     {
-      "__resolveType": "site/sections/Product/ProductShelf.tsx",
-      "title": "You may also like",
+      "__resolveType": "site/sections/Capy/LifestyleBanner.tsx",
+      "page": {
+        "__resolveType": "PDP Loader"
+      },
+      "meta": "On Tião · {color} · Adult",
+      "position": "top-right"
+    },
+    {
+      "__resolveType": "site/sections/Capy/ProductShelf.tsx",
+      "title": "Complete the look.",
       "products": {
         "__resolveType": "shopify/loaders/ProductList.ts",
         "props": {
-          "sort": "",
-          "query": "a",
-          "count": 9
-        },
-        "filters": {
-          "tags": [],
-          "productTypes": [],
-          "productVendors": [],
-          "variantOptions": []
+          "collection": "the-herd",
+          "count": 12,
+          "sort": ""
         }
+      },
+      "order": [
+        "largo-sunglasses",
+        "yuzu-bucket-hat",
+        "passeio-grazing-vest",
+        "passo-four-paw-sandals",
+        "sol-linen-poncho",
+        "boia-swim-vest"
+      ],
+      "count": 4,
+      "link": {
+        "label": "Shop the herd",
+        "href": "/collections/the-herd"
       }
     },
     {
-      "__resolveType": "site/sections/Newsletter/Newsletter.tsx"
+      "__resolveType": "site/sections/Capy/Newsletter.tsx",
+      "title": "Slow news, monthly.",
+      "titleTone": "One letter. No hurry.",
+      "body": "New pieces, field notes from the riverbank and the odd yuzu. Once a month, never more.",
+      "placeholder": "Your email",
+      "ctaLabel": "Subscribe",
+      "note": "Unsubscribe whenever you like. We won’t take it personally."
     },
     {
       "__resolveType": "Footer"

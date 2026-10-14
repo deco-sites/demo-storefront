@@ -11,13 +11,25 @@ import productDetailsPageLoader, {
   type Props as ProductDetailsPageProps,
 } from "../vendor/shopify/loaders/ProductDetailsPage";
 import { pageState } from "../request-state.server";
+import { withDecoMetafields } from "../sdk/capyProduct";
 
 /**
  * Shopify's product listing page reads filters, sort and pagination from the page URL, which a block
  * function doesn't get as an argument: it reads it from the page being rendered.
  */
-export const shopifyProductListingPage = (props: ProductListingPageProps) =>
-  productListingPageLoader(props, pageState().url);
+export const shopifyProductListingPage = (props: ProductListingPageProps) => {
+  const { url, params } = pageState();
+  return productListingPageLoader(
+    {
+      ...props,
+      // `/collections/:handle` names the collection in a route param (the loader would read the
+      // first path segment, "collections").
+      collectionName: props.collectionName || params.handle,
+      metafields: withDecoMetafields(props.metafields),
+    },
+    url,
+  );
+};
 
 /** v7's commerce extension wrappers. No extensions are saved, so each returns its data as is. */
 export const listingPageExtensions = (props: {
@@ -38,4 +50,9 @@ export const detailsPageExtensions = (props: {
  */
 export const shopifyProductDetailsPage = (
   props: Omit<ProductDetailsPageProps, "slug"> & { slug?: string },
-) => productDetailsPageLoader({ ...props, slug: props.slug ?? pageState().params.slug ?? "" });
+) =>
+  productDetailsPageLoader({
+    ...props,
+    slug: props.slug ?? pageState().params.slug ?? "",
+    metafields: withDecoMetafields(props.metafields),
+  });

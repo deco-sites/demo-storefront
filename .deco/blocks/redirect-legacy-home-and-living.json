@@ -1,0 +1,6 @@
+{
+  "__resolveType": "redirect",
+  "from": "/home-and-living",
+  "to": "/collections/the-herd",
+  "permanent": false
+}

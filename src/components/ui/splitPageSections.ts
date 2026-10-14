@@ -11,8 +11,8 @@
 export type PositionedSection = { key?: string; component?: string; index?: number };
 
 /** Sections that render a top-level landmark of their own, or no markup at all. */
-const HEADER_SECTION = /sections\/(Header|Theme)\//;
-const FOOTER_SECTION = /sections\/Footer\//;
+const HEADER_SECTION = /sections\/(Header|Theme)\/|sections\/Capy\/Header\.tsx/;
+const FOOTER_SECTION = /sections\/Footer\/|sections\/Capy\/Footer\.tsx/;
 /**
  * Sections that render no visible markup — SEO only emits `<head>` metadata,
  * and Analytics/Session/htmx only inject scripts. Treating them as content
