@@ -1,4 +1,4 @@
-import type { AnalyticsItem, Product } from "@decocms/apps-commerce/types";
+import type { AnalyticsItem, Product } from "../../../vendor/commerce/types";
 import { useAddToCart } from "../../../platform/cart";
 import { useSendEvent } from "../../../sdk/useSendEvent";
 import Button from "../../ui/Button";

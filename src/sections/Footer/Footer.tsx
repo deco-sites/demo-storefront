@@ -1,7 +1,6 @@
 import { type ImageWidget } from "~/types/widgets";
 import Image from "~/components/ui/Image";
 import PoweredByDeco from "~/components/ui/PoweredByDeco";
-import Section from "../../components/ui/Section";
 
 /** @titleBy title */
 interface Item {
@@ -67,9 +66,7 @@ function Footer({
             <span className="text-sm font-medium text-ink-soft">
               {support.title ?? "Atendimento"}
             </span>
-            {support.description && (
-              <p className="text-sm text-muted">{support.description}</p>
-            )}
+            {support.description && <p className="text-sm text-muted">{support.description}</p>}
             <ul className="flex flex-col gap-2 sm:flex-row sm:gap-6">
               {support.channels?.map(({ label, value, href }) => (
                 <li key={label} className="text-sm text-muted">
@@ -139,9 +136,7 @@ function Footer({
           </ul>
 
           <div className="flex flex-nowrap items-center justify-between gap-4 sm:justify-center">
-            {logo && (
-              <img loading="lazy" src={logo} alt="Logo" className="h-5 w-auto" />
-            )}
+            {logo && <img loading="lazy" src={logo} alt="Logo" className="h-5 w-auto" />}
             <span className="text-xs text-muted">{trademark}</span>
           </div>
 
@@ -154,8 +149,6 @@ function Footer({
     </footer>
   );
 }
-
-export const LoadingFallback = () => <Section.Placeholder height="380px" />;
 
 export default Footer;
 

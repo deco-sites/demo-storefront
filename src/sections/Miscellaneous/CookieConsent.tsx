@@ -142,5 +142,4 @@ function CookieConsent({
     </div>
   );
 }
-export const LoadingFallback = () => null;
 export default CookieConsent;
