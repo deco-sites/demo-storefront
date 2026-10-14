@@ -223,6 +223,7 @@ export function srcSetOf(url: string | undefined, widths = [480, 800, 1064]): st
   if (url.includes("cdn.shopify.com"))
     return widths.map((w) => `${sized(url, w)} ${w}w`).join(", ");
   const local = url.match(/^(\/capy\/img\/[bjls]-[^@]+)\.webp$/);
-  if (local) return `${url} 1344w, ${local[1]}@2x.webp 2688w`;
+  // @m is a 720w cut for phones, so the mobile hero (the LCP) isn't the 1344w desktop file.
+  if (local) return `${local[1]}@m.webp 720w, ${url} 1344w, ${local[1]}@2x.webp 2688w`;
   return undefined;
 }
