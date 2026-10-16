@@ -3,8 +3,12 @@ import type { QueryClient } from "@tanstack/react-query";
 import { CART_QUERY_KEY, getCartServerFn } from "../platform/cart";
 import { getUserServerFn, USER_QUERY_KEY } from "../platform/user";
 import { RootDocument } from "../runtime/RootDocument";
-// @ts-ignore Vite ?url import
-import appCss from "../styles/app.css?url";
+// Inlined into the document head: a separate stylesheet request blocked first paint while it
+// shared the connection with the hero image, fonts and JS.
+// @ts-ignore Vite ?inline import
+import appCss from "../styles/app.css?inline";
+
+const FONT_FACE = `@font-face{font-family:"Switzer";src:url("/capy/fonts/Switzer-Variable.woff2") format("woff2");font-weight:100 900;font-display:swap}`;
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   beforeLoad: async ({ context }) => {
@@ -57,9 +61,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         type: "font/woff2",
         crossOrigin: "anonymous",
       },
-      { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.ico" },
     ],
+    styles: [{ children: FONT_FACE + appCss }],
   }),
   component: RootLayout,
 });

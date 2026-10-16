@@ -5,12 +5,8 @@
    styles (lime pill, hairline pill, underlined link); glass only on the header, the drawer,
    the hero weather pill and the phone buy bar; collection colours only in tags and the Rio field. */
 
-@font-face {
-  font-family: "Switzer";
-  src: url("/capy/fonts/Switzer-Variable.woff2") format("woff2");
-  font-weight: 100 900;
-  font-display: swap;
-}
+/* The Switzer @font-face lives in src/routes/__root.tsx: this file is inlined into the page with
+   Vite's ?inline, which can't carry a public-asset url(). */
 
 :root {
   /* the cobogó wall */
