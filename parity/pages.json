@@ -530,6 +530,23 @@
   ],
   "$pendingBaselinesComment": "NOT approvals. A pendingBaselines rule covers cases whose whole page differs from v7 for an explained reason the product owner hasn't signed off: compare checks those cases against the v8 capture pinned in `dir` (node parity/run.mjs record-pending --rule <id>, which records the upstream/HAR fixtures v7 never needed into that dir) and reports them PENDING, never ok; --strict fails on them; --no-pending compares them with the v7 baseline instead. `dir`/README.md lists how each case differs from v7. Only the product owner signs one off; an agent only adds them.",
   "pendingBaselines": [],
+  "$approvedDecisionsComment": "Product-owner decisions that keep v8 identical to production on purpose (no field or pixel rule needed, since the pages match). Each cites the product owner's own words and date.",
+  "approvedDecisions": [
+    {
+      "id": "listing-match-prod",
+      "approval": "product owner, 2026-10-17: \"Match prod now, fix right after\"",
+      "decision": "The migration keeps production's broken listing pages: src/blocks/commerce.ts calls the Shopify listing loader without the page URL, as v7 did, so every category, search and catch-all page shows \"0 results\" with an empty breadcrumb, pixel-identical to production. A follow-up PR (fix/listing-page-url) passes pageState().url again right after the v8 cutover; that PR's listing pages then differ from this baseline by design.",
+      "cases": [
+        "plp-*",
+        "search*",
+        "not-found*",
+        "sitemap-xml-page",
+        "search-submit",
+        "plp-sort",
+        "header-nav-spa"
+      ]
+    }
+  ],
   "pages": [
     {
       "id": "home",
