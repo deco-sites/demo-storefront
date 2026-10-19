@@ -1,13 +1,19 @@
 {
   "name": "Search Page",
   "path": "/s",
+  "seo": {
+    "__resolveType": "website/sections/Seo/SeoV2.tsx",
+    "title": "Search · deco for capybaras",
+    "noIndexing": true
+  },
   "sections": [
     {
       "__resolveType": "commerce/sections/Seo/SeoPLPV2.tsx",
       "jsonLD": {
         "__resolveType": "lazy",
         "value": {
-          "__resolveType": "PLP Loader"
+          "__resolveType": "shopify/loaders/ProductListingPage.ts",
+          "count": 48
         }
       }
     },
@@ -15,24 +21,156 @@
       "__resolveType": "Header"
     },
     {
-      "__resolveType": "site/sections/Product/SearchResult.tsx",
-      "page": {
-        "__resolveType": "PLP Loader"
-      },
-      "layout": {
-        "pagination": "show-more"
-      },
-      "startingPage": 1
+      "__resolveType": "site/sections/Capy/CollectionHeader.tsx",
+      "showTabs": true,
+      "tabs": [
+        {
+          "handle": "the-herd",
+          "label": "All"
+        },
+        {
+          "handle": "sol",
+          "label": "Sol"
+        },
+        {
+          "handle": "rio",
+          "label": "Rio"
+        },
+        {
+          "handle": "onsen",
+          "label": "Onsen"
+        }
+      ]
     },
     {
-      "__resolveType": "site/sections/Newsletter/Newsletter.tsx"
+      "__resolveType": "site/sections/Capy/ProductListing.tsx",
+      "page": {
+        "__resolveType": "shopify/loaders/ProductListingPage.ts",
+        "count": 48
+      },
+      "colorFamilies": [
+        {
+          "name": "Forest",
+          "swatch": "#07401a",
+          "matches": [
+            "Deep Green"
+          ]
+        },
+        {
+          "name": "Lime",
+          "swatch": "#d0ec1a",
+          "matches": [
+            "Lime",
+            "Lime/Green",
+            "Lime/Smoke"
+          ]
+        },
+        {
+          "name": "Marigold",
+          "swatch": "#e8a33d",
+          "matches": [
+            "Marigold",
+            "Yuzu"
+          ]
+        },
+        {
+          "name": "Sand",
+          "swatch": "#e2d1ad",
+          "matches": [
+            "Sand"
+          ]
+        },
+        {
+          "name": "Ivory",
+          "swatch": "#f6f2e8",
+          "matches": [
+            "Bone",
+            "Steam White"
+          ]
+        },
+        {
+          "name": "Lilac",
+          "swatch": "#b79ad9",
+          "matches": [
+            "Lilac"
+          ]
+        },
+        {
+          "name": "Mint",
+          "swatch": "#8fd3c7",
+          "matches": [
+            "Pool Mint"
+          ]
+        },
+        {
+          "name": "Earth",
+          "swatch": "#6b4a2b",
+          "matches": [
+            "Tortoise/Green",
+            "Terracotta",
+            "Charcoal"
+          ]
+        }
+      ],
+      "sizes": [
+        "Pup",
+        "Adult",
+        "Big Boss"
+      ],
+      "promo": null,
+      "emptyText": "Nothing by that name in the herd."
+    },
+    {
+      "__resolveType": "site/sections/Capy/CollectionCards.tsx",
+      "title": "Shop by collection.",
+      "cards": [
+        {
+          "collection": "sol",
+          "title": "Shade you can wear.",
+          "linkLabel": "Shop Sol · 3 pieces",
+          "href": "/collections/sol",
+          "image": {
+            "src": "/capy/img/b-sol-d.webp",
+            "alt": "Two capybaras in linen ponchos grazing by a cobogó wall at golden hour.",
+            "position": "74% 50%"
+          }
+        },
+        {
+          "collection": "rio",
+          "title": "Built for wet days.",
+          "linkLabel": "Shop Rio · 3 pieces",
+          "href": "/collections/rio",
+          "image": {
+            "src": "/capy/img/b-rain-d.webp",
+            "alt": "Tião in the Rio Raincoat by the pool after the rain.",
+            "position": "73% 50%"
+          }
+        },
+        {
+          "collection": "onsen",
+          "title": "The long soak, tailored.",
+          "linkLabel": "Shop Onsen · 2 pieces",
+          "href": "/collections/onsen",
+          "image": {
+            "src": "/capy/img/l-pdp-rob.webp",
+            "alt": "Tião asleep in the Steam White robe beside a steaming hot spring.",
+            "position": "60% 50%"
+          }
+        }
+      ]
+    },
+    {
+      "__resolveType": "site/sections/Capy/Newsletter.tsx",
+      "title": "Slow news, monthly.",
+      "titleTone": "One letter. No hurry.",
+      "body": "New pieces, field notes from the riverbank and the odd yuzu. Once a month, never more.",
+      "placeholder": "Your email",
+      "ctaLabel": "Subscribe",
+      "note": "Unsubscribe whenever you like. We won’t take it personally."
     },
     {
       "__resolveType": "Footer"
     }
   ],
-  "seo": {
-    "__resolveType": "website/sections/Seo/SeoV2.tsx"
-  },
   "__resolveType": "website/pages/Page.tsx"
 }

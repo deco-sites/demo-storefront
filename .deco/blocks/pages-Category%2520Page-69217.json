@@ -1,38 +1,58 @@
 {
-  "name": "Category Page",
+  "name": "Not Found Page",
   "path": "/*",
+  "seo": {
+    "__resolveType": "website/sections/Seo/SeoV2.tsx",
+    "title": "Not here · deco for capybaras",
+    "noIndexing": true
+  },
   "sections": [
     {
       "__resolveType": "Header"
     },
     {
-      "__resolveType": "commerce/sections/Seo/SeoPLPV2.tsx",
-      "jsonLD": {
-        "__resolveType": "lazy",
-        "value": {
-          "__resolveType": "PLP Loader"
+      "__resolveType": "site/sections/Capy/CollectionHeader.tsx",
+      "title": "Not here.",
+      "description": "This path has wandered off. The herd is right here.",
+      "showTabs": true,
+      "tabs": [
+        {
+          "handle": "the-herd",
+          "label": "All"
+        },
+        {
+          "handle": "sol",
+          "label": "Sol"
+        },
+        {
+          "handle": "rio",
+          "label": "Rio"
+        },
+        {
+          "handle": "onsen",
+          "label": "Onsen"
         }
+      ]
+    },
+    {
+      "__resolveType": "site/sections/Capy/ProductRail.tsx",
+      "title": "Meet the herd.",
+      "products": {
+        "__resolveType": "shopify/loaders/ProductList.ts",
+        "props": {
+          "collection": "the-herd",
+          "count": 12,
+          "sort": ""
+        }
+      },
+      "link": {
+        "label": "Shop all eight",
+        "href": "/collections/the-herd"
       }
-    },
-    {
-      "__resolveType": "site/sections/Product/SearchResult.tsx",
-      "page": {
-        "__resolveType": "PLP Loader"
-      },
-      "layout": {
-        "pagination": "show-more"
-      },
-      "startingPage": 1
-    },
-    {
-      "__resolveType": "site/sections/Newsletter/Newsletter.tsx"
     },
     {
       "__resolveType": "Footer"
     }
   ],
-  "seo": {
-    "__resolveType": "website/sections/Seo/SeoV2.tsx"
-  },
   "__resolveType": "website/pages/Page.tsx"
 }

@@ -11,18 +11,25 @@ import productDetailsPageLoader, {
   type Props as ProductDetailsPageProps,
 } from "../vendor/shopify/loaders/ProductDetailsPage";
 import { pageState } from "../request-state.server";
+import { withDecoMetafields } from "../sdk/capyProduct";
 
 /**
- * Shopify's product listing page, called the way production (v7, main) calls it: without the page
- * URL. v7's setup.ts registered a wrapper meant to forward the URL, but the content resolves the
- * loader through the commerce listingPage extension, which never reached that wrapper, so the loader
- * fell back to `https://localhost/`: every category, search and catch-all page asks Shopify for the
- * collection "" and shows "0 results" with an empty breadcrumb, live too. The migration keeps the
- * pages exactly as production renders them (back-end only, pixel-identical); passing
- * `pageState().url` here is the fix, a product change left for after the migration.
+ * Shopify's product listing page reads filters, sort and pagination from the page URL, which a block
+ * function doesn't get as an argument: it reads it from the page being rendered.
  */
-export const shopifyProductListingPage = (props: ProductListingPageProps) =>
-  productListingPageLoader(props);
+export const shopifyProductListingPage = (props: ProductListingPageProps) => {
+  const { url, params } = pageState();
+  return productListingPageLoader(
+    {
+      ...props,
+      // `/collections/:handle` names the collection in a route param (the loader would read the
+      // first path segment, "collections").
+      collectionName: props.collectionName || params.handle,
+      metafields: withDecoMetafields(props.metafields),
+    },
+    url,
+  );
+};
 
 /** v7's commerce extension wrappers. No extensions are saved, so each returns its data as is. */
 export const listingPageExtensions = (props: {
@@ -43,4 +50,9 @@ export const detailsPageExtensions = (props: {
  */
 export const shopifyProductDetailsPage = (
   props: Omit<ProductDetailsPageProps, "slug"> & { slug?: string },
-) => productDetailsPageLoader({ ...props, slug: props.slug ?? pageState().params.slug ?? "" });
+) =>
+  productDetailsPageLoader({
+    ...props,
+    slug: props.slug ?? pageState().params.slug ?? "",
+    metafields: withDecoMetafields(props.metafields),
+  });

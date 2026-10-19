@@ -9,6 +9,8 @@ export interface CartItem {
   /** Merchandise/variant ID — what was added. */
   merchandiseId: string;
   title: string;
+  /** The variant's option values, e.g. "Sand / Adult" ("Default Title" for single-variant products). */
+  variantTitle?: string;
   productHandle: string;
   image?: { url: string; alt?: string };
   price: CartItemPrice;

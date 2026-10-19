@@ -11,6 +11,7 @@ export function shopifyCartToCartState(cart: ShopifyCart | null): CartState {
     lineId: line.id,
     merchandiseId: line.merchandise.id,
     title: line.merchandise.product.title,
+    variantTitle: line.merchandise.title,
     productHandle: line.merchandise.product.handle,
     image: line.merchandise.image
       ? {

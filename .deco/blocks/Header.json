@@ -1,56 +1,51 @@
 {
-  "__resolveType": "site/sections/Header/Header.tsx",
-  "searchbar": {
-    "placeholder": "What are you looking for?",
-    "loader": {
-      "__resolveType": "resolved",
-      "data": null
-    }
-  },
-  "alerts": [],
-  "logo": {
-    "src": "https://decoims.com/decocms/e8c6326e-e009-4e3c-9787-b2fe25a1b993/deco-logo.png",
-    "alt": "Deco Storefront",
-    "width": 67,
-    "height": 28
-  },
-  "navItems": [
+  "__resolveType": "site/sections/Capy/Header.tsx",
+  "logo": "/capy/deco-logo.svg",
+  "subline": "for capybaras",
+  "links": [
     {
-      "@type": "SiteNavigationElement",
-      "url": "/shirts",
-      "name": "Shirts",
-      "children": []
+      "label": "Shop",
+      "href": "/collections/the-herd"
     },
     {
-      "@type": "SiteNavigationElement",
-      "url": "/hoodies-sweatshirts",
-      "name": "Hoodies & Sweatshirts",
-      "children": []
+      "label": "Sol",
+      "href": "/collections/sol"
     },
     {
-      "@type": "SiteNavigationElement",
-      "url": "/jackets-outerwear",
-      "name": "Jackets & Outerwear",
-      "children": []
+      "label": "Rio",
+      "href": "/collections/rio"
     },
     {
-      "@type": "SiteNavigationElement",
-      "url": "/bottoms",
-      "name": "Bottoms",
-      "children": []
+      "label": "Onsen",
+      "href": "/collections/onsen"
     },
     {
-      "@type": "SiteNavigationElement",
-      "url": "/accessories",
-      "name": "Accessories",
-      "children": []
-    },
-    {
-      "@type": "SiteNavigationElement",
-      "url": "/stickers",
-      "name": "Stickers",
-      "children": []
+      "label": "Riverbank",
+      "href": "/#riverbank"
     }
   ],
-  "loading": "eager"
+  "showSearch": true,
+  "showAccount": true,
+  "theme": "paper",
+  "searchPlaceholder": "Search the herd",
+  "minicart": {
+    "freeDeliveryThreshold": 400,
+    "freeDeliveryText": "to free riverbank delivery.",
+    "freeDeliveryUnlocked": "Free riverbank delivery is on us.",
+    "crossSellTitle": "Complete the look",
+    "note": "Taxes and delivery at checkout. Free size swap within 30 days.",
+    "emptyText": "Your bag is empty. The herd is waiting.",
+    "emptyLink": {
+      "label": "Meet the herd",
+      "href": "/collections/the-herd"
+    }
+  },
+  "crossSell": {
+    "__resolveType": "shopify/loaders/ProductList.ts",
+    "props": {
+      "query": "tag:capy-2026 AND (title:Yuzu OR title:Largo)",
+      "count": 2,
+      "sort": ""
+    }
+  }
 }
