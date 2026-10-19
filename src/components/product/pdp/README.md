@@ -29,7 +29,7 @@ It declares the editable `Props` and delegates rendering to `ProductHero`.
 
 ## How the "instant variant swap" works
 
-`@decocms/start`'s `createDecoRouter` ships with `defaultPreload: "intent"`. Every
+The router (`src/router.tsx`) is created with `defaultPreload: "intent"`. Every
 `<Link>` in the app fires the route loader ~50 ms after the pointer lands on it.
 The TanStack catch-all route already resolves a product URL server-side, so by the
 time the user clicks a variant swatch the data is already in the router cache — the
@@ -174,6 +174,5 @@ new fields.
 3. Write a composition component (`<Area>Hero` here) that handles analytics and layout.
 4. Write the section file in `src/sections/<Area>/` that declares the admin-facing
    `Props` with English JSDoc and delegates to the composition.
-5. Export `LoadingFallback` from the section file when the section is async.
-6. `npm run generate:schema && npm run typecheck && npm run build`.
-7. Verify in the admin preview that the new `Props` groups render.
+5. `npm run generate:schema && npm run typecheck && npm run build`.
+6. Verify in the admin preview that the new `Props` groups render.

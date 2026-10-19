@@ -1,5 +1,5 @@
-import type { ProductDetailsPage } from "@decocms/apps-commerce/types";
-import type { AnalyticsItem } from "@decocms/apps-commerce/types";
+import type { ProductDetailsPage } from "../../../vendor/commerce/types";
+import type { AnalyticsItem } from "../../../vendor/commerce/types";
 import ProductActions, { type ActionsCopyConfig } from "./ProductActions";
 import ProductPrice from "./ProductPrice";
 import ProductTitle from "./ProductTitle";

@@ -1,5 +1,5 @@
 import type { HTMLWidget, ImageWidget } from "~/types/widgets";
-import type { SiteNavigationElement } from "@decocms/apps-commerce/types";
+import type { SiteNavigationElement } from "../../vendor/commerce/types";
 import Alert from "../../components/header/Alert";
 import Bag from "../../components/header/Bag";
 import HeaderNav from "../../components/header/HeaderNav";
@@ -9,8 +9,7 @@ import { type SearchbarProps } from "../../components/search/Searchbar/Form";
 import Drawer from "../../components/ui/Drawer";
 import Icon from "../../components/ui/Icon";
 import { SIDEMENU_CONTAINER_ID, SIDEMENU_DRAWER_ID } from "../../constants";
-import { useDevice } from "@decocms/blocks/sdk/useDevice";
-import { type LoadingFallbackProps } from "~/types/deco";
+import { useDevice } from "~/sdk/device";
 
 export interface Logo {
   src: ImageWidget;
@@ -121,10 +120,7 @@ function Header({
 }: Props) {
   const device = useDevice();
   return (
-    <header
-      role="banner"
-      className="fixed top-0 inset-x-0 z-50"
-    >
+    <header role="banner" className="fixed top-0 inset-x-0 z-50">
       {alerts.length > 0 && (
         <div className="glass-strong flex h-8 items-center justify-center text-2xs">
           <Alert alerts={alerts} />
@@ -170,11 +166,6 @@ function Header({
     </header>
   );
 }
-
-export const LoadingFallback = (props: LoadingFallbackProps<Props>) => (
-  <Header {...(props as any)} loading="lazy" />
-);
-
 export default Header;
 
 export const eager = true;

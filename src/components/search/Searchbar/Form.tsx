@@ -3,7 +3,7 @@
  * fetched via HTMX (kept for now — the suggestions migration is its own task).
  */
 import { useEffect, useId, useRef } from "react";
-import { Suggestion } from "@decocms/apps-commerce/types";
+import { Suggestion } from "../../../vendor/commerce/types";
 import { SEARCHBAR_INPUT_FORM_ID, SIDEMENU_DRAWER_ID } from "../../../constants";
 import { useComponent } from "../../../sections/Component";
 import Icon from "../../ui/Icon";
@@ -58,7 +58,8 @@ export default function Searchbar({
       // bootstrap), but @decocms/apps' ambient Window.DECO type only declares
       // `subscribe`. Cast through the real shape to dispatch programmatically.
       const events = window.DECO?.events as unknown as
-        { dispatch?: (event: unknown) => void } | undefined;
+        | { dispatch?: (event: unknown) => void }
+        | undefined;
       events?.dispatch?.({
         name: "search",
         params: { search_term: term },

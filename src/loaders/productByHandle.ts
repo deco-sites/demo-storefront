@@ -1,8 +1,8 @@
-import type { Product } from "@decocms/apps-commerce/types";
-import { RequestContext } from "@decocms/blocks/sdk/requestContext";
-import { getShopifyClient } from "@decocms/apps-shopify/client";
-import { GetProduct } from "@decocms/apps-shopify/utils/storefront/queries";
-import { toProduct, type ProductShopify } from "@decocms/apps-shopify/utils/transform";
+import type { Product } from "../vendor/commerce/types";
+import { pageState } from "../request-state.server";
+import { getShopifyClient } from "../vendor/shopify/client";
+import { GetProduct } from "../vendor/shopify/utils/storefront/queries";
+import { toProduct, type ProductShopify } from "../vendor/shopify/utils/transform";
 
 export interface Props {
   /**
@@ -24,7 +24,6 @@ export default async function productByHandleLoader({ handle }: Props): Promise<
 
   if (!data?.product) return null;
 
-  const req = RequestContext.current?.request;
-  const url = req ? new URL(req.url) : new URL("https://localhost");
-  return [toProduct(data.product, data.product.variants.nodes[0], url)];
+  // Product links are built on the URL of the page being rendered, as v7 built them on the request's.
+  return [toProduct(data.product, data.product.variants.nodes[0], pageState().url)];
 }
