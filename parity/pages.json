@@ -10,7 +10,6 @@
   },
   "siteEnv": {
     "DECO_OTEL": "off",
-    "OTEL_EXPORTER_OTLP_ENDPOINT": "",
     "DECO_OTEL_METRICS_ENDPOINT": "",
     "DECO_OTEL_LOGS_ENDPOINT": "",
     "DECO_OTEL_TRACES_ENDPOINT": "",

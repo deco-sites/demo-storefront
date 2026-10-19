@@ -18,25 +18,6 @@ const hosted = Boolean(env.DECO_SITE && env.DECO_SITE_TOKEN);
 const site = hosted ? (env.DECO_SITE as string) : undefined;
 const token = hosted ? (env.DECO_SITE_TOKEN as string) : undefined;
 
-/** `k1=v1,k2=v2` with URL-encoded values, the format of `OTEL_EXPORTER_OTLP_HEADERS`. */
-const otlpHeaders = (raw: string | undefined) => {
-  const headers: Record<string, string> = {};
-  for (const pair of raw?.split(",") ?? []) {
-    const at = pair.indexOf("=");
-    if (at <= 0) continue;
-    try {
-      headers[decodeURIComponent(pair.slice(0, at).trim())] = decodeURIComponent(
-        pair.slice(at + 1).trim(),
-      );
-    } catch {
-      // A malformed pair is skipped.
-    }
-  }
-  return headers;
-};
-
-const otlpEndpoint = env.OTEL_EXPORTER_OTLP_ENDPOINT as string | undefined;
-
 /**
  * v7's telemetry identity (/next/telemetry): `service.name` from DECO_SITE_NAME, the environment from
  * DECO_ENV_NAME and `service.version` from the Workers version (the `CF_VERSION_METADATA` binding),
@@ -57,21 +38,10 @@ const options = {
   // `vite dev` keeps local files even with hosted releases on. The SDK reads no NODE_ENV; it takes
   // local development from this option.
   dev: import.meta.env.DEV,
-  // The hosted collector when the site is connected (the token sends there); otherwise the standard
-  // OTEL_EXPORTER_OTLP_ENDPOINT/HEADERS, if set (/next/telemetry#choose-where-telemetry-goes). The SDK
-  // reads no environment variables, so the site passes them. `vite dev` sends nothing, so local work
-  // never reaches the production collector wrangler.jsonc points at.
-  ...(import.meta.env.DEV
-    ? { telemetry: false as const }
-    : hosted || !otlpEndpoint
-      ? { telemetry: { resource } }
-      : {
-          telemetry: {
-            endpoint: otlpEndpoint,
-            headers: otlpHeaders(env.OTEL_EXPORTER_OTLP_HEADERS as string | undefined),
-            resource,
-          },
-        }),
+  // Telemetry goes to the hosted Deco CMS collector, which the token authenticates
+  // (/next/telemetry#choose-where-telemetry-goes); without a token it goes nowhere. `vite dev` sends
+  // nothing.
+  telemetry: import.meta.env.DEV ? (false as const) : { resource },
 };
 
 export const cms = createCMS({ ...options, content });
