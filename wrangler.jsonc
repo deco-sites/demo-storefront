@@ -21,18 +21,14 @@
   "version_metadata": {
     "binding": "CF_VERSION_METADATA"
   },
-  // Telemetry (/next/telemetry#choose-where-telemetry-goes): with DECO_SITE and DECO_SITE_TOKEN set,
-  // the hosted Deco CMS collector; otherwise the standard OTEL_EXPORTER_OTLP_ENDPOINT (src/cms.ts reads
-  // it and OTEL_EXPORTER_OTLP_HEADERS and passes them to createCMS), the same collector v7 sent to
-  // (its DECO_OTEL_*_ENDPOINT vars). The SDK appends /v1/metrics, /v1/logs and /v1/traces. The auth
-  // header goes as a secret, the value v7 kept in DECO_OTEL_AUTH_TOKEN:
-  //   wrangler secret put OTEL_EXPORTER_OTLP_HEADERS   # authorization=Bearer <token>
-  // `vite dev` sends nothing (src/cms.ts); the parity harness empties the endpoint. The tail worker
-  // above keeps capturing uncaught errors.
+  // Telemetry (/next/telemetry#choose-where-telemetry-goes): with DECO_SITE and DECO_SITE_TOKEN set
+  // (below and as a secret), the site sends to the hosted Deco CMS collector, which verifies the
+  // token and stamps every signal with the site. There is no other destination. `vite dev` sends
+  // nothing (src/cms.ts); the parity harness turns it off. The tail worker above keeps capturing
+  // uncaught errors.
   "vars": {
     "DECO_SITE_NAME": "demo-storefront",
     "DECO_ENV_NAME": "production",
-    "OTEL_EXPORTER_OTLP_ENDPOINT": "https://otel-ingest.infra.deco.cx",
     // The Shopify store (/next/upstream-clients#call-a-client), the values of v7's deco-shopify block.
     // The Storefront API token is a public, read-scoped token: Shopify serves it to browsers by design.
     "SHOPIFY_STORE_NAME": "gimenesdevstore",
