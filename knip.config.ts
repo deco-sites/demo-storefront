@@ -7,7 +7,6 @@ const config: KnipConfig = {
     "src/server.ts",
     "src/start.ts",
     "src/worker-entry.ts",
-    "src/sections/**/*.{ts,tsx}",
     ".deco/index.ts",
     "vite.config.ts",
     "parity/**/*.{mjs,js,ts}",

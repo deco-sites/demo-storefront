@@ -1,6 +1,4 @@
-// Vendored from @decocms/blocks 7.64.3 (src/hooks/Image.tsx), the version the v7 site ran. Image helpers are
-// site code in the next major; this copy keeps the exact CDN URLs v7 produced (decoims.com, quality=high).
-// It's your code now.
+// The site's image helpers: optimized decoims.com URLs (quality=high) and the <Image> component.
 import type { ImgHTMLAttributes } from "react";
 import { forwardRef } from "react";
 
@@ -43,9 +41,7 @@ export function getImageCdnDomain(): string {
  *
  * The CDN maps these to 60% / 70% / 80%. It also accepts `original` (100%),
  * deliberately excluded here: a global 100% default hurts performance on
- * every page, which is the same call `DefaultQualityOptions` makes in the
- * Fresh implementation this file was ported from (deco-cx/apps,
- * website/components/Image.tsx).
+ * every page.
  *
  * A union rather than `string` because the CDN **fails silently** on
  * anything else: it answers 200 and serves its 60% default. So the obvious
@@ -57,7 +53,7 @@ export function getImageCdnDomain(): string {
  */
 export type ImageQuality = "low" | "medium" | "high";
 
-// The v7 site called registerImageQuality("high") once in src/setup.ts.
+// The site asks for "high" quality everywhere.
 let imageQuality: ImageQuality | undefined = "high";
 
 /**

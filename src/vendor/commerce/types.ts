@@ -1,5 +1,4 @@
-// Vendored from @decocms/apps-commerce 7.64.3 (src/types/commerce.ts). Shared commerce types and helpers live in the site in the
-// next major (/next/upstream-clients#what-a-client-is); this copy is the site's own code now.
+// Shared commerce types and helpers are the site's own code (/next/upstream-clients#what-a-client-is).
 type Flag = { name: string; value: boolean };
 /** Used at the top-level node to indicate the context for the JSON-LD objects used. The context provided in this type is compatible with the keys and URLs in the rest of this generated file. */
 export declare type WithContext<T extends Things> = T & {
@@ -914,10 +913,8 @@ export interface NavItem {
 /** @deprecated Use SiteNavigationElement instead */
 export interface Navbar extends NavItem {
   // TODO: The schema generator is not handling recursive types leading in a infinite recursion loop
-  // deno-lint-ignore no-explicit-any
   children?: any[];
 }
-// deno-lint-ignore no-explicit-any
 export interface IEvent<Params = any> {
   name: string;
   params: Params;

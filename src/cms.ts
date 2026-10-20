@@ -20,9 +20,9 @@ const site = hosted ? (env.DECO_SITE as string) : undefined;
 const token = hosted ? (env.DECO_SITE_TOKEN as string) : undefined;
 
 /**
- * v7's telemetry identity (/next/telemetry): `service.name` from DECO_SITE_NAME, the environment from
- * DECO_ENV_NAME and `service.version` from the Workers version (the `CF_VERSION_METADATA` binding),
- * as v7's `instrumentWorker` set them. Unset values keep the SDK's defaults.
+ * The telemetry identity (/next/telemetry): `service.name` from DECO_SITE_NAME, the environment from
+ * DECO_ENV_NAME and `service.version` from the Workers version (the `CF_VERSION_METADATA` binding).
+ * Unset values keep the SDK's defaults.
  */
 const resource = Object.fromEntries(
   Object.entries({

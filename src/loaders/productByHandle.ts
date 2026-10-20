@@ -24,6 +24,6 @@ export default async function productByHandleLoader({ handle }: Props): Promise<
 
   if (!data?.product) return null;
 
-  // Product links are built on the URL of the page being rendered, as v7 built them on the request's.
+  // Product links are built on the URL of the page being rendered.
   return [toProduct(data.product, data.product.variants.nodes[0], pageState().url)];
 }

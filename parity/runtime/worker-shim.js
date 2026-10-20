@@ -14,8 +14,8 @@
  *                    matchers, cache TTLs) is identical between runs.
  *   PARITY_SEED      integer. Replaces Math.random with a seeded PRNG.
  *
- * The migrated (v8) site must load the same shim so both sides of a
- * comparison see identical upstream data.
+ * Both sides of a comparison load it (parity/vite.config.ts), so they see
+ * identical upstream data.
  */
 import { env } from "cloudflare:workers";
 

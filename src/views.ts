@@ -1,98 +1,48 @@
 /**
  * The view registry (/next/rendering): the section each descriptor's `component` names. Keys are
- * the sections' v7 type names, which .deco/index.ts puts in every descriptor.
+ * the sections' block types (.deco/index.ts).
  */
 import type { ComponentType } from "react";
-import * as Animation from "./sections/Animation/Animation";
-import * as CategoryBanner from "./sections/Category/CategoryBanner";
-import * as CategoryGrid from "./sections/Category/CategoryGrid";
-import * as Faq from "./sections/Content/Faq";
-import * as Hero from "./sections/Content/Hero";
-import * as HighlightStrip from "./sections/Content/HighlightStrip";
-import * as Intro from "./sections/Content/Intro";
-import * as Logos from "./sections/Content/Logos";
-import * as PromoGrid from "./sections/Content/PromoGrid";
-import * as Footer from "./sections/Footer/Footer";
-import * as Header from "./sections/Header/Header";
-import * as Banner from "./sections/Images/Banner";
-import * as Carousel from "./sections/Images/Carousel";
-import * as ImageGallery from "./sections/Images/ImageGallery";
-import * as ShoppableBanner from "./sections/Images/ShoppableBanner";
-import * as LinkTree from "./sections/Links/LinkTree";
-import * as CampaignTimer from "./sections/Miscellaneous/CampaignTimer";
-import * as CookieConsent from "./sections/Miscellaneous/CookieConsent";
-import * as Newsletter from "./sections/Newsletter/Newsletter";
-import * as ProductDetails from "./sections/Product/ProductDetails";
-import * as ProductShelf from "./sections/Product/ProductShelf";
-import * as ProductShelfTabbed from "./sections/Product/ProductShelfTabbed";
-import * as SearchResult from "./sections/Product/SearchResult";
-import * as ShelfWithImage from "./sections/Product/ShelfWithImage";
-import * as Wishlist from "./sections/Product/Wishlist";
-import * as InstagramPosts from "./sections/Social/InstagramPosts";
-import * as WhatsApp from "./sections/Social/WhatsApp";
-import * as CapyHeader from "./sections/Capy/Header";
-import * as CapyFooter from "./sections/Capy/Footer";
-import * as CapyNewsletter from "./sections/Capy/Newsletter";
-import * as CapyHeroScene from "./sections/Capy/HeroScene";
-import * as CapyIntroStatement from "./sections/Capy/IntroStatement";
-import * as CapyCollectionScene from "./sections/Capy/CollectionScene";
-import * as CapyProductRail from "./sections/Capy/ProductRail";
-import * as CapyManifesto from "./sections/Capy/Manifesto";
-import * as CapySizingStory from "./sections/Capy/SizingStory";
-import * as CapyJournalCards from "./sections/Capy/JournalCards";
-import * as CapyCollectionHeader from "./sections/Capy/CollectionHeader";
-import * as CapyProductListing from "./sections/Capy/ProductListing";
-import * as CapyCollectionCards from "./sections/Capy/CollectionCards";
-import * as CapyProductDetails from "./sections/Capy/ProductDetails";
-import * as CapyLifestyleBanner from "./sections/Capy/LifestyleBanner";
-import * as CapyProductShelf from "./sections/Capy/ProductShelf";
+import * as ClassicProductShelf from "./sections/Product/ProductShelf";
+import * as CollectionCards from "./sections/Capy/CollectionCards";
+import * as CollectionHeader from "./sections/Capy/CollectionHeader";
+import * as CollectionScene from "./sections/Capy/CollectionScene";
+import * as Footer from "./sections/Capy/Footer";
+import * as Header from "./sections/Capy/Header";
+import * as HeroScene from "./sections/Capy/HeroScene";
+import * as IntroStatement from "./sections/Capy/IntroStatement";
+import * as JournalCards from "./sections/Capy/JournalCards";
+import * as LifestyleBanner from "./sections/Capy/LifestyleBanner";
+import * as Manifesto from "./sections/Capy/Manifesto";
+import * as Newsletter from "./sections/Capy/Newsletter";
+import * as ProductDetails from "./sections/Capy/ProductDetails";
+import * as ProductListing from "./sections/Capy/ProductListing";
+import * as ProductRail from "./sections/Capy/ProductRail";
+import * as ProductShelf from "./sections/Capy/ProductShelf";
+import * as SizingStory from "./sections/Capy/SizingStory";
 
 export interface SectionView {
   default: ComponentType<any>;
+  /** The landmark the section renders, so the page keeps it out of `<main>` (src/runtime/PageView.tsx). */
+  landmark?: "header" | "footer";
 }
 
 export const views: Record<string, SectionView> = {
-  "site/sections/Animation/Animation.tsx": Animation,
-  "site/sections/Category/CategoryBanner.tsx": CategoryBanner,
-  "site/sections/Category/CategoryGrid.tsx": CategoryGrid,
-  "site/sections/Content/Faq.tsx": Faq,
-  "site/sections/Content/Hero.tsx": Hero,
-  "site/sections/Content/HighlightStrip.tsx": HighlightStrip,
-  "site/sections/Content/Intro.tsx": Intro,
-  "site/sections/Content/Logos.tsx": Logos,
-  "site/sections/Content/PromoGrid.tsx": PromoGrid,
-  "site/sections/Footer/Footer.tsx": Footer,
-  "site/sections/Header/Header.tsx": Header,
-  "site/sections/Images/Banner.tsx": Banner,
-  "site/sections/Images/Carousel.tsx": Carousel,
-  "site/sections/Images/ImageGallery.tsx": ImageGallery,
-  "site/sections/Images/ShoppableBanner.tsx": ShoppableBanner,
-  "site/sections/Links/LinkTree.tsx": LinkTree,
-  "site/sections/Miscellaneous/CampaignTimer.tsx": CampaignTimer,
-  "site/sections/Miscellaneous/CookieConsent.tsx": CookieConsent,
-  "site/sections/Newsletter/Newsletter.tsx": Newsletter,
-  "site/sections/Product/ProductDetails.tsx": ProductDetails,
-  "site/sections/Product/ProductShelf.tsx": ProductShelf,
-  "site/sections/Product/ProductShelfTabbed.tsx": ProductShelfTabbed,
-  "site/sections/Product/SearchResult.tsx": SearchResult,
-  "site/sections/Product/ShelfWithImage.tsx": ShelfWithImage,
-  "site/sections/Product/Wishlist.tsx": Wishlist,
-  "site/sections/Social/InstagramPosts.tsx": InstagramPosts,
-  "site/sections/Social/WhatsApp.tsx": WhatsApp,
-  "site/sections/Capy/Header.tsx": CapyHeader,
-  "site/sections/Capy/Footer.tsx": CapyFooter,
-  "site/sections/Capy/Newsletter.tsx": CapyNewsletter,
-  "site/sections/Capy/HeroScene.tsx": CapyHeroScene,
-  "site/sections/Capy/IntroStatement.tsx": CapyIntroStatement,
-  "site/sections/Capy/CollectionScene.tsx": CapyCollectionScene,
-  "site/sections/Capy/ProductRail.tsx": CapyProductRail,
-  "site/sections/Capy/Manifesto.tsx": CapyManifesto,
-  "site/sections/Capy/SizingStory.tsx": CapySizingStory,
-  "site/sections/Capy/JournalCards.tsx": CapyJournalCards,
-  "site/sections/Capy/CollectionHeader.tsx": CapyCollectionHeader,
-  "site/sections/Capy/ProductListing.tsx": CapyProductListing,
-  "site/sections/Capy/CollectionCards.tsx": CapyCollectionCards,
-  "site/sections/Capy/ProductDetails.tsx": CapyProductDetails,
-  "site/sections/Capy/LifestyleBanner.tsx": CapyLifestyleBanner,
-  "site/sections/Capy/ProductShelf.tsx": CapyProductShelf,
+  "site-header": { ...Header, landmark: "header" },
+  "site-footer": { ...Footer, landmark: "footer" },
+  newsletter: Newsletter,
+  "hero-scene": HeroScene,
+  "intro-statement": IntroStatement,
+  "collection-scene": CollectionScene,
+  "product-rail": ProductRail,
+  manifesto: Manifesto,
+  "sizing-story": SizingStory,
+  "journal-cards": JournalCards,
+  "collection-header": CollectionHeader,
+  "product-listing": ProductListing,
+  "collection-cards": CollectionCards,
+  "product-details": ProductDetails,
+  "lifestyle-banner": LifestyleBanner,
+  "product-shelf": ProductShelf,
+  "classic-product-shelf": ClassicProductShelf,
 };

@@ -1,19 +1,15 @@
 /**
  * The page `<head>`, built by the site from the page's name, its SEO block and the site-wide SEO
- * defaults (in v7 this was `cmsRouteConfig`'s head builder in @decocms/tanstack; the tags and their
- * order are the same).
+ * defaults.
  */
 import type { PageSeo } from "./model";
 
 export const SITE_NAME = "Storefront-tanstack";
 
 /**
- * The site-wide SEO defaults: the `seo` of v7's `site` block (`.deco/blocks/site.json`, removed in
- * the move to the next major). Since @decocms 7.48.4 v7 applies it to every CMS page (its
- * `getSiteSeo` had read only a block named `Site`, so this site's lowercase `site` block was
- * ignored before): a field the page's SEO block leaves empty takes the site's value, and the
- * page's template, or else the site's, wraps the title and the description. In the next major a
- * page without SEO gets the site's defaults (`Page.seo` in @decocms/blocks), which are these.
+ * The site-wide SEO defaults, applied to every page: a field the page's SEO block leaves empty
+ * takes the site's value, and the page's template, or else the site's, wraps the title and the
+ * description. A page without an SEO block gets these defaults alone.
  */
 export const SITE_SEO: PageSeo = {
   title: "Storefront",
@@ -31,9 +27,8 @@ function effectiveTemplate(template: string | undefined): string | undefined {
 }
 
 /**
- * The page's SEO with the site's defaults applied, as v7 7.77.1 does (`buildPageSeo` in
- * @decocms/tanstack): empty title, description and image take the site's, then the page's template
- * (or the site's) wraps the title and the description.
+ * The page's SEO with the site's defaults applied: empty title, description and image take the
+ * site's, then the page's template (or the site's) wraps the title and the description.
  */
 function withSiteDefaults(pageSeo: PageSeo | undefined): PageSeo {
   const seo: PageSeo = { ...pageSeo };

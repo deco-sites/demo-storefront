@@ -6,8 +6,8 @@ import type { Block, Route } from "@decocms/blocks";
 
 /**
  * What a section block returns in data mode (/next/rendering): the section to render and its props.
- * `component` is the section's v7 type name, which the page also uses for the wrapper's
- * `id` and `data-manifest-key`, exactly as v7 rendered them.
+ * `component` is the section's block type, which the page also puts in the wrapper's `id` and
+ * `data-manifest-key`, where the site editor's click-to-edit finds the section.
  */
 export type BlockDescriptor = {
   component: string;

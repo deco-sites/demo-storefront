@@ -1,6 +1,6 @@
 /**
  * What the home route and the catch-all route share: both serve CMS pages, found by URL with
- * `matchRoute` (src/open-page.server.ts). v7's route options are kept: the query string reaches the
+ * `matchRoute` (src/open-page.server.ts). Their route options: the query string reaches the
  * loader (filters, sort, pagination), `skuId` (client-side variant selection) doesn't refetch, the
  * previous page stays up while the next one loads, and the page's cache profile sets its headers.
  */
@@ -54,8 +54,7 @@ export async function loadPageAt(
   // the document streams. A block still pending at that point is streamed later as a resolution
   // script, and on this site (TanStack Start 1.166, block promises returned through the page server
   // function) the browser's copy of that promise never settled: the section's markup came from the
-  // server but never hydrated (no reveal, no handlers). v7 also resolved every non-deferred section
-  // before rendering the page.
+  // server but never hydrated (no reveal, no handlers).
   await Promise.all(blocks.map((block) => block.value));
   return { ...page, blocks };
 }

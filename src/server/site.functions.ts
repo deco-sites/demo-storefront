@@ -1,15 +1,11 @@
 /**
- * The site's own actions and per-shopper reads, as server functions. In v7 the browser reached them
- * through `/deco/invoke`; the next major has no invoke endpoint, so they're the framework's server
- * functions instead (/next/renames-and-migrations#loaders-actions-and-invoke).
+ * The shopper's wishlist and address book, as server functions the browser calls
+ * (/next/renames-and-migrations#loaders-actions-and-invoke).
  */
 import { createServerFn } from "@tanstack/react-start";
 import { getRequest, getResponse } from "@tanstack/react-start/server";
 import { z } from "zod";
 import submitAddress from "../actions/address/submit";
-import subscribeNewsletter from "../actions/newsletter/subscribe";
-import subscribeNotifyMe from "../actions/notifyMe/subscribe";
-import simulateShipping from "../actions/shipping/simulate";
 import submitWishlist from "../actions/wishlist/submit";
 import loadAddresses from "../loaders/address";
 import loadWishlist from "../loaders/wishlist";
@@ -51,15 +47,3 @@ export const getAddressesServerFn = createServerFn({ method: "GET" }).handler(()
 export const submitAddressServerFn = createServerFn({ method: "POST" })
   .inputValidator(addressOp)
   .handler(({ data }) => submitAddress(data, getRequest(), getResponse().headers));
-
-export const subscribeNewsletterServerFn = createServerFn({ method: "POST" })
-  .inputValidator(z.object({ email: z.string() }))
-  .handler(({ data }) => subscribeNewsletter(data, getRequest(), getResponse().headers));
-
-export const notifyMeServerFn = createServerFn({ method: "POST" })
-  .inputValidator(z.object({ skuId: z.string(), email: z.string(), name: z.string().optional() }))
-  .handler(({ data }) => subscribeNotifyMe(data));
-
-export const simulateShippingServerFn = createServerFn({ method: "POST" })
-  .inputValidator(z.object({ postalCode: z.string() }))
-  .handler(({ data }) => simulateShipping(data));

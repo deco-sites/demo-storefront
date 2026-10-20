@@ -1,33 +1,49 @@
-// The block map (/next/blocks#the-block-map). Started by the deco-v7-to-v8-migration skill's script from
-// the v7 site and finished by hand. Each block is registered under the v7 name saved content stores, as it is
-// (/next/renames-and-migrations#checklist-for-migrating-existing-content: "register them as they
-// are"), and under no second name: the site editor lists every key of this map, so a short name
-// next to each v7 name showed every section twice in its pickers, where v7's editor showed it once.
-// Sections return descriptors (/next/rendering), which src/views.ts maps to components.
-import type { Blocks, Lazy, Route } from "@decocms/blocks";
+// The block map (/next/blocks#the-block-map): every block type saved content can name. Sections
+// return descriptors (/next/rendering), which src/views.ts maps to components; a section with a
+// loader runs it here, on the server, and the loader's result becomes the view's props. The saved
+// props are the loader's input, so that's the type the editor form is generated from.
+import type { Blocks, Route } from "@decocms/blocks";
 import type { BlockDescriptor, PageSeo } from "../src/model";
-import type { Suggestion } from "../src/vendor/commerce/types";
+import { pageState } from "../src/request-state.server";
+import { shopifyProductDetailsPage, shopifyProductListingPage } from "../src/blocks/commerce";
+import { device } from "../src/blocks/matchers";
+import { seo } from "../src/blocks/seo";
+import type { Props as ClassicProductShelfProps } from "../src/sections/Product/ProductShelf";
+import { loader as loadHeader, type Props as HeaderProps } from "../src/sections/Capy/Header";
+import type { Props as FooterProps } from "../src/sections/Capy/Footer";
+import type { Props as NewsletterProps } from "../src/sections/Capy/Newsletter";
+import type { Props as HeroSceneProps } from "../src/sections/Capy/HeroScene";
+import type { Props as IntroStatementProps } from "../src/sections/Capy/IntroStatement";
 import {
-  detailsPageExtensions,
-  listingPageExtensions,
-  shopifyProductDetailsPage,
-  shopifyProductListingPage,
-} from "../src/blocks/commerce";
-import { device, random } from "../src/blocks/matchers";
-import { type PropsOf, section } from "../src/blocks/section";
-import { seo, seoDetailsPage, seoListingPage } from "../src/blocks/seo";
-import { loader as categoryBannerLoader } from "../src/sections/Category/CategoryBanner";
-import { loader as searchResultLoader } from "../src/sections/Product/SearchResult";
-import { loader as wishlistLoader } from "../src/sections/Product/Wishlist";
-import { loader as instagramPostsLoader } from "../src/sections/Social/InstagramPosts";
-import { loader as capyHeaderLoader } from "../src/sections/Capy/Header";
-import { loader as capyCollectionSceneLoader } from "../src/sections/Capy/CollectionScene";
-import { loader as capyProductRailLoader } from "../src/sections/Capy/ProductRail";
-import { loader as capyCollectionHeaderLoader } from "../src/loaders/capyCollectionHeader";
-import { loader as capyProductListingLoader } from "../src/sections/Capy/ProductListing";
-import { loader as capyProductDetailsLoader } from "../src/sections/Capy/ProductDetails";
-import { loader as capyLifestyleBannerLoader } from "../src/sections/Capy/LifestyleBanner";
-import { loader as capyProductShelfLoader } from "../src/sections/Capy/ProductShelf";
+  loader as loadCollectionScene,
+  type Props as CollectionSceneProps,
+} from "../src/sections/Capy/CollectionScene";
+import {
+  loader as loadProductRail,
+  type Props as ProductRailProps,
+} from "../src/sections/Capy/ProductRail";
+import type { Props as ManifestoProps } from "../src/sections/Capy/Manifesto";
+import type { Props as SizingStoryProps } from "../src/sections/Capy/SizingStory";
+import type { Props as JournalCardsProps } from "../src/sections/Capy/JournalCards";
+import type { Props as CollectionHeaderProps } from "../src/sections/Capy/CollectionHeader";
+import { loader as loadCollectionHeader } from "../src/loaders/capyCollectionHeader";
+import {
+  loader as loadProductListing,
+  type Props as ProductListingProps,
+} from "../src/sections/Capy/ProductListing";
+import type { Props as CollectionCardsProps } from "../src/sections/Capy/CollectionCards";
+import {
+  loader as loadProductDetails,
+  type Props as ProductDetailsProps,
+} from "../src/sections/Capy/ProductDetails";
+import {
+  loader as loadLifestyleBanner,
+  type Props as LifestyleBannerProps,
+} from "../src/sections/Capy/LifestyleBanner";
+import {
+  loader as loadProductShelf,
+  type Props as ProductShelfProps,
+} from "../src/sections/Capy/ProductShelf";
 import productByHandle from "../src/loaders/productByHandle";
 import shopifyProductList, {
   type Props as ShopifyProductListProps,
@@ -36,7 +52,6 @@ import { withDecoMetafields } from "../src/sdk/capyProduct";
 import shopifyRelatedProducts, {
   type Props as RelatedProductsProps,
 } from "../src/vendor/shopify/loaders/RelatedProducts";
-import websiteGoogleFonts from "../src/vendor/website/loaders/fonts/googleFonts";
 
 /** The site's page: the built-in fields, with SEO for the site's head builder and descriptor sections. */
 interface StorePage extends Route {
@@ -44,237 +59,84 @@ interface StorePage extends Route {
   sections: BlockDescriptor[];
 }
 
-const animation = section<typeof import("../src/sections/Animation/Animation")>(
-  "site/sections/Animation/Animation.tsx",
-);
-const categoryBanner = section<typeof import("../src/sections/Category/CategoryBanner")>(
-  "site/sections/Category/CategoryBanner.tsx",
-  categoryBannerLoader,
-);
-const categoryGrid = section<typeof import("../src/sections/Category/CategoryGrid")>(
-  "site/sections/Category/CategoryGrid.tsx",
-);
-const faq = section<typeof import("../src/sections/Content/Faq")>("site/sections/Content/Faq.tsx");
-const hero = section<typeof import("../src/sections/Content/Hero")>(
-  "site/sections/Content/Hero.tsx",
-);
-const highlightStrip = section<typeof import("../src/sections/Content/HighlightStrip")>(
-  "site/sections/Content/HighlightStrip.tsx",
-);
-const promoGrid = section<typeof import("../src/sections/Content/PromoGrid")>(
-  "site/sections/Content/PromoGrid.tsx",
-);
-const intro = section<typeof import("../src/sections/Content/Intro")>(
-  "site/sections/Content/Intro.tsx",
-);
-const logos = section<typeof import("../src/sections/Content/Logos")>(
-  "site/sections/Content/Logos.tsx",
-);
-const footer = section<typeof import("../src/sections/Footer/Footer")>(
-  "site/sections/Footer/Footer.tsx",
-);
-const header = section<typeof import("../src/sections/Header/Header")>(
-  "site/sections/Header/Header.tsx",
-);
-const banner = section<typeof import("../src/sections/Images/Banner")>(
-  "site/sections/Images/Banner.tsx",
-);
-const carousel = section<typeof import("../src/sections/Images/Carousel")>(
-  "site/sections/Images/Carousel.tsx",
-);
-const imageGallery = section<typeof import("../src/sections/Images/ImageGallery")>(
-  "site/sections/Images/ImageGallery.tsx",
-);
-const shoppableBanner = section<typeof import("../src/sections/Images/ShoppableBanner")>(
-  "site/sections/Images/ShoppableBanner.tsx",
-);
-const linkTree = section<typeof import("../src/sections/Links/LinkTree")>(
-  "site/sections/Links/LinkTree.tsx",
-);
-const campaignTimer = section<typeof import("../src/sections/Miscellaneous/CampaignTimer")>(
-  "site/sections/Miscellaneous/CampaignTimer.tsx",
-);
-const cookieConsent = section<typeof import("../src/sections/Miscellaneous/CookieConsent")>(
-  "site/sections/Miscellaneous/CookieConsent.tsx",
-);
-const newsletter = section<typeof import("../src/sections/Newsletter/Newsletter")>(
-  "site/sections/Newsletter/Newsletter.tsx",
-);
-const productDetails = section<typeof import("../src/sections/Product/ProductDetails")>(
-  "site/sections/Product/ProductDetails.tsx",
-);
-const productShelf = section<typeof import("../src/sections/Product/ProductShelf")>(
-  "site/sections/Product/ProductShelf.tsx",
-);
-const productShelfTabbed = section<typeof import("../src/sections/Product/ProductShelfTabbed")>(
-  "site/sections/Product/ProductShelfTabbed.tsx",
-);
-const searchResult = section<typeof import("../src/sections/Product/SearchResult")>(
-  "site/sections/Product/SearchResult.tsx",
-  searchResultLoader,
-);
-const shelfWithImage = section<typeof import("../src/sections/Product/ShelfWithImage")>(
-  "site/sections/Product/ShelfWithImage.tsx",
-);
-const wishlist = section<typeof import("../src/sections/Product/Wishlist")>(
-  "site/sections/Product/Wishlist.tsx",
-  wishlistLoader,
-);
-const instagramPosts = section<typeof import("../src/sections/Social/InstagramPosts")>(
-  "site/sections/Social/InstagramPosts.tsx",
-  instagramPostsLoader,
-);
-const whatsApp = section<typeof import("../src/sections/Social/WhatsApp")>(
-  "site/sections/Social/WhatsApp.tsx",
-);
-
-
-// The capybara redesign (src/sections/Capy): every block of the new home, collection and product pages.
-const capyHeader = section<typeof import("../src/sections/Capy/Header")>(
-  "site/sections/Capy/Header.tsx",
-  capyHeaderLoader,
-);
-const capyFooter = section<typeof import("../src/sections/Capy/Footer")>(
-  "site/sections/Capy/Footer.tsx",
-);
-const capyNewsletter = section<typeof import("../src/sections/Capy/Newsletter")>(
-  "site/sections/Capy/Newsletter.tsx",
-);
-const capyHeroScene = section<typeof import("../src/sections/Capy/HeroScene")>(
-  "site/sections/Capy/HeroScene.tsx",
-);
-const capyIntroStatement = section<typeof import("../src/sections/Capy/IntroStatement")>(
-  "site/sections/Capy/IntroStatement.tsx",
-);
-const capyCollectionScene = section<typeof import("../src/sections/Capy/CollectionScene")>(
-  "site/sections/Capy/CollectionScene.tsx",
-  capyCollectionSceneLoader,
-);
-const capyProductRail = section<typeof import("../src/sections/Capy/ProductRail")>(
-  "site/sections/Capy/ProductRail.tsx",
-  capyProductRailLoader,
-);
-const capyManifesto = section<typeof import("../src/sections/Capy/Manifesto")>(
-  "site/sections/Capy/Manifesto.tsx",
-);
-const capySizingStory = section<typeof import("../src/sections/Capy/SizingStory")>(
-  "site/sections/Capy/SizingStory.tsx",
-);
-const capyJournalCards = section<typeof import("../src/sections/Capy/JournalCards")>(
-  "site/sections/Capy/JournalCards.tsx",
-);
-const capyCollectionHeader = section<typeof import("../src/loaders/capyCollectionHeader")>(
-  "site/sections/Capy/CollectionHeader.tsx",
-  capyCollectionHeaderLoader,
-);
-const capyProductListing = section<typeof import("../src/sections/Capy/ProductListing")>(
-  "site/sections/Capy/ProductListing.tsx",
-  capyProductListingLoader,
-);
-const capyCollectionCards = section<typeof import("../src/sections/Capy/CollectionCards")>(
-  "site/sections/Capy/CollectionCards.tsx",
-);
-const capyProductDetails = section<typeof import("../src/sections/Capy/ProductDetails")>(
-  "site/sections/Capy/ProductDetails.tsx",
-  capyProductDetailsLoader,
-);
-const capyLifestyleBanner = section<typeof import("../src/sections/Capy/LifestyleBanner")>(
-  "site/sections/Capy/LifestyleBanner.tsx",
-  capyLifestyleBannerLoader,
-);
-const capyProductShelf = section<typeof import("../src/sections/Capy/ProductShelf")>(
-  "site/sections/Capy/ProductShelf.tsx",
-  capyProductShelfLoader,
-);
-
 /**
- * The theme section. v7 never rendered it on this site (its Google Fonts loader had no
- * implementation, so the section dropped out of every page), and the pages' colors and fonts come
- * from src/styles/app.css. It stays a block, so saved themes keep their form, and renders nothing,
- * which keeps every page exactly as it looks today. Its font is a lazy argument, so the font loader
- * doesn't run for it. Turning it on means returning a descriptor for it and calling `font()`, and it
- * changes the look of every page.
+ * A section's descriptor: the view to render (its key in src/views.ts) and its props. Every section
+ * block is async, so each one resolves on its own tick and streams in the same order.
  */
-type ThemeProps = PropsOf<typeof import("../src/sections/Theme/Theme")>;
-const theme = (
-  _props: Omit<ThemeProps, "font"> & { font?: Lazy<NonNullable<ThemeProps["font"]>> },
-): BlockDescriptor | undefined => undefined;
-
-/** v7's `resolved`: a value saved as is. Only the header's search suggestions use it, saved as `null`. */
-const resolved = (props: { data: Suggestion | null }): Suggestion | null => props.data;
+const view = (component: string, props: object): BlockDescriptor => ({
+  component,
+  props: props as BlockDescriptor["props"],
+});
 
 export default {
   // The built-in page, replaced so its sections are descriptors and its seo is the site's
-  // (/next/built-in-blocks#change-a-built-in). v7's website/pages/Page.tsx is a built-in alias.
+  // (/next/built-in-blocks#change-a-built-in).
   page: (input: StorePage) => input,
 
-  // SEO
+  // The page's SEO. The site editor finds a page's SEO type, and fills it into every new page, by
+  // this name, so it keeps it until the site editor reads it from the page schema instead.
   "website/sections/Seo/SeoV2.tsx": seo,
-  "commerce/sections/Seo/SeoPLPV2.tsx": seoListingPage,
-  "commerce/sections/Seo/SeoPDPV2.tsx": seoDetailsPage,
 
-  // Commerce data, over the Shopify upstream client
-  // In v7's order, which is the order the editor lists them in a product picker.
-  "site/loaders/productByHandle.ts": productByHandle,
-  "shopify/loaders/ProductDetailsPage.ts": shopifyProductDetailsPage,
-  // Every product loader also asks for the `deco.*` metafields the redesign reads (src/sdk/capyProduct.ts).
-  "shopify/loaders/ProductList.ts": (props: ShopifyProductListProps) =>
+  // Commerce data, over the Shopify upstream client, in the order the editor's product pickers list them.
+  /** @title Product by Handle */
+  "product-by-handle": productByHandle,
+  /** @title Shopify Product Details Page */
+  "shopify-product-details-page": shopifyProductDetailsPage,
+  // Every product loader also asks for the `deco.*` metafields the design reads (src/sdk/capyProduct.ts).
+  /** @title Shopify Product List */
+  "shopify-product-list": (props: ShopifyProductListProps) =>
     shopifyProductList({ ...props, metafields: withDecoMetafields(props.metafields) }),
-  "shopify/loaders/ProductListingPage.ts": shopifyProductListingPage,
-  "shopify/loaders/RelatedProducts.ts": (props: RelatedProductsProps) =>
-    shopifyRelatedProducts(props),
-  "commerce/loaders/product/extensions/listingPage.ts": listingPageExtensions,
-  "commerce/loaders/product/extensions/detailsPage.ts": detailsPageExtensions,
-  "website/loaders/fonts/googleFonts.ts": websiteGoogleFonts,
-  resolved,
+  /** @title Shopify Product Listing Page */
+  "shopify-product-listing-page": shopifyProductListingPage,
+  /** @title Shopify Related Products */
+  "shopify-related-products": (props: RelatedProductsProps) => shopifyRelatedProducts(props),
 
   // Matchers
-  "website/matchers/device.ts": device,
-  "website/matchers/random.ts": random,
+  /** @title Device */
+  device,
 
   // Sections
-  "site/sections/Animation/Animation.tsx": animation,
-  "site/sections/Category/CategoryBanner.tsx": categoryBanner,
-  "site/sections/Category/CategoryGrid.tsx": categoryGrid,
-  "site/sections/Content/Faq.tsx": faq,
-  "site/sections/Content/Hero.tsx": hero,
-  "site/sections/Content/HighlightStrip.tsx": highlightStrip,
-  "site/sections/Content/Intro.tsx": intro,
-  "site/sections/Content/Logos.tsx": logos,
-  "site/sections/Content/PromoGrid.tsx": promoGrid,
-  "site/sections/Footer/Footer.tsx": footer,
-  "site/sections/Header/Header.tsx": header,
-  "site/sections/Images/Banner.tsx": banner,
-  "site/sections/Images/Carousel.tsx": carousel,
-  "site/sections/Images/ImageGallery.tsx": imageGallery,
-  "site/sections/Images/ShoppableBanner.tsx": shoppableBanner,
-  "site/sections/Links/LinkTree.tsx": linkTree,
-  "site/sections/Miscellaneous/CampaignTimer.tsx": campaignTimer,
-  "site/sections/Miscellaneous/CookieConsent.tsx": cookieConsent,
-  "site/sections/Newsletter/Newsletter.tsx": newsletter,
-  "site/sections/Product/ProductDetails.tsx": productDetails,
-  "site/sections/Product/ProductShelf.tsx": productShelf,
-  "site/sections/Product/ProductShelfTabbed.tsx": productShelfTabbed,
-  "site/sections/Product/SearchResult.tsx": searchResult,
-  "site/sections/Product/ShelfWithImage.tsx": shelfWithImage,
-  "site/sections/Product/Wishlist.tsx": wishlist,
-  "site/sections/Social/InstagramPosts.tsx": instagramPosts,
-  "site/sections/Social/WhatsApp.tsx": whatsApp,
-  "site/sections/Theme/Theme.tsx": theme,
-  "site/sections/Capy/Header.tsx": capyHeader,
-  "site/sections/Capy/Footer.tsx": capyFooter,
-  "site/sections/Capy/Newsletter.tsx": capyNewsletter,
-  "site/sections/Capy/HeroScene.tsx": capyHeroScene,
-  "site/sections/Capy/IntroStatement.tsx": capyIntroStatement,
-  "site/sections/Capy/CollectionScene.tsx": capyCollectionScene,
-  "site/sections/Capy/ProductRail.tsx": capyProductRail,
-  "site/sections/Capy/Manifesto.tsx": capyManifesto,
-  "site/sections/Capy/SizingStory.tsx": capySizingStory,
-  "site/sections/Capy/JournalCards.tsx": capyJournalCards,
-  "site/sections/Capy/CollectionHeader.tsx": capyCollectionHeader,
-  "site/sections/Capy/ProductListing.tsx": capyProductListing,
-  "site/sections/Capy/CollectionCards.tsx": capyCollectionCards,
-  "site/sections/Capy/ProductDetails.tsx": capyProductDetails,
-  "site/sections/Capy/LifestyleBanner.tsx": capyLifestyleBanner,
-  "site/sections/Capy/ProductShelf.tsx": capyProductShelf,
+  /** @title Header */
+  "site-header": async (props: HeaderProps) => view("site-header", await loadHeader(props)),
+  /** @title Footer */
+  "site-footer": async (props: FooterProps) => view("site-footer", props),
+  /** @title Newsletter */
+  newsletter: async (props: NewsletterProps) => view("newsletter", props),
+  /** @title Hero Scene */
+  "hero-scene": async (props: HeroSceneProps) => view("hero-scene", props),
+  /** @title Intro Statement */
+  "intro-statement": async (props: IntroStatementProps) => view("intro-statement", props),
+  /** @title Collection Scene */
+  "collection-scene": async (props: CollectionSceneProps) =>
+    view("collection-scene", await loadCollectionScene(props)),
+  /** @title Product Rail */
+  "product-rail": async (props: ProductRailProps) =>
+    view("product-rail", await loadProductRail(props)),
+  /** @title Manifesto */
+  manifesto: async (props: ManifestoProps) => view("manifesto", props),
+  /** @title Sizing Story */
+  "sizing-story": async (props: SizingStoryProps) => view("sizing-story", props),
+  /** @title Journal Cards */
+  "journal-cards": async (props: JournalCardsProps) => view("journal-cards", props),
+  /** @title Collection Header */
+  "collection-header": async (props: CollectionHeaderProps) =>
+    view("collection-header", await loadCollectionHeader(props)),
+  /** @title Product Listing */
+  "product-listing": async (props: ProductListingProps) =>
+    view("product-listing", await loadProductListing(props, pageState().url)),
+  /** @title Collection Cards */
+  "collection-cards": async (props: CollectionCardsProps) => view("collection-cards", props),
+  /** @title Product Details */
+  "product-details": async (props: ProductDetailsProps) =>
+    view("product-details", await loadProductDetails(props, pageState().url)),
+  /** @title Lifestyle Banner */
+  "lifestyle-banner": async (props: LifestyleBannerProps) =>
+    view("lifestyle-banner", await loadLifestyleBanner(props)),
+  /** @title Product Shelf */
+  "product-shelf": async (props: ProductShelfProps) =>
+    view("product-shelf", await loadProductShelf(props, pageState().url)),
+  // The shelf of the design before the capybara one, which the offline page still shows.
+  /** @title Classic Product Shelf */
+  "classic-product-shelf": async (props: ClassicProductShelfProps) =>
+    view("classic-product-shelf", props),
 } satisfies Blocks;

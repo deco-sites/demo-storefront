@@ -1,4 +1,4 @@
-// Vendored from @decocms/apps-shopify (utils/enums.ts) by the deco-v7-to-v8-migration skill. It's your code now.
+// The site's own Shopify code, over the upstream client (src/vendor/shopify/client.ts).
 export enum CurrencyCode {
   AED = "AED",
   AFN = "AFN",

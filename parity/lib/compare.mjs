@@ -104,7 +104,7 @@ function ruleMatches(rule, baseVal, actVal, actSnap) {
   }
   if ("replace" in rule) {
     // The baseline value with each [from, to] string replaced in order (on its JSON text) is exactly the
-    // actual value: e.g. URLs v7 built on a placeholder origin that v8 builds on the page's.
+    // actual value: e.g. URLs the old version built on a placeholder origin that the new one builds on the page's.
     if (baseVal === ABSENT || actVal === ABSENT) return false;
     let text = JSON.stringify(baseVal);
     for (const [from, to] of rule.replace) text = text.split(from).join(to);

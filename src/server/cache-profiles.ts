@@ -1,7 +1,7 @@
 /**
- * Page cache profiles, owned by the site (in v7 they came from @decocms/blocks/sdk/cacheHeaders).
- * A profile decides the Cache-Control a page is sent with and how long the worker keeps it in the
- * edge cache (createDecoWorker, whose defaults are these same v7 values and URL rules).
+ * Page cache profiles, owned by the site. A profile decides the Cache-Control a page is sent with
+ * and how long the worker keeps it in the edge cache (createDecoWorker, whose defaults are these
+ * same values and URL rules).
  */
 export type CacheProfileName =
   | "static"

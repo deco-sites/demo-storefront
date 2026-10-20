@@ -80,9 +80,8 @@ const SORTS: { value: Sort; label: string }[] = [
 
 const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
-/** Runs on the server with a request for the page (src/blocks/section.ts). */
-export function loader(props: Props, req?: Request) {
-  const url = new URL(req?.url ?? "https://localhost/");
+/** Runs on the server with the URL of the page being rendered (.deco/index.ts). */
+export function loader(props: Props, url: URL) {
   const { page, ...rest } = props;
   return {
     ...rest,

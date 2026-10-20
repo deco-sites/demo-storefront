@@ -3,9 +3,9 @@
  * Suspense boundary per block, each streamed as its promise resolves, and each descriptor rendered
  * through the view registry.
  *
- * The markup around each section is v7's, so pages look and behave exactly as before: a
- * `<section>` with the section's id and `data-manifest-key`, an error boundary, and the page content
- * between the Header and the Footer in a `<main>` landmark (v7's src/components/ui/PageSections.tsx).
+ * Each section is wrapped in a `<section>` whose `id` and `data-manifest-key` are its block type
+ * (the site editor's click-to-edit finds sections by `data-manifest-key`) and an error boundary,
+ * and the page content between the Header and the Footer goes in a `<main>` landmark.
  */
 import { Component, type ErrorInfo, type ReactNode, Suspense } from "react";
 import { Await } from "@tanstack/react-router";
@@ -13,13 +13,6 @@ import type { BlockDescriptor } from "../model";
 import { type Device, DeviceProvider } from "../sdk/device";
 import { mainBounds } from "../components/ui/splitPageSections";
 import { views } from "../views";
-
-function sectionId(component: string): string {
-  return component
-    .replace(/\//g, "-")
-    .replace(/\.tsx$/, "")
-    .replace(/^site-sections-/, "");
-}
 
 class SectionErrorBoundary extends Component<
   { sectionKey: string; children: ReactNode },
@@ -47,7 +40,7 @@ function SectionView({ block }: { block: BlockDescriptor }) {
   if (!view) return null;
   const View = view.default;
   return (
-    <section id={sectionId(block.component)} data-manifest-key={block.component}>
+    <section id={block.component} data-manifest-key={block.component}>
       <SectionErrorBoundary sectionKey={block.component}>
         <View {...block.props} />
       </SectionErrorBoundary>
@@ -87,7 +80,10 @@ function renderBlocks(blocks: PageBlock[]) {
  */
 export function PageView({ blocks, device }: { blocks: PageBlock[]; device?: Device }) {
   const bounds = mainBounds(
-    blocks.map((block, pos) => ({ s: { key: block.key, component: block.component }, pos })),
+    blocks.map((block, pos) => ({
+      s: { landmark: block.component ? views[block.component]?.landmark : undefined },
+      pos,
+    })),
   );
   return (
     <DeviceProvider value={device}>

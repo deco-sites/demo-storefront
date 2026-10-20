@@ -1,8 +1,8 @@
-// Vendored from @decocms/apps-shopify 7.64.3 (client.ts), then rewritten over the next-major upstream
-// client, `createShopifyClient` (/next/upstream-clients#call-a-client). It's your code now.
+// The site's Shopify client, over the upstream client `createShopifyClient`
+// (/next/upstream-clients#call-a-client).
 //
-// The loaders, cart and sign-in flows in src/vendor/shopify keep calling `getShopifyClient().query(…)`
-// as they did in v7; underneath, every request goes through the Storefront API endpoint of the
+// The loaders, cart and sign-in flows in src/vendor/shopify call `getShopifyClient().query(…)`;
+// underneath, every request goes through the Storefront API endpoint of the
 // instrumented client (provider "shopify", one operation label per GraphQL document).
 import { createShopifyClient, type ShopifyClient } from "@decocms/apps-shopify";
 import { env } from "cloudflare:workers";
@@ -27,7 +27,7 @@ function shopify(): ShopifyClient {
   return client;
 }
 
-/** The Storefront API, with the v7 calling convention (a document or a fragment-composed definition). */
+/** The Storefront API: a query is a document or a fragment-composed definition. */
 export function getShopifyClient(): GraphQLClient {
   return {
     query<T>(query: string | QueryDefinition, variables?: Record<string, unknown>): Promise<T> {

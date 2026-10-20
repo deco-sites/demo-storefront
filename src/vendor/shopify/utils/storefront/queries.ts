@@ -1,4 +1,4 @@
-// Vendored from @decocms/apps-shopify (utils/storefront/queries.ts) by the deco-v7-to-v8-migration skill. It's your code now.
+// The site's own Shopify code, over the upstream client (src/vendor/shopify/client.ts).
 import { gql } from "../graphql";
 
 const ProductVariant = gql`

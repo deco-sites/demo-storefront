@@ -1,5 +1,5 @@
-// Vendored from @decocms/apps-shopify 7.64.3 (utils/graphql.ts). The request itself is sent by the
-// next-major client (see ../client.ts); what stays here is how the queries are written. It's your code now.
+// How the Storefront API queries are written. The request itself is sent by the upstream client
+// (see ../client.ts).
 
 export function gql(strings: TemplateStringsArray, ...values: unknown[]): string {
   return strings.reduce((acc, str, i) => acc + str + (values[i] ?? ""), "");

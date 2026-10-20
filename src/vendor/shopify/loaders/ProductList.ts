@@ -1,4 +1,4 @@
-// Vendored from @decocms/apps-shopify 7.64.3 (loaders/ProductList.ts) by the deco-v7-to-v8-migration skill. It's your code now.
+// The site's own Shopify code, over the upstream client (src/vendor/shopify/client.ts).
 import type { Product } from "../../commerce/types";
 import { getShopifyClient } from "../client";
 import { ProductsByCollection, SearchProducts } from "../utils/storefront/queries";

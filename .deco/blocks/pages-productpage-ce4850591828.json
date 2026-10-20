@@ -3,19 +3,10 @@
   "path": "/products/:slug",
   "sections": [
     {
-      "__resolveType": "commerce/sections/Seo/SeoPDPV2.tsx",
-      "jsonLD": {
-        "__resolveType": "lazy",
-        "value": {
-          "__resolveType": "PDP Loader"
-        }
-      }
-    },
-    {
       "__resolveType": "Header"
     },
     {
-      "__resolveType": "site/sections/Capy/ProductDetails.tsx",
+      "__resolveType": "product-details",
       "page": {
         "__resolveType": "PDP Loader"
       },
@@ -67,7 +58,7 @@
       ]
     },
     {
-      "__resolveType": "site/sections/Capy/LifestyleBanner.tsx",
+      "__resolveType": "lifestyle-banner",
       "page": {
         "__resolveType": "PDP Loader"
       },
@@ -75,10 +66,10 @@
       "position": "top-right"
     },
     {
-      "__resolveType": "site/sections/Capy/ProductShelf.tsx",
+      "__resolveType": "product-shelf",
       "title": "Complete the look.",
       "products": {
-        "__resolveType": "shopify/loaders/ProductList.ts",
+        "__resolveType": "shopify-product-list",
         "props": {
           "collection": "the-herd",
           "count": 12,
@@ -100,7 +91,7 @@
       }
     },
     {
-      "__resolveType": "site/sections/Capy/Newsletter.tsx",
+      "__resolveType": "newsletter",
       "title": "Slow news, monthly.",
       "titleTone": "One letter. No hurry.",
       "body": "New pieces, field notes from the riverbank and the odd yuzu. Once a month, never more.",
@@ -112,5 +103,5 @@
       "__resolveType": "Footer"
     }
   ],
-  "__resolveType": "website/pages/Page.tsx"
+  "__resolveType": "page"
 }

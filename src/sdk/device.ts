@@ -1,6 +1,5 @@
 /**
- * Device detection, owned by the site (in v7 it came from @decocms/blocks/sdk/useDevice; the regular
- * expressions are the same, so every page splits mobile/tablet/desktop exactly as before).
+ * Device detection, owned by the site: mobile, tablet or desktop, from the User-Agent.
  *
  * The server detects the device from the request's User-Agent once per page (src/open-page.server.ts)
  * and the page renders inside a `DeviceProvider` seeded with it, so server rendering and hydration

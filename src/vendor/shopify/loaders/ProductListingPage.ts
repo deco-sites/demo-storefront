@@ -1,4 +1,4 @@
-// Vendored from @decocms/apps-shopify 7.64.3 (loaders/ProductListingPage.ts) by the deco-v7-to-v8-migration skill. It's your code now.
+// The site's own Shopify code, over the upstream client (src/vendor/shopify/client.ts).
 import type { ProductListingPage } from "../../commerce/types";
 import { getShopifyClient } from "../client";
 import { ProductsByCollection, SearchProducts } from "../utils/storefront/queries";
@@ -46,8 +46,8 @@ export interface Props {
 
 /**
  * A failed Storefront API call (network error, HTTP error, GraphQL error) lists nothing instead of
- * failing the section: the page keeps its breadcrumb, filters and sort bar with "0 results", the
- * state v7 showed, rather than dropping the whole listing section.
+ * failing the section: the page keeps its breadcrumb, filters and sort bar with "0 results",
+ * rather than dropping the whole listing section.
  */
 async function orEmpty<T>(query: Promise<T>, what: string): Promise<T | undefined> {
   try {

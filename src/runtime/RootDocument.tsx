@@ -1,7 +1,6 @@
 /**
- * The document every page renders in. In v7 the site composed it from @decocms/tanstack's pieces in
- * src/routes/__root.tsx; the markup is the same: the DECO.events bus and the data-event observer
- * that the site's analytics events go through, a navigation progress bar, a content area that keeps
+ * The document every page renders in: the DECO.events bus and the data-event observer that the
+ * site's analytics events go through, a navigation progress bar, a content area that keeps
  * its height while the next page loads, @decocms/tanstack's `DecoPreview` (the Studio bridge, the
  * draft badge, and the draft and CDN segment token `createDecoWorker` hands the page), and the
  * router's head and scripts.
@@ -35,8 +34,7 @@ window.dataLayer = window.dataLayer || [];
 
 /**
  * Dispatches the events elements declare with `data-event` (src/sdk/useSendEvent.ts), on view or click.
- * v7's `ANALYTICS_SCRIPT` (@decocms/blocks 7.64.3, src/sdk/analytics.ts): it waits for a Speculation
- * Rules prerender to activate before observing anything.
+ * It waits for a Speculation Rules prerender to activate before observing anything.
  */
 const DATA_EVENT_OBSERVER = `
 (function() {
@@ -103,9 +101,8 @@ const PROGRESS_CSS = `
 `;
 
 /**
- * A loading bar at the top of the page during client-side navigation (v7's `NavigationProgress`,
- * @decocms/tanstack 7.64.3): the site's `brand-primary-500` color when it defines one, else the
- * inherited text color.
+ * A loading bar at the top of the page during client-side navigation: the site's
+ * `brand-primary-500` color when it defines one, else the inherited text color.
  */
 function NavigationProgress() {
   const isLoading = useRouterState({ select: (s) => s.isLoading });

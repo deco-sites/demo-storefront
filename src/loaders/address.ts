@@ -1,15 +1,8 @@
-import { usePlatform } from "../apps/site";
 import { type AddressBookState } from "../platform/address/address.types";
 import { readAddressCookie } from "../platform/address/cookie";
 
 async function loader(req: Request): Promise<AddressBookState> {
-  const platform = usePlatform();
-
-  if (platform === "wake") {
-    // TODO(consumer): wire the wake address endpoint here.
-  }
-
-  // Default: cookie-backed so the demo works without a backend.
+  // The address book lives in a cookie: the demo store has no customer address backend.
   return readAddressCookie(req);
 }
 

@@ -1,4 +1,4 @@
-// Vendored from @decocms/apps-commerce 7.64.3 (src/types/cart.ts). Shared commerce types live in the site in the next major. It's your code now.
+// Shared commerce types and helpers are the site's own code (/next/upstream-clients#what-a-client-is).
 /**
  * Cart v2 — platform-agnostic fragmentation contract.
  *

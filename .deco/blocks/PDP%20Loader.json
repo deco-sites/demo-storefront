@@ -1,7 +1,3 @@
 {
-  "data": {
-    "__resolveType": "shopify/loaders/ProductDetailsPage.ts"
-  },
-  "extensions": [],
-  "__resolveType": "commerce/loaders/product/extensions/detailsPage.ts"
+  "__resolveType": "shopify-product-details-page"
 }

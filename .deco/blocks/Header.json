@@ -1,5 +1,5 @@
 {
-  "__resolveType": "site/sections/Capy/Header.tsx",
+  "__resolveType": "site-header",
   "logo": "/capy/deco-logo.svg",
   "subline": "for capybaras",
   "links": [
@@ -41,7 +41,7 @@
     }
   },
   "crossSell": {
-    "__resolveType": "shopify/loaders/ProductList.ts",
+    "__resolveType": "shopify-product-list",
     "props": {
       "query": "tag:capy-2026 AND (title:Yuzu OR title:Largo)",
       "count": 2,
