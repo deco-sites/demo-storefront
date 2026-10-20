@@ -20,8 +20,10 @@ URI-encoded name. For ANY content change, edit only the matching
 `deco content`, `deco check`): `deco check` must report 0 errors.
 
 **The block map is `.deco/index.ts`**: every type content can name, by its
-short name (`hero-scene`, `shopify-product-list`, `device`, …). A section
-returns a descriptor; a new section needs an entry there and in `src/views.ts`.
+short name (`hero-scene`, `shopify-product-list`, `device`, …). The one
+exception is the page SEO block, `website/sections/Seo/SeoV2.tsx`: the site
+editor writes that name into new pages, so keep it. A section returns a
+descriptor; a new section needs an entry there and in `src/views.ts`.
 
 **Never hand-edit generated files:**
 

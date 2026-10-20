@@ -92,14 +92,14 @@ The baseline is therefore itself a replayed run, captured under exactly the cond
 
 ## Comparing a change
 
-`npm run parity:compare` builds the checked-out code with the parity shim and compares it against `parity/baseline`. To record the baseline, check out production (main) in another worktree, run `npm run parity:record` there and copy its `parity/baseline` over; or record it here before changing anything. A target served elsewhere (`--target <url>`) must:
+`npm run parity:compare` builds the checked-out code with the parity shim and compares it against `parity/baseline`. To record the baseline, run `npm run parity:record` on a checkout of production (main) with this branch's `parity/` folder (the cases are in `parity/pages.json`): record it here before changing anything, or copy `parity/` into a worktree of main, record there and copy its `parity/baseline` back. A target served elsewhere (`--target <url>`) must:
 
 1. Load `parity/runtime/worker-shim.js` first in its worker entry, for example through the same Vite plugin. Without it, the target fetches live data instead of the recorded fixtures.
 2. Run with `PARITY_UPSTREAM=http://127.0.0.1:5347`, `PARITY_NOW` and `PARITY_SEED` from `pages.json`, the `siteEnv` of `pages.json`, and the same content revision.
 
 Then run `npm run parity:compare -- --target <url>`. While compare runs, it serves the replay proxy on port 5347.
 
-Expected differences are approved by the product owner only, never by an agent, and approvals are **per site and per change**: a rule approved for one change says nothing about the next. Until the product owner signs a difference off, it is listed as PENDING in the PR with its screenshots. Once approved, it is encoded in `pages.json`, never by editing the baseline:
+Expected differences are approved by the product owner only, never by an agent, and approvals are **per site**: every approved rule applies to every later compare, so when a new baseline is recorded, remove the rules it no longer needs. Until the product owner signs a difference off, it is listed as PENDING in the PR with its screenshots. Once approved, it is encoded in `pages.json`, never by editing the baseline:
 
 - `ignoreHeaders` drops a header from both snapshots.
 - `approvedDifferences` holds one rule per case list and snapshot field. Each rule names the `cases`, the field `path` (dotted; `[*]` pairs up array elements, e.g. `analytics.events[*].props.items`), and exactly what the new value must be: `actual` (an exact value, `"$absent"` for a dropped field), `actualSameAs` (equal to another field of the same capture), `addsOnly` (an array that is the baseline plus exactly these entries) `replace` (the baseline value with each listed `[from, to]` string replaced, on its JSON text) or `mask` (a string equal to the baseline once the regex matches are blanked). `baseline` optionally pins the old value as well, and `approval` cites the sign-off. Where the capture matches, compare resets that field to the baseline value; any other change to the field still fails. The summary lists the rules applied per case.

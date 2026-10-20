@@ -3,9 +3,10 @@
 @import "./capy.css";
 /* parity harness (dev-only) must not feed Tailwind class detection */
 @source not "../../parity";
-/* Server and data code (the Shopify and commerce code, the page renderer, root document and edge
-   cache), the block map and the generated schema render no markup of their own: their class-like
-   strings would add utilities no view uses. */
+/* Left out of Tailwind's class detection: the Shopify and commerce code, the server code, the
+   block map and the generated schema hold class-like strings no view needs, and the few classes
+   the page renderer and root document (src/runtime) put in markup are styled in this stylesheet
+   already. Scanning them would add utilities to the bundle. */
 @source not "../vendor";
 @source not "../runtime";
 @source not "../server";
