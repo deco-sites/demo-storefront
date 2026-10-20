@@ -1,5 +1,4 @@
-// Vendored from @decocms/apps-commerce 7.64.3 (src/sdk/useOffer.ts). Shared commerce types and helpers live in the site in the
-// next major (/next/upstream-clients#what-a-client-is); this copy is the site's own code now.
+// Shared commerce types and helpers are the site's own code (/next/upstream-clients#what-a-client-is).
 import type { AggregateOffer, UnitPriceSpecification } from "../types";
 
 const bestInstallment = (acc: UnitPriceSpecification | null, curr: UnitPriceSpecification) => {

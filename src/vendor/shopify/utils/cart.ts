@@ -1,4 +1,4 @@
-// Vendored from @decocms/apps-shopify 7.64.3 (utils/cart.ts). Cart, session and sign-in flows live in the site in the next major (/next/upstream-clients#what-a-client-is). It's your code now.
+// Cart, session and sign-in flows are the site's own code (/next/upstream-clients#what-a-client-is).
 import { getCookies, setCookie } from "./cookies";
 
 const CART_COOKIE = "cart";

@@ -22,8 +22,8 @@ export const loadPage = createServerFn({ method: "GET" })
     const clientNavigation = new URL(request.url).pathname.startsWith("/_serverFn/");
     const page = await openPage(data.href, request);
     // While the server renders a document, block promises stay unawaited so each block streams.
-    // A client-side navigation answers once every block is ready, as v7 did: the router swaps
-    // pages at once, and the response carries data, not promises.
+    // A client-side navigation answers once every block is ready: the router swaps pages at once,
+    // and the response carries data, not promises.
     if (!clientNavigation) return page;
     const blocks = await Promise.all(
       page.blocks.map(async (block) => ({ ...block, value: await block.value })),

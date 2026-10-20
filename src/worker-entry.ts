@@ -14,7 +14,7 @@ import { getCookies } from "./vendor/shopify/utils/cookies";
 // @ts-ignore Vite ?url import
 import appCss from "./styles/app.css?url";
 
-// Enforced Content-Security-Policy, the same header v7 sent through `securityHeaders`.
+// Enforced Content-Security-Policy.
 //
 // Hosts included here are the ones actually referenced by the rendered
 // storefront: decoims.com (deco image CDN), cdn.shopify.com / *.shopify.com /

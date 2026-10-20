@@ -1,4 +1,4 @@
-// Vendored from @decocms/apps-shopify 7.64.3 (loaders/ProductDetailsPage.ts) by the deco-v7-to-v8-migration skill. It's your code now.
+// The site's own Shopify code, over the upstream client (src/vendor/shopify/client.ts).
 import type { ProductDetailsPage } from "../../commerce/types";
 import { getShopifyClient } from "../client";
 import { GetProduct } from "../utils/storefront/queries";

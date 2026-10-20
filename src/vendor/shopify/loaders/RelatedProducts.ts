@@ -1,5 +1,4 @@
-// Vendored from @decocms/apps-shopify 7.64.3 (loaders/RelatedProducts.ts). v7 offered it in every product-list
-// picker of the editor; no saved content uses it. It's your code now.
+// Shopify related products, offered in every product-list picker of the editor.
 import type { Product } from "../../commerce/types";
 import { getShopifyClient } from "../client";
 import { GetProduct, ProductRecommendations } from "../utils/storefront/queries";

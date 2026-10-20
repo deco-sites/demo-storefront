@@ -1,7 +1,6 @@
-// Vendored from @decocms/apps-shopify 7.64.3 (utils/cookies.ts). Cart, session and sign-in flows live in the site in the next major (/next/upstream-clients#what-a-client-is). It's your code now.
+// Cart, session and sign-in flows are the site's own code (/next/upstream-clients#what-a-client-is).
 /**
- * Node.js-compatible cookie helpers.
- * Replaces Deno's std/http/cookie.ts.
+ * Cookie helpers for the Shopify cart and session cookies.
  */
 
 export function getCookies(headers: Headers): Record<string, string> {

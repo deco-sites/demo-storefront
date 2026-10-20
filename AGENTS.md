@@ -19,9 +19,9 @@ URI-encoded name. For ANY content change, edit only the matching
 `.deco/blocks/*.json` file(s), then run `npm run prebuild` (`deco schema`,
 `deco content`, `deco check`): `deco check` must report 0 errors.
 
-**The block map is `.deco/index.ts`**: every type content can name, with an
-alias under each v7 type name saved content stores. A section returns a
-descriptor; a new section needs an entry there and in `src/views.ts`.
+**The block map is `.deco/index.ts`**: every type content can name, by its
+short name (`hero-scene`, `shopify-product-list`, `device`, …). A section
+returns a descriptor; a new section needs an entry there and in `src/views.ts`.
 
 **Never hand-edit generated files:**
 

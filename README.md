@@ -44,14 +44,14 @@ Open `http://localhost:5173`.
 | `npm run knip` / `knip:fix` | Find / auto-fix unused exports and files |
 | `npm run tailwind:lint` / `tailwind:fix` | Lint/auto-fix Tailwind class usage |
 | `npm run generate:routes` | Regenerate `src/routeTree.gen.ts` |
-| `npm run parity:*` | The v7 → v8 parity harness (`parity/README.md`) |
+| `npm run parity:*` | The parity harness: pixel and snapshot compare against production (`parity/README.md`) |
 
 ## Project layout
 
 ```
 .deco/
 ├── blocks/               # Saved content, one JSON file per block (source of truth)
-├── index.ts              # The block map: every type content can name (v7 type names)
+├── index.ts              # The block map: every type content can name
 └── schema.gen.json       # Editor forms (`deco schema`; committed). blocks.gen.ts is generated and gitignored
 src/
 ├── cms.ts                # createCMS (explicit params; the site reads its own env)
@@ -61,16 +61,16 @@ src/
 ├── page-route.tsx        # Route options shared by `/` and `/$`
 ├── head.ts               # <head> from the page SEO and the site-wide SEO defaults
 ├── request-state.server.ts # The page being rendered, for block functions (AsyncLocalStorage)
-├── blocks/               # Block functions: commerce loaders, SEO, matchers, section helper
+├── blocks/               # Block functions: commerce loaders, SEO, matchers
 ├── runtime/              # Root document, page view (sections, <main> landmark)
 ├── routes/               # TanStack Router file routes (__root, $, index, account, login)
-├── sections/             # CMS-rendered sections (Header, Footer, Product, Newsletter, …)
+├── sections/             # CMS-rendered sections (Capy: the capybara design; Product: the offline page's shelf)
 ├── components/           # UI components (header, minicart, product, search, ui, …)
 ├── platform/             # Domain state — TanStack Query hooks + createServerFn actions
 ├── server/               # Edge cache, cache profiles, the site's server functions
 ├── loaders/, actions/    # Site loaders and actions (called by blocks and server functions)
-├── vendor/               # Code copied from the v7 packages: Shopify, commerce types, Image
-├── sdk/                  # clx, debounce, device, logger, …
+├── vendor/               # Shopify loaders and flows, commerce types, image helpers (the site's own code)
+├── sdk/                  # clx, device, url, …
 ├── styles/app.css        # Tailwind v4 entry
 ├── server.ts             # TanStack Start server entry
 ├── start.ts              # Start instance (server-function fetch with the CDN segment token)
@@ -84,7 +84,7 @@ src/
 2. The request goes on to the TanStack Start server entry (`src/server.ts`).
 3. The catch-all route (`src/routes/$.tsx`) and the home route call `loadPage`, which finds the page with `matchRoute` (`src/open-page.server.ts`) and starts every block on it.
 4. Each section block returns a descriptor; `src/runtime/PageView.tsx` renders it through `src/views.ts`.
-5. Commerce data (Shopify PDP, PLP, search, cart) comes from the loaders in `src/vendor/shopify`, sent through the v8 Shopify client.
+5. Commerce data (Shopify PDP, PLP, search, cart) comes from the loaders in `src/vendor/shopify`, sent through the Shopify upstream client.
 
 ## Data fetching pattern
 
