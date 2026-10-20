@@ -17,7 +17,7 @@
  *          `pendingBaselines` rule into its `dir`: a live pass records what the
  *          baseline fixtures lack (upstream + HAR, into that dir), then a replay
  *          pass captures the screens/snapshots compare checks those cases against,
- *          plus a v7-vs-new report for the product owner.
+ *          plus a baseline-vs-new report for the product owner.
  * compare: replay mode against --target (default: starts the local parity
  *          build). Writes parity/runs/<label>/{actual,diff,summary.*} and exits
  *          non-zero on any pixel, snapshot or missing-capture difference.
@@ -150,23 +150,15 @@ function sanitizeHars(harDir) {
 }
 
 /**
- * Editor-form baseline: the admin's composed schema as the v7 site serves it
- * (GET /live/_meta). Not part of the pixel/snapshot compare (v8 has no admin
- * endpoint); it is the reference for the v8 schema.gen.json form review.
+ * Editor-form baseline: the baseline build's generated schema (.deco/schema.gen.json), the forms the
+ * site editor shows. Not part of the pixel/snapshot compare; it is the reference for reviewing a
+ * change's schema.gen.json.
  */
-async function saveForms(baseURL) {
+function saveForms() {
   const dir = path.join(BASE, "forms");
   fs.mkdirSync(dir, { recursive: true });
-  try {
-    const res = await fetch(`${baseURL}/live/_meta`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const meta = await res.json();
-    delete meta.etag;
-    fs.writeFileSync(path.join(dir, "live-meta.json"), JSON.stringify(meta, null, 1) + "\n");
-    log(`[record] editor forms saved to ${path.relative(ROOT, dir)}/live-meta.json`);
-  } catch (err) {
-    log(`[record] editor forms not saved: ${err.message}`);
-  }
+  fs.copyFileSync(path.join(ROOT, ".deco/schema.gen.json"), path.join(dir, "schema.gen.json"));
+  log(`[record] editor forms saved to ${path.relative(ROOT, dir)}/schema.gen.json`);
 }
 
 async function recaptureBaseline() {
@@ -237,7 +229,7 @@ async function record() {
   let r2;
   try {
     r2 = await capturePass({ cases, baseURL: site.url, mode: "replay", upstream, outDir: BASE, harDir, noPending: true });
-    await saveForms(site.url);
+    saveForms();
   } finally {
     await site.stop();
     await upstream.close();
@@ -322,7 +314,7 @@ async function compare() {
     const md = [
       `# Parity compare ${label}`,
       ``,
-      `target: ${baseURL}${usePending ? "" : " (--no-pending: every case against the v7 baseline)"}  `,
+      `target: ${baseURL}${usePending ? "" : " (--no-pending: every case against the baseline)"}  `,
       `result: **${pass ? "PASS" : "FAIL"}**${has("strict") ? " (--strict)" : ""} — ${counts.text}, upstream misses: ${upstream.misses.length}  `,
       summary.pending.length ? `pending rules (not approved): ${summary.pending.join(", ")}` : `pending rules: none`,
       ``,
@@ -344,7 +336,7 @@ async function compare() {
  * Pins the new version's output for one `pendingBaselines` rule. Pass 1 serves the baseline's
  * recordings where they exist and records the rest live (upstream into <dir>/upstream.json, browser
  * third parties into <dir>/har/); pass 2 replays and writes <dir>/screens and <dir>/snapshots. The
- * report <dir>/README.md lists, per case, how the pinned capture differs from the v7 baseline.
+ * report <dir>/README.md lists, per case, how the pinned capture differs from the baseline.
  */
 async function recordPending() {
   const rule = pendingBaselines.find((p) => p.id === flag("rule"));
@@ -380,12 +372,12 @@ async function recordPending() {
     await site.stop();
     await upstream.close();
   }
-  // Old vs new, for the product owner: the v7 baseline against the pinned capture.
-  const vsDir = path.join(dir, "v7-vs-new");
+  // Old vs new, for the product owner: the baseline against the pinned capture.
+  const vsDir = path.join(dir, "baseline-vs-new");
   const rows = [];
   for (const r of r2) {
     const c = compareCase({ id: r.id, fileId: fileId(r.id), error: r.error, baseDir: BASE, actualDir: dir, outRoot: vsDir, ignoreHeaders: manifest.ignoreHeaders, approvedDifferences: manifest.approvedDifferences, volatileHarMisses: manifest.volatileHarMisses });
-    rows.push(`| ${r.id} | ${c.ok ? "same as v7" : c.problems.join("; ").replace(/\|/g, "\\|")} |`);
+    rows.push(`| ${r.id} | ${c.ok ? "same as the baseline" : c.problems.join("; ").replace(/\|/g, "\\|")} |`);
   }
   const { execSync } = await import("node:child_process");
   fs.writeFileSync(path.join(dir, "README.md"), [
@@ -393,11 +385,11 @@ async function recordPending() {
     ``,
     `Not approved. ${rule.reason ?? ""}`,
     ``,
-    `Pinned from \`${execSync("git rev-parse --short HEAD", { cwd: ROOT }).toString().trim()}\` with \`node parity/run.mjs record-pending --rule ${rule.id}\`. Compare checks these cases against \`screens/\` and \`snapshots/\` here (reported PENDING when identical); \`--strict\` fails on them. The v7 captures are in \`parity/baseline/screens/\`; \`v7-vs-new/diff/\` has the red-pixel diffs and snapshot diffs.`,
+    `Pinned from \`${execSync("git rev-parse --short HEAD", { cwd: ROOT }).toString().trim()}\` with \`node parity/run.mjs record-pending --rule ${rule.id}\`. Compare checks these cases against \`screens/\` and \`snapshots/\` here (reported PENDING when identical); \`--strict\` fails on them. The baseline captures are in \`parity/baseline/screens/\`; \`baseline-vs-new/diff/\` has the red-pixel diffs and snapshot diffs.`,
     ``,
     `Upstream misses in the replayed capture: ${upstream.misses.length}.`,
     ``,
-    `| case | v7 baseline vs this capture |`,
+    `| case | baseline vs this capture |`,
     `|---|---|`,
     ...rows,
     ``,

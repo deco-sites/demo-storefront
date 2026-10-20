@@ -35,7 +35,7 @@ const step = (ok, text) => {
   if (!ok) failed++;
   console.log(`${ok ? "ok  " : "FAIL"} ${text}`);
 };
-const newsletterOf = (block) => block.sections.find((s) => String(s.__resolveType).includes("Newsletter"));
+const newsletterOf = (block) => block.sections.find((s) => s.__resolveType === "newsletter");
 const fetchHome = async () => (await fetch(`${SITE}/?editor-check=${Date.now()}`)).text();
 const waitFor = async (predicate, ms = 20_000) => {
   const end = Date.now() + ms;
@@ -61,7 +61,7 @@ const l1 = await client.blocksList();
 step(l1.diagnostics.length === 0, `blocks.list: ${Object.keys(l1.blocks).length} blocks, revision ${l1.revision}, ${l1.diagnostics.length} diagnostics`);
 const startVersion = l1.versions[BLOCK];
 const original = l1.blocks[BLOCK];
-const originalTitle = newsletterOf(original).notices.empty.title;
+const originalTitle = newsletterOf(original).title;
 
 try {
   await client.blocksApply({ set: { [BLOCK]: original }, ifMatch: { [BLOCK]: "stale-version" } });
@@ -72,7 +72,7 @@ try {
 
 const title = `Editor check ${new Date().toISOString()}`;
 const edited = structuredClone(original);
-newsletterOf(edited).notices.empty.title = title;
+newsletterOf(edited).title = title;
 const a1 = await client.blocksApply({ set: { [BLOCK]: edited }, ifMatch: { [BLOCK]: startVersion } });
 step(a1.versions[BLOCK] && a1.versions[BLOCK] !== startVersion, `blocks.apply edit: Newsletter title -> "${title}", version ${a1.versions[BLOCK]}`);
 step(await waitFor(async () => (await fetchHome()).includes(title)), `vite dev renders the new title without a restart`);
