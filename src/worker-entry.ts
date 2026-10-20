@@ -1,20 +1,18 @@
 /**
  * Cloudflare Worker entry point — Shopify storefront.
  *
- * TanStack Start serves every page; the site's edge-cache wrapper (src/server/edge-cache.ts) adds
- * security headers, page cache headers and the edge cache in front of it. In v7 this was
- * `createDecoWorkerEntry` from @decocms/tanstack. Shopify checkout runs on Shopify's hosted checkout
- * (or the store's domain) and needs no reverse proxy: every commerce call goes through the
- * Storefront API (GraphQL) from the server.
+ * TanStack Start serves every page; `createDecoWorker` (@decocms/tanstack) puts the Deco edge in
+ * front of it: the page cache (keyed on build, content revision, device, region and login), drafts,
+ * Studio framing, CMS redirects, security headers and the CDN caching of navigation data. Shopify
+ * checkout runs on Shopify's hosted checkout (or the store's domain) and needs no reverse proxy.
  */
+import { createDecoWorker } from "@decocms/tanstack/worker";
 import handler, { createServerEntry } from "@tanstack/react-start/server-entry";
-import { withEdgeCache } from "./server/edge-cache";
+import { cms } from "./cms";
 import { detectDevice } from "./sdk/device";
 import { getCookies } from "./vendor/shopify/utils/cookies";
 // @ts-ignore Vite ?url import
 import appCss from "./styles/app.css?url";
-
-const serverEntry = createServerEntry({ fetch: handler.fetch });
 
 // Enforced Content-Security-Policy, the same header v7 sent through `securityHeaders`.
 //
@@ -26,12 +24,7 @@ const serverEntry = createServerEntry({ fetch: handler.fetch });
 // `default-src` is intentionally broad (https:) so resource types with no
 // explicit directive — media, manifest, prefetch — keep working; the XSS
 // hardening comes from `script-src`, `object-src`, `base-uri` and
-// `form-action`. `frame-ancestors` is omitted, and no X-Frame-Options is sent
-// either, so any origin may frame the site, exactly as on v7 (the parity
-// baseline's headers show neither). Adding
-// `frame-ancestors 'self' https://studio.decocms.com https://*.deco.studio`
-// would stop clickjacking and keep the site editor's preview iframe working; it
-// is left for the product owner to decide (parity/README.md).
+// `form-action`. The worker adds `frame-ancestors` (Studio and the site).
 const CSP_DIRECTIVES = [
   "default-src 'self' https: data: blob:",
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' cdn.shopify.com *.shopify.com",
@@ -46,25 +39,26 @@ const CSP_DIRECTIVES = [
   "form-action 'self' *.myshopify.com *.shopify.com",
 ];
 
-export default withEdgeCache(serverEntry, {
-  enforcedCsp: CSP_DIRECTIVES.join("; "),
-  cssHref: appCss,
-  buildSegment: (request) => {
-    const cookies = getCookies(request.headers);
-    // The cache splits only mobile vs desktop: tablets share the mobile entry.
-    const device =
-      detectDevice(request.headers.get("user-agent") ?? "") === "desktop" ? "desktop" : "mobile";
-    // Region splits the cache so a page cached for one region isn't served to another. Reads
-    // cf-region-code (Cloudflare adds it in production), with request.cf as a fallback.
+export default createDecoWorker({
+  serverEntry: createServerEntry({ fetch: handler.fetch }),
+  cms,
+  site: "demo-storefront",
+  buildHash: __BUILD_HASH__,
+  dev: import.meta.env.DEV,
+  csp: { enforce: CSP_DIRECTIVES },
+  preload: { styles: [appCss] },
+  purgeToken: (env: { PURGE_TOKEN?: string }) => env.PURGE_TOKEN,
+  segment: (request) => {
+    // Signed-in shoppers carry the Shopify customer token cookie (src/platform/user/user.actions.ts):
+    // their pages are never stored in or served from the shared cache.
+    if (getCookies(request.headers).secure_customer_sig) return "private";
+    // The cache splits only mobile vs desktop: tablets share the mobile entry. Region splits it so
+    // a page cached for one region isn't served to another (cf-region-code, request.cf fallback).
     const cf = (request as unknown as { cf?: { regionCode?: string } }).cf;
-    const regionCode = request.headers.get("cf-region-code") ?? cf?.regionCode ?? "";
     return {
-      device,
-      // Signed-in shoppers carry the Shopify customer token cookie (src/platform/user/user.actions.ts):
-      // their pages are never stored in or served from the shared cache. v7 looked for a
-      // `customerAccessToken` cookie, which the sign-in flow never sets.
-      ...(cookies.secure_customer_sig ? { loggedIn: true } : {}),
-      ...(regionCode ? { regionId: regionCode } : {}),
+      device:
+        detectDevice(request.headers.get("user-agent") ?? "") === "desktop" ? "desktop" : "mobile",
+      regionId: request.headers.get("cf-region-code") ?? cf?.regionCode,
     };
   },
 });

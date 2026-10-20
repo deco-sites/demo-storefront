@@ -13,7 +13,7 @@ import simulateShipping from "../actions/shipping/simulate";
 import submitWishlist from "../actions/wishlist/submit";
 import loadAddresses from "../loaders/address";
 import loadWishlist from "../loaders/wishlist";
-import { markPrivate } from "./private-response";
+import { markPrivate } from "@decocms/tanstack/server";
 
 const addressInput = z.object({
   id: z.string().optional(),
@@ -33,7 +33,7 @@ const addressOp = z.discriminatedUnion("op", [
   z.object({ op: z.literal("setDefault"), id: z.string() }),
 ]);
 
-// The shopper's own wishlist and addresses: never shared, so never cached (src/server/edge-cache.ts).
+// The shopper's own wishlist and addresses: never shared, so never cached (createDecoWorker in src/worker-entry.ts).
 export const getWishlistServerFn = createServerFn({ method: "GET" }).handler(() => {
   markPrivate();
   return loadWishlist(undefined, getRequest());

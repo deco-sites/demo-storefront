@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { getRequest, getResponse } from "@tanstack/react-start/server";
 import { z } from "zod";
-import { isServerFnCall, markPrivate } from "../../server/private-response";
+import { isServerFnCall, markPrivate } from "@decocms/tanstack/server";
 import { getCartCookie } from "../../vendor/shopify/utils/cart";
 import addItems from "../../vendor/shopify/actions/cart/addItems";
 import updateItems from "../../vendor/shopify/actions/cart/updateItems";
