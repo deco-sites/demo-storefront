@@ -7,80 +7,72 @@
   "manifest": {
     "blocks": {
       "sections": {
-        "commerce/sections/Seo/SeoPLPV2.tsx": {
-          "$ref": "#/definitions/Y29tbWVyY2Uvc2VjdGlvbnMvU2VvL1Nlb1BMUFYyLnRzeA==",
-          "namespace": "commerce"
-        },
-        "commerce/sections/Seo/SeoPDPV2.tsx": {
-          "$ref": "#/definitions/Y29tbWVyY2Uvc2VjdGlvbnMvU2VvL1Nlb1BEUFYyLnRzeA==",
-          "namespace": "commerce"
-        },
-        "site/sections/Product/ProductShelf.tsx": {
-          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Qcm9kdWN0L1Byb2R1Y3RTaGVsZi50c3g=",
+        "site-header": {
+          "$ref": "#/definitions/c2l0ZS1oZWFkZXI=",
           "namespace": "site"
         },
-        "site/sections/Capy/Header.tsx": {
-          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0hlYWRlci50c3g=",
+        "site-footer": {
+          "$ref": "#/definitions/c2l0ZS1mb290ZXI=",
           "namespace": "site"
         },
-        "site/sections/Capy/Footer.tsx": {
-          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0Zvb3Rlci50c3g=",
+        "newsletter": {
+          "$ref": "#/definitions/bmV3c2xldHRlcg==",
           "namespace": "site"
         },
-        "site/sections/Capy/Newsletter.tsx": {
-          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L05ld3NsZXR0ZXIudHN4",
+        "hero-scene": {
+          "$ref": "#/definitions/aGVyby1zY2VuZQ==",
           "namespace": "site"
         },
-        "site/sections/Capy/HeroScene.tsx": {
-          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0hlcm9TY2VuZS50c3g=",
+        "intro-statement": {
+          "$ref": "#/definitions/aW50cm8tc3RhdGVtZW50",
           "namespace": "site"
         },
-        "site/sections/Capy/IntroStatement.tsx": {
-          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0ludHJvU3RhdGVtZW50LnRzeA==",
+        "collection-scene": {
+          "$ref": "#/definitions/Y29sbGVjdGlvbi1zY2VuZQ==",
           "namespace": "site"
         },
-        "site/sections/Capy/CollectionScene.tsx": {
-          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25TY2VuZS50c3g=",
+        "product-rail": {
+          "$ref": "#/definitions/cHJvZHVjdC1yYWls",
           "namespace": "site"
         },
-        "site/sections/Capy/ProductRail.tsx": {
-          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RSYWlsLnRzeA==",
+        "manifesto": {
+          "$ref": "#/definitions/bWFuaWZlc3Rv",
           "namespace": "site"
         },
-        "site/sections/Capy/Manifesto.tsx": {
-          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L01hbmlmZXN0by50c3g=",
+        "sizing-story": {
+          "$ref": "#/definitions/c2l6aW5nLXN0b3J5",
           "namespace": "site"
         },
-        "site/sections/Capy/SizingStory.tsx": {
-          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1NpemluZ1N0b3J5LnRzeA==",
+        "journal-cards": {
+          "$ref": "#/definitions/am91cm5hbC1jYXJkcw==",
           "namespace": "site"
         },
-        "site/sections/Capy/JournalCards.tsx": {
-          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0pvdXJuYWxDYXJkcy50c3g=",
+        "collection-header": {
+          "$ref": "#/definitions/Y29sbGVjdGlvbi1oZWFkZXI=",
           "namespace": "site"
         },
-        "site/sections/Capy/CollectionHeader.tsx": {
-          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25IZWFkZXIudHN4",
+        "product-listing": {
+          "$ref": "#/definitions/cHJvZHVjdC1saXN0aW5n",
           "namespace": "site"
         },
-        "site/sections/Capy/ProductListing.tsx": {
-          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RMaXN0aW5nLnRzeA==",
+        "collection-cards": {
+          "$ref": "#/definitions/Y29sbGVjdGlvbi1jYXJkcw==",
           "namespace": "site"
         },
-        "site/sections/Capy/CollectionCards.tsx": {
-          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25DYXJkcy50c3g=",
+        "product-details": {
+          "$ref": "#/definitions/cHJvZHVjdC1kZXRhaWxz",
           "namespace": "site"
         },
-        "site/sections/Capy/ProductDetails.tsx": {
-          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3REZXRhaWxzLnRzeA==",
+        "lifestyle-banner": {
+          "$ref": "#/definitions/bGlmZXN0eWxlLWJhbm5lcg==",
           "namespace": "site"
         },
-        "site/sections/Capy/LifestyleBanner.tsx": {
-          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0xpZmVzdHlsZUJhbm5lci50c3g=",
+        "product-shelf": {
+          "$ref": "#/definitions/cHJvZHVjdC1zaGVsZg==",
           "namespace": "site"
         },
-        "site/sections/Capy/ProductShelf.tsx": {
-          "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RTaGVsZi50c3g=",
+        "classic-product-shelf": {
+          "$ref": "#/definitions/Y2xhc3NpYy1wcm9kdWN0LXNoZWxm",
           "namespace": "site"
         }
       },
@@ -89,33 +81,25 @@
           "$ref": "#/definitions/d2Vic2l0ZS9zZWN0aW9ucy9TZW8vU2VvVjIudHN4",
           "namespace": "website"
         },
-        "site/loaders/productByHandle.ts": {
-          "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw==",
+        "product-by-handle": {
+          "$ref": "#/definitions/cHJvZHVjdC1ieS1oYW5kbGU=",
           "namespace": "site"
         },
-        "shopify/loaders/ProductDetailsPage.ts": {
-          "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3REZXRhaWxzUGFnZS50cw==",
-          "namespace": "shopify"
+        "shopify-product-details-page": {
+          "$ref": "#/definitions/c2hvcGlmeS1wcm9kdWN0LWRldGFpbHMtcGFnZQ==",
+          "namespace": "site"
         },
-        "shopify/loaders/ProductList.ts": {
-          "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz",
-          "namespace": "shopify"
+        "shopify-product-list": {
+          "$ref": "#/definitions/c2hvcGlmeS1wcm9kdWN0LWxpc3Q=",
+          "namespace": "site"
         },
-        "shopify/loaders/ProductListingPage.ts": {
-          "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0aW5nUGFnZS50cw==",
-          "namespace": "shopify"
+        "shopify-product-listing-page": {
+          "$ref": "#/definitions/c2hvcGlmeS1wcm9kdWN0LWxpc3RpbmctcGFnZQ==",
+          "namespace": "site"
         },
-        "shopify/loaders/RelatedProducts.ts": {
-          "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw==",
-          "namespace": "shopify"
-        },
-        "commerce/loaders/product/extensions/listingPage.ts": {
-          "$ref": "#/definitions/Y29tbWVyY2UvbG9hZGVycy9wcm9kdWN0L2V4dGVuc2lvbnMvbGlzdGluZ1BhZ2UudHM=",
-          "namespace": "commerce"
-        },
-        "commerce/loaders/product/extensions/detailsPage.ts": {
-          "$ref": "#/definitions/Y29tbWVyY2UvbG9hZGVycy9wcm9kdWN0L2V4dGVuc2lvbnMvZGV0YWlsc1BhZ2UudHM=",
-          "namespace": "commerce"
+        "shopify-related-products": {
+          "$ref": "#/definitions/c2hvcGlmeS1yZWxhdGVkLXByb2R1Y3Rz",
+          "namespace": "site"
         },
         "lazy": {
           "$ref": "#/definitions/bGF6eQ==",
@@ -143,9 +127,9 @@
         }
       },
       "matchers": {
-        "website/matchers/device.ts": {
-          "$ref": "#/definitions/d2Vic2l0ZS9tYXRjaGVycy9kZXZpY2UudHM=",
-          "namespace": "website"
+        "device": {
+          "$ref": "#/definitions/ZGV2aWNl",
+          "namespace": "site"
         },
         "always": {
           "$ref": "#/definitions/YWx3YXlz",
@@ -402,598 +386,400 @@
           }
         }
       },
-      "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ProductListingPage": {
+      "cHJvZHVjdC1ieS1oYW5kbGU=": {
+        "title": "Product by Handle",
+        "description": "Returns the pinned product as a single-item list, so it drops straight into any prop typed `Product[] | null`.",
         "type": "object",
-        "properties": {
-          "breadcrumb": {
-            "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@BreadcrumbList",
-            "title": "Breadcrumb"
-          },
-          "filters": {
-            "type": "array",
-            "items": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@FilterToggle"
-                },
-                {
-                  "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@FilterRange"
-                }
-              ]
-            },
-            "title": "Filters"
-          },
-          "products": {
-            "anyOf": [
-              {
-                "$ref": "#/definitions/Resolvable"
-              },
-              {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@Product"
-                },
-                "title": "Inline data"
-              },
-              {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
-              },
-              {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
-              },
-              {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
-              }
-            ],
-            "title": "Products"
-          },
-          "pageInfo": {
-            "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@PageInfo",
-            "title": "Page Info"
-          },
-          "sortOptions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@SortOption"
-            },
-            "title": "Sort Options"
-          },
-          "seo": {
-            "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@Seo",
-            "nullable": true,
-            "title": "Seo"
-          }
-        },
         "required": [
-          "breadcrumb",
-          "filters",
-          "products",
-          "pageInfo",
-          "sortOptions"
-        ]
-      },
-      "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@BreadcrumbList": {
-        "type": "object",
+          "__resolveType",
+          "handle"
+        ],
         "properties": {
-          "image": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
-            },
-            "nullable": true,
-            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-            "title": "Image"
-          },
-          "@id": {
+          "__resolveType": {
             "type": "string",
-            "nullable": true,
-            "description": "IRI identifying the canonical address of this object.",
-            "title": "@id"
+            "enum": [
+              "product-by-handle"
+            ],
+            "default": "product-by-handle"
           },
-          "additionalType": {
+          "handle": {
             "type": "string",
-            "nullable": true,
-            "description": "An additional type for the item, typically used for adding more specific types from external vocabularies in microdata syntax. This is a relationship between something and a class that the thing is in. In RDFa syntax, it is better to use the native RDFa syntax - the 'typeof' attribute - for multiple types. Schema.org tools may have only weaker understanding of extra types, in particular those defined externally.",
-            "title": "Additional Type"
-          },
-          "alternateName": {
+            "title": "Product handle",
+            "description": "The product's URL handle/slug (e.g. \"high-top-canvas-shoes\") — pins an exact product instead of relying on a search query."
+          }
+        }
+      },
+      "c2hvcGlmeS1wcm9kdWN0LWRldGFpbHMtcGFnZQ==": {
+        "title": "Shopify Product Details Page",
+        "type": "object",
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
             "type": "string",
-            "nullable": true,
-            "description": "An alias for the item.",
-            "title": "Alternate Name"
+            "enum": [
+              "shopify-product-details-page"
+            ],
+            "default": "shopify-product-details-page"
           },
-          "description": {
-            "type": "string",
-            "nullable": true,
-            "description": "A description of the item.",
-            "title": "Description"
-          },
-          "disambiguatingDescription": {
-            "type": "string",
-            "nullable": true,
-            "description": "A sub property of description. A short description of the item used to disambiguate from other, similar items. Information from other properties (in particular, name) may be necessary for the description to be useful for disambiguation.",
-            "title": "Disambiguating Description"
-          },
-          "identifier": {
-            "type": "string",
-            "nullable": true,
-            "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
-            "title": "Identifier"
-          },
-          "video": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@VideoObject"
-            },
-            "nullable": true,
-            "title": "Video"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true,
-            "description": "The name of the item.",
-            "title": "Name"
-          },
-          "sameAs": {
-            "type": "string",
-            "nullable": true,
-            "description": "URL of a reference Web page that unambiguously indicates the item's identity. E.g. the URL of the item's Wikipedia page, Wikidata entry, or official website.",
-            "title": "Same As"
-          },
-          "subjectOf": {
-            "type": "string",
-            "nullable": true,
-            "description": "A CreativeWork or Event about this Thing.",
-            "title": "Subject Of"
-          },
-          "url": {
-            "type": "string",
-            "nullable": true,
-            "description": "URL of the item.",
-            "title": "Url"
-          },
-          "itemListElement": {
+          "metafields": {
             "type": "array",
             "items": {
               "type": "object",
               "properties": {
-                "item": {
+                "namespace": {
                   "type": "string",
-                  "description": "An entity represented by an entry in a list or data feed (e.g. an 'artist' in a list of 'artists')’.",
-                  "title": "Item"
+                  "title": "Namespace"
                 },
-                "position": {
-                  "type": "number",
-                  "description": "The position of an item in a series or sequence of items.",
-                  "title": "Position"
-                },
-                "image": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
-                  },
-                  "nullable": true,
-                  "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-                  "title": "Image"
-                },
-                "@id": {
+                "key": {
                   "type": "string",
-                  "nullable": true,
-                  "description": "IRI identifying the canonical address of this object.",
-                  "title": "@id"
-                },
-                "additionalType": {
-                  "type": "string",
-                  "nullable": true,
-                  "description": "An additional type for the item, typically used for adding more specific types from external vocabularies in microdata syntax. This is a relationship between something and a class that the thing is in. In RDFa syntax, it is better to use the native RDFa syntax - the 'typeof' attribute - for multiple types. Schema.org tools may have only weaker understanding of extra types, in particular those defined externally.",
-                  "title": "Additional Type"
-                },
-                "alternateName": {
-                  "type": "string",
-                  "nullable": true,
-                  "description": "An alias for the item.",
-                  "title": "Alternate Name"
-                },
-                "description": {
-                  "type": "string",
-                  "nullable": true,
-                  "description": "A description of the item.",
-                  "title": "Description"
-                },
-                "disambiguatingDescription": {
-                  "type": "string",
-                  "nullable": true,
-                  "description": "A sub property of description. A short description of the item used to disambiguate from other, similar items. Information from other properties (in particular, name) may be necessary for the description to be useful for disambiguation.",
-                  "title": "Disambiguating Description"
-                },
-                "identifier": {
-                  "type": "string",
-                  "nullable": true,
-                  "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
-                  "title": "Identifier"
-                },
-                "video": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@VideoObject"
-                  },
-                  "nullable": true,
-                  "title": "Video"
-                },
-                "name": {
-                  "type": "string",
-                  "nullable": true,
-                  "description": "The name of the item.",
-                  "title": "Name"
-                },
-                "sameAs": {
-                  "type": "string",
-                  "nullable": true,
-                  "description": "URL of a reference Web page that unambiguously indicates the item's identity. E.g. the URL of the item's Wikipedia page, Wikidata entry, or official website.",
-                  "title": "Same As"
-                },
-                "subjectOf": {
-                  "type": "string",
-                  "nullable": true,
-                  "description": "A CreativeWork or Event about this Thing.",
-                  "title": "Subject Of"
-                },
-                "url": {
-                  "type": "string",
-                  "nullable": true,
-                  "description": "URL of the item.",
-                  "title": "Url"
+                  "title": "Key"
                 }
               },
               "required": [
-                "item",
-                "position"
-              ]
-            },
-            "description": "For itemListElement values, you can use simple strings (e.g. \"Peter\", \"Paul\", \"Mary\"), existing entities, or use ListItem.\n\nText values are best if the elements in the list are plain strings. Existing entities are best for a simple, unordered list of existing things in your data. ListItem is used with ordered lists when you want to provide additional context about the element in that list or when the same item might be in different places in different lists.\n\nNote: The order of elements in your mark-up is not sufficient for indicating the order or elements. Use ListItem with a 'position' property in such cases.",
-            "title": "Item List Element"
-          },
-          "numberOfItems": {
-            "type": "number",
-            "description": "The number of items in an ItemList. Note that some descriptions might not fully describe all items in a list (e.g., multi-page pagination); in such cases, the numberOfItems would be for the entire list.",
-            "title": "Number Of Items"
-          }
-        },
-        "required": [
-          "itemListElement",
-          "numberOfItems"
-        ]
-      },
-      "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject": {
-        "type": "object",
-        "properties": {
-          "url": {
-            "type": "string",
-            "nullable": true,
-            "format": "image-uri",
-            "title": "Url"
-          },
-          "encodingFormat": {
-            "type": "string",
-            "nullable": true,
-            "description": "Media type typically expressed using a MIME format (see IANA site and MDN reference)",
-            "title": "Encoding Format"
-          },
-          "embedUrl": {
-            "type": "string",
-            "nullable": true,
-            "description": "A URL pointing to a player for a specific video.",
-            "title": "Embed Url"
-          },
-          "contentUrl": {
-            "type": "string",
-            "nullable": true,
-            "description": "Actual bytes of the media object, for example the image file or video file.",
-            "title": "Content Url"
-          },
-          "thumbnailUrl": {
-            "type": "string",
-            "nullable": true,
-            "description": "A thumbnail image relevant to the Thing",
-            "title": "Thumbnail Url"
-          },
-          "image": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+                "namespace",
+                "key"
+              ],
+              "title": "{{{key}}}"
             },
             "nullable": true,
-            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-            "title": "Image"
+            "title": "Metafields"
           },
-          "@id": {
+          "slug": {
             "type": "string",
             "nullable": true,
-            "description": "IRI identifying the canonical address of this object.",
-            "title": "@id"
-          },
-          "additionalType": {
-            "type": "string",
-            "nullable": true,
-            "description": "An additional type for the item, typically used for adding more specific types from external vocabularies in microdata syntax. This is a relationship between something and a class that the thing is in. In RDFa syntax, it is better to use the native RDFa syntax - the 'typeof' attribute - for multiple types. Schema.org tools may have only weaker understanding of extra types, in particular those defined externally.",
-            "title": "Additional Type"
-          },
-          "alternateName": {
-            "type": "string",
-            "nullable": true,
-            "description": "An alias for the item.",
-            "title": "Alternate Name"
-          },
-          "description": {
-            "type": "string",
-            "nullable": true,
-            "description": "A description of the item.",
-            "title": "Description"
-          },
-          "disambiguatingDescription": {
-            "type": "string",
-            "nullable": true,
-            "description": "A sub property of description. A short description of the item used to disambiguate from other, similar items. Information from other properties (in particular, name) may be necessary for the description to be useful for disambiguation.",
-            "title": "Disambiguating Description"
-          },
-          "identifier": {
-            "type": "string",
-            "nullable": true,
-            "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
-            "title": "Identifier"
-          },
-          "video": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@VideoObject"
-            },
-            "nullable": true,
-            "title": "Video"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true,
-            "description": "The name of the item.",
-            "title": "Name"
-          },
-          "sameAs": {
-            "type": "string",
-            "nullable": true,
-            "description": "URL of a reference Web page that unambiguously indicates the item's identity. E.g. the URL of the item's Wikipedia page, Wikidata entry, or official website.",
-            "title": "Same As"
-          },
-          "subjectOf": {
-            "type": "string",
-            "nullable": true,
-            "description": "A CreativeWork or Event about this Thing.",
-            "title": "Subject Of"
+            "title": "Slug"
           }
         }
       },
-      "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@VideoObject": {
+      "c2hvcGlmeS1wcm9kdWN0LWxpc3Q=": {
+        "title": "Shopify Product List",
         "type": "object",
-        "properties": {
-          "uploadDate": {
-            "type": "string",
-            "nullable": true,
-            "description": "date when video was published first time, format ISO 8601: https://en.wikipedia.org/wiki/ISO_8601",
-            "title": "Upload Date"
-          },
-          "duration": {
-            "type": "string",
-            "nullable": true,
-            "description": "video duration, format ISO 8601: https://en.wikipedia.org/wiki/ISO_8601,\nPT00H30M5S means 30 minutes and 5 seconds",
-            "title": "Duration"
-          },
-          "encodingFormat": {
-            "type": "string",
-            "nullable": true,
-            "description": "Media type typically expressed using a MIME format (see IANA site and MDN reference)",
-            "title": "Encoding Format"
-          },
-          "embedUrl": {
-            "type": "string",
-            "nullable": true,
-            "description": "A URL pointing to a player for a specific video.",
-            "title": "Embed Url"
-          },
-          "contentUrl": {
-            "type": "string",
-            "nullable": true,
-            "description": "Actual bytes of the media object, for example the image file or video file.",
-            "title": "Content Url"
-          },
-          "thumbnailUrl": {
-            "type": "string",
-            "nullable": true,
-            "description": "A thumbnail image relevant to the Thing",
-            "title": "Thumbnail Url"
-          },
-          "image": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
-            },
-            "nullable": true,
-            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
-            "title": "Image"
-          },
-          "@id": {
-            "type": "string",
-            "nullable": true,
-            "description": "IRI identifying the canonical address of this object.",
-            "title": "@id"
-          },
-          "additionalType": {
-            "type": "string",
-            "nullable": true,
-            "description": "An additional type for the item, typically used for adding more specific types from external vocabularies in microdata syntax. This is a relationship between something and a class that the thing is in. In RDFa syntax, it is better to use the native RDFa syntax - the 'typeof' attribute - for multiple types. Schema.org tools may have only weaker understanding of extra types, in particular those defined externally.",
-            "title": "Additional Type"
-          },
-          "alternateName": {
-            "type": "string",
-            "nullable": true,
-            "description": "An alias for the item.",
-            "title": "Alternate Name"
-          },
-          "description": {
-            "type": "string",
-            "nullable": true,
-            "description": "A description of the item.",
-            "title": "Description"
-          },
-          "disambiguatingDescription": {
-            "type": "string",
-            "nullable": true,
-            "description": "A sub property of description. A short description of the item used to disambiguate from other, similar items. Information from other properties (in particular, name) may be necessary for the description to be useful for disambiguation.",
-            "title": "Disambiguating Description"
-          },
-          "identifier": {
-            "type": "string",
-            "nullable": true,
-            "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
-            "title": "Identifier"
-          },
-          "video": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@VideoObject"
-            },
-            "nullable": true,
-            "title": "Video"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true,
-            "description": "The name of the item.",
-            "title": "Name"
-          },
-          "sameAs": {
-            "type": "string",
-            "nullable": true,
-            "description": "URL of a reference Web page that unambiguously indicates the item's identity. E.g. the URL of the item's Wikipedia page, Wikidata entry, or official website.",
-            "title": "Same As"
-          },
-          "subjectOf": {
-            "type": "string",
-            "nullable": true,
-            "description": "A CreativeWork or Event about this Thing.",
-            "title": "Subject Of"
-          }
-        }
-      },
-      "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@FilterToggle": {
-        "type": "object",
-        "properties": {
-          "values": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@FilterToggleValue"
-            },
-            "title": "Values"
-          },
-          "quantity": {
-            "type": "number",
-            "title": "Quantity"
-          },
-          "label": {
-            "type": "string",
-            "title": "Label"
-          },
-          "key": {
-            "type": "string",
-            "title": "Key"
-          }
-        },
         "required": [
-          "values",
-          "quantity",
-          "label",
-          "key"
-        ]
-      },
-      "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@FilterToggleValue": {
-        "type": "object",
+          "__resolveType",
+          "props"
+        ],
         "properties": {
-          "quantity": {
-            "type": "number",
-            "title": "Quantity"
-          },
-          "label": {
+          "__resolveType": {
             "type": "string",
-            "title": "Label"
+            "enum": [
+              "shopify-product-list"
+            ],
+            "default": "shopify-product-list"
           },
-          "value": {
-            "type": "string",
-            "title": "Value"
-          },
-          "selected": {
-            "type": "boolean",
-            "title": "Selected"
-          },
-          "url": {
-            "type": "string",
-            "title": "Url"
-          },
-          "children": {
+          "props": {
             "anyOf": [
               {
-                "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@FilterToggle"
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "title": "Query"
+                  },
+                  "count": {
+                    "type": "number",
+                    "title": "Count"
+                  },
+                  "sort": {
+                    "type": "string",
+                    "enum": [
+                      "",
+                      "price-descending",
+                      "price-ascending"
+                    ],
+                    "nullable": true,
+                    "title": "Sort"
+                  }
+                },
+                "required": [
+                  "query",
+                  "count"
+                ],
+                "title": "QueryProps"
               },
               {
-                "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@FilterRange"
+                "type": "object",
+                "properties": {
+                  "collection": {
+                    "type": "string",
+                    "title": "Collection"
+                  },
+                  "count": {
+                    "type": "number",
+                    "title": "Count"
+                  },
+                  "sort": {
+                    "type": "string",
+                    "enum": [
+                      "",
+                      "price-descending",
+                      "price-ascending",
+                      "best-selling",
+                      "title-descending",
+                      "title-ascending",
+                      "created-descending"
+                    ],
+                    "nullable": true,
+                    "title": "Sort"
+                  }
+                },
+                "required": [
+                  "collection",
+                  "count"
+                ],
+                "title": "CollectionProps"
               }
             ],
+            "title": "Props"
+          },
+          "filters": {
+            "type": "object",
+            "properties": {
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "nullable": true,
+                "title": "Tags"
+              },
+              "productTypes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "nullable": true,
+                "title": "Product Types"
+              },
+              "productVendors": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "nullable": true,
+                "title": "Product Vendors"
+              },
+              "priceMin": {
+                "type": "number",
+                "nullable": true,
+                "title": "Price Min"
+              },
+              "priceMax": {
+                "type": "number",
+                "nullable": true,
+                "title": "Price Max"
+              },
+              "variantOptions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "title": "Name"
+                    },
+                    "value": {
+                      "type": "string",
+                      "title": "Value"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "value"
+                  ]
+                },
+                "nullable": true,
+                "title": "Variant Options"
+              }
+            },
             "nullable": true,
-            "title": "Children"
+            "title": "Filters"
+          },
+          "metafields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "namespace": {
+                  "type": "string",
+                  "title": "Namespace"
+                },
+                "key": {
+                  "type": "string",
+                  "title": "Key"
+                }
+              },
+              "required": [
+                "namespace",
+                "key"
+              ],
+              "title": "{{{key}}}"
+            },
+            "nullable": true,
+            "title": "Metafields"
           }
-        },
-        "required": [
-          "quantity",
-          "label",
-          "value",
-          "selected",
-          "url"
-        ]
+        }
       },
-      "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@FilterRange": {
+      "c2hvcGlmeS1wcm9kdWN0LWxpc3RpbmctcGFnZQ==": {
+        "title": "Shopify Product Listing Page",
         "type": "object",
-        "properties": {
-          "values": {
-            "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@FilterRangeValue",
-            "title": "Values"
-          },
-          "label": {
-            "type": "string",
-            "title": "Label"
-          },
-          "key": {
-            "type": "string",
-            "title": "Key"
-          }
-        },
         "required": [
-          "values",
-          "label",
-          "key"
-        ]
+          "__resolveType",
+          "count"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "shopify-product-listing-page"
+            ],
+            "default": "shopify-product-listing-page"
+          },
+          "query": {
+            "type": "string",
+            "nullable": true,
+            "title": "Query"
+          },
+          "collectionName": {
+            "type": "string",
+            "nullable": true,
+            "title": "Collection Name"
+          },
+          "count": {
+            "type": "number",
+            "title": "Count"
+          },
+          "metafields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "namespace": {
+                  "type": "string",
+                  "title": "Namespace"
+                },
+                "key": {
+                  "type": "string",
+                  "title": "Key"
+                }
+              },
+              "required": [
+                "namespace",
+                "key"
+              ],
+              "title": "{{{key}}}"
+            },
+            "nullable": true,
+            "title": "Metafields"
+          },
+          "pageOffset": {
+            "type": "number",
+            "nullable": true,
+            "title": "Page Offset"
+          },
+          "page": {
+            "type": "number",
+            "nullable": true,
+            "title": "Page"
+          },
+          "startCursor": {
+            "type": "string",
+            "nullable": true,
+            "title": "Start Cursor"
+          },
+          "endCursor": {
+            "type": "string",
+            "nullable": true,
+            "title": "End Cursor"
+          },
+          "pageHref": {
+            "type": "string",
+            "nullable": true,
+            "title": "Page Href"
+          }
+        }
       },
-      "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@FilterRangeValue": {
+      "c2hvcGlmeS1yZWxhdGVkLXByb2R1Y3Rz": {
+        "title": "Shopify Related Products",
         "type": "object",
-        "properties": {
-          "min": {
-            "type": "number",
-            "title": "Min"
-          },
-          "max": {
-            "type": "number",
-            "title": "Max"
-          }
-        },
         "required": [
-          "min",
-          "max"
-        ]
+          "__resolveType",
+          "slug"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "shopify-related-products"
+            ],
+            "default": "shopify-related-products"
+          },
+          "slug": {
+            "type": "string",
+            "title": "Slug"
+          },
+          "count": {
+            "type": "number",
+            "nullable": true,
+            "title": "Count"
+          },
+          "metafields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "namespace": {
+                  "type": "string",
+                  "title": "Namespace"
+                },
+                "key": {
+                  "type": "string",
+                  "title": "Key"
+                }
+              },
+              "required": [
+                "namespace",
+                "key"
+              ],
+              "title": "{{{key}}}"
+            },
+            "nullable": true,
+            "title": "Metafields"
+          }
+        }
+      },
+      "ZGV2aWNl": {
+        "title": "Device",
+        "description": "Shows the variant to visitors on the devices checked.",
+        "type": "object",
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "device"
+            ],
+            "default": "device"
+          },
+          "mobile": {
+            "type": "boolean",
+            "nullable": true,
+            "title": "Mobile"
+          },
+          "tablet": {
+            "type": "boolean",
+            "nullable": true,
+            "title": "Tablet"
+          },
+          "desktop": {
+            "type": "boolean",
+            "nullable": true,
+            "title": "Desktop"
+          }
+        }
       },
       "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@Product": {
         "type": "object",
@@ -1056,13 +842,13 @@
                 "title": "Inline data"
               },
               {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                "$ref": "#/definitions/cHJvZHVjdC1ieS1oYW5kbGU="
               },
               {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
+                "$ref": "#/definitions/c2hvcGlmeS1wcm9kdWN0LWxpc3Q="
               },
               {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
+                "$ref": "#/definitions/c2hvcGlmeS1yZWxhdGVkLXByb2R1Y3Rz"
               }
             ],
             "nullable": true,
@@ -1081,13 +867,13 @@
                 "title": "Inline data"
               },
               {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                "$ref": "#/definitions/cHJvZHVjdC1ieS1oYW5kbGU="
               },
               {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
+                "$ref": "#/definitions/c2hvcGlmeS1wcm9kdWN0LWxpc3Q="
               },
               {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
+                "$ref": "#/definitions/c2hvcGlmeS1yZWxhdGVkLXByb2R1Y3Rz"
               }
             ],
             "nullable": true,
@@ -1150,13 +936,13 @@
                 "title": "Inline data"
               },
               {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                "$ref": "#/definitions/cHJvZHVjdC1ieS1oYW5kbGU="
               },
               {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
+                "$ref": "#/definitions/c2hvcGlmeS1wcm9kdWN0LWxpc3Q="
               },
               {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
+                "$ref": "#/definitions/c2hvcGlmeS1yZWxhdGVkLXByb2R1Y3Rz"
               }
             ],
             "nullable": true,
@@ -1378,6 +1164,224 @@
           }
         }
       },
+      "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "nullable": true,
+            "format": "image-uri",
+            "title": "Url"
+          },
+          "encodingFormat": {
+            "type": "string",
+            "nullable": true,
+            "description": "Media type typically expressed using a MIME format (see IANA site and MDN reference)",
+            "title": "Encoding Format"
+          },
+          "embedUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "A URL pointing to a player for a specific video.",
+            "title": "Embed Url"
+          },
+          "contentUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "Actual bytes of the media object, for example the image file or video file.",
+            "title": "Content Url"
+          },
+          "thumbnailUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "A thumbnail image relevant to the Thing",
+            "title": "Thumbnail Url"
+          },
+          "image": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+            },
+            "nullable": true,
+            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+            "title": "Image"
+          },
+          "@id": {
+            "type": "string",
+            "nullable": true,
+            "description": "IRI identifying the canonical address of this object.",
+            "title": "@id"
+          },
+          "additionalType": {
+            "type": "string",
+            "nullable": true,
+            "description": "An additional type for the item, typically used for adding more specific types from external vocabularies in microdata syntax. This is a relationship between something and a class that the thing is in. In RDFa syntax, it is better to use the native RDFa syntax - the 'typeof' attribute - for multiple types. Schema.org tools may have only weaker understanding of extra types, in particular those defined externally.",
+            "title": "Additional Type"
+          },
+          "alternateName": {
+            "type": "string",
+            "nullable": true,
+            "description": "An alias for the item.",
+            "title": "Alternate Name"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "description": "A description of the item.",
+            "title": "Description"
+          },
+          "disambiguatingDescription": {
+            "type": "string",
+            "nullable": true,
+            "description": "A sub property of description. A short description of the item used to disambiguate from other, similar items. Information from other properties (in particular, name) may be necessary for the description to be useful for disambiguation.",
+            "title": "Disambiguating Description"
+          },
+          "identifier": {
+            "type": "string",
+            "nullable": true,
+            "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
+            "title": "Identifier"
+          },
+          "video": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@VideoObject"
+            },
+            "nullable": true,
+            "title": "Video"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name of the item.",
+            "title": "Name"
+          },
+          "sameAs": {
+            "type": "string",
+            "nullable": true,
+            "description": "URL of a reference Web page that unambiguously indicates the item's identity. E.g. the URL of the item's Wikipedia page, Wikidata entry, or official website.",
+            "title": "Same As"
+          },
+          "subjectOf": {
+            "type": "string",
+            "nullable": true,
+            "description": "A CreativeWork or Event about this Thing.",
+            "title": "Subject Of"
+          }
+        }
+      },
+      "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@VideoObject": {
+        "type": "object",
+        "properties": {
+          "uploadDate": {
+            "type": "string",
+            "nullable": true,
+            "description": "date when video was published first time, format ISO 8601: https://en.wikipedia.org/wiki/ISO_8601",
+            "title": "Upload Date"
+          },
+          "duration": {
+            "type": "string",
+            "nullable": true,
+            "description": "video duration, format ISO 8601: https://en.wikipedia.org/wiki/ISO_8601,\nPT00H30M5S means 30 minutes and 5 seconds",
+            "title": "Duration"
+          },
+          "encodingFormat": {
+            "type": "string",
+            "nullable": true,
+            "description": "Media type typically expressed using a MIME format (see IANA site and MDN reference)",
+            "title": "Encoding Format"
+          },
+          "embedUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "A URL pointing to a player for a specific video.",
+            "title": "Embed Url"
+          },
+          "contentUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "Actual bytes of the media object, for example the image file or video file.",
+            "title": "Content Url"
+          },
+          "thumbnailUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "A thumbnail image relevant to the Thing",
+            "title": "Thumbnail Url"
+          },
+          "image": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+            },
+            "nullable": true,
+            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+            "title": "Image"
+          },
+          "@id": {
+            "type": "string",
+            "nullable": true,
+            "description": "IRI identifying the canonical address of this object.",
+            "title": "@id"
+          },
+          "additionalType": {
+            "type": "string",
+            "nullable": true,
+            "description": "An additional type for the item, typically used for adding more specific types from external vocabularies in microdata syntax. This is a relationship between something and a class that the thing is in. In RDFa syntax, it is better to use the native RDFa syntax - the 'typeof' attribute - for multiple types. Schema.org tools may have only weaker understanding of extra types, in particular those defined externally.",
+            "title": "Additional Type"
+          },
+          "alternateName": {
+            "type": "string",
+            "nullable": true,
+            "description": "An alias for the item.",
+            "title": "Alternate Name"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "description": "A description of the item.",
+            "title": "Description"
+          },
+          "disambiguatingDescription": {
+            "type": "string",
+            "nullable": true,
+            "description": "A sub property of description. A short description of the item used to disambiguate from other, similar items. Information from other properties (in particular, name) may be necessary for the description to be useful for disambiguation.",
+            "title": "Disambiguating Description"
+          },
+          "identifier": {
+            "type": "string",
+            "nullable": true,
+            "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
+            "title": "Identifier"
+          },
+          "video": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@VideoObject"
+            },
+            "nullable": true,
+            "title": "Video"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name of the item.",
+            "title": "Name"
+          },
+          "sameAs": {
+            "type": "string",
+            "nullable": true,
+            "description": "URL of a reference Web page that unambiguously indicates the item's identity. E.g. the URL of the item's Wikipedia page, Wikidata entry, or official website.",
+            "title": "Same As"
+          },
+          "subjectOf": {
+            "type": "string",
+            "nullable": true,
+            "description": "A CreativeWork or Event about this Thing.",
+            "title": "Subject Of"
+          }
+        }
+      },
       "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@AggregateRating": {
         "type": "object",
         "properties": {
@@ -1523,13 +1527,13 @@
                 "title": "Inline data"
               },
               {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                "$ref": "#/definitions/cHJvZHVjdC1ieS1oYW5kbGU="
               },
               {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
+                "$ref": "#/definitions/c2hvcGlmeS1wcm9kdWN0LWxpc3Q="
               },
               {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
+                "$ref": "#/definitions/c2hvcGlmeS1yZWxhdGVkLXByb2R1Y3Rz"
               }
             ],
             "description": "Indicates a {@link https://schema.org/Product Product} that is a member of this {@link https://schema.org/ProductGroup ProductGroup} (or {@link https://schema.org/ProductModel ProductModel}).",
@@ -1776,13 +1780,13 @@
                 "title": "Inline data"
               },
               {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                "$ref": "#/definitions/cHJvZHVjdC1ieS1oYW5kbGU="
               },
               {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
+                "$ref": "#/definitions/c2hvcGlmeS1wcm9kdWN0LWxpc3Q="
               },
               {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
+                "$ref": "#/definitions/c2hvcGlmeS1yZWxhdGVkLXByb2R1Y3Rz"
               }
             ],
             "nullable": true,
@@ -1801,13 +1805,13 @@
                 "title": "Inline data"
               },
               {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                "$ref": "#/definitions/cHJvZHVjdC1ieS1oYW5kbGU="
               },
               {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
+                "$ref": "#/definitions/c2hvcGlmeS1wcm9kdWN0LWxpc3Q="
               },
               {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
+                "$ref": "#/definitions/c2hvcGlmeS1yZWxhdGVkLXByb2R1Y3Rz"
               }
             ],
             "nullable": true,
@@ -1864,13 +1868,13 @@
                 "title": "Inline data"
               },
               {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                "$ref": "#/definitions/cHJvZHVjdC1ieS1oYW5kbGU="
               },
               {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
+                "$ref": "#/definitions/c2hvcGlmeS1wcm9kdWN0LWxpc3Q="
               },
               {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
+                "$ref": "#/definitions/c2hvcGlmeS1yZWxhdGVkLXByb2R1Y3Rz"
               }
             ],
             "nullable": true,
@@ -3227,898 +3231,7 @@
           "text"
         ]
       },
-      "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@PageInfo": {
-        "type": "object",
-        "properties": {
-          "currentPage": {
-            "type": "number",
-            "title": "Current Page"
-          },
-          "nextPage": {
-            "type": "string",
-            "nullable": true,
-            "title": "Next Page"
-          },
-          "previousPage": {
-            "type": "string",
-            "nullable": true,
-            "title": "Previous Page"
-          },
-          "records": {
-            "type": "number",
-            "nullable": true,
-            "title": "Records"
-          },
-          "recordPerPage": {
-            "type": "number",
-            "nullable": true,
-            "title": "Record Per Page"
-          },
-          "pageTypes": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "Brand",
-                "Category",
-                "Department",
-                "SubCategory",
-                "Product",
-                "Collection",
-                "Cluster",
-                "Search",
-                "Unknown"
-              ]
-            },
-            "nullable": true,
-            "title": "Page Types"
-          }
-        },
-        "required": [
-          "currentPage",
-          "nextPage",
-          "previousPage"
-        ]
-      },
-      "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@SortOption": {
-        "type": "object",
-        "properties": {
-          "value": {
-            "type": "string",
-            "title": "Value"
-          },
-          "label": {
-            "type": "string",
-            "title": "Label"
-          }
-        },
-        "required": [
-          "value",
-          "label"
-        ]
-      },
-      "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@Seo": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string",
-            "title": "Title"
-          },
-          "description": {
-            "type": "string",
-            "title": "Description"
-          },
-          "canonical": {
-            "type": "string",
-            "title": "Canonical"
-          },
-          "noIndexing": {
-            "type": "boolean",
-            "nullable": true,
-            "title": "No Indexing"
-          }
-        },
-        "required": [
-          "title",
-          "description",
-          "canonical"
-        ]
-      },
-      "Y29tbWVyY2Uvc2VjdGlvbnMvU2VvL1Nlb1BMUFYyLnRzeA==@Props": {
-        "type": "object",
-        "properties": {
-          "jsonLD": {
-            "type": "object",
-            "required": [
-              "__resolveType",
-              "value"
-            ],
-            "properties": {
-              "__resolveType": {
-                "type": "string",
-                "enum": [
-                  "lazy"
-                ],
-                "default": "lazy"
-              },
-              "value": {
-                "anyOf": [
-                  {
-                    "$ref": "#/definitions/Resolvable"
-                  },
-                  {
-                    "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ProductListingPage",
-                    "title": "Inline data"
-                  },
-                  {
-                    "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0aW5nUGFnZS50cw=="
-                  },
-                  {
-                    "$ref": "#/definitions/Y29tbWVyY2UvbG9hZGVycy9wcm9kdWN0L2V4dGVuc2lvbnMvbGlzdGluZ1BhZ2UudHM="
-                  }
-                ]
-              }
-            },
-            "title": "Data Source"
-          },
-          "title": {
-            "type": "string",
-            "nullable": true,
-            "title": "Title Override"
-          },
-          "description": {
-            "type": "string",
-            "nullable": true,
-            "title": "Description Override"
-          },
-          "noIndexing": {
-            "type": "boolean",
-            "nullable": true,
-            "title": "Disable indexing"
-          },
-          "configJsonLD": {
-            "type": "object",
-            "properties": {
-              "removeVideos": {
-                "type": "boolean",
-                "nullable": true,
-                "title": "Remove videos"
-              },
-              "ignoreStructuredData": {
-                "type": "boolean",
-                "nullable": true,
-                "title": "Ignore Structured Data",
-                "description": "By default, Structured Data (JSON-LD) is sent to everyone. Turn this on to omit it for regular visitors while crawlers and bots still receive the full Structured Data. When this block is the page's SEO source, the product fetch is also skipped for visitors, so the page loads faster. Some integrations may rely on Structured Data being present for all users."
-              }
-            },
-            "nullable": true,
-            "title": "Structured Data"
-          }
-        },
-        "description": "v7's `commerce/sections/Seo/SeoPLPV2.tsx`."
-      },
-      "Y29tbWVyY2Uvc2VjdGlvbnMvU2VvL1Nlb1BMUFYyLnRzeA==": {
-        "title": "commerce/sections/Seo/SeoPLPV2.tsx",
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/definitions/Y29tbWVyY2Uvc2VjdGlvbnMvU2VvL1Nlb1BMUFYyLnRzeA==@Props"
-          }
-        ],
-        "required": [
-          "__resolveType"
-        ],
-        "properties": {
-          "__resolveType": {
-            "type": "string",
-            "enum": [
-              "commerce/sections/Seo/SeoPLPV2.tsx"
-            ],
-            "default": "commerce/sections/Seo/SeoPLPV2.tsx"
-          }
-        }
-      },
-      "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ProductDetailsPage": {
-        "type": "object",
-        "properties": {
-          "breadcrumbList": {
-            "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@BreadcrumbList",
-            "title": "Breadcrumb List"
-          },
-          "product": {
-            "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@Product",
-            "title": "Product"
-          },
-          "seo": {
-            "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@Seo",
-            "nullable": true,
-            "title": "Seo"
-          }
-        },
-        "required": [
-          "breadcrumbList",
-          "product"
-        ]
-      },
-      "Y29tbWVyY2Uvc2VjdGlvbnMvU2VvL1Nlb1BEUFYyLnRzeA==@Props": {
-        "type": "object",
-        "properties": {
-          "jsonLD": {
-            "type": "object",
-            "required": [
-              "__resolveType",
-              "value"
-            ],
-            "properties": {
-              "__resolveType": {
-                "type": "string",
-                "enum": [
-                  "lazy"
-                ],
-                "default": "lazy"
-              },
-              "value": {
-                "anyOf": [
-                  {
-                    "$ref": "#/definitions/Resolvable"
-                  },
-                  {
-                    "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ProductDetailsPage",
-                    "title": "Inline data"
-                  },
-                  {
-                    "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3REZXRhaWxzUGFnZS50cw=="
-                  },
-                  {
-                    "$ref": "#/definitions/Y29tbWVyY2UvbG9hZGVycy9wcm9kdWN0L2V4dGVuc2lvbnMvZGV0YWlsc1BhZ2UudHM="
-                  }
-                ]
-              }
-            },
-            "title": "Data Source"
-          },
-          "omitVariants": {
-            "type": "boolean",
-            "nullable": true,
-            "title": "Omit variants"
-          },
-          "title": {
-            "type": "string",
-            "nullable": true,
-            "title": "Title Override"
-          },
-          "description": {
-            "type": "string",
-            "nullable": true,
-            "title": "Description Override"
-          },
-          "noIndexing": {
-            "type": "boolean",
-            "nullable": true,
-            "title": "Disable indexing"
-          },
-          "ignoreStructuredData": {
-            "type": "boolean",
-            "nullable": true,
-            "title": "Ignore Structured Data",
-            "description": "By default, Structured Data (JSON-LD) is sent to everyone. Turn this on to omit it for regular visitors while crawlers and bots still receive the full Structured Data. When this block is the page's SEO source, the product fetch is also skipped for visitors, so the page loads faster. Some integrations may rely on Structured Data being present for all users."
-          }
-        },
-        "description": "v7's `commerce/sections/Seo/SeoPDPV2.tsx`."
-      },
-      "Y29tbWVyY2Uvc2VjdGlvbnMvU2VvL1Nlb1BEUFYyLnRzeA==": {
-        "title": "commerce/sections/Seo/SeoPDPV2.tsx",
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/definitions/Y29tbWVyY2Uvc2VjdGlvbnMvU2VvL1Nlb1BEUFYyLnRzeA==@Props"
-          }
-        ],
-        "required": [
-          "__resolveType"
-        ],
-        "properties": {
-          "__resolveType": {
-            "type": "string",
-            "enum": [
-              "commerce/sections/Seo/SeoPDPV2.tsx"
-            ],
-            "default": "commerce/sections/Seo/SeoPDPV2.tsx"
-          }
-        }
-      },
-      "c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw==": {
-        "title": "site/loaders/productByHandle.ts",
-        "description": "Returns the pinned product as a single-item list, so it drops straight into any prop typed `Product[] | null`.",
-        "type": "object",
-        "required": [
-          "__resolveType",
-          "handle"
-        ],
-        "properties": {
-          "__resolveType": {
-            "type": "string",
-            "enum": [
-              "site/loaders/productByHandle.ts"
-            ],
-            "default": "site/loaders/productByHandle.ts"
-          },
-          "handle": {
-            "type": "string",
-            "title": "Product handle",
-            "description": "The product's URL handle/slug (e.g. \"high-top-canvas-shoes\") — pins an exact product instead of relying on a search query."
-          }
-        }
-      },
-      "c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3REZXRhaWxzUGFnZS50cw==": {
-        "title": "shopify/loaders/ProductDetailsPage.ts",
-        "type": "object",
-        "required": [
-          "__resolveType"
-        ],
-        "properties": {
-          "__resolveType": {
-            "type": "string",
-            "enum": [
-              "shopify/loaders/ProductDetailsPage.ts"
-            ],
-            "default": "shopify/loaders/ProductDetailsPage.ts"
-          },
-          "metafields": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "namespace": {
-                  "type": "string",
-                  "title": "Namespace"
-                },
-                "key": {
-                  "type": "string",
-                  "title": "Key"
-                }
-              },
-              "required": [
-                "namespace",
-                "key"
-              ],
-              "title": "{{{key}}}"
-            },
-            "nullable": true,
-            "title": "Metafields"
-          },
-          "slug": {
-            "type": "string",
-            "nullable": true,
-            "title": "Slug"
-          }
-        }
-      },
-      "c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz": {
-        "title": "shopify/loaders/ProductList.ts",
-        "type": "object",
-        "required": [
-          "__resolveType",
-          "props"
-        ],
-        "properties": {
-          "__resolveType": {
-            "type": "string",
-            "enum": [
-              "shopify/loaders/ProductList.ts"
-            ],
-            "default": "shopify/loaders/ProductList.ts"
-          },
-          "props": {
-            "anyOf": [
-              {
-                "type": "object",
-                "properties": {
-                  "query": {
-                    "type": "string",
-                    "title": "Query"
-                  },
-                  "count": {
-                    "type": "number",
-                    "title": "Count"
-                  },
-                  "sort": {
-                    "type": "string",
-                    "enum": [
-                      "",
-                      "price-descending",
-                      "price-ascending"
-                    ],
-                    "nullable": true,
-                    "title": "Sort"
-                  }
-                },
-                "required": [
-                  "query",
-                  "count"
-                ],
-                "title": "QueryProps"
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "collection": {
-                    "type": "string",
-                    "title": "Collection"
-                  },
-                  "count": {
-                    "type": "number",
-                    "title": "Count"
-                  },
-                  "sort": {
-                    "type": "string",
-                    "enum": [
-                      "",
-                      "price-descending",
-                      "price-ascending",
-                      "best-selling",
-                      "title-descending",
-                      "title-ascending",
-                      "created-descending"
-                    ],
-                    "nullable": true,
-                    "title": "Sort"
-                  }
-                },
-                "required": [
-                  "collection",
-                  "count"
-                ],
-                "title": "CollectionProps"
-              }
-            ],
-            "title": "Props"
-          },
-          "filters": {
-            "type": "object",
-            "properties": {
-              "tags": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                },
-                "nullable": true,
-                "title": "Tags"
-              },
-              "productTypes": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                },
-                "nullable": true,
-                "title": "Product Types"
-              },
-              "productVendors": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                },
-                "nullable": true,
-                "title": "Product Vendors"
-              },
-              "priceMin": {
-                "type": "number",
-                "nullable": true,
-                "title": "Price Min"
-              },
-              "priceMax": {
-                "type": "number",
-                "nullable": true,
-                "title": "Price Max"
-              },
-              "variantOptions": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "title": "Name"
-                    },
-                    "value": {
-                      "type": "string",
-                      "title": "Value"
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "value"
-                  ]
-                },
-                "nullable": true,
-                "title": "Variant Options"
-              }
-            },
-            "nullable": true,
-            "title": "Filters"
-          },
-          "metafields": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "namespace": {
-                  "type": "string",
-                  "title": "Namespace"
-                },
-                "key": {
-                  "type": "string",
-                  "title": "Key"
-                }
-              },
-              "required": [
-                "namespace",
-                "key"
-              ],
-              "title": "{{{key}}}"
-            },
-            "nullable": true,
-            "title": "Metafields"
-          }
-        }
-      },
-      "c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0aW5nUGFnZS50cw==": {
-        "title": "shopify/loaders/ProductListingPage.ts",
-        "type": "object",
-        "required": [
-          "__resolveType",
-          "count"
-        ],
-        "properties": {
-          "__resolveType": {
-            "type": "string",
-            "enum": [
-              "shopify/loaders/ProductListingPage.ts"
-            ],
-            "default": "shopify/loaders/ProductListingPage.ts"
-          },
-          "query": {
-            "type": "string",
-            "nullable": true,
-            "title": "Query"
-          },
-          "collectionName": {
-            "type": "string",
-            "nullable": true,
-            "title": "Collection Name"
-          },
-          "count": {
-            "type": "number",
-            "title": "Count"
-          },
-          "metafields": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "namespace": {
-                  "type": "string",
-                  "title": "Namespace"
-                },
-                "key": {
-                  "type": "string",
-                  "title": "Key"
-                }
-              },
-              "required": [
-                "namespace",
-                "key"
-              ],
-              "title": "{{{key}}}"
-            },
-            "nullable": true,
-            "title": "Metafields"
-          },
-          "pageOffset": {
-            "type": "number",
-            "nullable": true,
-            "title": "Page Offset"
-          },
-          "page": {
-            "type": "number",
-            "nullable": true,
-            "title": "Page"
-          },
-          "startCursor": {
-            "type": "string",
-            "nullable": true,
-            "title": "Start Cursor"
-          },
-          "endCursor": {
-            "type": "string",
-            "nullable": true,
-            "title": "End Cursor"
-          },
-          "pageHref": {
-            "type": "string",
-            "nullable": true,
-            "title": "Page Href"
-          }
-        }
-      },
-      "c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw==": {
-        "title": "shopify/loaders/RelatedProducts.ts",
-        "type": "object",
-        "required": [
-          "__resolveType",
-          "slug"
-        ],
-        "properties": {
-          "__resolveType": {
-            "type": "string",
-            "enum": [
-              "shopify/loaders/RelatedProducts.ts"
-            ],
-            "default": "shopify/loaders/RelatedProducts.ts"
-          },
-          "slug": {
-            "type": "string",
-            "title": "Slug"
-          },
-          "count": {
-            "type": "number",
-            "nullable": true,
-            "title": "Count"
-          },
-          "metafields": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "namespace": {
-                  "type": "string",
-                  "title": "Namespace"
-                },
-                "key": {
-                  "type": "string",
-                  "title": "Key"
-                }
-              },
-              "required": [
-                "namespace",
-                "key"
-              ],
-              "title": "{{{key}}}"
-            },
-            "nullable": true,
-            "title": "Metafields"
-          }
-        }
-      },
-      "Y29tbWVyY2UvbG9hZGVycy9wcm9kdWN0L2V4dGVuc2lvbnMvbGlzdGluZ1BhZ2UudHM=": {
-        "title": "commerce/loaders/product/extensions/listingPage.ts",
-        "type": "object",
-        "required": [
-          "__resolveType",
-          "data"
-        ],
-        "properties": {
-          "__resolveType": {
-            "type": "string",
-            "enum": [
-              "commerce/loaders/product/extensions/listingPage.ts"
-            ],
-            "default": "commerce/loaders/product/extensions/listingPage.ts"
-          },
-          "data": {
-            "anyOf": [
-              {
-                "$ref": "#/definitions/Resolvable"
-              },
-              {
-                "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ProductListingPage",
-                "title": "Inline data"
-              },
-              {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0aW5nUGFnZS50cw=="
-              },
-              {
-                "$ref": "#/definitions/Y29tbWVyY2UvbG9hZGVycy9wcm9kdWN0L2V4dGVuc2lvbnMvbGlzdGluZ1BhZ2UudHM="
-              }
-            ],
-            "nullable": true,
-            "title": "Data"
-          },
-          "extensions": {
-            "anyOf": [
-              {
-                "$ref": "#/definitions/Resolvable"
-              },
-              {
-                "type": "array",
-                "items": {},
-                "title": "Inline data"
-              },
-              {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
-              },
-              {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
-              },
-              {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
-              }
-            ],
-            "nullable": true,
-            "title": "Extensions"
-          }
-        }
-      },
-      "Y29tbWVyY2UvbG9hZGVycy9wcm9kdWN0L2V4dGVuc2lvbnMvZGV0YWlsc1BhZ2UudHM=": {
-        "title": "commerce/loaders/product/extensions/detailsPage.ts",
-        "type": "object",
-        "required": [
-          "__resolveType",
-          "data"
-        ],
-        "properties": {
-          "__resolveType": {
-            "type": "string",
-            "enum": [
-              "commerce/loaders/product/extensions/detailsPage.ts"
-            ],
-            "default": "commerce/loaders/product/extensions/detailsPage.ts"
-          },
-          "data": {
-            "anyOf": [
-              {
-                "$ref": "#/definitions/Resolvable"
-              },
-              {
-                "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ProductDetailsPage",
-                "title": "Inline data"
-              },
-              {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3REZXRhaWxzUGFnZS50cw=="
-              },
-              {
-                "$ref": "#/definitions/Y29tbWVyY2UvbG9hZGVycy9wcm9kdWN0L2V4dGVuc2lvbnMvZGV0YWlsc1BhZ2UudHM="
-              }
-            ],
-            "nullable": true,
-            "title": "Data"
-          },
-          "extensions": {
-            "anyOf": [
-              {
-                "$ref": "#/definitions/Resolvable"
-              },
-              {
-                "type": "array",
-                "items": {},
-                "title": "Inline data"
-              },
-              {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
-              },
-              {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
-              },
-              {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
-              }
-            ],
-            "nullable": true,
-            "title": "Extensions"
-          }
-        }
-      },
-      "d2Vic2l0ZS9tYXRjaGVycy9kZXZpY2UudHM=": {
-        "title": "website/matchers/device.ts",
-        "description": "v7's `website/matchers/device.ts`: true when the visitor's device is one of those checked.",
-        "type": "object",
-        "required": [
-          "__resolveType"
-        ],
-        "properties": {
-          "__resolveType": {
-            "type": "string",
-            "enum": [
-              "website/matchers/device.ts"
-            ],
-            "default": "website/matchers/device.ts"
-          },
-          "mobile": {
-            "type": "boolean",
-            "nullable": true,
-            "title": "Mobile"
-          },
-          "tablet": {
-            "type": "boolean",
-            "nullable": true,
-            "title": "Tablet"
-          },
-          "desktop": {
-            "type": "boolean",
-            "nullable": true,
-            "title": "Desktop"
-          }
-        }
-      },
-      "c2l0ZS9zZWN0aW9ucy9Qcm9kdWN0L1Byb2R1Y3RTaGVsZi50c3g=@Props": {
-        "type": "object",
-        "properties": {
-          "products": {
-            "anyOf": [
-              {
-                "$ref": "#/definitions/Resolvable"
-              },
-              {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@Product"
-                },
-                "title": "Inline data"
-              },
-              {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
-              },
-              {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
-              },
-              {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
-              }
-            ],
-            "nullable": true,
-            "title": "Products"
-          },
-          "title": {
-            "type": "string",
-            "nullable": true,
-            "description": "Section title",
-            "title": "Title"
-          },
-          "cta": {
-            "type": "string",
-            "nullable": true,
-            "description": "See all link",
-            "title": "Cta"
-          },
-          "visibility": {
-            "type": "string",
-            "enum": [
-              "all",
-              "mobile-only",
-              "desktop-only"
-            ],
-            "nullable": true,
-            "title": "Exibir em",
-            "description": "Em quais dispositivos esta seção aparece. Útil para mostrar\nconteúdo diferente no celular e no computador.",
-            "default": "all"
-          }
-        },
-        "required": [
-          "products"
-        ]
-      },
-      "c2l0ZS9zZWN0aW9ucy9Qcm9kdWN0L1Byb2R1Y3RTaGVsZi50c3g=": {
-        "title": "site/sections/Product/ProductShelf.tsx",
-        "type": "object",
-        "allOf": [
-          {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Qcm9kdWN0L1Byb2R1Y3RTaGVsZi50c3g=@Props"
-          }
-        ],
-        "required": [
-          "__resolveType"
-        ],
-        "properties": {
-          "__resolveType": {
-            "type": "string",
-            "enum": [
-              "site/sections/Product/ProductShelf.tsx"
-            ],
-            "default": "site/sections/Product/ProductShelf.tsx"
-          }
-        }
-      },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L0hlYWRlci50c3g=@Props": {
+      "c2l0ZS1oZWFkZXI=@Props": {
         "type": "object",
         "properties": {
           "logo": {
@@ -4249,13 +3362,13 @@
                 "title": "Inline data"
               },
               {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                "$ref": "#/definitions/cHJvZHVjdC1ieS1oYW5kbGU="
               },
               {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
+                "$ref": "#/definitions/c2hvcGlmeS1wcm9kdWN0LWxpc3Q="
               },
               {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
+                "$ref": "#/definitions/c2hvcGlmeS1yZWxhdGVkLXByb2R1Y3Rz"
               }
             ],
             "nullable": true,
@@ -4264,12 +3377,12 @@
           }
         }
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L0hlYWRlci50c3g=": {
-        "title": "site/sections/Capy/Header.tsx",
+      "c2l0ZS1oZWFkZXI=": {
+        "title": "Header",
         "type": "object",
         "allOf": [
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0hlYWRlci50c3g=@Props"
+            "$ref": "#/definitions/c2l0ZS1oZWFkZXI=@Props"
           }
         ],
         "required": [
@@ -4279,13 +3392,13 @@
           "__resolveType": {
             "type": "string",
             "enum": [
-              "site/sections/Capy/Header.tsx"
+              "site-header"
             ],
-            "default": "site/sections/Capy/Header.tsx"
+            "default": "site-header"
           }
         }
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L0Zvb3Rlci50c3g=@Props": {
+      "c2l0ZS1mb290ZXI=@Props": {
         "type": "object",
         "properties": {
           "about": {
@@ -4363,12 +3476,12 @@
           }
         }
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L0Zvb3Rlci50c3g=": {
-        "title": "site/sections/Capy/Footer.tsx",
+      "c2l0ZS1mb290ZXI=": {
+        "title": "Footer",
         "type": "object",
         "allOf": [
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0Zvb3Rlci50c3g=@Props"
+            "$ref": "#/definitions/c2l0ZS1mb290ZXI=@Props"
           }
         ],
         "required": [
@@ -4378,13 +3491,13 @@
           "__resolveType": {
             "type": "string",
             "enum": [
-              "site/sections/Capy/Footer.tsx"
+              "site-footer"
             ],
-            "default": "site/sections/Capy/Footer.tsx"
+            "default": "site-footer"
           }
         }
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L05ld3NsZXR0ZXIudHN4@Props": {
+      "bmV3c2xldHRlcg==@Props": {
         "type": "object",
         "properties": {
           "title": {
@@ -4424,12 +3537,12 @@
           }
         }
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L05ld3NsZXR0ZXIudHN4": {
-        "title": "site/sections/Capy/Newsletter.tsx",
+      "bmV3c2xldHRlcg==": {
+        "title": "Newsletter",
         "type": "object",
         "allOf": [
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L05ld3NsZXR0ZXIudHN4@Props"
+            "$ref": "#/definitions/bmV3c2xldHRlcg==@Props"
           }
         ],
         "required": [
@@ -4439,13 +3552,13 @@
           "__resolveType": {
             "type": "string",
             "enum": [
-              "site/sections/Capy/Newsletter.tsx"
+              "newsletter"
             ],
-            "default": "site/sections/Capy/Newsletter.tsx"
+            "default": "newsletter"
           }
         }
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L0hlcm9TY2VuZS50c3g=@Props": {
+      "aGVyby1zY2VuZQ==@Props": {
         "type": "object",
         "properties": {
           "image": {
@@ -4589,12 +3702,12 @@
           "title"
         ]
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L0hlcm9TY2VuZS50c3g=": {
-        "title": "site/sections/Capy/HeroScene.tsx",
+      "aGVyby1zY2VuZQ==": {
+        "title": "Hero Scene",
         "type": "object",
         "allOf": [
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0hlcm9TY2VuZS50c3g=@Props"
+            "$ref": "#/definitions/aGVyby1zY2VuZQ==@Props"
           }
         ],
         "required": [
@@ -4604,13 +3717,13 @@
           "__resolveType": {
             "type": "string",
             "enum": [
-              "site/sections/Capy/HeroScene.tsx"
+              "hero-scene"
             ],
-            "default": "site/sections/Capy/HeroScene.tsx"
+            "default": "hero-scene"
           }
         }
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L0ludHJvU3RhdGVtZW50LnRzeA==@Props": {
+      "aW50cm8tc3RhdGVtZW50@Props": {
         "type": "object",
         "properties": {
           "text": {
@@ -4649,12 +3762,12 @@
           "text"
         ]
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L0ludHJvU3RhdGVtZW50LnRzeA==": {
-        "title": "site/sections/Capy/IntroStatement.tsx",
+      "aW50cm8tc3RhdGVtZW50": {
+        "title": "Intro Statement",
         "type": "object",
         "allOf": [
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0ludHJvU3RhdGVtZW50LnRzeA==@Props"
+            "$ref": "#/definitions/aW50cm8tc3RhdGVtZW50@Props"
           }
         ],
         "required": [
@@ -4664,13 +3777,13 @@
           "__resolveType": {
             "type": "string",
             "enum": [
-              "site/sections/Capy/IntroStatement.tsx"
+              "intro-statement"
             ],
-            "default": "site/sections/Capy/IntroStatement.tsx"
+            "default": "intro-statement"
           }
         }
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25TY2VuZS50c3g=@Props": {
+      "Y29sbGVjdGlvbi1zY2VuZQ==@Props": {
         "type": "object",
         "properties": {
           "variant": {
@@ -4797,13 +3910,13 @@
                 "title": "Inline data"
               },
               {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                "$ref": "#/definitions/cHJvZHVjdC1ieS1oYW5kbGU="
               },
               {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
+                "$ref": "#/definitions/c2hvcGlmeS1wcm9kdWN0LWxpc3Q="
               },
               {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
+                "$ref": "#/definitions/c2hvcGlmeS1yZWxhdGVkLXByb2R1Y3Rz"
               }
             ],
             "nullable": true,
@@ -4841,12 +3954,12 @@
           "title"
         ]
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25TY2VuZS50c3g=": {
-        "title": "site/sections/Capy/CollectionScene.tsx",
+      "Y29sbGVjdGlvbi1zY2VuZQ==": {
+        "title": "Collection Scene",
         "type": "object",
         "allOf": [
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25TY2VuZS50c3g=@Props"
+            "$ref": "#/definitions/Y29sbGVjdGlvbi1zY2VuZQ==@Props"
           }
         ],
         "required": [
@@ -4856,13 +3969,13 @@
           "__resolveType": {
             "type": "string",
             "enum": [
-              "site/sections/Capy/CollectionScene.tsx"
+              "collection-scene"
             ],
-            "default": "site/sections/Capy/CollectionScene.tsx"
+            "default": "collection-scene"
           }
         }
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RSYWlsLnRzeA==@Props": {
+      "cHJvZHVjdC1yYWls@Props": {
         "type": "object",
         "properties": {
           "title": {
@@ -4882,13 +3995,13 @@
                 "title": "Inline data"
               },
               {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                "$ref": "#/definitions/cHJvZHVjdC1ieS1oYW5kbGU="
               },
               {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
+                "$ref": "#/definitions/c2hvcGlmeS1wcm9kdWN0LWxpc3Q="
               },
               {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
+                "$ref": "#/definitions/c2hvcGlmeS1yZWxhdGVkLXByb2R1Y3Rz"
               }
             ],
             "nullable": true,
@@ -4929,12 +4042,12 @@
           "products"
         ]
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RSYWlsLnRzeA==": {
-        "title": "site/sections/Capy/ProductRail.tsx",
+      "cHJvZHVjdC1yYWls": {
+        "title": "Product Rail",
         "type": "object",
         "allOf": [
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RSYWlsLnRzeA==@Props"
+            "$ref": "#/definitions/cHJvZHVjdC1yYWls@Props"
           }
         ],
         "required": [
@@ -4944,13 +4057,13 @@
           "__resolveType": {
             "type": "string",
             "enum": [
-              "site/sections/Capy/ProductRail.tsx"
+              "product-rail"
             ],
-            "default": "site/sections/Capy/ProductRail.tsx"
+            "default": "product-rail"
           }
         }
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L01hbmlmZXN0by50c3g=@Props": {
+      "bWFuaWZlc3Rv@Props": {
         "type": "object",
         "properties": {
           "image": {
@@ -5026,12 +4139,12 @@
           "title"
         ]
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L01hbmlmZXN0by50c3g=": {
-        "title": "site/sections/Capy/Manifesto.tsx",
+      "bWFuaWZlc3Rv": {
+        "title": "Manifesto",
         "type": "object",
         "allOf": [
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L01hbmlmZXN0by50c3g=@Props"
+            "$ref": "#/definitions/bWFuaWZlc3Rv@Props"
           }
         ],
         "required": [
@@ -5041,13 +4154,13 @@
           "__resolveType": {
             "type": "string",
             "enum": [
-              "site/sections/Capy/Manifesto.tsx"
+              "manifesto"
             ],
-            "default": "site/sections/Capy/Manifesto.tsx"
+            "default": "manifesto"
           }
         }
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L1NpemluZ1N0b3J5LnRzeA==@Props": {
+      "c2l6aW5nLXN0b3J5@Props": {
         "type": "object",
         "properties": {
           "title": {
@@ -5160,12 +4273,12 @@
           "image"
         ]
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L1NpemluZ1N0b3J5LnRzeA==": {
-        "title": "site/sections/Capy/SizingStory.tsx",
+      "c2l6aW5nLXN0b3J5": {
+        "title": "Sizing Story",
         "type": "object",
         "allOf": [
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1NpemluZ1N0b3J5LnRzeA==@Props"
+            "$ref": "#/definitions/c2l6aW5nLXN0b3J5@Props"
           }
         ],
         "required": [
@@ -5175,13 +4288,13 @@
           "__resolveType": {
             "type": "string",
             "enum": [
-              "site/sections/Capy/SizingStory.tsx"
+              "sizing-story"
             ],
-            "default": "site/sections/Capy/SizingStory.tsx"
+            "default": "sizing-story"
           }
         }
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L0pvdXJuYWxDYXJkcy50c3g=@Props": {
+      "am91cm5hbC1jYXJkcw==@Props": {
         "type": "object",
         "properties": {
           "title": {
@@ -5319,12 +4432,12 @@
           "title"
         ]
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L0pvdXJuYWxDYXJkcy50c3g=": {
-        "title": "site/sections/Capy/JournalCards.tsx",
+      "am91cm5hbC1jYXJkcw==": {
+        "title": "Journal Cards",
         "type": "object",
         "allOf": [
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0pvdXJuYWxDYXJkcy50c3g=@Props"
+            "$ref": "#/definitions/am91cm5hbC1jYXJkcw==@Props"
           }
         ],
         "required": [
@@ -5334,13 +4447,13 @@
           "__resolveType": {
             "type": "string",
             "enum": [
-              "site/sections/Capy/JournalCards.tsx"
+              "journal-cards"
             ],
-            "default": "site/sections/Capy/JournalCards.tsx"
+            "default": "journal-cards"
           }
         }
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25IZWFkZXIudHN4@Props": {
+      "Y29sbGVjdGlvbi1oZWFkZXI=@Props": {
         "type": "object",
         "properties": {
           "title": {
@@ -5388,12 +4501,12 @@
           }
         }
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25IZWFkZXIudHN4": {
-        "title": "site/sections/Capy/CollectionHeader.tsx",
+      "Y29sbGVjdGlvbi1oZWFkZXI=": {
+        "title": "Collection Header",
         "type": "object",
         "allOf": [
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25IZWFkZXIudHN4@Props"
+            "$ref": "#/definitions/Y29sbGVjdGlvbi1oZWFkZXI=@Props"
           }
         ],
         "required": [
@@ -5403,13 +4516,485 @@
           "__resolveType": {
             "type": "string",
             "enum": [
-              "site/sections/Capy/CollectionHeader.tsx"
+              "collection-header"
             ],
-            "default": "site/sections/Capy/CollectionHeader.tsx"
+            "default": "collection-header"
           }
         }
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RMaXN0aW5nLnRzeA==@Props": {
+      "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ProductListingPage": {
+        "type": "object",
+        "properties": {
+          "breadcrumb": {
+            "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@BreadcrumbList",
+            "title": "Breadcrumb"
+          },
+          "filters": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@FilterToggle"
+                },
+                {
+                  "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@FilterRange"
+                }
+              ]
+            },
+            "title": "Filters"
+          },
+          "products": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/Resolvable"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@Product"
+                },
+                "title": "Inline data"
+              },
+              {
+                "$ref": "#/definitions/cHJvZHVjdC1ieS1oYW5kbGU="
+              },
+              {
+                "$ref": "#/definitions/c2hvcGlmeS1wcm9kdWN0LWxpc3Q="
+              },
+              {
+                "$ref": "#/definitions/c2hvcGlmeS1yZWxhdGVkLXByb2R1Y3Rz"
+              }
+            ],
+            "title": "Products"
+          },
+          "pageInfo": {
+            "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@PageInfo",
+            "title": "Page Info"
+          },
+          "sortOptions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@SortOption"
+            },
+            "title": "Sort Options"
+          },
+          "seo": {
+            "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@Seo",
+            "nullable": true,
+            "title": "Seo"
+          }
+        },
+        "required": [
+          "breadcrumb",
+          "filters",
+          "products",
+          "pageInfo",
+          "sortOptions"
+        ]
+      },
+      "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@BreadcrumbList": {
+        "type": "object",
+        "properties": {
+          "image": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+            },
+            "nullable": true,
+            "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+            "title": "Image"
+          },
+          "@id": {
+            "type": "string",
+            "nullable": true,
+            "description": "IRI identifying the canonical address of this object.",
+            "title": "@id"
+          },
+          "additionalType": {
+            "type": "string",
+            "nullable": true,
+            "description": "An additional type for the item, typically used for adding more specific types from external vocabularies in microdata syntax. This is a relationship between something and a class that the thing is in. In RDFa syntax, it is better to use the native RDFa syntax - the 'typeof' attribute - for multiple types. Schema.org tools may have only weaker understanding of extra types, in particular those defined externally.",
+            "title": "Additional Type"
+          },
+          "alternateName": {
+            "type": "string",
+            "nullable": true,
+            "description": "An alias for the item.",
+            "title": "Alternate Name"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "description": "A description of the item.",
+            "title": "Description"
+          },
+          "disambiguatingDescription": {
+            "type": "string",
+            "nullable": true,
+            "description": "A sub property of description. A short description of the item used to disambiguate from other, similar items. Information from other properties (in particular, name) may be necessary for the description to be useful for disambiguation.",
+            "title": "Disambiguating Description"
+          },
+          "identifier": {
+            "type": "string",
+            "nullable": true,
+            "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
+            "title": "Identifier"
+          },
+          "video": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@VideoObject"
+            },
+            "nullable": true,
+            "title": "Video"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name of the item.",
+            "title": "Name"
+          },
+          "sameAs": {
+            "type": "string",
+            "nullable": true,
+            "description": "URL of a reference Web page that unambiguously indicates the item's identity. E.g. the URL of the item's Wikipedia page, Wikidata entry, or official website.",
+            "title": "Same As"
+          },
+          "subjectOf": {
+            "type": "string",
+            "nullable": true,
+            "description": "A CreativeWork or Event about this Thing.",
+            "title": "Subject Of"
+          },
+          "url": {
+            "type": "string",
+            "nullable": true,
+            "description": "URL of the item.",
+            "title": "Url"
+          },
+          "itemListElement": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "item": {
+                  "type": "string",
+                  "description": "An entity represented by an entry in a list or data feed (e.g. an 'artist' in a list of 'artists')’.",
+                  "title": "Item"
+                },
+                "position": {
+                  "type": "number",
+                  "description": "The position of an item in a series or sequence of items.",
+                  "title": "Position"
+                },
+                "image": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ImageObject"
+                  },
+                  "nullable": true,
+                  "description": "An image of the item. This can be a {@link https://schema.org/URL URL} or a fully described {@link https://schema.org/ImageObject ImageObject}.",
+                  "title": "Image"
+                },
+                "@id": {
+                  "type": "string",
+                  "nullable": true,
+                  "description": "IRI identifying the canonical address of this object.",
+                  "title": "@id"
+                },
+                "additionalType": {
+                  "type": "string",
+                  "nullable": true,
+                  "description": "An additional type for the item, typically used for adding more specific types from external vocabularies in microdata syntax. This is a relationship between something and a class that the thing is in. In RDFa syntax, it is better to use the native RDFa syntax - the 'typeof' attribute - for multiple types. Schema.org tools may have only weaker understanding of extra types, in particular those defined externally.",
+                  "title": "Additional Type"
+                },
+                "alternateName": {
+                  "type": "string",
+                  "nullable": true,
+                  "description": "An alias for the item.",
+                  "title": "Alternate Name"
+                },
+                "description": {
+                  "type": "string",
+                  "nullable": true,
+                  "description": "A description of the item.",
+                  "title": "Description"
+                },
+                "disambiguatingDescription": {
+                  "type": "string",
+                  "nullable": true,
+                  "description": "A sub property of description. A short description of the item used to disambiguate from other, similar items. Information from other properties (in particular, name) may be necessary for the description to be useful for disambiguation.",
+                  "title": "Disambiguating Description"
+                },
+                "identifier": {
+                  "type": "string",
+                  "nullable": true,
+                  "description": "The identifier property represents any kind of identifier for any kind of {@link https://schema.org/Thing Thing}, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links. See {@link /docs/datamodel.html#identifierBg background notes} for more details.",
+                  "title": "Identifier"
+                },
+                "video": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@VideoObject"
+                  },
+                  "nullable": true,
+                  "title": "Video"
+                },
+                "name": {
+                  "type": "string",
+                  "nullable": true,
+                  "description": "The name of the item.",
+                  "title": "Name"
+                },
+                "sameAs": {
+                  "type": "string",
+                  "nullable": true,
+                  "description": "URL of a reference Web page that unambiguously indicates the item's identity. E.g. the URL of the item's Wikipedia page, Wikidata entry, or official website.",
+                  "title": "Same As"
+                },
+                "subjectOf": {
+                  "type": "string",
+                  "nullable": true,
+                  "description": "A CreativeWork or Event about this Thing.",
+                  "title": "Subject Of"
+                },
+                "url": {
+                  "type": "string",
+                  "nullable": true,
+                  "description": "URL of the item.",
+                  "title": "Url"
+                }
+              },
+              "required": [
+                "item",
+                "position"
+              ]
+            },
+            "description": "For itemListElement values, you can use simple strings (e.g. \"Peter\", \"Paul\", \"Mary\"), existing entities, or use ListItem.\n\nText values are best if the elements in the list are plain strings. Existing entities are best for a simple, unordered list of existing things in your data. ListItem is used with ordered lists when you want to provide additional context about the element in that list or when the same item might be in different places in different lists.\n\nNote: The order of elements in your mark-up is not sufficient for indicating the order or elements. Use ListItem with a 'position' property in such cases.",
+            "title": "Item List Element"
+          },
+          "numberOfItems": {
+            "type": "number",
+            "description": "The number of items in an ItemList. Note that some descriptions might not fully describe all items in a list (e.g., multi-page pagination); in such cases, the numberOfItems would be for the entire list.",
+            "title": "Number Of Items"
+          }
+        },
+        "required": [
+          "itemListElement",
+          "numberOfItems"
+        ]
+      },
+      "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@FilterToggle": {
+        "type": "object",
+        "properties": {
+          "values": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@FilterToggleValue"
+            },
+            "title": "Values"
+          },
+          "quantity": {
+            "type": "number",
+            "title": "Quantity"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "key": {
+            "type": "string",
+            "title": "Key"
+          }
+        },
+        "required": [
+          "values",
+          "quantity",
+          "label",
+          "key"
+        ]
+      },
+      "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@FilterToggleValue": {
+        "type": "object",
+        "properties": {
+          "quantity": {
+            "type": "number",
+            "title": "Quantity"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "value": {
+            "type": "string",
+            "title": "Value"
+          },
+          "selected": {
+            "type": "boolean",
+            "title": "Selected"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          },
+          "children": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@FilterToggle"
+              },
+              {
+                "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@FilterRange"
+              }
+            ],
+            "nullable": true,
+            "title": "Children"
+          }
+        },
+        "required": [
+          "quantity",
+          "label",
+          "value",
+          "selected",
+          "url"
+        ]
+      },
+      "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@FilterRange": {
+        "type": "object",
+        "properties": {
+          "values": {
+            "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@FilterRangeValue",
+            "title": "Values"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "key": {
+            "type": "string",
+            "title": "Key"
+          }
+        },
+        "required": [
+          "values",
+          "label",
+          "key"
+        ]
+      },
+      "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@FilterRangeValue": {
+        "type": "object",
+        "properties": {
+          "min": {
+            "type": "number",
+            "title": "Min"
+          },
+          "max": {
+            "type": "number",
+            "title": "Max"
+          }
+        },
+        "required": [
+          "min",
+          "max"
+        ]
+      },
+      "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@PageInfo": {
+        "type": "object",
+        "properties": {
+          "currentPage": {
+            "type": "number",
+            "title": "Current Page"
+          },
+          "nextPage": {
+            "type": "string",
+            "nullable": true,
+            "title": "Next Page"
+          },
+          "previousPage": {
+            "type": "string",
+            "nullable": true,
+            "title": "Previous Page"
+          },
+          "records": {
+            "type": "number",
+            "nullable": true,
+            "title": "Records"
+          },
+          "recordPerPage": {
+            "type": "number",
+            "nullable": true,
+            "title": "Record Per Page"
+          },
+          "pageTypes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "Brand",
+                "Category",
+                "Department",
+                "SubCategory",
+                "Product",
+                "Collection",
+                "Cluster",
+                "Search",
+                "Unknown"
+              ]
+            },
+            "nullable": true,
+            "title": "Page Types"
+          }
+        },
+        "required": [
+          "currentPage",
+          "nextPage",
+          "previousPage"
+        ]
+      },
+      "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@SortOption": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "title": "Value"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          }
+        },
+        "required": [
+          "value",
+          "label"
+        ]
+      },
+      "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@Seo": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "canonical": {
+            "type": "string",
+            "title": "Canonical"
+          },
+          "noIndexing": {
+            "type": "boolean",
+            "nullable": true,
+            "title": "No Indexing"
+          }
+        },
+        "required": [
+          "title",
+          "description",
+          "canonical"
+        ]
+      },
+      "cHJvZHVjdC1saXN0aW5n@Props": {
         "type": "object",
         "properties": {
           "page": {
@@ -5422,10 +5007,7 @@
                 "title": "Inline data"
               },
               {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0aW5nUGFnZS50cw=="
-              },
-              {
-                "$ref": "#/definitions/Y29tbWVyY2UvbG9hZGVycy9wcm9kdWN0L2V4dGVuc2lvbnMvbGlzdGluZ1BhZ2UudHM="
+                "$ref": "#/definitions/c2hvcGlmeS1wcm9kdWN0LWxpc3RpbmctcGFnZQ=="
               }
             ],
             "nullable": true,
@@ -5600,12 +5182,12 @@
           "page"
         ]
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RMaXN0aW5nLnRzeA==": {
-        "title": "site/sections/Capy/ProductListing.tsx",
+      "cHJvZHVjdC1saXN0aW5n": {
+        "title": "Product Listing",
         "type": "object",
         "allOf": [
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RMaXN0aW5nLnRzeA==@Props"
+            "$ref": "#/definitions/cHJvZHVjdC1saXN0aW5n@Props"
           }
         ],
         "required": [
@@ -5615,13 +5197,13 @@
           "__resolveType": {
             "type": "string",
             "enum": [
-              "site/sections/Capy/ProductListing.tsx"
+              "product-listing"
             ],
-            "default": "site/sections/Capy/ProductListing.tsx"
+            "default": "product-listing"
           }
         }
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25DYXJkcy50c3g=@Props": {
+      "Y29sbGVjdGlvbi1jYXJkcw==@Props": {
         "type": "object",
         "properties": {
           "title": {
@@ -5701,12 +5283,12 @@
           }
         }
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25DYXJkcy50c3g=": {
-        "title": "site/sections/Capy/CollectionCards.tsx",
+      "Y29sbGVjdGlvbi1jYXJkcw==": {
+        "title": "Collection Cards",
         "type": "object",
         "allOf": [
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25DYXJkcy50c3g=@Props"
+            "$ref": "#/definitions/Y29sbGVjdGlvbi1jYXJkcw==@Props"
           }
         ],
         "required": [
@@ -5716,13 +5298,35 @@
           "__resolveType": {
             "type": "string",
             "enum": [
-              "site/sections/Capy/CollectionCards.tsx"
+              "collection-cards"
             ],
-            "default": "site/sections/Capy/CollectionCards.tsx"
+            "default": "collection-cards"
           }
         }
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3REZXRhaWxzLnRzeA==@Props": {
+      "c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@ProductDetailsPage": {
+        "type": "object",
+        "properties": {
+          "breadcrumbList": {
+            "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@BreadcrumbList",
+            "title": "Breadcrumb List"
+          },
+          "product": {
+            "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@Product",
+            "title": "Product"
+          },
+          "seo": {
+            "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@Seo",
+            "nullable": true,
+            "title": "Seo"
+          }
+        },
+        "required": [
+          "breadcrumbList",
+          "product"
+        ]
+      },
+      "cHJvZHVjdC1kZXRhaWxz@Props": {
         "type": "object",
         "properties": {
           "page": {
@@ -5735,10 +5339,7 @@
                 "title": "Inline data"
               },
               {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3REZXRhaWxzUGFnZS50cw=="
-              },
-              {
-                "$ref": "#/definitions/Y29tbWVyY2UvbG9hZGVycy9wcm9kdWN0L2V4dGVuc2lvbnMvZGV0YWlsc1BhZ2UudHM="
+                "$ref": "#/definitions/c2hvcGlmeS1wcm9kdWN0LWRldGFpbHMtcGFnZQ=="
               }
             ],
             "nullable": true,
@@ -5933,12 +5534,12 @@
           "page"
         ]
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3REZXRhaWxzLnRzeA==": {
-        "title": "site/sections/Capy/ProductDetails.tsx",
+      "cHJvZHVjdC1kZXRhaWxz": {
+        "title": "Product Details",
         "type": "object",
         "allOf": [
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3REZXRhaWxzLnRzeA==@Props"
+            "$ref": "#/definitions/cHJvZHVjdC1kZXRhaWxz@Props"
           }
         ],
         "required": [
@@ -5948,13 +5549,13 @@
           "__resolveType": {
             "type": "string",
             "enum": [
-              "site/sections/Capy/ProductDetails.tsx"
+              "product-details"
             ],
-            "default": "site/sections/Capy/ProductDetails.tsx"
+            "default": "product-details"
           }
         }
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L0xpZmVzdHlsZUJhbm5lci50c3g=@Props": {
+      "bGlmZXN0eWxlLWJhbm5lcg==@Props": {
         "type": "object",
         "properties": {
           "page": {
@@ -5967,10 +5568,7 @@
                 "title": "Inline data"
               },
               {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3REZXRhaWxzUGFnZS50cw=="
-              },
-              {
-                "$ref": "#/definitions/Y29tbWVyY2UvbG9hZGVycy9wcm9kdWN0L2V4dGVuc2lvbnMvZGV0YWlsc1BhZ2UudHM="
+                "$ref": "#/definitions/c2hvcGlmeS1wcm9kdWN0LWRldGFpbHMtcGFnZQ=="
               }
             ],
             "nullable": true,
@@ -6031,12 +5629,12 @@
           }
         }
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L0xpZmVzdHlsZUJhbm5lci50c3g=": {
-        "title": "site/sections/Capy/LifestyleBanner.tsx",
+      "bGlmZXN0eWxlLWJhbm5lcg==": {
+        "title": "Lifestyle Banner",
         "type": "object",
         "allOf": [
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0xpZmVzdHlsZUJhbm5lci50c3g=@Props"
+            "$ref": "#/definitions/bGlmZXN0eWxlLWJhbm5lcg==@Props"
           }
         ],
         "required": [
@@ -6046,13 +5644,13 @@
           "__resolveType": {
             "type": "string",
             "enum": [
-              "site/sections/Capy/LifestyleBanner.tsx"
+              "lifestyle-banner"
             ],
-            "default": "site/sections/Capy/LifestyleBanner.tsx"
+            "default": "lifestyle-banner"
           }
         }
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RTaGVsZi50c3g=@Props": {
+      "cHJvZHVjdC1zaGVsZg==@Props": {
         "type": "object",
         "properties": {
           "title": {
@@ -6072,13 +5670,13 @@
                 "title": "Inline data"
               },
               {
-                "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+                "$ref": "#/definitions/cHJvZHVjdC1ieS1oYW5kbGU="
               },
               {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
+                "$ref": "#/definitions/c2hvcGlmeS1wcm9kdWN0LWxpc3Q="
               },
               {
-                "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
+                "$ref": "#/definitions/c2hvcGlmeS1yZWxhdGVkLXByb2R1Y3Rz"
               }
             ],
             "nullable": true,
@@ -6124,12 +5722,12 @@
           "products"
         ]
       },
-      "c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RTaGVsZi50c3g=": {
-        "title": "site/sections/Capy/ProductShelf.tsx",
+      "cHJvZHVjdC1zaGVsZg==": {
+        "title": "Product Shelf",
         "type": "object",
         "allOf": [
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RTaGVsZi50c3g=@Props"
+            "$ref": "#/definitions/cHJvZHVjdC1zaGVsZg==@Props"
           }
         ],
         "required": [
@@ -6139,9 +5737,87 @@
           "__resolveType": {
             "type": "string",
             "enum": [
-              "site/sections/Capy/ProductShelf.tsx"
+              "product-shelf"
             ],
-            "default": "site/sections/Capy/ProductShelf.tsx"
+            "default": "product-shelf"
+          }
+        }
+      },
+      "Y2xhc3NpYy1wcm9kdWN0LXNoZWxm@Props": {
+        "type": "object",
+        "properties": {
+          "products": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/Resolvable"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/c3JjL3ZlbmRvci9jb21tZXJjZS90eXBlcy50cw==@Product"
+                },
+                "title": "Inline data"
+              },
+              {
+                "$ref": "#/definitions/cHJvZHVjdC1ieS1oYW5kbGU="
+              },
+              {
+                "$ref": "#/definitions/c2hvcGlmeS1wcm9kdWN0LWxpc3Q="
+              },
+              {
+                "$ref": "#/definitions/c2hvcGlmeS1yZWxhdGVkLXByb2R1Y3Rz"
+              }
+            ],
+            "nullable": true,
+            "title": "Products"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true,
+            "description": "Section title",
+            "title": "Title"
+          },
+          "cta": {
+            "type": "string",
+            "nullable": true,
+            "description": "See all link",
+            "title": "Cta"
+          },
+          "visibility": {
+            "type": "string",
+            "enum": [
+              "all",
+              "mobile-only",
+              "desktop-only"
+            ],
+            "nullable": true,
+            "title": "Exibir em",
+            "description": "Em quais dispositivos esta seção aparece. Útil para mostrar\nconteúdo diferente no celular e no computador.",
+            "default": "all"
+          }
+        },
+        "required": [
+          "products"
+        ]
+      },
+      "Y2xhc3NpYy1wcm9kdWN0LXNoZWxm": {
+        "title": "Classic Product Shelf",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/definitions/Y2xhc3NpYy1wcm9kdWN0LXNoZWxm@Props"
+          }
+        ],
+        "required": [
+          "__resolveType"
+        ],
+        "properties": {
+          "__resolveType": {
+            "type": "string",
+            "enum": [
+              "classic-product-shelf"
+            ],
+            "default": "classic-product-shelf"
           }
         }
       },
@@ -6740,80 +6416,72 @@
             "$ref": "#/definitions/Resolvable"
           },
           {
-            "$ref": "#/definitions/Y29tbWVyY2Uvc2VjdGlvbnMvU2VvL1Nlb1BMUFYyLnRzeA==",
-            "inputSchema": "#/definitions/Y29tbWVyY2Uvc2VjdGlvbnMvU2VvL1Nlb1BMUFYyLnRzeA==@Props"
+            "$ref": "#/definitions/c2l0ZS1oZWFkZXI=",
+            "inputSchema": "#/definitions/c2l0ZS1oZWFkZXI=@Props"
           },
           {
-            "$ref": "#/definitions/Y29tbWVyY2Uvc2VjdGlvbnMvU2VvL1Nlb1BEUFYyLnRzeA==",
-            "inputSchema": "#/definitions/Y29tbWVyY2Uvc2VjdGlvbnMvU2VvL1Nlb1BEUFYyLnRzeA==@Props"
+            "$ref": "#/definitions/c2l0ZS1mb290ZXI=",
+            "inputSchema": "#/definitions/c2l0ZS1mb290ZXI=@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Qcm9kdWN0L1Byb2R1Y3RTaGVsZi50c3g=",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9Qcm9kdWN0L1Byb2R1Y3RTaGVsZi50c3g=@Props"
+            "$ref": "#/definitions/bmV3c2xldHRlcg==",
+            "inputSchema": "#/definitions/bmV3c2xldHRlcg==@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0hlYWRlci50c3g=",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0hlYWRlci50c3g=@Props"
+            "$ref": "#/definitions/aGVyby1zY2VuZQ==",
+            "inputSchema": "#/definitions/aGVyby1zY2VuZQ==@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0Zvb3Rlci50c3g=",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0Zvb3Rlci50c3g=@Props"
+            "$ref": "#/definitions/aW50cm8tc3RhdGVtZW50",
+            "inputSchema": "#/definitions/aW50cm8tc3RhdGVtZW50@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L05ld3NsZXR0ZXIudHN4",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L05ld3NsZXR0ZXIudHN4@Props"
+            "$ref": "#/definitions/Y29sbGVjdGlvbi1zY2VuZQ==",
+            "inputSchema": "#/definitions/Y29sbGVjdGlvbi1zY2VuZQ==@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0hlcm9TY2VuZS50c3g=",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0hlcm9TY2VuZS50c3g=@Props"
+            "$ref": "#/definitions/cHJvZHVjdC1yYWls",
+            "inputSchema": "#/definitions/cHJvZHVjdC1yYWls@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0ludHJvU3RhdGVtZW50LnRzeA==",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0ludHJvU3RhdGVtZW50LnRzeA==@Props"
+            "$ref": "#/definitions/bWFuaWZlc3Rv",
+            "inputSchema": "#/definitions/bWFuaWZlc3Rv@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25TY2VuZS50c3g=",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25TY2VuZS50c3g=@Props"
+            "$ref": "#/definitions/c2l6aW5nLXN0b3J5",
+            "inputSchema": "#/definitions/c2l6aW5nLXN0b3J5@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RSYWlsLnRzeA==",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RSYWlsLnRzeA==@Props"
+            "$ref": "#/definitions/am91cm5hbC1jYXJkcw==",
+            "inputSchema": "#/definitions/am91cm5hbC1jYXJkcw==@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L01hbmlmZXN0by50c3g=",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L01hbmlmZXN0by50c3g=@Props"
+            "$ref": "#/definitions/Y29sbGVjdGlvbi1oZWFkZXI=",
+            "inputSchema": "#/definitions/Y29sbGVjdGlvbi1oZWFkZXI=@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1NpemluZ1N0b3J5LnRzeA==",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1NpemluZ1N0b3J5LnRzeA==@Props"
+            "$ref": "#/definitions/cHJvZHVjdC1saXN0aW5n",
+            "inputSchema": "#/definitions/cHJvZHVjdC1saXN0aW5n@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0pvdXJuYWxDYXJkcy50c3g=",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0pvdXJuYWxDYXJkcy50c3g=@Props"
+            "$ref": "#/definitions/Y29sbGVjdGlvbi1jYXJkcw==",
+            "inputSchema": "#/definitions/Y29sbGVjdGlvbi1jYXJkcw==@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25IZWFkZXIudHN4",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25IZWFkZXIudHN4@Props"
+            "$ref": "#/definitions/cHJvZHVjdC1kZXRhaWxz",
+            "inputSchema": "#/definitions/cHJvZHVjdC1kZXRhaWxz@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RMaXN0aW5nLnRzeA==",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RMaXN0aW5nLnRzeA==@Props"
+            "$ref": "#/definitions/bGlmZXN0eWxlLWJhbm5lcg==",
+            "inputSchema": "#/definitions/bGlmZXN0eWxlLWJhbm5lcg==@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25DYXJkcy50c3g=",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25DYXJkcy50c3g=@Props"
+            "$ref": "#/definitions/cHJvZHVjdC1zaGVsZg==",
+            "inputSchema": "#/definitions/cHJvZHVjdC1zaGVsZg==@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3REZXRhaWxzLnRzeA==",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3REZXRhaWxzLnRzeA==@Props"
-          },
-          {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0xpZmVzdHlsZUJhbm5lci50c3g=",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0xpZmVzdHlsZUJhbm5lci50c3g=@Props"
-          },
-          {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RTaGVsZi50c3g=",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RTaGVsZi50c3g=@Props"
+            "$ref": "#/definitions/Y2xhc3NpYy1wcm9kdWN0LXNoZWxm",
+            "inputSchema": "#/definitions/Y2xhc3NpYy1wcm9kdWN0LXNoZWxm@Props"
           }
         ]
       }
@@ -6825,80 +6493,72 @@
             "$ref": "#/definitions/Resolvable"
           },
           {
-            "$ref": "#/definitions/Y29tbWVyY2Uvc2VjdGlvbnMvU2VvL1Nlb1BMUFYyLnRzeA==",
-            "inputSchema": "#/definitions/Y29tbWVyY2Uvc2VjdGlvbnMvU2VvL1Nlb1BMUFYyLnRzeA==@Props"
+            "$ref": "#/definitions/c2l0ZS1oZWFkZXI=",
+            "inputSchema": "#/definitions/c2l0ZS1oZWFkZXI=@Props"
           },
           {
-            "$ref": "#/definitions/Y29tbWVyY2Uvc2VjdGlvbnMvU2VvL1Nlb1BEUFYyLnRzeA==",
-            "inputSchema": "#/definitions/Y29tbWVyY2Uvc2VjdGlvbnMvU2VvL1Nlb1BEUFYyLnRzeA==@Props"
+            "$ref": "#/definitions/c2l0ZS1mb290ZXI=",
+            "inputSchema": "#/definitions/c2l0ZS1mb290ZXI=@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9Qcm9kdWN0L1Byb2R1Y3RTaGVsZi50c3g=",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9Qcm9kdWN0L1Byb2R1Y3RTaGVsZi50c3g=@Props"
+            "$ref": "#/definitions/bmV3c2xldHRlcg==",
+            "inputSchema": "#/definitions/bmV3c2xldHRlcg==@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0hlYWRlci50c3g=",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0hlYWRlci50c3g=@Props"
+            "$ref": "#/definitions/aGVyby1zY2VuZQ==",
+            "inputSchema": "#/definitions/aGVyby1zY2VuZQ==@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0Zvb3Rlci50c3g=",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0Zvb3Rlci50c3g=@Props"
+            "$ref": "#/definitions/aW50cm8tc3RhdGVtZW50",
+            "inputSchema": "#/definitions/aW50cm8tc3RhdGVtZW50@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L05ld3NsZXR0ZXIudHN4",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L05ld3NsZXR0ZXIudHN4@Props"
+            "$ref": "#/definitions/Y29sbGVjdGlvbi1zY2VuZQ==",
+            "inputSchema": "#/definitions/Y29sbGVjdGlvbi1zY2VuZQ==@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0hlcm9TY2VuZS50c3g=",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0hlcm9TY2VuZS50c3g=@Props"
+            "$ref": "#/definitions/cHJvZHVjdC1yYWls",
+            "inputSchema": "#/definitions/cHJvZHVjdC1yYWls@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0ludHJvU3RhdGVtZW50LnRzeA==",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0ludHJvU3RhdGVtZW50LnRzeA==@Props"
+            "$ref": "#/definitions/bWFuaWZlc3Rv",
+            "inputSchema": "#/definitions/bWFuaWZlc3Rv@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25TY2VuZS50c3g=",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25TY2VuZS50c3g=@Props"
+            "$ref": "#/definitions/c2l6aW5nLXN0b3J5",
+            "inputSchema": "#/definitions/c2l6aW5nLXN0b3J5@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RSYWlsLnRzeA==",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RSYWlsLnRzeA==@Props"
+            "$ref": "#/definitions/am91cm5hbC1jYXJkcw==",
+            "inputSchema": "#/definitions/am91cm5hbC1jYXJkcw==@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L01hbmlmZXN0by50c3g=",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L01hbmlmZXN0by50c3g=@Props"
+            "$ref": "#/definitions/Y29sbGVjdGlvbi1oZWFkZXI=",
+            "inputSchema": "#/definitions/Y29sbGVjdGlvbi1oZWFkZXI=@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1NpemluZ1N0b3J5LnRzeA==",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1NpemluZ1N0b3J5LnRzeA==@Props"
+            "$ref": "#/definitions/cHJvZHVjdC1saXN0aW5n",
+            "inputSchema": "#/definitions/cHJvZHVjdC1saXN0aW5n@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0pvdXJuYWxDYXJkcy50c3g=",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0pvdXJuYWxDYXJkcy50c3g=@Props"
+            "$ref": "#/definitions/Y29sbGVjdGlvbi1jYXJkcw==",
+            "inputSchema": "#/definitions/Y29sbGVjdGlvbi1jYXJkcw==@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25IZWFkZXIudHN4",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25IZWFkZXIudHN4@Props"
+            "$ref": "#/definitions/cHJvZHVjdC1kZXRhaWxz",
+            "inputSchema": "#/definitions/cHJvZHVjdC1kZXRhaWxz@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RMaXN0aW5nLnRzeA==",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RMaXN0aW5nLnRzeA==@Props"
+            "$ref": "#/definitions/bGlmZXN0eWxlLWJhbm5lcg==",
+            "inputSchema": "#/definitions/bGlmZXN0eWxlLWJhbm5lcg==@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25DYXJkcy50c3g=",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0NvbGxlY3Rpb25DYXJkcy50c3g=@Props"
+            "$ref": "#/definitions/cHJvZHVjdC1zaGVsZg==",
+            "inputSchema": "#/definitions/cHJvZHVjdC1zaGVsZg==@Props"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3REZXRhaWxzLnRzeA==",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3REZXRhaWxzLnRzeA==@Props"
-          },
-          {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0xpZmVzdHlsZUJhbm5lci50c3g=",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L0xpZmVzdHlsZUJhbm5lci50c3g=@Props"
-          },
-          {
-            "$ref": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RTaGVsZi50c3g=",
-            "inputSchema": "#/definitions/c2l0ZS9zZWN0aW9ucy9DYXB5L1Byb2R1Y3RTaGVsZi50c3g=@Props"
+            "$ref": "#/definitions/Y2xhc3NpYy1wcm9kdWN0LXNoZWxm",
+            "inputSchema": "#/definitions/Y2xhc3NpYy1wcm9kdWN0LXNoZWxm@Props"
           }
         ]
       },
@@ -6911,25 +6571,19 @@
             "$ref": "#/definitions/d2Vic2l0ZS9zZWN0aW9ucy9TZW8vU2VvVjIudHN4"
           },
           {
-            "$ref": "#/definitions/c2l0ZS9sb2FkZXJzL3Byb2R1Y3RCeUhhbmRsZS50cw=="
+            "$ref": "#/definitions/cHJvZHVjdC1ieS1oYW5kbGU="
           },
           {
-            "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3REZXRhaWxzUGFnZS50cw=="
+            "$ref": "#/definitions/c2hvcGlmeS1wcm9kdWN0LWRldGFpbHMtcGFnZQ=="
           },
           {
-            "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0LnRz"
+            "$ref": "#/definitions/c2hvcGlmeS1wcm9kdWN0LWxpc3Q="
           },
           {
-            "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1Byb2R1Y3RMaXN0aW5nUGFnZS50cw=="
+            "$ref": "#/definitions/c2hvcGlmeS1wcm9kdWN0LWxpc3RpbmctcGFnZQ=="
           },
           {
-            "$ref": "#/definitions/c2hvcGlmeS9sb2FkZXJzL1JlbGF0ZWRQcm9kdWN0cy50cw=="
-          },
-          {
-            "$ref": "#/definitions/Y29tbWVyY2UvbG9hZGVycy9wcm9kdWN0L2V4dGVuc2lvbnMvbGlzdGluZ1BhZ2UudHM="
-          },
-          {
-            "$ref": "#/definitions/Y29tbWVyY2UvbG9hZGVycy9wcm9kdWN0L2V4dGVuc2lvbnMvZGV0YWlsc1BhZ2UudHM="
+            "$ref": "#/definitions/c2hvcGlmeS1yZWxhdGVkLXByb2R1Y3Rz"
           },
           {
             "$ref": "#/definitions/bGF6eQ=="
@@ -6948,7 +6602,7 @@
             "$ref": "#/definitions/Resolvable"
           },
           {
-            "$ref": "#/definitions/d2Vic2l0ZS9tYXRjaGVycy9kZXZpY2UudHM="
+            "$ref": "#/definitions/ZGV2aWNl"
           },
           {
             "$ref": "#/definitions/YWx3YXlz"

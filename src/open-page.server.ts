@@ -47,8 +47,8 @@ export async function openPage(href: string, request: Request) {
     // Reading the saved blocks runs nothing: it only expands saved-block references.
     const stored = await Promise.all(sections.map((block) => c.resolve(block, { run: false })));
     const blocks = sections.map((block, index) => ({
-      // v7's keys, so a section that stays on the page keeps its state across client-side
-      // navigations exactly as before.
+      // Keyed by type and position, so a section that stays on the page keeps its state across
+      // client-side navigations.
       key: `${componentOf(stored[index]?.[0]) ?? "block"}-${index}`,
       // The saved section type, so the page can tell the Header and Footer landmarks from content.
       component: componentOf(stored[index]?.[0]),
@@ -69,7 +69,7 @@ export async function openPage(href: string, request: Request) {
     return {
       name: page.name,
       seo: seo ?? undefined,
-      // The page's absolute URL, query string included, as v7's `pageUrl` (the home's og:url fallback).
+      // The page's absolute URL, query string included (the home's og:url fallback).
       url: url.href,
       device,
       profile,

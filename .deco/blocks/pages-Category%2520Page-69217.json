@@ -11,7 +11,7 @@
       "__resolveType": "Header"
     },
     {
-      "__resolveType": "site/sections/Capy/CollectionHeader.tsx",
+      "__resolveType": "collection-header",
       "title": "Not here.",
       "description": "This path has wandered off. The herd is right here.",
       "showTabs": true,
@@ -35,10 +35,10 @@
       ]
     },
     {
-      "__resolveType": "site/sections/Capy/ProductRail.tsx",
+      "__resolveType": "product-rail",
       "title": "Meet the herd.",
       "products": {
-        "__resolveType": "shopify/loaders/ProductList.ts",
+        "__resolveType": "shopify-product-list",
         "props": {
           "collection": "the-herd",
           "count": 12,
@@ -54,5 +54,5 @@
       "__resolveType": "Footer"
     }
   ],
-  "__resolveType": "website/pages/Page.tsx"
+  "__resolveType": "page"
 }

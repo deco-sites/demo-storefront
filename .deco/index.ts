@@ -1,28 +1,49 @@
-// The block map (/next/blocks#the-block-map). Started by the deco-v7-to-v8-migration skill's script from
-// the v7 site and finished by hand. Each block is registered under the v7 name saved content stores, as it is
-// (/next/renames-and-migrations#checklist-for-migrating-existing-content: "register them as they
-// are"), and under no second name: the site editor lists every key of this map, so a short name
-// next to each v7 name showed every section twice in its pickers, where v7's editor showed it once.
-// Sections return descriptors (/next/rendering), which src/views.ts maps to components.
+// The block map (/next/blocks#the-block-map): every block type saved content can name. Sections
+// return descriptors (/next/rendering), which src/views.ts maps to components; a section with a
+// loader runs it here, on the server, and the loader's result becomes the view's props. The saved
+// props are the loader's input, so that's the type the editor form is generated from.
 import type { Blocks, Route } from "@decocms/blocks";
 import type { BlockDescriptor, PageSeo } from "../src/model";
-import {
-  detailsPageExtensions,
-  listingPageExtensions,
-  shopifyProductDetailsPage,
-  shopifyProductListingPage,
-} from "../src/blocks/commerce";
+import { pageState } from "../src/request-state.server";
+import { shopifyProductDetailsPage, shopifyProductListingPage } from "../src/blocks/commerce";
 import { device } from "../src/blocks/matchers";
-import { section } from "../src/blocks/section";
-import { seo, seoDetailsPage, seoListingPage } from "../src/blocks/seo";
-import { loader as capyHeaderLoader } from "../src/sections/Capy/Header";
-import { loader as capyCollectionSceneLoader } from "../src/sections/Capy/CollectionScene";
-import { loader as capyProductRailLoader } from "../src/sections/Capy/ProductRail";
-import { loader as capyCollectionHeaderLoader } from "../src/loaders/capyCollectionHeader";
-import { loader as capyProductListingLoader } from "../src/sections/Capy/ProductListing";
-import { loader as capyProductDetailsLoader } from "../src/sections/Capy/ProductDetails";
-import { loader as capyLifestyleBannerLoader } from "../src/sections/Capy/LifestyleBanner";
-import { loader as capyProductShelfLoader } from "../src/sections/Capy/ProductShelf";
+import { seo } from "../src/blocks/seo";
+import type { Props as ClassicProductShelfProps } from "../src/sections/Product/ProductShelf";
+import { loader as loadHeader, type Props as HeaderProps } from "../src/sections/Capy/Header";
+import type { Props as FooterProps } from "../src/sections/Capy/Footer";
+import type { Props as NewsletterProps } from "../src/sections/Capy/Newsletter";
+import type { Props as HeroSceneProps } from "../src/sections/Capy/HeroScene";
+import type { Props as IntroStatementProps } from "../src/sections/Capy/IntroStatement";
+import {
+  loader as loadCollectionScene,
+  type Props as CollectionSceneProps,
+} from "../src/sections/Capy/CollectionScene";
+import {
+  loader as loadProductRail,
+  type Props as ProductRailProps,
+} from "../src/sections/Capy/ProductRail";
+import type { Props as ManifestoProps } from "../src/sections/Capy/Manifesto";
+import type { Props as SizingStoryProps } from "../src/sections/Capy/SizingStory";
+import type { Props as JournalCardsProps } from "../src/sections/Capy/JournalCards";
+import type { Props as CollectionHeaderProps } from "../src/sections/Capy/CollectionHeader";
+import { loader as loadCollectionHeader } from "../src/loaders/capyCollectionHeader";
+import {
+  loader as loadProductListing,
+  type Props as ProductListingProps,
+} from "../src/sections/Capy/ProductListing";
+import type { Props as CollectionCardsProps } from "../src/sections/Capy/CollectionCards";
+import {
+  loader as loadProductDetails,
+  type Props as ProductDetailsProps,
+} from "../src/sections/Capy/ProductDetails";
+import {
+  loader as loadLifestyleBanner,
+  type Props as LifestyleBannerProps,
+} from "../src/sections/Capy/LifestyleBanner";
+import {
+  loader as loadProductShelf,
+  type Props as ProductShelfProps,
+} from "../src/sections/Capy/ProductShelf";
 import productByHandle from "../src/loaders/productByHandle";
 import shopifyProductList, {
   type Props as ShopifyProductListProps,
@@ -38,110 +59,84 @@ interface StorePage extends Route {
   sections: BlockDescriptor[];
 }
 
-const productShelf = section<typeof import("../src/sections/Product/ProductShelf")>(
-  "site/sections/Product/ProductShelf.tsx",
-);
-
-// The capybara redesign (src/sections/Capy): every block of the new home, collection and product pages.
-const capyHeader = section<typeof import("../src/sections/Capy/Header")>(
-  "site/sections/Capy/Header.tsx",
-  capyHeaderLoader,
-);
-const capyFooter = section<typeof import("../src/sections/Capy/Footer")>(
-  "site/sections/Capy/Footer.tsx",
-);
-const capyNewsletter = section<typeof import("../src/sections/Capy/Newsletter")>(
-  "site/sections/Capy/Newsletter.tsx",
-);
-const capyHeroScene = section<typeof import("../src/sections/Capy/HeroScene")>(
-  "site/sections/Capy/HeroScene.tsx",
-);
-const capyIntroStatement = section<typeof import("../src/sections/Capy/IntroStatement")>(
-  "site/sections/Capy/IntroStatement.tsx",
-);
-const capyCollectionScene = section<typeof import("../src/sections/Capy/CollectionScene")>(
-  "site/sections/Capy/CollectionScene.tsx",
-  capyCollectionSceneLoader,
-);
-const capyProductRail = section<typeof import("../src/sections/Capy/ProductRail")>(
-  "site/sections/Capy/ProductRail.tsx",
-  capyProductRailLoader,
-);
-const capyManifesto = section<typeof import("../src/sections/Capy/Manifesto")>(
-  "site/sections/Capy/Manifesto.tsx",
-);
-const capySizingStory = section<typeof import("../src/sections/Capy/SizingStory")>(
-  "site/sections/Capy/SizingStory.tsx",
-);
-const capyJournalCards = section<typeof import("../src/sections/Capy/JournalCards")>(
-  "site/sections/Capy/JournalCards.tsx",
-);
-const capyCollectionHeader = section<typeof import("../src/loaders/capyCollectionHeader")>(
-  "site/sections/Capy/CollectionHeader.tsx",
-  capyCollectionHeaderLoader,
-);
-const capyProductListing = section<typeof import("../src/sections/Capy/ProductListing")>(
-  "site/sections/Capy/ProductListing.tsx",
-  capyProductListingLoader,
-);
-const capyCollectionCards = section<typeof import("../src/sections/Capy/CollectionCards")>(
-  "site/sections/Capy/CollectionCards.tsx",
-);
-const capyProductDetails = section<typeof import("../src/sections/Capy/ProductDetails")>(
-  "site/sections/Capy/ProductDetails.tsx",
-  capyProductDetailsLoader,
-);
-const capyLifestyleBanner = section<typeof import("../src/sections/Capy/LifestyleBanner")>(
-  "site/sections/Capy/LifestyleBanner.tsx",
-  capyLifestyleBannerLoader,
-);
-const capyProductShelf = section<typeof import("../src/sections/Capy/ProductShelf")>(
-  "site/sections/Capy/ProductShelf.tsx",
-  capyProductShelfLoader,
-);
+/**
+ * A section's descriptor: the view to render (its key in src/views.ts) and its props. Every section
+ * block is async, so each one resolves on its own tick and streams in the same order.
+ */
+const view = (component: string, props: object): BlockDescriptor => ({
+  component,
+  props: props as BlockDescriptor["props"],
+});
 
 export default {
   // The built-in page, replaced so its sections are descriptors and its seo is the site's
-  // (/next/built-in-blocks#change-a-built-in). v7's website/pages/Page.tsx is a built-in alias.
+  // (/next/built-in-blocks#change-a-built-in).
   page: (input: StorePage) => input,
 
-  // SEO
+  // The page's SEO. The site editor finds a page's SEO type, and fills it into every new page, by
+  // this name, so it keeps it until the site editor reads it from the page schema instead.
   "website/sections/Seo/SeoV2.tsx": seo,
-  "commerce/sections/Seo/SeoPLPV2.tsx": seoListingPage,
-  "commerce/sections/Seo/SeoPDPV2.tsx": seoDetailsPage,
 
-  // Commerce data, over the Shopify upstream client
-  // In v7's order, which is the order the editor lists them in a product picker.
-  "site/loaders/productByHandle.ts": productByHandle,
-  "shopify/loaders/ProductDetailsPage.ts": shopifyProductDetailsPage,
-  // Every product loader also asks for the `deco.*` metafields the redesign reads (src/sdk/capyProduct.ts).
-  "shopify/loaders/ProductList.ts": (props: ShopifyProductListProps) =>
+  // Commerce data, over the Shopify upstream client, in the order the editor's product pickers list them.
+  /** @title Product by Handle */
+  "product-by-handle": productByHandle,
+  /** @title Shopify Product Details Page */
+  "shopify-product-details-page": shopifyProductDetailsPage,
+  // Every product loader also asks for the `deco.*` metafields the design reads (src/sdk/capyProduct.ts).
+  /** @title Shopify Product List */
+  "shopify-product-list": (props: ShopifyProductListProps) =>
     shopifyProductList({ ...props, metafields: withDecoMetafields(props.metafields) }),
-  "shopify/loaders/ProductListingPage.ts": shopifyProductListingPage,
-  "shopify/loaders/RelatedProducts.ts": (props: RelatedProductsProps) =>
-    shopifyRelatedProducts(props),
-  "commerce/loaders/product/extensions/listingPage.ts": listingPageExtensions,
-  "commerce/loaders/product/extensions/detailsPage.ts": detailsPageExtensions,
+  /** @title Shopify Product Listing Page */
+  "shopify-product-listing-page": shopifyProductListingPage,
+  /** @title Shopify Related Products */
+  "shopify-related-products": (props: RelatedProductsProps) => shopifyRelatedProducts(props),
 
   // Matchers
-  "website/matchers/device.ts": device,
+  /** @title Device */
+  device,
 
   // Sections
-  "site/sections/Product/ProductShelf.tsx": productShelf,
-  "site/sections/Capy/Header.tsx": capyHeader,
-  "site/sections/Capy/Footer.tsx": capyFooter,
-  "site/sections/Capy/Newsletter.tsx": capyNewsletter,
-  "site/sections/Capy/HeroScene.tsx": capyHeroScene,
-  "site/sections/Capy/IntroStatement.tsx": capyIntroStatement,
-  "site/sections/Capy/CollectionScene.tsx": capyCollectionScene,
-  "site/sections/Capy/ProductRail.tsx": capyProductRail,
-  "site/sections/Capy/Manifesto.tsx": capyManifesto,
-  "site/sections/Capy/SizingStory.tsx": capySizingStory,
-  "site/sections/Capy/JournalCards.tsx": capyJournalCards,
-  "site/sections/Capy/CollectionHeader.tsx": capyCollectionHeader,
-  "site/sections/Capy/ProductListing.tsx": capyProductListing,
-  "site/sections/Capy/CollectionCards.tsx": capyCollectionCards,
-  "site/sections/Capy/ProductDetails.tsx": capyProductDetails,
-  "site/sections/Capy/LifestyleBanner.tsx": capyLifestyleBanner,
-  "site/sections/Capy/ProductShelf.tsx": capyProductShelf,
+  /** @title Header */
+  "site-header": async (props: HeaderProps) => view("site-header", await loadHeader(props)),
+  /** @title Footer */
+  "site-footer": async (props: FooterProps) => view("site-footer", props),
+  /** @title Newsletter */
+  newsletter: async (props: NewsletterProps) => view("newsletter", props),
+  /** @title Hero Scene */
+  "hero-scene": async (props: HeroSceneProps) => view("hero-scene", props),
+  /** @title Intro Statement */
+  "intro-statement": async (props: IntroStatementProps) => view("intro-statement", props),
+  /** @title Collection Scene */
+  "collection-scene": async (props: CollectionSceneProps) =>
+    view("collection-scene", await loadCollectionScene(props)),
+  /** @title Product Rail */
+  "product-rail": async (props: ProductRailProps) =>
+    view("product-rail", await loadProductRail(props)),
+  /** @title Manifesto */
+  manifesto: async (props: ManifestoProps) => view("manifesto", props),
+  /** @title Sizing Story */
+  "sizing-story": async (props: SizingStoryProps) => view("sizing-story", props),
+  /** @title Journal Cards */
+  "journal-cards": async (props: JournalCardsProps) => view("journal-cards", props),
+  /** @title Collection Header */
+  "collection-header": async (props: CollectionHeaderProps) =>
+    view("collection-header", await loadCollectionHeader(props)),
+  /** @title Product Listing */
+  "product-listing": async (props: ProductListingProps) =>
+    view("product-listing", await loadProductListing(props, pageState().url)),
+  /** @title Collection Cards */
+  "collection-cards": async (props: CollectionCardsProps) => view("collection-cards", props),
+  /** @title Product Details */
+  "product-details": async (props: ProductDetailsProps) =>
+    view("product-details", await loadProductDetails(props, pageState().url)),
+  /** @title Lifestyle Banner */
+  "lifestyle-banner": async (props: LifestyleBannerProps) =>
+    view("lifestyle-banner", await loadLifestyleBanner(props)),
+  /** @title Product Shelf */
+  "product-shelf": async (props: ProductShelfProps) =>
+    view("product-shelf", await loadProductShelf(props, pageState().url)),
+  // The shelf of the design before the capybara one, which the offline page still shows.
+  /** @title Classic Product Shelf */
+  "classic-product-shelf": async (props: ClassicProductShelfProps) =>
+    view("classic-product-shelf", props),
 } satisfies Blocks;

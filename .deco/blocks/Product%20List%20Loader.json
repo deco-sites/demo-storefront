@@ -1,5 +1,5 @@
 {
-  "__resolveType": "shopify/loaders/ProductList.ts",
+  "__resolveType": "shopify-product-list",
   "props": {
     "sort": "",
     "query": "",

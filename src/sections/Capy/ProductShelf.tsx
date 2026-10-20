@@ -21,10 +21,10 @@ export interface Props {
   link?: Cta;
 }
 
-/** Runs on the server with a request for the page (src/blocks/section.ts). */
-export function loader(props: Props, req?: Request) {
+/** Runs on the server with the URL of the page being rendered (.deco/index.ts). */
+export function loader(props: Props, url: URL) {
   // On a product page, the product itself isn't offered with itself.
-  const path = new URL(req?.url ?? "https://localhost/").pathname;
+  const path = url.pathname;
   const current = path.startsWith("/products/") ? path.slice("/products/".length) : undefined;
   const cards = toCards(props.products, props.order).filter(
     (c) => !current || !current.startsWith(c.handle),

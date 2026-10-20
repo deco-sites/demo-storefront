@@ -13,7 +13,7 @@
       "theme": "night"
     },
     {
-      "__resolveType": "site/sections/Capy/HeroScene.tsx",
+      "__resolveType": "hero-scene",
       "image": {
         "src": "/capy/img/b-rain-d.webp",
         "alt": "Tião in the deep green Rio Raincoat sitting on the wet edge of an infinity pool after the rain, a rainbow over Sugarloaf.",
@@ -42,7 +42,7 @@
       }
     },
     {
-      "__resolveType": "site/sections/Capy/IntroStatement.tsx",
+      "__resolveType": "intro-statement",
       "text": "Three collections for a capybara’s day. The sun, the river and the soak.",
       "collections": [
         {
@@ -60,7 +60,7 @@
       ]
     },
     {
-      "__resolveType": "site/sections/Capy/CollectionScene.tsx",
+      "__resolveType": "collection-scene",
       "variant": "photo",
       "collection": "sol",
       "image": {
@@ -82,7 +82,7 @@
       "credit": "Sol Linen Poncho in Sand and Lime"
     },
     {
-      "__resolveType": "site/sections/Capy/CollectionScene.tsx",
+      "__resolveType": "collection-scene",
       "variant": "products",
       "collection": "rio",
       "title": "Built for wet days.",
@@ -96,7 +96,7 @@
         "href": "#riverbank"
       },
       "products": {
-        "__resolveType": "shopify/loaders/ProductList.ts",
+        "__resolveType": "shopify-product-list",
         "props": {
           "collection": "rio",
           "count": 3,
@@ -115,7 +115,7 @@
       ]
     },
     {
-      "__resolveType": "site/sections/Capy/CollectionScene.tsx",
+      "__resolveType": "collection-scene",
       "variant": "photo-night",
       "collection": "onsen",
       "image": {
@@ -136,10 +136,10 @@
       }
     },
     {
-      "__resolveType": "site/sections/Capy/ProductRail.tsx",
+      "__resolveType": "product-rail",
       "title": "Meet the herd.",
       "products": {
-        "__resolveType": "shopify/loaders/ProductList.ts",
+        "__resolveType": "shopify-product-list",
         "props": {
           "collection": "the-herd",
           "count": 12,
@@ -162,7 +162,7 @@
       }
     },
     {
-      "__resolveType": "site/sections/Capy/Manifesto.tsx",
+      "__resolveType": "manifesto",
       "image": {
         "src": "/capy/img/s-cobogo.webp",
         "alt": "Tião looking through the cut-outs of a cobogó wall in marigold, mint and lilac.",
@@ -177,7 +177,7 @@
       }
     },
     {
-      "__resolveType": "site/sections/Capy/SizingStory.tsx",
+      "__resolveType": "sizing-story",
       "title": "Pup, Adult or Big Boss.",
       "body": "Three sizes, graded from real body measurements. Measure around the widest part of the barrel, just behind the front legs. If girth and back disagree, girth wins.",
       "image": {
@@ -213,7 +213,7 @@
       }
     },
     {
-      "__resolveType": "site/sections/Capy/JournalCards.tsx",
+      "__resolveType": "journal-cards",
       "title": "Riverbank.",
       "dek": "Notes from the slow life.",
       "link": {
@@ -258,7 +258,7 @@
       ]
     },
     {
-      "__resolveType": "site/sections/Capy/Newsletter.tsx",
+      "__resolveType": "newsletter",
       "title": "Slow news, monthly.",
       "titleTone": "One letter. No hurry.",
       "body": "New pieces, field notes from the riverbank and the odd yuzu. Once a month, never more.",
@@ -270,5 +270,5 @@
       "__resolveType": "Footer"
     }
   ],
-  "__resolveType": "website/pages/Page.tsx"
+  "__resolveType": "page"
 }

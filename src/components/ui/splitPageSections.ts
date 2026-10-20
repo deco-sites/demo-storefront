@@ -1,5 +1,5 @@
 /**
- * Pure ordering logic behind {@link PageSections}.
+ * Pure ordering logic behind the page's `<main>` landmark (src/runtime/PageView.tsx).
  *
  * The CMS section list is flat and already contains the Header (`role=banner`)
  * and Footer (`role=contentinfo`) sections, so we can't wrap the whole list in
@@ -8,30 +8,15 @@
  * content and render only that span inside `<main>`.
  */
 
-export type PositionedSection = { key?: string; component?: string; index?: number };
-
-/** Sections that render a top-level landmark of their own, or no markup at all. */
-const HEADER_SECTION = /sections\/(Header|Theme)\/|sections\/Capy\/Header\.tsx/;
-const FOOTER_SECTION = /sections\/Footer\/|sections\/Capy\/Footer\.tsx/;
 /**
- * Sections that render no visible markup — SEO only emits `<head>` metadata,
- * and Analytics/Session/htmx only inject scripts. Treating them as content
- * would drag the `<main>` boundaries past the Header/Footer and trip the
- * orphan warning below.
+ * A section of the page, by the landmark its view declares (src/views.ts): the Header renders the
+ * `banner` landmark and the Footer `contentinfo`; every other section is page content.
  */
-const NON_VISUAL_SECTION = /sections\/(Seo|Analytics)\/|sections\/(Session|htmx)\.tsx/;
+export type PositionedSection = { landmark?: "header" | "footer" };
 
-const matches = (re: RegExp, s: PositionedSection) =>
-  re.test(s.component ?? "") || re.test(s.key ?? "");
+type SectionKind = "header" | "footer" | "content";
 
-type SectionKind = "header" | "footer" | "non-visual" | "content";
-
-const sectionKind = (s: PositionedSection): SectionKind => {
-  if (matches(HEADER_SECTION, s)) return "header";
-  if (matches(FOOTER_SECTION, s)) return "footer";
-  if (matches(NON_VISUAL_SECTION, s)) return "non-visual";
-  return "content";
-};
+const sectionKind = (s: PositionedSection): SectionKind => s.landmark ?? "content";
 
 interface MainBounds {
   /** First position (inclusive) that belongs inside `<main>`. */
@@ -46,8 +31,7 @@ interface MainBounds {
  *
  * The bounds start at the first content section and end at the last one, then
  * are clamped so that no Header-ish or Footer-ish section can ever fall inside
- * them — a non-content section placed before the Header (SEO sections are, on
- * every PLP/PDP block) must not drag `<main>` above the Header.
+ * them.
  */
 export function mainBounds(positioned: { s: PositionedSection; pos: number }[]): MainBounds | null {
   const content = positioned.filter(({ s }) => sectionKind(s) === "content").map(({ pos }) => pos);

@@ -7,20 +7,10 @@
   },
   "sections": [
     {
-      "__resolveType": "commerce/sections/Seo/SeoPLPV2.tsx",
-      "jsonLD": {
-        "__resolveType": "lazy",
-        "value": {
-          "__resolveType": "shopify/loaders/ProductListingPage.ts",
-          "count": 48
-        }
-      }
-    },
-    {
       "__resolveType": "Header"
     },
     {
-      "__resolveType": "site/sections/Capy/CollectionHeader.tsx",
+      "__resolveType": "collection-header",
       "showTabs": true,
       "tabs": [
         {
@@ -43,9 +33,9 @@
       ]
     },
     {
-      "__resolveType": "site/sections/Capy/ProductListing.tsx",
+      "__resolveType": "product-listing",
       "page": {
-        "__resolveType": "shopify/loaders/ProductListingPage.ts",
+        "__resolveType": "shopify-product-listing-page",
         "count": 48
       },
       "colorFamilies": [
@@ -135,7 +125,7 @@
       }
     },
     {
-      "__resolveType": "site/sections/Capy/CollectionCards.tsx",
+      "__resolveType": "collection-cards",
       "title": "Shop by collection.",
       "cards": [
         {
@@ -174,7 +164,7 @@
       ]
     },
     {
-      "__resolveType": "site/sections/Capy/Newsletter.tsx",
+      "__resolveType": "newsletter",
       "title": "Slow news, monthly.",
       "titleTone": "One letter. No hurry.",
       "body": "New pieces, field notes from the riverbank and the odd yuzu. Once a month, never more.",
@@ -186,5 +176,5 @@
       "__resolveType": "Footer"
     }
   ],
-  "__resolveType": "website/pages/Page.tsx"
+  "__resolveType": "page"
 }

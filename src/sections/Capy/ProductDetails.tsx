@@ -68,13 +68,13 @@ export interface Props {
   notFound?: { title: string; body?: string; link?: Cta };
 }
 
-/** Runs on the server with a request for the page (src/blocks/section.ts). */
-export function loader(props: Props, req?: Request) {
+/** Runs on the server with the URL of the page being rendered (.deco/index.ts). */
+export function loader(props: Props, url: URL) {
   const { page, ...rest } = props;
   const product = page?.product;
   if (!product) return { ...rest, product: null, analytics: null, initialColor: "" };
   const pdp = toPdp(product);
-  const asked = new URL(req?.url ?? "https://localhost/").searchParams.get("color") ?? "";
+  const asked = url.searchParams.get("color") ?? "";
   const initialColor = pdp.colors.find((c) => c.name.toLowerCase() === asked.toLowerCase())?.name;
   const analytics = mapProductToAnalyticsItem({
     product,
