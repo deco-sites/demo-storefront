@@ -73,14 +73,14 @@ src/
 ├── sdk/                  # clx, debounce, device, logger, …
 ├── styles/app.css        # Tailwind v4 entry
 ├── server.ts             # TanStack Start server entry
-├── start.ts              # Start middleware (draft cookie)
-├── worker-entry.ts       # Cloudflare Worker entry: CSP, segmentation, edge cache
+├── start.ts              # Start instance (server-function fetch with the CDN segment token)
+├── worker-entry.ts       # Cloudflare Worker entry: createDecoWorker (CSP, segment, edge cache, request metrics)
 └── router.tsx            # Router configuration
 ```
 
 ## How rendering works
 
-1. A request hits `src/worker-entry.ts` → `withEdgeCache` (`src/server/edge-cache.ts`): security headers, CSP, device/region segmentation, the edge cache.
+1. A request hits `src/worker-entry.ts` → `createDecoWorker` (`@decocms/tanstack/worker`) with the CMS from `src/cms.ts`: security headers, CSP, drafts, CMS redirects, device/region/sign-in segmentation, the edge cache, and `http.server.request.duration` for every request in the CMS's telemetry (what Studio's Monitor shows; nothing in `vite dev`, where telemetry is off).
 2. The request goes on to the TanStack Start server entry (`src/server.ts`).
 3. The catch-all route (`src/routes/$.tsx`) and the home route call `loadPage`, which finds the page with `matchRoute` (`src/open-page.server.ts`) and starts every block on it.
 4. Each section block returns a descriptor; `src/runtime/PageView.tsx` renders it through `src/views.ts`.

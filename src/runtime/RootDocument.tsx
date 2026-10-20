@@ -2,12 +2,13 @@
  * The document every page renders in. In v7 the site composed it from @decocms/tanstack's pieces in
  * src/routes/__root.tsx; the markup is the same: the DECO.events bus and the data-event observer
  * that the site's analytics events go through, a navigation progress bar, a content area that keeps
- * its height while the next page loads, v7's editor bridge (LiveControls), and the router's head and
- * scripts.
+ * its height while the next page loads, @decocms/tanstack's `DecoPreview` (the Studio bridge, the
+ * draft badge, and the draft and CDN segment token `createDecoWorker` hands the page), and the
+ * router's head and scripts.
  */
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { HeadContent, Outlet, ScriptOnce, Scripts, useRouterState } from "@tanstack/react-router";
-import { LiveControls } from "../vendor/blocks/LiveControls";
+import { DecoPreview } from "@decocms/tanstack/react";
 
 /** The DECO.events bus. Events dispatched before a subscriber exists are replayed to it. */
 const EVENTS_BOOTSTRAP = `
@@ -175,7 +176,7 @@ export function RootDocument({ children }: { children?: ReactNode }) {
           <StableOutlet />
         </div>
         {children}
-        <LiveControls site="demo-storefront" />
+        <DecoPreview site="demo-storefront" />
         <ScriptOnce children={DATA_EVENT_OBSERVER} />
         <Scripts />
       </body>

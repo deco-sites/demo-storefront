@@ -6,7 +6,7 @@ import {
   setCookie,
 } from "@tanstack/react-start/server";
 import { z } from "zod";
-import { markPrivate } from "../../server/private-response";
+import { markPrivate } from "@decocms/tanstack/server";
 import { getShopifyClient } from "../../vendor/shopify/client";
 import shopifySignIn from "../../vendor/shopify/actions/user/signIn";
 import shopifySignUp from "../../vendor/shopify/actions/user/signUp";

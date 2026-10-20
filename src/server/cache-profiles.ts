@@ -1,7 +1,7 @@
 /**
  * Page cache profiles, owned by the site (in v7 they came from @decocms/blocks/sdk/cacheHeaders).
  * A profile decides the Cache-Control a page is sent with and how long the worker keeps it in the
- * edge cache (src/server/edge-cache.ts). The values and URL rules are v7's, unchanged.
+ * edge cache (createDecoWorker, whose defaults are these same v7 values and URL rules).
  */
 export type CacheProfileName =
   | "static"
@@ -59,11 +59,6 @@ const PROFILES: Record<CacheProfileName, CacheProfile> = {
   none: NO_CACHE,
 };
 
-export function edgeCacheConfig(profile: CacheProfileName): Window & { isPublic: boolean } {
-  const p = PROFILES[profile];
-  return { ...p.edge, isPublic: p.isPublic };
-}
-
 /** The response headers for a profile. */
 export function cacheHeaders(profile: CacheProfileName): Record<string, string> {
   const p = PROFILES[profile];
@@ -90,55 +85,4 @@ export function detectCacheProfile(pathnameOrUrl: string | URL): CacheProfileNam
   if (p.endsWith("/p")) return "product";
   if (p === "/" || p === "") return "static";
   return "listing";
-}
-
-/** The page a GET server-function request loads, from its payload: the first string that is a path. */
-export function serverFnPagePath(url: URL): string | null {
-  if (!url.pathname.startsWith("/_serverFn/") && !url.pathname.startsWith("/_server/")) return null;
-  const payload = url.searchParams.get("payload");
-  if (!payload) return null;
-  try {
-    let found: string | null = null;
-    const visit = (v: unknown): void => {
-      if (found !== null) return;
-      if (typeof v === "string") {
-        if (v.startsWith("/") && !v.startsWith("//")) found = v;
-      } else if (Array.isArray(v)) {
-        for (const x of v) visit(x);
-      } else if (v && typeof v === "object") {
-        for (const x of Object.values(v)) visit(x);
-      }
-    };
-    visit(JSON.parse(payload));
-    return found;
-  } catch {
-    return null;
-  }
-}
-
-/** Variant params a page loader ignores, left out of a server function's cache key. */
-const SERVER_FN_IGNORED_PARAMS = ["skuId", "idsku"];
-
-export function canonicalizeServerFnPayload(payload: string): string {
-  try {
-    const stripQuery = (s: string): string => {
-      if (!s.startsWith("/") || s.startsWith("//")) return s;
-      const q = s.indexOf("?");
-      if (q < 0) return s;
-      const sp = new URLSearchParams(s.slice(q + 1));
-      for (const p of SERVER_FN_IGNORED_PARAMS) sp.delete(p);
-      const rest = sp.toString();
-      return rest ? `${s.slice(0, q)}?${rest}` : s.slice(0, q);
-    };
-    const visit = (v: unknown): unknown => {
-      if (typeof v === "string") return stripQuery(v);
-      if (Array.isArray(v)) return v.map(visit);
-      if (v && typeof v === "object")
-        return Object.fromEntries(Object.entries(v).map(([k, x]) => [k, visit(x)]));
-      return v;
-    };
-    return JSON.stringify(visit(JSON.parse(payload)));
-  } catch {
-    return payload;
-  }
 }
