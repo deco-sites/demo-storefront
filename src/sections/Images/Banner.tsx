@@ -39,8 +39,10 @@ function Banner({ title, description, priceLabel, price, images, cta, visibility
             />
           </Picture>
 
-          {/* Scrim protects text legibility regardless of the underlying photo */}
-          <div className="absolute inset-y-0 left-0 w-full bg-gradient-to-r from-black/45 via-black/10 to-transparent sm:w-2/3" />
+          {/* Scrim protects text legibility regardless of the underlying photo: opaque enough that
+              white text clears WCAG AA (4.5:1) even over a pure-white photo. Flat on mobile, where
+              the copy spans the full width; a left-anchored gradient from `sm` up, where it does not. */}
+          <div className="absolute inset-y-0 left-0 w-full bg-black/60 sm:w-2/3 sm:bg-transparent sm:bg-gradient-to-r sm:from-black/65 sm:from-35% sm:to-transparent" />
 
           <div
             className={clx(
