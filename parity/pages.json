@@ -339,7 +339,7 @@
     {
       "id": "css-bundle-unused-rules",
       "status": "pending",
-      "approval": "PENDING product-owner approval (not approved). The stylesheet lost the utilities only the removed pre-redesign sections and saved blocks used, so its hashed file name in the preload Link header changes. No pixel changes.",
+      "approval": "PENDING product-owner approval (not approved). The stylesheet lost the utilities only the removed pre-redesign sections, their saved blocks and the removed PDP components' README named, so its hashed file name in the preload Link header changes. No pixel changes.",
       "cases": [
         "home@mobile",
         "home@desktop",

@@ -65,7 +65,7 @@ src/
 ├── runtime/              # Root document, page view (sections, <main> landmark)
 ├── routes/               # TanStack Router file routes (__root, $, index, account, login)
 ├── sections/             # CMS-rendered sections (Capy: the capybara design; Product: the offline page's shelf)
-├── components/           # UI components (header, minicart, product, search, ui, …)
+├── components/           # UI components (capy: minicart, product card, icons; product, ui, account, wishlist)
 ├── platform/             # Domain state — TanStack Query hooks + createServerFn actions
 ├── server/               # Edge cache, cache profiles, the site's server functions
 ├── loaders/, actions/    # Site loaders and actions (called by blocks and server functions)
