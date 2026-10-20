@@ -1,4 +1,3 @@
-import { usePlatform } from "../../apps/site";
 import { type Address, type AddressBookState } from "../../platform/address/address.types";
 import { readAddressCookie, serializeAddressCookie } from "../../platform/address/cookie";
 
@@ -14,11 +13,7 @@ async function action(
   request: Request,
   responseHeaders: Headers,
 ): Promise<AddressBookState> {
-  const platform = usePlatform();
-  if (platform === "vtex" || platform === "wake") {
-    // TODO(consumer): wire the real platform address endpoints here.
-  }
-
+  // The address book lives in a cookie: the demo store has no customer address backend.
   const current = readAddressCookie(request);
   let addresses = [...current.addresses];
 
