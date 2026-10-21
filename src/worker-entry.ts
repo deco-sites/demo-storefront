@@ -11,8 +11,6 @@ import handler, { createServerEntry } from "@tanstack/react-start/server-entry";
 import { withEdgeCache } from "./server/edge-cache";
 import { detectDevice } from "./sdk/device";
 import { getCookies } from "./vendor/shopify/utils/cookies";
-// @ts-ignore Vite ?url import
-import appCss from "./styles/app.css?url";
 
 const serverEntry = createServerEntry({ fetch: handler.fetch });
 
@@ -48,7 +46,6 @@ const CSP_DIRECTIVES = [
 
 export default withEdgeCache(serverEntry, {
   enforcedCsp: CSP_DIRECTIVES.join("; "),
-  cssHref: appCss,
   buildSegment: (request) => {
     const cookies = getCookies(request.headers);
     // The cache splits only mobile vs desktop: tablets share the mobile entry.
