@@ -21,7 +21,7 @@
   --paper: #f6f1e7;           /* the concrete frame */
   --paper-2: #ece4d3;
   --ink: #1c1917;
-  --muted: #5c564f;
+  --muted: #4a453f;          /* ≥7:1 on paper, paper-2 and sizing-bg (WCAG AAA) */
   --hair: rgba(28, 25, 23, .12);
   --hair-2: rgba(28, 25, 23, .24);
   --scrim: 22, 20, 15;        /* warm near-black #16140f, used only as photo scrims */
