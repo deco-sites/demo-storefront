@@ -2,8 +2,8 @@
 
 The storefront domain has no SPF, DKIM or DMARC records, so anyone can forge
 `From:` addresses on it and legitimate store mail lands in spam. These are DNS
-records, not application code — nothing in this repo sends email today
-(`src/actions/newsletter/subscribe.ts` only writes a cookie), so the fix is
+records, not application code — nothing in this repo sends email from the storefront domain
+today (password-recovery mail is sent by Shopify), so the fix is
 applied in the DNS zone that serves the storefront hostname.
 
 This file is the runbook: what to publish now, and how to find the DKIM

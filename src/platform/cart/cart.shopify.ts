@@ -1,4 +1,4 @@
-import type { ShopifyCart } from "@decocms/apps-shopify";
+import type { ShopifyCart } from "../../vendor/shopify/loaders/cart";
 import { EMPTY_CART, type CartItem, type CartState } from "./cart.types";
 
 const parseMoney = (m?: { amount: string; currencyCode: string }) =>
@@ -11,6 +11,7 @@ export function shopifyCartToCartState(cart: ShopifyCart | null): CartState {
     lineId: line.id,
     merchandiseId: line.merchandise.id,
     title: line.merchandise.product.title,
+    variantTitle: line.merchandise.title,
     productHandle: line.merchandise.product.handle,
     image: line.merchandise.image
       ? {

@@ -1,4 +1,4 @@
-import type { AnalyticsItem } from "@decocms/apps-commerce/types";
+import type { AnalyticsItem } from "../../vendor/commerce/types";
 import { useNavigate } from "@tanstack/react-router";
 import { useSendEvent } from "../../sdk/useSendEvent";
 import { useToggleWishlist, useWishlist } from "../../platform/wishlist";

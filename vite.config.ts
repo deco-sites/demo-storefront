@@ -1,6 +1,6 @@
 import { cloudflare } from "@cloudflare/vite-plugin";
+import { decoTanstack } from "@decocms/tanstack/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
-import { decoVitePlugin } from "@decocms/tanstack/vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
@@ -55,7 +55,9 @@ export default defineConfig({
       },
     }),
     tailwindcss(),
-    decoVitePlugin(),
+    // `__BUILD_HASH__` (the commit: Workers Builds' sha, else git's) for the edge cache, and
+    // decoContent(): in `vite dev`, a block saved in the site editor reloads open pages.
+    decoTanstack({ buildHash: process.env.WORKERS_CI_COMMIT_SHA }),
     {
       name: "site-manual-chunks",
       config(_cfg, { command }) {
@@ -75,20 +77,6 @@ export default defineConfig({
             },
           },
         };
-      },
-    },
-    {
-      name: "deco-stub-meta-gen",
-      enforce: "pre" as const,
-      resolveId(id, importer, options) {
-        if (!options?.ssr && importer && id.includes("meta.gen")) {
-          return "\0stub:meta-gen";
-        }
-      },
-      load(id) {
-        if (id === "\0stub:meta-gen") {
-          return "export default {};";
-        }
       },
     },
   ],

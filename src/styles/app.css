@@ -1,4 +1,21 @@
 @import "tailwindcss";
+/* The capybara redesign: tokens, type and every Capy section (src/sections/Capy). */
+@import "./capy.css";
+/* parity harness (dev-only) must not feed Tailwind class detection */
+@source not "../../parity";
+/* Left out of Tailwind's class detection: the Shopify and commerce code, the server code, the
+   block map and the generated schema hold class-like strings no view needs, and the few classes
+   the page renderer and root document (src/runtime) put in markup are styled in this stylesheet
+   already. Scanning them would add utilities to the bundle. */
+@source not "../vendor";
+@source not "../runtime";
+@source not "../server";
+@source not "../blocks";
+@source not "../../.deco/index.ts";
+@source not "../../.deco/schema.gen.json";
+/* Utilities no current markup uses, kept so the stylesheet stays exactly what production ships
+   (removing them changes the CSS bundle, a product-owner decision). */
+@source inline("lowercase normal-case text-4xl text-base-content/40 mt-2 tooltip h-[120px] sm:h-[200px] sm:min-h-[600px] hero stack");
 @plugin "daisyui";
 @plugin "daisyui/theme" {
   name: "light";
@@ -194,7 +211,8 @@ ol.carousel {
   @media (width >= 1536px) { max-width: 1536px; }
 }
 
-/* Deferred section visibility — reduces layout shift while loading */
+/* Rules for deferred-section placeholders. Nothing renders them; kept so the stylesheet stays
+   exactly what production ships (removing them changes the CSS bundle, a product-owner decision). */
 section[data-deferred="true"] {
   content-visibility: auto;
   contain-intrinsic-size: auto 300px;

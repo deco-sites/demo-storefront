@@ -1,0 +1,6 @@
+{
+  "__resolveType": "redirect",
+  "from": "/accessories",
+  "to": "/collections/the-herd",
+  "permanent": false
+}

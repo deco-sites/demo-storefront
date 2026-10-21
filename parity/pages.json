@@ -1,0 +1,400 @@
+{
+  "$comment": "Cases for the parity harness (parity/README.md): every route of the site (the capybara design), desktop and mobile, compared pixel by pixel and snapshot by snapshot against a baseline recorded from production (main).",
+  "ports": {
+    "site": 5340,
+    "upstream": 5347
+  },
+  "viewports": {
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 1,
+      "isMobile": true,
+      "hasTouch": true,
+      "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1"
+    },
+    "desktop": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 1,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+    }
+  },
+  "fixedTime": "2030-01-01T12:00:00.000Z",
+  "$fixedTimeNote": "Must be in the FUTURE relative to the wall clock: the server clock is frozen to it and cookies (cart, 7-day expiry) are dated from it, while Chromium's cookie jar uses real time. Re-record before 2030-01-08.",
+  "randomSeed": 1337,
+  "locale": "en-US",
+  "timezone": "UTC",
+  "chromiumArgs": [
+    "--font-render-hinting=none",
+    "--disable-skia-runtime-opts",
+    "--force-color-profile=srgb",
+    "--disable-lcd-text",
+    "--disable-gpu",
+    "--disable-gpu-rasterization",
+    "--disable-threaded-animation",
+    "--disable-threaded-scrolling",
+    "--disable-checker-imaging",
+    "--disable-partial-raster",
+    "--run-all-compositor-stages-before-draw"
+  ],
+  "decoEventsRecorder": {
+    "$comment": "The analytics contract here is window.DECO.events.dispatch (ANALYTICS_SCRIPT data-event observers, the search form's `search` event). parity/lib/capture.mjs wraps dispatch from an init script and every call lands in the snapshot's `analytics.events`.",
+    "enabled": true
+  },
+  "thirdParty": {
+    "$comment": "No analytics collector is configured on this site (site.json trackingIds is empty, no lilstts SDK). Every third-party browser request is replayed from the per-case HAR; `block` stays available for beacons.",
+    "block": []
+  },
+  "siteEnv": {
+    "DECO_SITE": "",
+    "DECO_SITE_TOKEN": ""
+  },
+  "ignoreHeaders": [],
+  "pages": [
+    {
+      "id": "home",
+      "path": "/"
+    },
+    {
+      "id": "home-utm",
+      "path": "/?utm_source=parity&utm_medium=test"
+    },
+    {
+      "id": "collection-the-herd",
+      "path": "/collections/the-herd"
+    },
+    {
+      "id": "collection-rio",
+      "path": "/collections/rio"
+    },
+    {
+      "id": "collection-sol",
+      "path": "/collections/sol"
+    },
+    {
+      "id": "collection-onsen",
+      "path": "/collections/onsen"
+    },
+    {
+      "id": "collection-sorted",
+      "path": "/collections/the-herd?sort=price-ascending"
+    },
+    {
+      "id": "collection-unknown",
+      "path": "/collections/does-not-exist"
+    },
+    {
+      "id": "search",
+      "path": "/s?q=raincoat"
+    },
+    {
+      "id": "search-no-results",
+      "path": "/s?q=zzzznotfound"
+    },
+    {
+      "id": "pdp-rio-raincoat",
+      "path": "/products/rio-raincoat"
+    },
+    {
+      "id": "pdp-yuzu-bucket-hat",
+      "path": "/products/yuzu-bucket-hat"
+    },
+    {
+      "id": "pdp-sol-linen-poncho",
+      "path": "/products/sol-linen-poncho"
+    },
+    {
+      "id": "pdp-sandals-color",
+      "path": "/products/passo-four-paw-sandals?color=Charcoal"
+    },
+    {
+      "id": "pdp-not-found",
+      "path": "/products/does-not-exist-1"
+    },
+    {
+      "id": "offline",
+      "path": "/offline"
+    },
+    {
+      "id": "login",
+      "path": "/login"
+    },
+    {
+      "id": "account-anonymous",
+      "path": "/account"
+    },
+    {
+      "id": "not-found",
+      "path": "/this-page-does-not-exist/x/y"
+    },
+    {
+      "id": "not-found-single",
+      "path": "/nonexistent-xyz"
+    },
+    {
+      "id": "sitemap-xml-page",
+      "path": "/sitemap.xml"
+    },
+    {
+      "id": "legacy-redirect-plp",
+      "path": "/shirts"
+    },
+    {
+      "id": "legacy-redirect-pdp",
+      "path": "/products/t-shirt"
+    }
+  ],
+  "flows": [
+    {
+      "id": "home-to-pdp-spa-nav",
+      "steps": [
+        {
+          "goto": "/"
+        },
+        {
+          "scrollIntoView": "a[href^=\"/products/\"] >> visible=true"
+        },
+        {
+          "settle": true,
+          "scroll": false
+        },
+        {
+          "click": "a[href^=\"/products/\"] >> visible=true"
+        },
+        {
+          "waitForURL": "**/products/**"
+        },
+        {
+          "url": "pdpUrl"
+        },
+        {
+          "capture": "pdp"
+        }
+      ]
+    },
+    {
+      "id": "header-nav-spa",
+      "viewports": [
+        "desktop"
+      ],
+      "steps": [
+        {
+          "goto": "/"
+        },
+        {
+          "click": "header nav[aria-label=Main] a[href=\"/collections/rio\"] >> visible=true"
+        },
+        {
+          "waitForURL": "**/collections/rio"
+        },
+        {
+          "url": "plpUrl"
+        },
+        {
+          "capture": "rio"
+        }
+      ]
+    },
+    {
+      "id": "mobile-menu",
+      "viewports": [
+        "mobile"
+      ],
+      "steps": [
+        {
+          "goto": "/"
+        },
+        {
+          "click": "button[aria-label=Menu] >> visible=true"
+        },
+        {
+          "settle": true,
+          "scroll": false
+        },
+        {
+          "capture": "menu",
+          "fullPage": false,
+          "scroll": false
+        }
+      ]
+    },
+    {
+      "id": "search-submit",
+      "steps": [
+        {
+          "goto": "/"
+        },
+        {
+          "click": "button[aria-label=Search] >> visible=true"
+        },
+        {
+          "settle": true,
+          "scroll": false
+        },
+        {
+          "type": [
+            "#capy-search",
+            "raincoat"
+          ]
+        },
+        {
+          "settle": true,
+          "scroll": false
+        },
+        {
+          "capture": "search-typed",
+          "fullPage": false,
+          "scroll": false
+        },
+        {
+          "press": [
+            "#capy-search",
+            "Enter"
+          ]
+        },
+        {
+          "waitForURL": "**/s?q=raincoat**"
+        },
+        {
+          "url": "resultsUrl"
+        },
+        {
+          "capture": "results"
+        }
+      ],
+      "viewports": [
+        "desktop"
+      ]
+    },
+    {
+      "id": "add-to-bag-minicart",
+      "steps": [
+        {
+          "goto": "/products/rio-raincoat"
+        },
+        {
+          "click": "button.add >> visible=true"
+        },
+        {
+          "waitFor": "aside[aria-label=\"Your bag\"] >> visible=true"
+        },
+        {
+          "settle": true,
+          "scroll": false
+        },
+        {
+          "capture": "minicart",
+          "fullPage": false,
+          "scroll": false
+        }
+      ]
+    }
+  ],
+  "texts": [
+    {
+      "id": "robots-txt",
+      "path": "/robots.txt"
+    },
+    {
+      "id": "sitemap-xml",
+      "path": "/sitemap.xml"
+    },
+    {
+      "id": "redirect-trailing-slash-plp",
+      "path": "/collections/the-herd/"
+    },
+    {
+      "id": "redirect-trailing-slash-pdp",
+      "path": "/products/rio-raincoat/"
+    },
+    {
+      "id": "redirect-trailing-slash-query",
+      "path": "/s/?q=raincoat"
+    },
+    {
+      "id": "legacy-redirect-plp-text",
+      "path": "/shirts"
+    },
+    {
+      "id": "legacy-redirect-pdp-text",
+      "path": "/products/t-shirt"
+    },
+    {
+      "id": "not-found-html",
+      "path": "/this-page-does-not-exist/x/y"
+    },
+    {
+      "id": "pdp-not-found-html",
+      "path": "/products/does-not-exist-1"
+    },
+    {
+      "id": "favicon",
+      "path": "/favicon.ico",
+      "binary": true
+    }
+  ],
+  "$approvalsComment": "Approvals are PER SITE. This harness was ported from storefront-tanstack, whose product-owner approvals do NOT carry over: this site starts with none. Only the product owner adds entries here (ignoreHeaders / approvedDifferences, see parity/README.md); an agent never does.",
+  "approvedDifferences": [
+    {
+      "id": "css-bundle-unused-rules",
+      "status": "pending",
+      "approval": "PENDING product-owner approval (not approved). The stylesheet lost the utilities only the removed pre-redesign sections, their saved blocks and the removed PDP components' README named, so its hashed file name in the preload Link header changes. No pixel changes.",
+      "cases": [
+        "home@mobile",
+        "home@desktop",
+        "home-utm@mobile",
+        "home-utm@desktop",
+        "collection-the-herd@mobile",
+        "collection-the-herd@desktop",
+        "collection-rio@mobile",
+        "collection-rio@desktop",
+        "collection-sol@mobile",
+        "collection-sol@desktop",
+        "collection-onsen@mobile",
+        "collection-onsen@desktop",
+        "collection-sorted@mobile",
+        "collection-sorted@desktop",
+        "collection-unknown@mobile",
+        "collection-unknown@desktop",
+        "search@mobile",
+        "search@desktop",
+        "search-no-results@mobile",
+        "search-no-results@desktop",
+        "pdp-rio-raincoat@mobile",
+        "pdp-rio-raincoat@desktop",
+        "pdp-yuzu-bucket-hat@mobile",
+        "pdp-yuzu-bucket-hat@desktop",
+        "pdp-sol-linen-poncho@mobile",
+        "pdp-sol-linen-poncho@desktop",
+        "pdp-sandals-color@mobile",
+        "pdp-sandals-color@desktop",
+        "pdp-not-found@mobile",
+        "pdp-not-found@desktop",
+        "offline@mobile",
+        "offline@desktop",
+        "login@mobile",
+        "login@desktop",
+        "account-anonymous@mobile",
+        "account-anonymous@desktop",
+        "not-found@mobile",
+        "not-found@desktop",
+        "not-found-single@mobile",
+        "not-found-single@desktop",
+        "sitemap-xml-page@mobile",
+        "sitemap-xml-page@desktop",
+        "legacy-redirect-plp@mobile",
+        "legacy-redirect-plp@desktop",
+        "legacy-redirect-pdp@mobile",
+        "legacy-redirect-pdp@desktop",
+        "sitemap-xml",
+        "not-found-html",
+        "pdp-not-found-html"
+      ],
+      "path": "headers.link",
+      "mask": "app-[A-Za-z0-9_-]{8}\\.css"
+    }
+  ],
+  "volatileHarMisses": [],
+  "pendingBaselines": []
+}
