@@ -2,8 +2,8 @@
 // return descriptors (/next/rendering), which src/views.ts maps to components; a section with a
 // loader runs it here, on the server, and the loader's result becomes the view's props. The saved
 // props are the loader's input, so that's the type the editor form is generated from.
-import type { Blocks, Route } from "@decocms/blocks";
-import type { BlockDescriptor, PageSeo } from "../src/model";
+import type { Blocks } from "@decocms/blocks";
+import type { BlockDescriptor } from "../src/model";
 import { pageState } from "../src/request-state.server";
 import { shopifyProductDetailsPage, shopifyProductListingPage } from "../src/blocks/commerce";
 import { device } from "../src/blocks/matchers";
@@ -53,12 +53,6 @@ import shopifyRelatedProducts, {
   type Props as RelatedProductsProps,
 } from "../src/vendor/shopify/loaders/RelatedProducts";
 
-/** The site's page: the built-in fields, with SEO for the site's head builder and descriptor sections. */
-interface StorePage extends Route {
-  seo?: PageSeo;
-  sections: BlockDescriptor[];
-}
-
 /**
  * A section's descriptor: the view to render (its key in src/views.ts) and its props. Every section
  * block is async, so each one resolves on its own tick and streams in the same order.
@@ -69,10 +63,6 @@ const view = (component: string, props: object): BlockDescriptor => ({
 });
 
 export default {
-  // The built-in page, replaced so its sections are descriptors and its seo is the site's
-  // (/next/built-in-blocks#change-a-built-in).
-  page: (input: StorePage) => input,
-
   // The page's SEO. The site editor finds a page's SEO type, and fills it into every new page, by
   // this name, so it keeps it until the site editor reads it from the page schema instead.
   "website/sections/Seo/SeoV2.tsx": seo,
