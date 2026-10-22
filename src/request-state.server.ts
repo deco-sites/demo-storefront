@@ -8,7 +8,7 @@
  * page URL is rebuilt from the href the router asked for.
  */
 import { AsyncLocalStorage } from "node:async_hooks";
-import type { Device } from "./sdk/device";
+import type { DeviceClass } from "./sdk/device";
 
 export interface PageState {
   /** The page's own URL, with its query string. */
@@ -17,7 +17,8 @@ export interface PageState {
   request: Request;
   /** The params `matchRoute` extracted from the page's path template, e.g. `{ slug }` for `/products/:slug`. */
   params: Record<string, string>;
-  device: Device;
+  /** Mobile or desktop: tablets are folded into mobile, as in the page cache key. */
+  device: DeviceClass;
 }
 
 const storage = new AsyncLocalStorage<PageState>();

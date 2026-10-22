@@ -1,9 +1,9 @@
 /**
  * Device detection, owned by the site: mobile, tablet or desktop, from the User-Agent.
  *
- * The server detects the device from the request's User-Agent once per page (src/open-page.server.ts)
- * and the page renders inside a `DeviceProvider` seeded with it, so server rendering and hydration
- * read the same value.
+ * The server detects the device from the request's User-Agent once per page (src/open-page.server.ts),
+ * folds it to its class (mobile or desktop) and the page renders inside a `DeviceProvider` seeded with
+ * that class, so server rendering, hydration, the `device` rule and the page cache key read the same value.
  */
 import { createContext, createElement, type ReactNode, useContext } from "react";
 
@@ -32,19 +32,20 @@ export function detectDevice(userAgent: string): Device {
   return "desktop";
 }
 
-const DeviceContext = createContext<Device | null>(null);
+const DeviceContext = createContext<DeviceClass | null>(null);
 
 /** Outside a provider: the browser's own User-Agent, or "desktop" on the server. */
-function runtimeDevice(): Device {
+function runtimeDevice(): DeviceClass {
   if (typeof navigator === "undefined" || typeof document === "undefined") return "desktop";
-  return detectDevice(navigator.userAgent);
+  return deviceClass(detectDevice(navigator.userAgent));
 }
 
-export function useDevice(): Device {
+/** The device class the page renders for: tablets read "mobile". */
+export function useDevice(): DeviceClass {
   return useContext(DeviceContext) ?? runtimeDevice();
 }
 
-export function DeviceProvider(props: { children: ReactNode; value?: Device }): ReactNode {
+export function DeviceProvider(props: { children: ReactNode; value?: DeviceClass }): ReactNode {
   return createElement(
     DeviceContext.Provider,
     { value: props.value ?? runtimeDevice() },

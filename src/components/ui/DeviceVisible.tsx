@@ -1,5 +1,5 @@
 import { type ReactNode } from "react";
-import { type Device, deviceClass, useDevice } from "~/sdk/device";
+import { type DeviceClass, useDevice } from "~/sdk/device";
 
 export type DeviceVisibility = "all" | "mobile-only" | "desktop-only";
 
@@ -13,10 +13,13 @@ export interface VisibilityConfig {
   visibility?: DeviceVisibility;
 }
 
-/** Tablets count as mobile ("mobile-only" shows on them), as in the page cache key and the `device` rule. */
-export function isVisibleOnDevice(device: Device, visibility: DeviceVisibility = "all"): boolean {
+/** `device` is already folded (tablets are "mobile"), as in the page cache key and the `device` rule. */
+export function isVisibleOnDevice(
+  device: DeviceClass,
+  visibility: DeviceVisibility = "all",
+): boolean {
   if (visibility === "all") return true;
-  return deviceClass(device) === (visibility === "desktop-only" ? "desktop" : "mobile");
+  return device === (visibility === "desktop-only" ? "desktop" : "mobile");
 }
 
 /**
