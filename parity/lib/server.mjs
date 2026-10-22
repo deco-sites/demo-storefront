@@ -41,8 +41,8 @@ export async function startSite({ port, env, log }) {
   // Fresh Cache API / KV state every start so edge-cache HIT/MISS never
   // depends on a previous run.
   fs.rmSync(path.join(ROOT, ".wrangler/state"), { recursive: true, force: true });
-  // Pin request.cf to the location the baseline was recorded with (regionCode SP feeds the
-  // X-Cache-Segment `r=` part). Left alone, the local Workers runtime uses node_modules/.mf/cf.json,
+  // Pin request.cf to the location the baseline was recorded with, so a run never depends on the
+  // machine's network. Left alone, the local Workers runtime uses node_modules/.mf/cf.json,
   // fetched for whatever network the machine is on and refetched once it is 30 days old. Miniflare
   // also refetches a pinned file older than 30 days, so copy it fresh on every start.
   const cfPath = path.join(ROOT, ".wrangler/parity-cf.json");

@@ -4,8 +4,20 @@
  */
 import { pageState } from "../request-state.server";
 
-/** Shows the variant to visitors on the devices checked. */
-export function device(props: { mobile?: boolean; tablet?: boolean; desktop?: boolean }): boolean {
-  const current = pageState().device;
-  return Boolean(props[current]);
+export interface DeviceProps {
+  mobile?: boolean;
+  /** @description Tablets get the mobile page: checking Tablet is the same as checking Mobile. */
+  tablet?: boolean;
+  desktop?: boolean;
+}
+
+/** Shows the variant to visitors on the devices checked. Tablets count as mobile. */
+export function device(props: DeviceProps): boolean {
+  // The page's device is already mobile or desktop (src/open-page.server.ts folds tablets into mobile,
+  // as the page cache key and v7 do), so a rule can't tell tablets from phones and cache whichever
+  // variant rendered first for both. The `tablet` checkbox, kept so saved rules and Studio's form
+  // still work, is read as "mobile": checked alone it matches every mobile visitor, phones included.
+  // A tablet-only variant can't exist.
+  if (pageState().device === "desktop") return props.desktop === true;
+  return props.mobile === true || props.tablet === true;
 }

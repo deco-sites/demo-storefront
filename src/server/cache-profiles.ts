@@ -1,7 +1,7 @@
 /**
  * Page cache profiles, owned by the site. A profile decides the Cache-Control a page is sent with
- * and how long the worker keeps it in the edge cache (createDecoWorker, whose defaults are these
- * same values and URL rules).
+ * as the app renders it. The edge cache's own copy of these values and URL rules is in
+ * src/worker-entry.ts (`PROFILES`, `pageProfile`): change both together.
  */
 export type CacheProfileName =
   | "static"

@@ -4,8 +4,8 @@
  *
  * With `DECO_SITE` and `DECO_SITE_TOKEN` set, it serves releases published in the hosted Deco CMS
  * without a deploy (/next/hosted#cloudflare-workers); without them it serves the content module, the
- * content of the commit this build was made from. Drafts need neither: `cms.forDraft` fetches what
- * the draft's branch changed from the Studio the pointer names (/next/hosted-drafts).
+ * content of the commit this build was made from. Drafts need neither: `cms.client({ version })` with a draft pointer
+ * fetches what the draft's branch changed from the Studio the pointer names (/next/hosted-drafts).
  */
 import { createCMS } from "@decocms/blocks";
 import { contentClient } from "@decocms/tanstack/server";
@@ -48,7 +48,9 @@ const options = {
 export const cms = createCMS({ ...options, content });
 
 /**
- * The client for this request: the draft the worker accepted (`createDecoWorker` checks the host
- * and hands the pointer over in the `x-deco-draft` header), or the release.
+ * The client for this request, `cms.client` built from what the worker decided at the edge
+ * (`createDecoWorker` checks the host and hands the app the version in `x-deco-version`, the visitor
+ * in `x-deco-visitor` and each test and campaign on or off in `x-deco-assignments`): the page decides
+ * nothing again, so it renders exactly what the page cache keyed on.
  */
 export const client = async (request: Request) => contentClient(cms, request);

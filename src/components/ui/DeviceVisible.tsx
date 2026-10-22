@@ -1,5 +1,5 @@
 import { type ReactNode } from "react";
-import { useDevice } from "~/sdk/device";
+import { type DeviceClass, useDevice } from "~/sdk/device";
 
 export type DeviceVisibility = "all" | "mobile-only" | "desktop-only";
 
@@ -13,10 +13,13 @@ export interface VisibilityConfig {
   visibility?: DeviceVisibility;
 }
 
-export function isVisibleOnDevice(device: string, visibility: DeviceVisibility = "all"): boolean {
+/** `device` is already folded (tablets are "mobile"), as in the page cache key and the `device` rule. */
+export function isVisibleOnDevice(
+  device: DeviceClass,
+  visibility: DeviceVisibility = "all",
+): boolean {
   if (visibility === "all") return true;
-  const isDesktop = device === "desktop";
-  return visibility === "desktop-only" ? isDesktop : !isDesktop;
+  return device === (visibility === "desktop-only" ? "desktop" : "mobile");
 }
 
 /**
@@ -24,7 +27,7 @@ export function isVisibleOnDevice(device: string, visibility: DeviceVisibility =
  *
  * Safe for SSR + caching: device is resolved server-side via `useDevice`
  * (from the request user-agent) and the edge cache is segmented by device
- * (see `buildSegment` in worker-entry), so the gated-out markup is never sent
+ * (`segmentOf` in src/cache-segment.ts), so the gated-out markup is never sent
  * to — nor cached for — the wrong device, and there's no hydration mismatch.
  */
 export default function DeviceVisible({

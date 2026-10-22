@@ -10,7 +10,7 @@
 import { Component, type ErrorInfo, type ReactNode, Suspense } from "react";
 import { Await } from "@tanstack/react-router";
 import type { BlockDescriptor } from "../model";
-import { type Device, DeviceProvider } from "../sdk/device";
+import { type DeviceClass, DeviceProvider } from "../sdk/device";
 import { mainBounds } from "../components/ui/splitPageSections";
 import { views } from "../views";
 
@@ -78,7 +78,7 @@ function renderBlocks(blocks: PageBlock[]) {
  * (`role=banner`) and Footer (`role=contentinfo`) sections too, so the whole list can't go inside
  * `<main>`: the bounds come from src/components/ui/splitPageSections.ts (unit tested there).
  */
-export function PageView({ blocks, device }: { blocks: PageBlock[]; device?: Device }) {
+export function PageView({ blocks, device }: { blocks: PageBlock[]; device?: DeviceClass }) {
   const bounds = mainBounds(
     blocks.map((block, pos) => ({
       s: { landmark: block.component ? views[block.component]?.landmark : undefined },

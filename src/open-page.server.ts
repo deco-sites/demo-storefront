@@ -8,7 +8,7 @@ import { type Block, matchRoute, type Redirect } from "@decocms/blocks";
 import { client } from "./cms";
 import type { BlockDescriptor, PageSeo, StoredPage } from "./model";
 import { withPage } from "./request-state.server";
-import { detectDevice } from "./sdk/device";
+import { detectDevice, deviceClass } from "./sdk/device";
 import { type CacheProfileName, detectCacheProfile } from "./server/cache-profiles";
 
 /** The section type saved, read before the block resolves, when the block is a section. */
@@ -33,7 +33,10 @@ export async function openPage(href: string, request: Request) {
   if (match.kind === "redirect") throw redirect({ href: match.location, statusCode: match.status });
 
   const page = match.entry;
-  const device = detectDevice(request.headers.get("user-agent") ?? "");
+  // Folded to mobile or desktop here, at the source, as the page cache key folds it (src/cache-segment.ts):
+  // the page data, useDevice() and the `device` rule can't tell a tablet from a phone, so they can't
+  // disagree with the cached copy.
+  const device = deviceClass(detectDevice(request.headers.get("user-agent") ?? ""));
   const state = {
     url,
     request: new Request(url, { headers: request.headers }),
