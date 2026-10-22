@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { segmentKey } from "@decocms/tanstack/worker";
-import { DEVICES, knownSegments, purgeSegments, REGIONS, segmentOf } from "./cache-segment";
+import { DEVICES, knownSegments, purgeSegments, segmentOf } from "./cache-segment";
 
 const USER_AGENTS = {
   desktop: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/130 Safari/537.36",
@@ -15,18 +15,14 @@ function request(headers: Record<string, string>, cf?: Record<string, string>): 
   return r;
 }
 
-/** Every request shape the worker can see: each user agent, in each region, abroad and with no geo. */
+/** Every request shape the worker can see: each user agent (and none), with and without geo. */
 function everyRequest(): Request[] {
-  const out: Request[] = [];
+  const out: Request[] = [request({})];
   for (const ua of Object.values(USER_AGENTS)) {
     out.push(request({ "user-agent": ua }));
-    out.push(request({ "user-agent": ua, "cf-ipcountry": "US", "cf-region-code": "PA" }));
-    out.push(request({ "user-agent": ua, "cf-ipcountry": "BR", "cf-region-code": "XX" }));
-    out.push(request({ "user-agent": ua, "cf-region-code": "SP" }));
-    for (const region of REGIONS) {
-      out.push(request({ "user-agent": ua, "cf-ipcountry": "BR", "cf-region-code": region }));
-      out.push(request({ "user-agent": ua }, { country: "BR", regionCode: region.toLowerCase() }));
-    }
+    out.push(request({ "user-agent": ua, "cf-ipcountry": "BR", "cf-region-code": "SP" }));
+    out.push(request({ "user-agent": ua, "cf-ipcountry": "US", "cf-region-code": "CA" }));
+    out.push(request({ "user-agent": ua }, { country: "BR", regionCode: "RJ" }));
   }
   return out;
 }
@@ -52,11 +48,16 @@ test("a purge with no segments asks only for segments a request can produce", ()
   assert.deepEqual(keys(purgeSegments(undefined)), produced);
 });
 
-test("the default is each device in each region and in none", () => {
-  assert.equal(knownSegments().length, DEVICES.length * (REGIONS.length + 1));
-  assert.deepEqual(keys(purgeSegments(undefined)), keys(knownSegments()));
-  assert.ok(keys(knownSegments()).has(segmentKey({ device: "desktop", regionId: "SP" })));
-  assert.ok(keys(knownSegments()).has(segmentKey({ device: "mobile" })));
+test("the default is the two devices", () => {
+  assert.equal(knownSegments().length, 2);
+  assert.deepEqual(
+    knownSegments(),
+    DEVICES.map((device) => ({ device })),
+  );
+  assert.deepEqual(
+    keys(purgeSegments(undefined)),
+    keys([{ device: "mobile" }, { device: "desktop" }]),
+  );
 });
 
 test("a body with no list of segments, or an empty one, gets the default", () => {
@@ -67,27 +68,25 @@ test("a body with no list of segments, or an empty one, gets the default", () =>
 
 test("the body's segments override the default", () => {
   const segments = purgeSegments([
-    { device: "desktop", regionId: "SP" },
-    { device: "desktop", regionId: "SP" },
+    { device: "desktop" },
+    { device: "desktop" },
     { device: "mobile", regionId: "", extra: 1 },
     null,
   ]);
-  assert.deepEqual(segments, [{ device: "desktop", regionId: "SP" }, { device: "mobile" }]);
+  assert.deepEqual(segments, [{ device: "desktop" }, { device: "mobile" }]);
 });
 
-test("a tablet shares the mobile entry and a region abroad shares the one with none", () => {
+test("the key has no region, and a tablet shares the mobile entry", () => {
   assert.deepEqual(segmentOf(request({ "user-agent": USER_AGENTS.tablet })), { device: "mobile" });
   assert.deepEqual(
     segmentOf(
-      request({ "user-agent": USER_AGENTS.desktop, "cf-ipcountry": "US", "cf-region-code": "PA" }),
+      request({ "user-agent": USER_AGENTS.desktop, "cf-ipcountry": "BR", "cf-region-code": "SP" }),
     ),
     { device: "desktop" },
   );
   assert.deepEqual(
-    segmentOf(
-      request({ "user-agent": USER_AGENTS.desktop, "cf-ipcountry": "BR", "cf-region-code": "PA" }),
-    ),
-    { device: "desktop", regionId: "PA" },
+    segmentOf(request({ "user-agent": USER_AGENTS.mobile }, { country: "BR", regionCode: "RJ" })),
+    { device: "mobile" },
   );
 });
 

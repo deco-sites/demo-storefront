@@ -75,13 +75,13 @@ src/
 ├── server.ts             # TanStack Start server entry
 ├── start.ts              # Start instance (server-function fetch with the CDN segment token)
 ├── worker-entry.ts       # Cloudflare Worker entry: createDecoWorker (CSP, drafts, request metrics) and the site's edge cache
-├── cache-segment.ts      # What splits the edge cache (device, region) and what a purge drops
+├── cache-segment.ts      # What splits the edge cache (device) and what a purge drops
 └── router.tsx            # Router configuration
 ```
 
 ## How rendering works
 
-1. A request hits `src/worker-entry.ts` → `createDecoWorker` (`@decocms/tanstack/worker`) with the CMS from `src/cms.ts`: security headers, CSP, drafts, CMS redirects, the site's own edge cache (in the same file: assignments, cache profiles, the purge route; the device/region/sign-in segmentation is in `src/cache-segment.ts`), and `http.server.request.duration` for every request in the CMS's telemetry (what Studio's Monitor shows; nothing in `vite dev`, where telemetry is off).
+1. A request hits `src/worker-entry.ts` → `createDecoWorker` (`@decocms/tanstack/worker`) with the CMS from `src/cms.ts`: security headers, CSP, drafts, CMS redirects, the site's own edge cache (in the same file: assignments, cache profiles, the purge route; the device/sign-in segmentation is in `src/cache-segment.ts`), and `http.server.request.duration` for every request in the CMS's telemetry (what Studio's Monitor shows; nothing in `vite dev`, where telemetry is off).
 2. The request goes on to the TanStack Start server entry (`src/server.ts`).
 3. The catch-all route (`src/routes/$.tsx`) and the home route call `loadPage`, which finds the page with `matchRoute` (`src/open-page.server.ts`) and starts every block on it.
 4. Each section block returns a descriptor; `src/runtime/PageView.tsx` renders it through `src/views.ts`.
@@ -105,7 +105,7 @@ For navigation, use `<Link from="@tanstack/react-router" preload="intent">` on i
 
 ## Edge caching
 
-The worker entry keeps pages in the Cloudflare Cache API, keyed by path, device (mobile or desktop), region (a Brazilian state, from Cloudflare's `cf-region-code`; any other visitor shares the entry with no region: `src/cache-segment.ts`), the visitor's A/B test and campaign assignments and `<build>.<content revision>`; signed-in shoppers are never served from it. Its cache profiles (`PROFILES` in `src/worker-entry.ts`; `src/server/cache-profiles.ts` has the same values for the page's own headers):
+The worker entry keeps pages in the Cloudflare Cache API, keyed by path, device (mobile or desktop; tablets share the mobile entry: `src/cache-segment.ts`), the visitor's A/B test and campaign assignments and `<build>.<content revision>`; signed-in shoppers are never served from it. Its cache profiles (`PROFILES` in `src/worker-entry.ts`; `src/server/cache-profiles.ts` has the same values for the page's own headers):
 
 | URL pattern | Profile | Edge TTL |
 |---|---|---|
@@ -115,7 +115,7 @@ The worker entry keeps pages in the Cloudflare Cache API, keyed by path, device 
 | `/cart`, `/checkout` | private | none |
 | Everything else | listing | 2 min |
 
-Change a profile or a URL rule in both files. `POST /_cache/purge` with `Authorization: Bearer <PURGE_TOKEN>` (a Worker secret) and `{ "paths": ["/"] }` drops every copy of those pages from the edge cache: each device, in each region and in none. Add `"segments": [{ "device": "desktop", "regionId": "SP" }]` to drop only those copies. Each copy is one Cache API call, and a Worker request may make 1,000 of them on Workers Paid (50 on Free): when a purge runs out, it answers 503 with the `notPurged` paths, to send again in smaller requests.
+Change a profile or a URL rule in both files. `POST /_cache/purge` with `Authorization: Bearer <PURGE_TOKEN>` (a Worker secret) and `{ "paths": ["/"] }` drops every copy of those pages from the edge cache: both devices, under every assignments key a visitor can carry now, as a navigation and as a fetch (4 Cache API calls per path with no tests or campaigns running). Add `"segments": [{ "device": "desktop" }]` to drop only those copies. Each copy is one Cache API call, and a Worker request may make 1,000 of them on Workers Paid (50 on Free): when a purge runs out, it answers 503 with the `notPurged` paths, to send again in smaller requests.
 
 ## Deployment
 

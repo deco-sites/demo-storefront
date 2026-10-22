@@ -4,7 +4,7 @@
  * TanStack Start serves every page behind `createDecoWorker` (@decocms/tanstack): drafts, Studio
  * framing, CMS redirects, the visitor, security headers and the request metric. The page cache in
  * front of the app is this file's (the @decocms/tanstack README's worker-entry recipe): the
- * Cloudflare Cache API, keyed by path, device, region (src/cache-segment.ts), the request's
+ * Cloudflare Cache API, keyed by path, device (src/cache-segment.ts), the request's
  * assignments and `<build>.<content revision>`; signed-in shoppers never share a cached page; the
  * cache profiles per URL; and the purge route, `POST /_cache/purge`. Change what it keys on, how long it keeps a
  * page, or drop it. Shopify checkout runs on Shopify's hosted checkout (or the store's domain) and
@@ -373,7 +373,7 @@ async function pageCache(page: PageRequest<Env>): Promise<Response> {
 
 // ---------------------------------------------------------------------------
 // Purge: v7's request, POST /_cache/purge with `Authorization: Bearer <PURGE_TOKEN>`
-// and { "paths": ["/", "/shoes"], "segments"?: [{ "device": "desktop", "regionId": "SP" }] }.
+// and { "paths": ["/", "/shoes"], "segments"?: [{ "device": "desktop" }] }.
 // ---------------------------------------------------------------------------
 
 const PURGE_PATH = "/_cache/purge";
@@ -388,8 +388,8 @@ function sameString(a: string, b: string): boolean {
 
 /**
  * Drops each exact path (`/shoes` never drops `/shoes?page=2`) under the
- * current version, for every segment (the body's own, else every device in
- * every known region and in none: src/cache-segment.ts),
+ * current version, for every segment (the body's own, else both devices:
+ * src/cache-segment.ts),
  * every assignments key a visitor can carry now (each subset of the saved
  * tests, with the running campaigns and with none), as a navigation and a
  * programmatic fetch. Navigation data expires with its profile, as in v7.
