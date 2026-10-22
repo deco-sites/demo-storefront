@@ -65,7 +65,7 @@
   /* Ink — primary text & solid surfaces */
   --color-ink: #0a0a0a;
   --color-ink-soft: #262626;
-  --color-muted: #737373;
+  --color-muted: #404040; /* ≥7:1 on white and paper (WCAG AAA) */
   --color-muted-soft: rgb(64 64 64 / 60%);
 
   /* Glass — the frosted-blur surface used across nav, tags, PDP panel, banners */
