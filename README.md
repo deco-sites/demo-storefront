@@ -74,13 +74,13 @@ src/
 ├── styles/app.css        # Tailwind v4 entry
 ├── server.ts             # TanStack Start server entry
 ├── start.ts              # Start instance (server-function fetch with the CDN segment token)
-├── worker-entry.ts       # Cloudflare Worker entry: createDecoWorker (CSP, segment, edge cache, request metrics)
+├── worker-entry.ts       # Cloudflare Worker entry: createDecoWorker (CSP, drafts, request metrics) and the site's edge cache
 └── router.tsx            # Router configuration
 ```
 
 ## How rendering works
 
-1. A request hits `src/worker-entry.ts` → `createDecoWorker` (`@decocms/tanstack/worker`) with the CMS from `src/cms.ts`: security headers, CSP, drafts, CMS redirects, device/region/sign-in segmentation, the edge cache, and `http.server.request.duration` for every request in the CMS's telemetry (what Studio's Monitor shows; nothing in `vite dev`, where telemetry is off).
+1. A request hits `src/worker-entry.ts` → `createDecoWorker` (`@decocms/tanstack/worker`) with the CMS from `src/cms.ts`: security headers, CSP, drafts, CMS redirects, the site's own edge cache (in the same file: device/region/sign-in segmentation, assignments, cache profiles, the purge route), and `http.server.request.duration` for every request in the CMS's telemetry (what Studio's Monitor shows; nothing in `vite dev`, where telemetry is off).
 2. The request goes on to the TanStack Start server entry (`src/server.ts`).
 3. The catch-all route (`src/routes/$.tsx`) and the home route call `loadPage`, which finds the page with `matchRoute` (`src/open-page.server.ts`) and starts every block on it.
 4. Each section block returns a descriptor; `src/runtime/PageView.tsx` renders it through `src/views.ts`.
@@ -104,7 +104,7 @@ For navigation, use `<Link from="@tanstack/react-router" preload="intent">` on i
 
 ## Edge caching
 
-The worker entry applies Cloudflare edge cache profiles (defined in `src/server/cache-profiles.ts`):
+The worker entry keeps pages in the Cloudflare Cache API, keyed by path, device (mobile or desktop), region, the visitor's A/B test and campaign assignments and `<build>.<content revision>`; signed-in shoppers are never served from it. Its cache profiles (`PROFILES` in `src/worker-entry.ts`; `src/server/cache-profiles.ts` has the same values for the page's own headers):
 
 | URL pattern | Profile | Edge TTL |
 |---|---|---|
@@ -114,7 +114,7 @@ The worker entry applies Cloudflare edge cache profiles (defined in `src/server/
 | `/cart`, `/checkout` | private | none |
 | Everything else | listing | 2 min |
 
-Change a profile or a URL rule in `src/server/cache-profiles.ts`.
+Change a profile or a URL rule in both files. `POST /_cache/purge` with `Authorization: Bearer <PURGE_TOKEN>` (a Worker secret) and `{ "paths": ["/"], "segments": [{ "device": "desktop", "regionId": "SP" }] }` drops pages from the edge cache.
 
 ## Deployment
 
