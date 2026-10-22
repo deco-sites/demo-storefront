@@ -4,9 +4,9 @@
  * TanStack Start serves every page behind `createDecoWorker` (@decocms/tanstack): drafts, Studio
  * framing, CMS redirects, the visitor, security headers and the request metric. The page cache in
  * front of the app is this file's (the @decocms/tanstack README's worker-entry recipe): the
- * Cloudflare Cache API, keyed by path, device, region, the request's assignments and
- * `<build>.<content revision>`; signed-in shoppers never share a cached page; the cache profiles
- * per URL; and the purge route, `POST /_cache/purge`. Change what it keys on, how long it keeps a
+ * Cloudflare Cache API, keyed by path, device, region (src/cache-segment.ts), the request's
+ * assignments and `<build>.<content revision>`; signed-in shoppers never share a cached page; the
+ * cache profiles per URL; and the purge route, `POST /_cache/purge`. Change what it keys on, how long it keeps a
  * page, or drop it. Shopify checkout runs on Shopify's hosted checkout (or the store's domain) and
  * needs no reverse proxy.
  */
@@ -26,9 +26,8 @@ import {
   serverFnPagePath,
 } from "@decocms/tanstack/worker";
 import handler, { createServerEntry } from "@tanstack/react-start/server-entry";
+import { purgeSegments, segmentOf } from "./cache-segment";
 import { cms } from "./cms";
-import { detectDevice } from "./sdk/device";
-import { getCookies } from "./vendor/shopify/utils/cookies";
 // @ts-ignore Vite ?url import
 import appCss from "./styles/app.css?url";
 
@@ -61,52 +60,6 @@ interface Env {
   /** The purge route's token (a Worker secret: `wrangler secret put PURGE_TOKEN`). */
   PURGE_TOKEN?: string;
 }
-
-// ---------------------------------------------------------------------------
-// What splits the cache besides the path, the assignments and the version.
-// ---------------------------------------------------------------------------
-
-/**
- * The site's segment (v7's `buildSegment`): the device and the site's own
- * parts (a region, a sales channel), each in the key. `loggedIn: true` is a
- * signed-in shopper: never served from or stored in the cache.
- */
-type SiteSegment = { device: string; loggedIn?: boolean } & Record<
-  string,
-  string | boolean | undefined
->;
-
-const buildSegment: (request: Request) => SiteSegment = (request) => {
-  // The cache splits only mobile vs desktop: tablets share the mobile entry. Region splits it so
-  // a page cached for one region isn't served to another (cf-region-code, request.cf fallback).
-  const cf = (request as unknown as { cf?: { regionCode?: string } }).cf;
-  return {
-    device:
-      detectDevice(request.headers.get("user-agent") ?? "") === "desktop" ? "desktop" : "mobile",
-    regionId: request.headers.get("cf-region-code") ?? cf?.regionCode,
-    // Signed-in shoppers carry the Shopify customer token cookie (src/platform/user/user.actions.ts):
-    // their pages are never stored in or served from the shared cache.
-    loggedIn: Boolean(getCookies(request.headers).secure_customer_sig),
-  };
-};
-
-/** The segment as key parts, or `"private"` for a request that never shares a cached page. */
-function segmentOf(request: Request): Segment | "private" {
-  const { loggedIn, ...parts } = buildSegment(request);
-  if (loggedIn === true) return "private";
-  const out: Record<string, string> = {};
-  for (const [name, value] of Object.entries(parts)) {
-    if (value !== undefined && value !== "" && value !== false) out[name] = String(value);
-  }
-  return out;
-}
-
-/** The segments a purge drops when its body names none: each device. */
-const DEVICES: readonly Segment[] = [
-  { device: "mobile" },
-  { device: "tablet" },
-  { device: "desktop" },
-];
 
 // ---------------------------------------------------------------------------
 // Cache profiles: how long a page is kept, picked per URL (v7's values).
@@ -420,7 +373,7 @@ async function pageCache(page: PageRequest<Env>): Promise<Response> {
 
 // ---------------------------------------------------------------------------
 // Purge: v7's request, POST /_cache/purge with `Authorization: Bearer <PURGE_TOKEN>`
-// and { "paths": ["/", "/shoes"], "segments"?: [{ "device": "desktop", ... }] }.
+// and { "paths": ["/", "/shoes"], "segments"?: [{ "device": "desktop", "regionId": "SP" }] }.
 // ---------------------------------------------------------------------------
 
 const PURGE_PATH = "/_cache/purge";
@@ -435,7 +388,8 @@ function sameString(a: string, b: string): boolean {
 
 /**
  * Drops each exact path (`/shoes` never drops `/shoes?page=2`) under the
- * current version, for every segment (the body's own, else each device),
+ * current version, for every segment (the body's own, else every device in
+ * every known region and in none: src/cache-segment.ts),
  * every assignments key a visitor can carry now (each subset of the saved
  * tests, with the running campaigns and with none), as a navigation and a
  * programmatic fetch. Navigation data expires with its profile, as in v7.
@@ -462,13 +416,7 @@ async function purge(request: Request, env: Env): Promise<Response> {
   if (paths.length === 0) {
     return new Response('Body must include "paths": ["/", "/page"]', { status: 400 });
   }
-  const segments = new Map<string, Segment>();
-  for (const s of Array.isArray(body.segments) ? body.segments : DEVICES) {
-    if (!s || typeof s !== "object") continue;
-    const clean: Record<string, string> = {};
-    for (const [k, v] of Object.entries(s)) if (typeof v === "string" && v) clean[k] = v;
-    segments.set(segmentKey(clean), clean);
-  }
+  const segments = purgeSegments(body.segments);
   const cache = edgeCache();
   if (!cache) return Response.json({ purged: [], total: 0, note: "Cache storage unavailable" });
   const origin = new URL(request.url).origin;
@@ -477,7 +425,7 @@ async function purge(request: Request, env: Env): Promise<Response> {
   const purged: string[] = [];
   for (const [i, path] of paths.entries()) {
     const url = new URL(path, origin);
-    for (const segment of segments.values()) {
+    for (const segment of segments) {
       for (const assigned of assignments) {
         for (const fetch of [false, true]) {
           let gone: boolean;
