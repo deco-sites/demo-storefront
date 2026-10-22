@@ -1,5 +1,5 @@
 import { type ReactNode } from "react";
-import { useDevice } from "~/sdk/device";
+import { type Device, deviceClass, useDevice } from "~/sdk/device";
 
 export type DeviceVisibility = "all" | "mobile-only" | "desktop-only";
 
@@ -13,10 +13,10 @@ export interface VisibilityConfig {
   visibility?: DeviceVisibility;
 }
 
-export function isVisibleOnDevice(device: string, visibility: DeviceVisibility = "all"): boolean {
+/** Tablets count as mobile ("mobile-only" shows on them), as in the page cache key and the `device` rule. */
+export function isVisibleOnDevice(device: Device, visibility: DeviceVisibility = "all"): boolean {
   if (visibility === "all") return true;
-  const isDesktop = device === "desktop";
-  return visibility === "desktop-only" ? isDesktop : !isDesktop;
+  return deviceClass(device) === (visibility === "desktop-only" ? "desktop" : "mobile");
 }
 
 /**

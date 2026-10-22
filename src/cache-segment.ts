@@ -5,7 +5,7 @@
  * listed here, so a purge without segments can drop every copy of a page.
  */
 import { type Segment, segmentKey } from "@decocms/tanstack/worker";
-import { detectDevice } from "./sdk/device";
+import { detectDevice, deviceClass } from "./sdk/device";
 import { getCookies } from "./vendor/shopify/utils/cookies";
 
 /** The devices the key splits on: tablets share the mobile entry. */
@@ -16,8 +16,7 @@ export function segmentOf(request: Request): Segment | "private" {
   // Signed-in shoppers carry the Shopify customer token cookie (src/platform/user/user.actions.ts):
   // their pages are never stored in or served from the shared cache.
   if (getCookies(request.headers).secure_customer_sig) return "private";
-  const device = detectDevice(request.headers.get("user-agent") ?? "");
-  return { device: device === "desktop" ? "desktop" : "mobile" };
+  return { device: deviceClass(detectDevice(request.headers.get("user-agent") ?? "")) };
 }
 
 /** Every segment `segmentOf` can produce: each device. */

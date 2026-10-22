@@ -9,6 +9,16 @@ import { createContext, createElement, type ReactNode, useContext } from "react"
 
 export type Device = "mobile" | "tablet" | "desktop";
 
+/**
+ * What the site renders for, and what the page cache splits on (src/cache-segment.ts): tablets get the
+ * mobile page, as on v7. Detection still tells a tablet apart; rendering never does.
+ */
+export type DeviceClass = "mobile" | "desktop";
+
+export function deviceClass(device: Device): DeviceClass {
+  return device === "desktop" ? "desktop" : "mobile";
+}
+
 const MOBILE_RE = /mobile|android.*mobile|iphone|ipod|webos|blackberry|opera mini|iemobile/i;
 const TABLET_RE = /ipad|tablet|kindle|silk|playbook|android(?!.*mobile)/i;
 

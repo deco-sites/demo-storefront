@@ -751,7 +751,7 @@
       },
       "ZGV2aWNl": {
         "title": "Device",
-        "description": "Shows the variant to visitors on the devices checked.",
+        "description": "Shows the variant to visitors on the devices checked. Tablets count as mobile.",
         "type": "object",
         "required": [
           "__resolveType"
@@ -772,6 +772,7 @@
           "tablet": {
             "type": "boolean",
             "nullable": true,
+            "description": "Tablets get the mobile page: checking Tablet is the same as checking Mobile.",
             "title": "Tablet"
           },
           "desktop": {
