@@ -24,7 +24,7 @@ export function isVisibleOnDevice(device: string, visibility: DeviceVisibility =
  *
  * Safe for SSR + caching: device is resolved server-side via `useDevice`
  * (from the request user-agent) and the edge cache is segmented by device
- * (see `buildSegment` in worker-entry), so the gated-out markup is never sent
+ * (`segmentOf` in src/cache-segment.ts), so the gated-out markup is never sent
  * to — nor cached for — the wrong device, and there's no hydration mismatch.
  */
 export default function DeviceVisible({
