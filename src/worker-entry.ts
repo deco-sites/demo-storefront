@@ -461,7 +461,6 @@ async function purge(request: Request, env: Env): Promise<Response> {
 const worker = createDecoWorker<Env>({
   serverEntry: createServerEntry({ fetch: handler.fetch }),
   cms,
-  site: "demo-storefront",
   dev: import.meta.env.DEV,
   csp: { enforce: CSP_DIRECTIVES },
   preload: { styles: [appCss] },
