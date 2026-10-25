@@ -35,7 +35,7 @@ export default defineConfig({
   server: {
     port,
     strictPort: port !== undefined,
-    allowedHosts: [".decocdn.com", ".trycloudflare.com", ".preview-studio.decocms.com", ".decocms.com"],
+    allowedHosts: [".decocdn.com", ".trycloudflare.com", ".preview-studio.decocms.com", ".decocms.com", "pamela-lupatelli-bb9a4kv-eaaa9b747c0858f5.style.dev"],
     // Shopify Storefront API is called server-side from loaders — no dev
     // proxy is needed. Checkout happens on Shopify's hosted checkout (or
     // the store's custom domain).
