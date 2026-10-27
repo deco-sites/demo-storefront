@@ -149,6 +149,33 @@ declare global {
   }
 }
 
+/**
+ * Deco Analytics — the first-party collector (decocms/analytics).
+ *
+ * KEYED, not Host-resolved. The collector reads the `Host` header of the request for its own
+ * bundle, which only works on a zone it has a route on (`analytics.decocdn.com/_dq/*`,
+ * `*.deco.site/_dq/*`). This site answers on `demo-storefront.deco-cx.workers.dev`, where a
+ * request for `/_dq/a.js` reaches THIS worker and gets HTML back — so it declares a key instead.
+ *
+ * The key is PUBLIC by design: it ships in the page source, so it identifies the site and never
+ * authenticates it. The collector cross-checks the request `Origin` against the domains
+ * registered for this key and records a mismatch as `origin.mismatch` rather than silently
+ * accepting it. Rows carry `site_id_source = 'tag'` and are never used for billing — only
+ * Host-resolved sites are.
+ *
+ * NO BRIDGE CODE, deliberately. The site's `deco` module (enabled for this key) subscribes to
+ * the `window.DECO.events` bus defined in EVENTS_BOOTSTRAP above and maps the GA4-shaped
+ * commerce events to typed columns (`value`, `currency`, `item_ids`), which is what a plain
+ * `track()` passthrough would lose. Arriving late costs nothing: the bus keeps a `_q` and
+ * replays it to every new subscriber, which is why `async` here is safe even though the
+ * observer below starts dispatching before the bundle lands.
+ *
+ * `async`, and nothing on the page reads from it — a failure here degrades to "analytics
+ * stopped", never to "the page broke". `vite dev` sends nothing: the runtime does not collect
+ * on localhost unless `__dq.dev` is set.
+ */
+const DECO_ANALYTICS_KEY = "dq_P_oevO9LL9eC4mD8aE7ePQ";
+
 export function RootDocument({ children }: { children?: ReactNode }) {
   // Pages wait for this signal before running work that must follow hydration.
   useEffect(() => {
@@ -175,6 +202,7 @@ export function RootDocument({ children }: { children?: ReactNode }) {
         {children}
         <DecoPreview site="demo-storefront" />
         <ScriptOnce children={DATA_EVENT_OBSERVER} />
+        <script async src={`https://analytics.decocdn.com/_dq/a.js?k=${DECO_ANALYTICS_KEY}`} />
         <Scripts />
       </body>
     </html>
