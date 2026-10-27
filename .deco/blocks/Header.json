@@ -41,11 +41,8 @@
     }
   },
   "crossSell": {
-    "__resolveType": "shopify-product-list",
-    "props": {
-      "query": "tag:capy-2026 AND (title:Yuzu OR title:Largo)",
-      "count": 2,
-      "sort": ""
-    }
+    "query": "tag:capy-2026 AND (title:Yuzu OR title:Largo)",
+    "count": 2,
+    "sort": ""
   }
 }

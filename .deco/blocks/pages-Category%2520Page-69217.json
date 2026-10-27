@@ -38,12 +38,9 @@
       "__resolveType": "product-rail",
       "title": "Meet the herd.",
       "products": {
-        "__resolveType": "shopify-product-list",
-        "props": {
-          "collection": "the-herd",
-          "count": 12,
-          "sort": ""
-        }
+        "collection": "the-herd",
+        "count": 12,
+        "sort": ""
       },
       "link": {
         "label": "Shop all eight",

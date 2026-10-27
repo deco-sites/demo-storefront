@@ -1,7 +1,7 @@
 /**
  * ProductListing (capybara redesign): the sticky colour/size toolbar and the 4-column grid, with
- * a promo tile placed in it. Products come from the listing loader (a collection in the URL, or a
- * search on /s). Colour families and sizes filter the page in place and keep `?color=` and
+ * a promo tile placed in it. Products are the page's own listing (the collection in the URL, or the
+ * search on /s), which the section's block function fetches from Shopify (.deco/index.ts). Colour families and sizes filter the page in place and keep `?color=` and
  * `?size=` in the URL; Shopify's own filters for these options aren't configured on the store, so
  * the families map variant colour names here.
  */
@@ -56,8 +56,11 @@ export interface Promo {
 }
 
 export interface Props {
-  /** @title Products */
-  page: ProductListingPage | null;
+  /**
+   * @title Products per page
+   * @description How many products of the collection or search to list.
+   */
+  count?: number;
   /** @title Colour families */
   colorFamilies?: ColorFamily[];
   /** @title Sizes */
@@ -80,9 +83,9 @@ const SORTS: { value: Sort; label: string }[] = [
 
 const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
-/** Runs on the server with the URL of the page being rendered (.deco/index.ts). */
-export function loader(props: Props, url: URL) {
-  const { page, ...rest } = props;
+/** Runs on the server with the listing and the URL of the page being rendered (.deco/index.ts). */
+export function loader(props: Props, page: ProductListingPage | null, url: URL) {
+  const { count: _count, ...rest } = props;
   return {
     ...rest,
     products: toCards(page?.products),

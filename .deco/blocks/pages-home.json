@@ -96,12 +96,9 @@
         "href": "#riverbank"
       },
       "products": {
-        "__resolveType": "shopify-product-list",
-        "props": {
-          "collection": "rio",
-          "count": 3,
-          "sort": ""
-        }
+        "collection": "rio",
+        "count": 3,
+        "sort": ""
       },
       "order": [
         "boia-swim-vest",
@@ -139,12 +136,9 @@
       "__resolveType": "product-rail",
       "title": "Meet the herd.",
       "products": {
-        "__resolveType": "shopify-product-list",
-        "props": {
-          "collection": "the-herd",
-          "count": 12,
-          "sort": ""
-        }
+        "collection": "the-herd",
+        "count": 12,
+        "sort": ""
       },
       "order": [
         "sol-linen-poncho",

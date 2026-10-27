@@ -2,10 +2,19 @@
 // return descriptors (/next/rendering), which src/views.ts maps to components; a section with a
 // loader runs it here, on the server, and the loader's result becomes the view's props. The saved
 // props are the loader's input, so that's the type the editor form is generated from.
+//
+// No block here fetches products for another: a section that shows products fetches them in its own
+// block function (src/loaders/capyProducts.ts), from the page being rendered (the product in
+// `/products/:slug`, the listing of `/collections/:handle` or `/s`) or from the products picked in
+// its settings. Its saved props hold only what an editor sets.
 import type { Blocks } from "@decocms/blocks";
 import type { BlockDescriptor } from "../src/model";
 import { pageState } from "../src/request-state.server";
-import { shopifyProductDetailsPage, shopifyProductListingPage } from "../src/blocks/commerce";
+import {
+  currentListingPage,
+  currentProductPage,
+  selectedProducts,
+} from "../src/loaders/capyProducts";
 import { device } from "../src/blocks/matchers";
 import { seo } from "../src/blocks/seo";
 import type { Props as ClassicProductShelfProps } from "../src/sections/Product/ProductShelf";
@@ -44,14 +53,6 @@ import {
   loader as loadProductShelf,
   type Props as ProductShelfProps,
 } from "../src/sections/Capy/ProductShelf";
-import productByHandle from "../src/loaders/productByHandle";
-import shopifyProductList, {
-  type Props as ShopifyProductListProps,
-} from "../src/vendor/shopify/loaders/ProductList";
-import { withDecoMetafields } from "../src/sdk/capyProduct";
-import shopifyRelatedProducts, {
-  type Props as RelatedProductsProps,
-} from "../src/vendor/shopify/loaders/RelatedProducts";
 
 /**
  * A section's descriptor: the view to render (its key in src/views.ts) and its props. Every section
@@ -67,27 +68,14 @@ export default {
   // this name, so it keeps it until the site editor reads it from the page schema instead.
   "website/sections/Seo/SeoV2.tsx": seo,
 
-  // Commerce data, over the Shopify upstream client, in the order the editor's product pickers list them.
-  /** @title Product by Handle */
-  "product-by-handle": productByHandle,
-  /** @title Shopify Product Details Page */
-  "shopify-product-details-page": shopifyProductDetailsPage,
-  // Every product loader also asks for the `deco.*` metafields the design reads (src/sdk/capyProduct.ts).
-  /** @title Shopify Product List */
-  "shopify-product-list": (props: ShopifyProductListProps) =>
-    shopifyProductList({ ...props, metafields: withDecoMetafields(props.metafields) }),
-  /** @title Shopify Product Listing Page */
-  "shopify-product-listing-page": shopifyProductListingPage,
-  /** @title Shopify Related Products */
-  "shopify-related-products": (props: RelatedProductsProps) => shopifyRelatedProducts(props),
-
   // Matchers
   /** @title Device */
   device,
 
   // Sections
   /** @title Header */
-  "site-header": async (props: HeaderProps) => view("site-header", await loadHeader(props)),
+  "site-header": async (props: HeaderProps) =>
+    view("site-header", loadHeader(props, await selectedProducts(props.crossSell))),
   /** @title Footer */
   "site-footer": async (props: FooterProps) => view("site-footer", props),
   /** @title Newsletter */
@@ -98,10 +86,10 @@ export default {
   "intro-statement": async (props: IntroStatementProps) => view("intro-statement", props),
   /** @title Collection Scene */
   "collection-scene": async (props: CollectionSceneProps) =>
-    view("collection-scene", await loadCollectionScene(props)),
+    view("collection-scene", loadCollectionScene(props, await selectedProducts(props.products))),
   /** @title Product Rail */
   "product-rail": async (props: ProductRailProps) =>
-    view("product-rail", await loadProductRail(props)),
+    view("product-rail", loadProductRail(props, await selectedProducts(props.products))),
   /** @title Manifesto */
   manifesto: async (props: ManifestoProps) => view("manifesto", props),
   /** @title Sizing Story */
@@ -113,20 +101,26 @@ export default {
     view("collection-header", await loadCollectionHeader(props)),
   /** @title Product Listing */
   "product-listing": async (props: ProductListingProps) =>
-    view("product-listing", await loadProductListing(props, pageState().url)),
+    view(
+      "product-listing",
+      loadProductListing(props, await currentListingPage(props.count), pageState().url),
+    ),
   /** @title Collection Cards */
   "collection-cards": async (props: CollectionCardsProps) => view("collection-cards", props),
   /** @title Product Details */
   "product-details": async (props: ProductDetailsProps) =>
-    view("product-details", await loadProductDetails(props, pageState().url)),
+    view("product-details", loadProductDetails(props, await currentProductPage(), pageState().url)),
   /** @title Lifestyle Banner */
   "lifestyle-banner": async (props: LifestyleBannerProps) =>
-    view("lifestyle-banner", await loadLifestyleBanner(props)),
+    view("lifestyle-banner", loadLifestyleBanner(props, await currentProductPage())),
   /** @title Product Shelf */
   "product-shelf": async (props: ProductShelfProps) =>
-    view("product-shelf", await loadProductShelf(props, pageState().url)),
+    view(
+      "product-shelf",
+      loadProductShelf(props, await selectedProducts(props.products), pageState().url),
+    ),
   // The shelf of the design before the capybara one, which the offline page still shows.
   /** @title Classic Product Shelf */
   "classic-product-shelf": async (props: ClassicProductShelfProps) =>
-    view("classic-product-shelf", props),
+    view("classic-product-shelf", { ...props, products: await selectedProducts(props.products) }),
 } satisfies Blocks;
