@@ -149,6 +149,60 @@ declare global {
   }
 }
 
+/**
+ * Deco Analytics — the first-party collector (decocms/analytics).
+ *
+ * KEYED, not Host-resolved. The collector reads the `Host` header of the request for its own
+ * bundle, which only works on a zone it has a route on (`analytics.decocdn.com/_dq/*`,
+ * `*.deco.site/_dq/*`). This site answers on `demo-storefront.deco-cx.workers.dev`, where a
+ * request for `/_dq/a.js` reaches THIS worker and gets HTML back — so it declares a key instead.
+ *
+ * The key is PUBLIC by design: it ships in the page source, so it identifies the site and never
+ * authenticates it. The collector cross-checks the request `Origin` against the domains
+ * registered for this key and records a mismatch as `origin.mismatch` rather than silently
+ * accepting it. Rows carry `site_id_source = 'tag'` and are never used for billing — only
+ * Host-resolved sites are.
+ *
+ * NO BRIDGE CODE, deliberately. The site's `deco` module (enabled for this key) subscribes to
+ * the `window.DECO.events` bus defined in EVENTS_BOOTSTRAP above and maps the GA4-shaped
+ * commerce events to typed columns (`value`, `currency`, `item_ids`), which is what a plain
+ * `track()` passthrough would lose. Arriving late costs nothing: the bus keeps a `_q` and
+ * replays it to every new subscriber, which is why `async` here is safe even though the
+ * observer below starts dispatching before the bundle lands.
+ *
+ * `async`, and nothing on the page reads from it — a failure here degrades to "analytics
+ * stopped", never to "the page broke". `vite dev` sends nothing: the runtime does not collect
+ * on localhost unless `__dq.dev` is set.
+ *
+ * PRODUCTION HOST ONLY, and the gate is the hostname rather than an environment variable on
+ * purpose. `DECO_ENV_NAME` is a static var in `wrangler.jsonc`, so a per-PR preview carries
+ * `production` exactly like production does and would not be separated by it. What actually
+ * differs is where the page answers: previews are `<version>-demo-storefront.deco-cx.workers.dev`.
+ *
+ * Without this gate preview traffic still lands in the production site's numbers. It arrives
+ * with an `Origin` outside the registered `domains`, so the collector flags it
+ * `origin.mismatch` — but a flag is not a filter, and only the heatmap rollups exclude it.
+ * `mv_analytics_hourly` and `mv_sessions` filter bots and nothing else, so every preview
+ * pageview would be counted as a real one.
+ *
+ * HOST_ALLOWED must stay equal to the `domains` registered for the key; they are the same
+ * decision enforced in two places, and the collector's copy is the authority.
+ */
+const DECO_ANALYTICS_KEY = "dq_pwJlAz_1uGtf814k5wV54Q";
+const DECO_ANALYTICS_HOST = "demo-storefront.deco-cx.workers.dev";
+
+/** Injects the tag only on the production host. Late injection is free: the `deco` module polls
+ *  for the `DECO.events` bus and the bus replays its queue to whoever subscribes. */
+const DECO_ANALYTICS_TAG = `
+(function () {
+  if (location.hostname !== ${JSON.stringify(DECO_ANALYTICS_HOST)}) return;
+  var s = document.createElement("script");
+  s.async = true;
+  s.src = "https://analytics.decocdn.com/_dq/a.js?k=${DECO_ANALYTICS_KEY}";
+  document.head.appendChild(s);
+})();
+`;
+
 export function RootDocument({ children }: { children?: ReactNode }) {
   // Pages wait for this signal before running work that must follow hydration.
   useEffect(() => {
@@ -175,6 +229,7 @@ export function RootDocument({ children }: { children?: ReactNode }) {
         {children}
         <DecoPreview site="demo-storefront" />
         <ScriptOnce children={DATA_EVENT_OBSERVER} />
+        <ScriptOnce children={DECO_ANALYTICS_TAG} />
         <Scripts />
       </body>
     </html>

@@ -43,8 +43,8 @@
     "enabled": true
   },
   "thirdParty": {
-    "$comment": "No analytics collector is configured on this site (site.json trackingIds is empty, no lilstts SDK). Every third-party browser request is replayed from the per-case HAR; `block` stays available for beacons.",
-    "block": []
+    "$comment": "Deco Analytics is configured (src/runtime/RootDocument.tsx), but its tag is gated on the production hostname and the harness serves from localhost, so it never injects here. `analytics.decocdn.com` is blocked anyway: that gate is a line of site code, and a run that silently starts beaconing would put harness traffic in the production site's numbers. Belt and braces, on the side where a mistake is cheap. Every other third-party browser request is replayed from the per-case HAR.",
+    "block": ["https://analytics.decocdn.com/**"]
   },
   "siteEnv": {
     "DECO_SITE": "",
