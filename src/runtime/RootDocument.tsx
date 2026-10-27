@@ -174,7 +174,7 @@ declare global {
  * stopped", never to "the page broke". `vite dev` sends nothing: the runtime does not collect
  * on localhost unless `__dq.dev` is set.
  */
-const DECO_ANALYTICS_KEY = "dq_P_oevO9LL9eC4mD8aE7ePQ";
+const DECO_ANALYTICS_KEY = "dq_pwJlAz_1uGtf814k5wV54Q";
 
 export function RootDocument({ children }: { children?: ReactNode }) {
   // Pages wait for this signal before running work that must follow hydration.
