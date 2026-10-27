@@ -173,8 +173,35 @@ declare global {
  * `async`, and nothing on the page reads from it — a failure here degrades to "analytics
  * stopped", never to "the page broke". `vite dev` sends nothing: the runtime does not collect
  * on localhost unless `__dq.dev` is set.
+ *
+ * PRODUCTION HOST ONLY, and the gate is the hostname rather than an environment variable on
+ * purpose. `DECO_ENV_NAME` is a static var in `wrangler.jsonc`, so a per-PR preview carries
+ * `production` exactly like production does and would not be separated by it. What actually
+ * differs is where the page answers: previews are `<version>-demo-storefront.deco-cx.workers.dev`.
+ *
+ * Without this gate preview traffic still lands in the production site's numbers. It arrives
+ * with an `Origin` outside the registered `domains`, so the collector flags it
+ * `origin.mismatch` — but a flag is not a filter, and only the heatmap rollups exclude it.
+ * `mv_analytics_hourly` and `mv_sessions` filter bots and nothing else, so every preview
+ * pageview would be counted as a real one.
+ *
+ * HOST_ALLOWED must stay equal to the `domains` registered for the key; they are the same
+ * decision enforced in two places, and the collector's copy is the authority.
  */
 const DECO_ANALYTICS_KEY = "dq_pwJlAz_1uGtf814k5wV54Q";
+const DECO_ANALYTICS_HOST = "demo-storefront.deco-cx.workers.dev";
+
+/** Injects the tag only on the production host. Late injection is free: the `deco` module polls
+ *  for the `DECO.events` bus and the bus replays its queue to whoever subscribes. */
+const DECO_ANALYTICS_TAG = `
+(function () {
+  if (location.hostname !== ${JSON.stringify(DECO_ANALYTICS_HOST)}) return;
+  var s = document.createElement("script");
+  s.async = true;
+  s.src = "https://analytics.decocdn.com/_dq/a.js?k=${DECO_ANALYTICS_KEY}";
+  document.head.appendChild(s);
+})();
+`;
 
 export function RootDocument({ children }: { children?: ReactNode }) {
   // Pages wait for this signal before running work that must follow hydration.
@@ -202,7 +229,7 @@ export function RootDocument({ children }: { children?: ReactNode }) {
         {children}
         <DecoPreview site="demo-storefront" />
         <ScriptOnce children={DATA_EVENT_OBSERVER} />
-        <script async src={`https://analytics.decocdn.com/_dq/a.js?k=${DECO_ANALYTICS_KEY}`} />
+        <ScriptOnce children={DECO_ANALYTICS_TAG} />
         <Scripts />
       </body>
     </html>
