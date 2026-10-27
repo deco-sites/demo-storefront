@@ -1,7 +1,7 @@
 {
   "major": 1,
   "blocksMajor": 8,
-  "version": "8.7.0",
+  "version": "8.8.0",
   "namespace": "site",
   "site": "demo-storefront",
   "manifest": {
@@ -109,20 +109,12 @@
           "$ref": "#/definitions/bXVsdGl2YXJpYXRl",
           "namespace": "deco"
         },
-        "secret": {
-          "$ref": "#/definitions/c2VjcmV0",
-          "namespace": "deco"
-        },
         "website/flags/multivariate.ts": {
           "$ref": "#/definitions/d2Vic2l0ZS9mbGFncy9tdWx0aXZhcmlhdGUudHM=",
           "namespace": "website"
         },
         "website/flags/multivariate/section.ts": {
           "$ref": "#/definitions/d2Vic2l0ZS9mbGFncy9tdWx0aXZhcmlhdGUvc2VjdGlvbi50cw==",
-          "namespace": "website"
-        },
-        "website/loaders/secret.ts": {
-          "$ref": "#/definitions/d2Vic2l0ZS9sb2FkZXJzL3NlY3JldC50cw==",
           "namespace": "website"
         }
       },
@@ -6160,29 +6152,6 @@
           }
         }
       },
-      "c2VjcmV0": {
-        "title": "secret",
-        "description": "An encrypted value, decrypted on the server",
-        "type": "object",
-        "required": [
-          "__resolveType",
-          "ciphertext"
-        ],
-        "properties": {
-          "__resolveType": {
-            "type": "string",
-            "enum": [
-              "secret"
-            ],
-            "default": "secret"
-          },
-          "ciphertext": {
-            "type": "string",
-            "title": "Ciphertext",
-            "writeOnly": true
-          }
-        }
-      },
       "c3BsaXQtdHJhZmZpYw==": {
         "title": "split-traffic",
         "description": "A/B tests: each name with the percentage of visitors in it (0 off, 100 everyone); resolves to whether the visitor is in each. The type of the saved block experiments",
@@ -6711,29 +6680,6 @@
           }
         }
       },
-      "d2Vic2l0ZS9sb2FkZXJzL3NlY3JldC50cw==": {
-        "title": "website/loaders/secret.ts",
-        "description": "An encrypted value, decrypted on the server",
-        "type": "object",
-        "required": [
-          "__resolveType",
-          "ciphertext"
-        ],
-        "properties": {
-          "__resolveType": {
-            "type": "string",
-            "enum": [
-              "website/loaders/secret.ts"
-            ],
-            "default": "website/loaders/secret.ts"
-          },
-          "ciphertext": {
-            "type": "string",
-            "title": "Ciphertext",
-            "writeOnly": true
-          }
-        }
-      },
       "__SECTION_REF__": {
         "title": "Section",
         "anyOf": [
@@ -6915,9 +6861,6 @@
           },
           {
             "$ref": "#/definitions/bXVsdGl2YXJpYXRl"
-          },
-          {
-            "$ref": "#/definitions/c2VjcmV0"
           }
         ]
       },
@@ -6990,7 +6933,6 @@
     "website/flags/multivariate/section.ts": "multivariate",
     "website/matchers/always.ts": "always",
     "website/matchers/never.ts": "never",
-    "website/loaders/redirect.ts": "redirect",
-    "website/loaders/secret.ts": "secret"
+    "website/loaders/redirect.ts": "redirect"
   }
 }
