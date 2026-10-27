@@ -188,7 +188,7 @@ declare global {
  * HOST_ALLOWED must stay equal to the `domains` registered for the key; they are the same
  * decision enforced in two places, and the collector's copy is the authority.
  */
-const DECO_ANALYTICS_KEY = "dq_pwJlAz_1uGtf814k5wV54Q";
+const DECO_ANALYTICS_KEY = "dq_daG7lFJjErRqafiBOpMO4A";
 const DECO_ANALYTICS_HOST = "demo-storefront.deco-cx.workers.dev";
 
 /** Injects the tag only on the production host. Late injection is free: the `deco` module polls
