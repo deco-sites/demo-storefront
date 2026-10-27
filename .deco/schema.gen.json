@@ -432,7 +432,7 @@
                 "type": "string",
                 "nullable": true,
                 "title": "Collection",
-                "description": "The collection's handle, e.g. \"the-herd\"."
+                "description": "The collection's handle, e.g. \"the-herd\". Used over Search when both are set."
               },
               "query": {
                 "type": "string",
@@ -458,7 +458,7 @@
                 ],
                 "nullable": true,
                 "title": "Sort",
-                "description": "Empty keeps the store's own order. A search sorts by relevance or price only."
+                "description": "Empty sorts by relevance. A search sorts by relevance or price only."
               }
             },
             "description": "The products offered in the bag drawer (up to four).",
@@ -994,7 +994,7 @@
                 "type": "string",
                 "nullable": true,
                 "title": "Collection",
-                "description": "The collection's handle, e.g. \"the-herd\"."
+                "description": "The collection's handle, e.g. \"the-herd\". Used over Search when both are set."
               },
               "query": {
                 "type": "string",
@@ -1020,7 +1020,7 @@
                 ],
                 "nullable": true,
                 "title": "Sort",
-                "description": "Empty keeps the store's own order. A search sorts by relevance or price only."
+                "description": "Empty sorts by relevance. A search sorts by relevance or price only."
               }
             },
             "description": "Fetched from Shopify; the first one is the lead.",
@@ -1093,7 +1093,7 @@
                 "type": "string",
                 "nullable": true,
                 "title": "Collection",
-                "description": "The collection's handle, e.g. \"the-herd\"."
+                "description": "The collection's handle, e.g. \"the-herd\". Used over Search when both are set."
               },
               "query": {
                 "type": "string",
@@ -1119,7 +1119,7 @@
                 ],
                 "nullable": true,
                 "title": "Sort",
-                "description": "Empty keeps the store's own order. A search sorts by relevance or price only."
+                "description": "Empty sorts by relevance. A search sorts by relevance or price only."
               }
             },
             "description": "Fetched from Shopify.",
@@ -2240,7 +2240,7 @@
                 "type": "string",
                 "nullable": true,
                 "title": "Collection",
-                "description": "The collection's handle, e.g. \"the-herd\"."
+                "description": "The collection's handle, e.g. \"the-herd\". Used over Search when both are set."
               },
               "query": {
                 "type": "string",
@@ -2266,7 +2266,7 @@
                 ],
                 "nullable": true,
                 "title": "Sort",
-                "description": "Empty keeps the store's own order. A search sorts by relevance or price only."
+                "description": "Empty sorts by relevance. A search sorts by relevance or price only."
               }
             },
             "description": "Fetched from Shopify.",
@@ -2343,7 +2343,7 @@
                 "type": "string",
                 "nullable": true,
                 "title": "Collection",
-                "description": "The collection's handle, e.g. \"the-herd\"."
+                "description": "The collection's handle, e.g. \"the-herd\". Used over Search when both are set."
               },
               "query": {
                 "type": "string",
@@ -2369,7 +2369,7 @@
                 ],
                 "nullable": true,
                 "title": "Sort",
-                "description": "Empty keeps the store's own order. A search sorts by relevance or price only."
+                "description": "Empty sorts by relevance. A search sorts by relevance or price only."
               }
             },
             "description": "Fetched from Shopify by the section's block function (.deco/index.ts).",

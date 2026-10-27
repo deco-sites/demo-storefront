@@ -36,7 +36,7 @@ export interface CapyImage {
 export interface ProductSelection {
   /**
    * @title Collection
-   * @description The collection's handle, e.g. "the-herd".
+   * @description The collection's handle, e.g. "the-herd". Used over Search when both are set.
    */
   collection?: string;
   /**
@@ -48,7 +48,7 @@ export interface ProductSelection {
   count?: number;
   /**
    * @title Sort
-   * @description Empty keeps the store's own order. A search sorts by relevance or price only.
+   * @description Empty sorts by relevance. A search sorts by relevance or price only.
    */
   sort?:
     | ""

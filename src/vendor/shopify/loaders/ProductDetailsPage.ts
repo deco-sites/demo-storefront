@@ -5,7 +5,7 @@ import { GetProduct } from "../utils/storefront/queries";
 import { type ProductShopify, toProductPage } from "../utils/transform";
 import type { Metafield } from "../utils/types";
 
-export interface Props {
+interface Props {
   slug: string;
   metafields?: Metafield[];
 }

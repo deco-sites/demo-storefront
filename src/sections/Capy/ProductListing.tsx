@@ -1,9 +1,10 @@
 /**
  * ProductListing (capybara redesign): the sticky colour/size toolbar and the 4-column grid, with
  * a promo tile placed in it. Products are the page's own listing (the collection in the URL, or the
- * search on /s), which the section's block function fetches from Shopify (.deco/index.ts). Colour families and sizes filter the page in place and keep `?color=` and
- * `?size=` in the URL; Shopify's own filters for these options aren't configured on the store, so
- * the families map variant colour names here.
+ * search on /s), which the section's block function fetches from Shopify (.deco/index.ts). Colour
+ * families and sizes filter the page in place and keep `?color=` and `?size=` in the URL; Shopify's
+ * own filters for these options aren't configured on the store, so the families map variant colour
+ * names here.
  */
 import { useEffect, useMemo, useState } from "react";
 import type { ProductListingPage } from "~/vendor/commerce/types";

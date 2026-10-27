@@ -32,7 +32,7 @@ interface ProductConnection {
   filters?: FilterNode[];
 }
 
-export interface Props {
+interface Props {
   query?: string;
   collectionName?: string;
   count: number;

@@ -18,24 +18,42 @@ import { type PageState, pageState } from "../request-state.server";
 import { withDecoMetafields } from "../sdk/capyProduct";
 import type { ProductSelection } from "../components/capy/types";
 
-/** The products a section's settings pick: a collection, or a search. Nothing when neither is set. */
-export async function selectedProducts(
+/**
+ * The products a section's settings pick: a collection, or a search when no collection is set (an
+ * empty search lists the whole store, as it did before). Nothing when neither is set. Sections that
+ * pick the same products on one page share one fetch.
+ */
+export function selectedProducts(
   selection: ProductSelection | undefined,
 ): Promise<Product[] | null> {
-  if (!selection) return null;
+  if (!selection) return Promise.resolve(null);
   const { collection, query, count = 12, sort = "" } = selection;
   let props: ProductListProps["props"];
   if (collection) props = { collection, count, sort };
   // A search sorts by relevance or price only.
-  else if (query)
+  else if (typeof query === "string")
     props = {
       query,
       count,
       sort: sort === "price-ascending" || sort === "price-descending" ? sort : "",
     };
-  else return null;
-  return productListLoader({ props, metafields: withDecoMetafields(undefined) });
+  else return Promise.resolve(null);
+  const state = pageState();
+  let fetches = selections.get(state);
+  if (!fetches) {
+    fetches = new Map();
+    selections.set(state, fetches);
+  }
+  const key = JSON.stringify(props);
+  let products = fetches.get(key);
+  if (!products) {
+    products = productListLoader({ props, metafields: withDecoMetafields(undefined) });
+    fetches.set(key, products);
+  }
+  return products;
 }
+
+const selections = new WeakMap<PageState, Map<string, Promise<Product[] | null>>>();
 
 // The product page's sections (details, lifestyle banner) share one fetch per page render.
 const productPages = new WeakMap<PageState, Promise<ProductDetailsPage | null>>();
