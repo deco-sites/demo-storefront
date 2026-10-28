@@ -655,6 +655,15 @@ p { text-wrap: pretty; }
 .freebar .track { margin-top: 12px; height: 6px; border-radius: 6px; background: rgba(28, 25, 23, .1); overflow: hidden; }
 .freebar .track span { position: relative; display: block; height: 100%; border-radius: 6px; background: var(--forest); }
 .freebar .track span::after { content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 10px; border-radius: 6px; background: var(--lime); }
+.freebar .track span { transition: width .7s cubic-bezier(.22, 1, .36, 1); }
+.freebar .cheer { display: flex; align-items: center; gap: 8px; font-weight: 480; color: var(--forest); }
+.freebar .cheer .ico { width: 16px; height: 16px; flex: none; }
+.freebar.done .track span { background: var(--lime); }
+@media (prefers-reduced-motion: no-preference) {
+  .freebar .cheer { animation: cheer .5s cubic-bezier(.22, 1, .36, 1) both; }
+  @keyframes cheer { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+}
+@media (prefers-reduced-motion: reduce) { .freebar .track span { transition: none; } }
 .drawer-body { flex: 1; overflow-y: auto; padding: 0 28px; display: flex; flex-direction: column; }
 .line-item { display: grid; grid-template-columns: 84px 1fr auto; gap: 16px; padding: 22px 0; border-bottom: 1px solid var(--hair); }
 .th { position: relative; border-radius: 12px; overflow: clip; background: var(--bg); }

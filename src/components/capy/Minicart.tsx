@@ -33,8 +33,8 @@ export interface MinicartSettings {
 
 const MINICART_DEFAULTS: Required<MinicartSettings> = {
   freeDeliveryThreshold: 400,
-  freeDeliveryText: "to free riverbank delivery.",
-  freeDeliveryUnlocked: "Free riverbank delivery is on us.",
+  freeDeliveryText: "away from free delivery.",
+  freeDeliveryUnlocked: "Free delivery unlocked. The capybaras will float it to your riverbank.",
   crossSellTitle: "Complete the look",
   note: "Taxes and delivery at checkout. Free size swap within 30 days.",
   emptyText: "Your bag is empty. The herd is waiting.",
@@ -217,13 +217,15 @@ export default function Minicart({
           </label>
         </div>
         {threshold > 0 && cart.items.length > 0 && (
-          <div className="freebar">
+          <div className={missing > 0 ? "freebar" : "freebar done"}>
             {missing > 0 ? (
               <p>
                 <b>{money(missing, currency)}</b> {s.freeDeliveryText}
               </p>
             ) : (
-              <p>{s.freeDeliveryUnlocked}</p>
+              <p key="done" className="cheer">
+                <Ico name="truck" /> {s.freeDeliveryUnlocked}
+              </p>
             )}
             <div
               className="track"
