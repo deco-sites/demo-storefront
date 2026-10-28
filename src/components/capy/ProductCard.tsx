@@ -12,14 +12,17 @@ export default function ProductCard({
   product,
   sizes = SIZES,
   eager = false,
+  onQuickView,
 }: {
   product: CardProduct;
   sizes?: string;
   eager?: boolean;
+  /** Shows a "Quick view" button over the packshot (on hover; always on touch screens). */
+  onQuickView?: () => void;
 }) {
   const [first, second] = product.colors;
   const scale = { "--s": product.scale } as React.CSSProperties;
-  return (
+  const card = (
     <a className="pcard" href={product.url} data-product={product.handle}>
       <div className="stage" style={{ "--bg": first?.bg } as React.CSSProperties}>
         {product.badge && <span className="tag tag-new nbadge">{product.badge}</span>}
@@ -64,5 +67,14 @@ export default function ProductCard({
         )}
       </div>
     </a>
+  );
+  if (!onQuickView) return card;
+  return (
+    <div className="pcard-qv">
+      {card}
+      <button type="button" className="pill qv-open" onClick={onQuickView}>
+        Quick view
+      </button>
+    </div>
   );
 }
