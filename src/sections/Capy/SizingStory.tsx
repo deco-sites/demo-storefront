@@ -1,6 +1,7 @@
 /** SizingStory (capybara redesign): the three sizes labelled under a photo of three capybaras. */
 import { Ico } from "~/components/capy/Icons";
 import Img from "~/components/capy/Img";
+import SizeFinder from "~/components/capy/SizeFinder";
 import type { CapyImage, Cta } from "~/components/capy/types";
 
 export interface SizeLabel {
@@ -64,6 +65,9 @@ export default function SizingStory({
             </ul>
           )}
         </figure>
+      </div>
+      <div className="wrap">
+        <SizeFinder />
       </div>
       {cta && (
         <div className="wrap foot">
