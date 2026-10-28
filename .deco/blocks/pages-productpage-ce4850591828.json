@@ -7,9 +7,6 @@
     },
     {
       "__resolveType": "product-details",
-      "page": {
-        "__resolveType": "PDP Loader"
-      },
       "colorPrompt": {
         "question": "Color.",
         "hint": "Pick your mood."
@@ -59,9 +56,6 @@
     },
     {
       "__resolveType": "lifestyle-banner",
-      "page": {
-        "__resolveType": "PDP Loader"
-      },
       "meta": "On Tião · {color} · Adult",
       "position": "top-right"
     },
@@ -69,12 +63,9 @@
       "__resolveType": "product-shelf",
       "title": "Complete the look.",
       "products": {
-        "__resolveType": "shopify-product-list",
-        "props": {
-          "collection": "the-herd",
-          "count": 12,
-          "sort": ""
-        }
+        "collection": "the-herd",
+        "count": 12,
+        "sort": ""
       },
       "order": [
         "largo-sunglasses",

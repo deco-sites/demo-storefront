@@ -34,10 +34,7 @@
     },
     {
       "__resolveType": "product-listing",
-      "page": {
-        "__resolveType": "shopify-product-listing-page",
-        "count": 48
-      },
+      "count": 48,
       "colorFamilies": [
         {
           "name": "Forest",

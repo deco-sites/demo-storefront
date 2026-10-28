@@ -8,7 +8,7 @@ import { type CardProduct, money, sized, srcSetOf, toCards } from "~/sdk/capyPro
 import { Ico } from "~/components/capy/Icons";
 import Img from "~/components/capy/Img";
 import { Tag } from "~/components/capy/Tag";
-import type { CapyImage, Cta } from "~/components/capy/types";
+import type { CapyImage, Cta, ProductSelection } from "~/components/capy/types";
 import type { Color } from "~/types/widgets";
 
 export interface Props {
@@ -35,9 +35,9 @@ export interface Props {
   credit?: string;
   /**
    * @title Products (products layout)
-   * @description The first one is the lead.
+   * @description Fetched from Shopify; the first one is the lead.
    */
-  products?: Product[] | null;
+  products?: ProductSelection;
   /**
    * @title Order
    * @description Product handles to show first, in this order (the first is the lead).
@@ -55,9 +55,10 @@ export interface Props {
   field?: Color;
 }
 
-export const loader = (props: Props) => ({
+/** Runs on the server with the products its block function fetched (.deco/index.ts). */
+export const loader = (props: Props, products: Product[] | null) => ({
   ...props,
-  products: toCards(props.products, props.order).slice(0, 3),
+  products: toCards(products, props.order).slice(0, 3),
 });
 
 type ViewProps = Omit<Props, "products"> & { products?: CardProduct[] };

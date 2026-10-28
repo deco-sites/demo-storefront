@@ -4,13 +4,16 @@ import type { Product } from "~/vendor/commerce/types";
 import { type CardProduct, toCards } from "~/sdk/capyProduct";
 import { Ico } from "~/components/capy/Icons";
 import ProductCard from "~/components/capy/ProductCard";
-import type { Cta } from "~/components/capy/types";
+import type { Cta, ProductSelection } from "~/components/capy/types";
 
 export interface Props {
   /** @title Title */
   title: string;
-  /** @title Products */
-  products: Product[] | null;
+  /**
+   * @title Products
+   * @description Fetched from Shopify.
+   */
+  products?: ProductSelection;
   /**
    * @title Order
    * @description Product handles to show first, in this order. The rest follow.
@@ -20,9 +23,10 @@ export interface Props {
   link?: Cta;
 }
 
-export const loader = (props: Props) => ({
+/** Runs on the server with the products its block function fetched (.deco/index.ts). */
+export const loader = (props: Props, products: Product[] | null) => ({
   ...props,
-  products: toCards(props.products, props.order),
+  products: toCards(products, props.order),
 });
 
 type ViewProps = Omit<Props, "products"> & { products: CardProduct[] };

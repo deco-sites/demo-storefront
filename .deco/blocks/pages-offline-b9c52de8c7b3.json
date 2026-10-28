@@ -7,8 +7,7 @@
     },
     {
       "__resolveType": "classic-product-shelf",
-      "title": "Oh no! You are offline!",
-      "products": null
+      "title": "Oh no! You are offline!"
     },
     {
       "__resolveType": "Footer"

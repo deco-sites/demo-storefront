@@ -61,14 +61,14 @@ src/
 ├── page-route.tsx        # Route options shared by `/` and `/$`
 ├── head.ts               # <head> from the page SEO and the site-wide SEO defaults
 ├── request-state.server.ts # The page being rendered, for block functions (AsyncLocalStorage)
-├── blocks/               # Block functions: commerce loaders, SEO, matchers
+├── blocks/               # Block functions: SEO, matchers
 ├── runtime/              # Root document, page view (sections, <main> landmark)
 ├── routes/               # TanStack Router file routes (__root, $, index, account, login)
 ├── sections/             # CMS-rendered sections (Capy: the capybara design; Product: the offline page's shelf)
 ├── components/           # UI components (capy: minicart, product card, icons; product, ui, account, wishlist)
 ├── platform/             # Domain state — TanStack Query hooks + createServerFn actions
 ├── server/               # Edge cache, cache profiles, the site's server functions
-├── loaders/, actions/    # Site loaders and actions (called by blocks and server functions)
+├── loaders/, actions/    # Site loaders and actions (called by sections' block functions and server functions)
 ├── vendor/               # Shopify loaders and flows, commerce types, image helpers (the site's own code)
 ├── sdk/                  # clx, device, url, …
 ├── styles/app.css        # Tailwind v4 entry
@@ -85,7 +85,7 @@ src/
 2. The request goes on to the TanStack Start server entry (`src/server.ts`).
 3. The catch-all route (`src/routes/$.tsx`) and the home route call `loadPage`, which finds the page with `matchRoute` (`src/open-page.server.ts`) and starts every block on it.
 4. Each section block returns a descriptor; `src/runtime/PageView.tsx` renders it through `src/views.ts`.
-5. Commerce data (Shopify PDP, PLP, search, cart) comes from the loaders in `src/vendor/shopify`, sent through the Shopify upstream client.
+5. Commerce data (Shopify PDP, PLP, search, cart) comes from the loaders in `src/vendor/shopify`, sent through the Shopify upstream client. Saved content holds no data blocks: each section that shows products fetches them in its own block function (`src/loaders/capyProducts.ts`), from the page being rendered (the product of `/products/:slug`, the listing of `/collections/:handle` or `/s`) or from the collection or search saved in its settings.
 
 ## Data fetching pattern
 

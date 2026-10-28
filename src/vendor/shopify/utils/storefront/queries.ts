@@ -381,15 +381,6 @@ export const ProductsByCollection = {
   }`,
 };
 
-export const ProductRecommendations = {
-	fragments: [Product, ProductVariant, Collection],
-	query: gql`query productRecommendations($productId: ID!, $identifiers: [HasMetafieldsIdentifier!]!) {
-    productRecommendations(productId: $productId) {
-      ...Product
-    }
-  }`,
-};
-
 export const GetShopInfo = {
 	query: gql`query GetShopInfo($identifiers: [HasMetafieldsIdentifier!]!) {
     shop {

@@ -12,6 +12,7 @@ import { MINICART_DRAWER_ID } from "~/constants";
 import { type CardProduct, toCards } from "~/sdk/capyProduct";
 import { IconSprite, Ico } from "~/components/capy/Icons";
 import Minicart, { type MinicartSettings } from "~/components/capy/Minicart";
+import type { ProductSelection } from "~/components/capy/types";
 
 export interface NavLink {
   /** @title Label */
@@ -45,14 +46,15 @@ export interface Props {
   minicart?: MinicartSettings;
   /**
    * @title Bag cross-sell
-   * @description Two products offered in the bag drawer.
+   * @description The products offered in the bag drawer (up to four).
    */
-  crossSell?: Product[] | null;
+  crossSell?: ProductSelection;
 }
 
-export const loader = (props: Props) => ({
+/** Runs on the server with the cross-sell products its block function fetched (.deco/index.ts). */
+export const loader = (props: Props, crossSell: Product[] | null) => ({
   ...props,
-  crossSell: toCards(props.crossSell).slice(0, 4),
+  crossSell: toCards(crossSell).slice(0, 4),
 });
 
 type ViewProps = Omit<Props, "crossSell"> & { crossSell?: CardProduct[] };

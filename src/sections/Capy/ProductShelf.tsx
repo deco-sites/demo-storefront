@@ -3,13 +3,16 @@ import type { Product } from "~/vendor/commerce/types";
 import { type CardProduct, toCards } from "~/sdk/capyProduct";
 import { Ico } from "~/components/capy/Icons";
 import ProductCard from "~/components/capy/ProductCard";
-import type { Cta } from "~/components/capy/types";
+import type { Cta, ProductSelection } from "~/components/capy/types";
 
 export interface Props {
   /** @title Title */
   title: string;
-  /** @title Products */
-  products: Product[] | null;
+  /**
+   * @title Products
+   * @description Fetched from Shopify.
+   */
+  products?: ProductSelection;
   /**
    * @title Order
    * @description Product handles to show first, in this order.
@@ -21,12 +24,15 @@ export interface Props {
   link?: Cta;
 }
 
-/** Runs on the server with the URL of the page being rendered (.deco/index.ts). */
-export function loader(props: Props, url: URL) {
+/**
+ * Runs on the server with the products its block function fetched and the URL of the page being
+ * rendered (.deco/index.ts).
+ */
+export function loader(props: Props, products: Product[] | null, url: URL) {
   // On a product page, the product itself isn't offered with itself.
   const path = url.pathname;
   const current = path.startsWith("/products/") ? path.slice("/products/".length) : undefined;
-  const cards = toCards(props.products, props.order).filter(
+  const cards = toCards(products, props.order).filter(
     (c) => !current || !current.startsWith(c.handle),
   );
   return { ...props, products: cards.slice(0, props.count ?? 4) };

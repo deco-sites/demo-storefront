@@ -2,8 +2,9 @@
  * ProductDetails (capybara redesign): the gallery (the colourway's packshot over two detail
  * crops of it), the buy column (name, tagline, price, description, facts, colour swatches, the
  * size control, add to bag) and the accordion. On phones a glass buy bar appears once the real
- * "Add to bag" has scrolled away. Product data comes from the Shopify product page loader and the
- * `deco.*` metafields; add to bag goes through the site's cart and opens the bag drawer.
+ * "Add to bag" has scrolled away. Product data is the page's own product (`/products/:slug`), which
+ * the section's block function fetches from Shopify with the `deco.*` metafields (.deco/index.ts);
+ * add to bag goes through the site's cart and opens the bag drawer.
  */
 import { useEffect, useRef, useState } from "react";
 import type { ProductDetailsPage } from "~/vendor/commerce/types";
@@ -38,8 +39,6 @@ export interface AccordionItem {
 }
 
 export interface Props {
-  /** @title Product */
-  page: ProductDetailsPage | null;
   /** @title Colour question */
   colorPrompt?: { question: string; hint?: string };
   /** @title Size question */
@@ -68,11 +67,12 @@ export interface Props {
   notFound?: { title: string; body?: string; link?: Cta };
 }
 
-/** Runs on the server with the URL of the page being rendered (.deco/index.ts). */
-export function loader(props: Props, url: URL) {
-  const { page, ...rest } = props;
+/**
+ * Runs on the server with the product and the URL of the page being rendered (.deco/index.ts).
+ */
+export function loader(props: Props, page: ProductDetailsPage | null, url: URL) {
   const product = page?.product;
-  if (!product) return { ...rest, product: null, analytics: null, initialColor: "" };
+  if (!product) return { ...props, product: null, analytics: null, initialColor: "" };
   const pdp = toPdp(product);
   const asked = url.searchParams.get("color") ?? "";
   const initialColor = pdp.colors.find((c) => c.name.toLowerCase() === asked.toLowerCase())?.name;
@@ -82,7 +82,7 @@ export function loader(props: Props, url: URL) {
     price: pdp.price,
   });
   return {
-    ...rest,
+    ...props,
     product: pdp,
     analytics,
     initialColor: initialColor ?? pdp.colors[0]?.name ?? "",
