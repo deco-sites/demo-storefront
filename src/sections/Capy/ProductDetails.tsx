@@ -7,6 +7,7 @@
  * add to bag goes through the site's cart and opens the bag drawer.
  */
 import { useEffect, useRef, useState } from "react";
+import FavoriteButton from "~/components/capy/FavoriteButton";
 import type { ProductDetailsPage } from "~/vendor/commerce/types";
 import { mapProductToAnalyticsItem } from "~/vendor/commerce/utils/productToAnalyticsItem";
 import { useAddToCart } from "~/platform/cart";
@@ -243,7 +244,10 @@ export default function ProductDetails({
               </>
             )}
           </nav>
-          <h1 className="h1">{product.title}</h1>
+          <div className="buy-title">
+            <h1 className="h1">{product.title}</h1>
+            <FavoriteButton handle={product.handle} title={product.title} className="fav-pdp" />
+          </div>
           {product.tagline && <p className="line">{product.tagline}</p>}
           <p className="price">{price}</p>
           {(product.descriptionHtml || product.facts.length > 0) && (

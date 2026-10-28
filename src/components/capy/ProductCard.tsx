@@ -1,4 +1,5 @@
 import type { CardProduct } from "~/sdk/capyProduct";
+import FavoriteButton from "~/components/capy/FavoriteButton";
 import { money, sized, srcSetOf } from "~/sdk/capyProduct";
 
 const SIZES = "(max-width: 720px) 76vw, (max-width: 1080px) 40vw, 30vw";
@@ -23,6 +24,7 @@ export default function ProductCard({
     <a className="pcard" href={product.url} data-product={product.handle}>
       <div className="stage" style={{ "--bg": first?.bg } as React.CSSProperties}>
         {product.badge && <span className="tag tag-new nbadge">{product.badge}</span>}
+        <FavoriteButton handle={product.handle} title={product.title} />
         {first?.image && (
           <img
             style={scale}

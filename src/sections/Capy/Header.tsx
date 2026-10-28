@@ -11,6 +11,7 @@ import { useCart } from "~/platform/cart";
 import { MINICART_DRAWER_ID } from "~/constants";
 import { type CardProduct, toCards } from "~/sdk/capyProduct";
 import { IconSprite, Ico } from "~/components/capy/Icons";
+import { useFavorites } from "~/sdk/favorites";
 import Minicart, { type MinicartSettings } from "~/components/capy/Minicart";
 import type { ProductSelection } from "~/components/capy/types";
 
@@ -58,6 +59,22 @@ export const loader = (props: Props, crossSell: Product[] | null) => ({
 });
 
 type ViewProps = Omit<Props, "crossSell"> & { crossSell?: CardProduct[] };
+
+function FavoritesCount() {
+  const count = useFavorites().length;
+  if (!count) return null;
+  return (
+    <span
+      className="fav-count"
+      role="status"
+      aria-label={`${count} ${count === 1 ? "favourite" : "favourites"} saved`}
+      title="Saved for a slow day"
+    >
+      <Ico name="heart" />
+      <span className="bag-count">{count > 9 ? "9+" : count}</span>
+    </span>
+  );
+}
 
 function BagButton() {
   const { cart } = useCart();
@@ -158,6 +175,7 @@ export default function Header({
               <Ico name="user" />
             </a>
           )}
+          <FavoritesCount />
           <BagButton />
           <button
             type="button"

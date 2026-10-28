@@ -17,6 +17,9 @@ export function IconSprite() {
         <path d="M5.5 8.5h13l-1 11.5h-11z" />
         <path d="M9 8.5V7a3 3 0 0 1 6 0v1.5" />
       </symbol>
+      <symbol id="i-heart" viewBox="0 0 24 24">
+        <path d="M12 19.5s-7.5-4.6-7.5-10A4.2 4.2 0 0 1 12 7a4.2 4.2 0 0 1 7.5 2.5c0 5.4-7.5 10-7.5 10z" />
+      </symbol>
       <symbol id="i-user" viewBox="0 0 24 24">
         <circle cx="12" cy="8.5" r="3.5" />
         <path d="M5 20c1.2-3.6 3.8-5.2 7-5.2s5.8 1.6 7 5.2" />
@@ -77,6 +80,7 @@ export function IconSprite() {
 export type IconName =
   | "search"
   | "bag"
+  | "heart"
   | "user"
   | "menu"
   | "arrow"
