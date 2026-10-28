@@ -760,3 +760,16 @@ body:has(.cart-toggle:checked) { overflow: hidden; }
 .swatches button { border: 0; padding: 0; }
 .sizes-pick label.out .n { color: var(--muted); }
 .desc p + p { margin-top: 12px; }
+
+/* ---------- review stars ---------- */
+.stars { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; line-height: 18px; font-variant-numeric: tabular-nums; color: var(--ink); }
+.stars-row { display: inline-flex; gap: 1px; }
+.stars svg { display: block; }
+.stars .star-bg { fill: var(--hair); }
+.stars .star-on { fill: var(--sol); }
+.stars .stars-c { color: var(--muted); }
+.pcard .meta .stars { grid-column: 1 / -1; margin-top: 4px; }
+.buy .price-row { margin-top: 18px; display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; }
+.buy .price-row .price { margin-top: 0; }
+.buy .stars { font-size: 14px; }
+.buy .stars svg { width: 16px; height: 16px; }

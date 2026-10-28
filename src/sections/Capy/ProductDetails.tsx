@@ -6,6 +6,8 @@
  * the section's block function fetches from Shopify with the `deco.*` metafields (.deco/index.ts);
  * add to bag goes through the site's cart and opens the bag drawer.
  */
+import { ratingOf } from "~/sdk/capyReviews";
+import Stars from "~/components/capy/Stars";
 import { useEffect, useRef, useState } from "react";
 import type { ProductDetailsPage } from "~/vendor/commerce/types";
 import { mapProductToAnalyticsItem } from "~/vendor/commerce/utils/productToAnalyticsItem";
@@ -176,6 +178,7 @@ export default function ProductDetails({
   }
 
   const price = money(product.price, product.currency);
+  const rating = ratingOf(product.handle);
   const addToBag = () => {
     if (!variantId) return;
     add.mutate({ merchandiseId: variantId, quantity: 1 }, { onSuccess: () => openMinicart() });
@@ -245,7 +248,10 @@ export default function ProductDetails({
           </nav>
           <h1 className="h1">{product.title}</h1>
           {product.tagline && <p className="line">{product.tagline}</p>}
-          <p className="price">{price}</p>
+          <div className="price-row">
+            <p className="price">{price}</p>
+            {rating && <Stars rating={rating} />}
+          </div>
           {(product.descriptionHtml || product.facts.length > 0) && (
             <div className="about-p">
               {product.descriptionHtml && (
