@@ -6,6 +6,7 @@
  */
 import type { Product, PropertyValue } from "../vendor/commerce/types";
 import type { Metafield } from "../vendor/shopify/utils/types";
+import { COLLECTIONS } from "../components/capy/Tag";
 import { backdrop, cardScale, displayImage, isLifestyle } from "./capyDisplay";
 
 /** The `deco.*` product metafields the redesign reads (tagline, badge, swatches, facts, …). */
@@ -46,6 +47,8 @@ export interface CardProduct {
   currency: string;
   tagline?: string;
   badge?: string;
+  /** The product's Sol, Rio or Onsen collection handle, for the card's collection tag. */
+  collectionTag?: string;
   /** Packshot height as a fraction of the card height. */
   scale: number;
   colors: CardColor[];
@@ -150,6 +153,9 @@ export function toCard(product: Product): CardProduct {
     currency: product.offers?.priceCurrency ?? "BRL",
     tagline: prop(product.additionalProperty, "tagline") || undefined,
     badge: prop(product.additionalProperty, "badge") || undefined,
+    collectionTag: (product.isVariantOf?.additionalProperty ?? [])
+      .map((p) => (p.name === "COLLECTION" ? String(p.valueReference ?? "") : ""))
+      .find((h) => h in COLLECTIONS),
     scale: cardScale(handle),
     colors: colors.map(({ sizes: _sizes, ...color }) => color),
     sizes: [
