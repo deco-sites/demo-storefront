@@ -108,9 +108,9 @@ const priceOf = (variant: Product) =>
  * the store charges; a compare-at price set on the variant in Shopify takes precedence.
  */
 export const ON_SALE: Record<string, number> = {
-  "sol-linen-poncho": __SOL__,
-  "onsen-waffle-robe": __ONS__,
-  "rio-raincoat": __RIO__,
+  "sol-linen-poncho": 489,
+  "onsen-waffle-robe": 859,
+  "rio-raincoat": 689,
 };
 
 const listPriceOf = (variant: Product, handle: string, price: number) => {
