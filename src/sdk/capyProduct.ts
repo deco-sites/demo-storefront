@@ -43,6 +43,8 @@ export interface CardProduct {
   url: string;
   title: string;
   price: number;
+  /** The original price, when the product is on sale (higher than `price`). */
+  listPrice?: number;
   currency: string;
   tagline?: string;
   badge?: string;
@@ -101,6 +103,28 @@ const optionOf = (variant: Product, re: RegExp) =>
 const priceOf = (variant: Product) =>
   variant.offers?.offers?.[0]?.price ?? variant.offers?.lowPrice ?? 0;
 
+/**
+ * The herd's current promotion: product handle → original price. The selling price stays the one
+ * the store charges; a compare-at price set on the variant in Shopify takes precedence.
+ */
+export const ON_SALE: Record<string, number> = {
+  "sol-linen-poncho": __SOL__,
+  "onsen-waffle-robe": __ONS__,
+  "rio-raincoat": __RIO__,
+};
+
+const listPriceOf = (variant: Product, handle: string, price: number) => {
+  const spec = variant.offers?.offers?.[0]?.priceSpecification?.find(
+    (s) => s.priceType === "https://schema.org/ListPrice",
+  );
+  const list = spec?.price ?? ON_SALE[handle];
+  return list != null && list > price ? list : undefined;
+};
+
+/** The discount as a whole percentage, e.g. 20 for R$ 400 → R$ 320. */
+export const discountOf = (price: number, listPrice?: number) =>
+  listPrice && listPrice > price ? Math.round((1 - price / listPrice) * 100) : 0;
+
 const available = (variant: Product) =>
   (variant.offers?.offers?.[0]?.availability ?? "").endsWith("InStock");
 
@@ -142,11 +166,13 @@ export function toCard(product: Product): CardProduct {
     {},
   );
   const colors = colorsOf(product, swatches);
+  const price = priceOf(product);
   return {
     handle,
     url: `/products/${handle}`,
     title: product.isVariantOf?.name ?? product.name ?? "",
-    price: priceOf(product),
+    price,
+    listPrice: listPriceOf(product, handle, price),
     currency: product.offers?.priceCurrency ?? "BRL",
     tagline: prop(product.additionalProperty, "tagline") || undefined,
     badge: prop(product.additionalProperty, "badge") || undefined,

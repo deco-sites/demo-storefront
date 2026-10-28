@@ -297,6 +297,9 @@ p { text-wrap: pretty; }
 .pcard .meta { padding: 16px 2px 0; display: grid; grid-template-columns: 1fr auto; column-gap: 12px; row-gap: 3px; }
 .pcard .meta .name { font-size: 15px; line-height: 20px; font-weight: 480; }
 .pcard .meta .price { font-size: 15px; line-height: 20px; font-weight: 400; font-variant-numeric: tabular-nums; }
+.pcard .obadge { position: absolute; top: 14px; right: 14px; z-index: 2; height: 24px; padding: 0 10px; font-size: 11px; }
+.price .was { margin-right: 8px; color: var(--muted); text-decoration-thickness: 1px; }
+.pdp .price .tag { margin-left: 10px; height: 24px; padding: 0 10px; font-size: 11px; vertical-align: middle; }
 .pcard .meta .line { grid-column: 1 / -1; font-size: 14px; line-height: 20px; color: var(--muted); }
 .dots { display: flex; gap: 6px; grid-column: 1 / -1; margin-top: 10px; }
 .dots i { width: 12px; height: 12px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(28, 25, 23, .2); }

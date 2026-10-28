@@ -1,5 +1,5 @@
 import type { CardProduct } from "~/sdk/capyProduct";
-import { money, sized, srcSetOf } from "~/sdk/capyProduct";
+import { discountOf, money, sized, srcSetOf } from "~/sdk/capyProduct";
 
 const SIZES = "(max-width: 720px) 76vw, (max-width: 1080px) 40vw, 30vw";
 
@@ -18,11 +18,13 @@ export default function ProductCard({
   eager?: boolean;
 }) {
   const [first, second] = product.colors;
+  const off = discountOf(product.price, product.listPrice);
   const scale = { "--s": product.scale } as React.CSSProperties;
   return (
     <a className="pcard" href={product.url} data-product={product.handle}>
       <div className="stage" style={{ "--bg": first?.bg } as React.CSSProperties}>
         {product.badge && <span className="tag tag-new nbadge">{product.badge}</span>}
+        {off > 0 && <span className="tag tag-sol obadge">-{off}%</span>}
         {first?.image && (
           <img
             style={scale}
@@ -53,7 +55,14 @@ export default function ProductCard({
       </div>
       <div className="meta">
         <span className="name">{product.title}</span>
-        <span className="price">{money(product.price, product.currency)}</span>
+        <span className="price">
+          {off > 0 && (
+            <s className="was" aria-label={`Was ${money(product.listPrice!, product.currency)}`}>
+              {money(product.listPrice!, product.currency)}
+            </s>
+          )}
+          {money(product.price, product.currency)}
+        </span>
         {product.tagline && <p className="line">{product.tagline}</p>}
         {product.colors.length > 0 && (
           <span className="dots" aria-label={`${product.colors.length} colours`}>
