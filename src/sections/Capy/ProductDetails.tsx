@@ -14,6 +14,7 @@ import { useSendEvent } from "~/sdk/useSendEvent";
 import { money, sized, srcSetOf, toPdp } from "~/sdk/capyProduct";
 import { Ico } from "~/components/capy/Icons";
 import { openMinicart } from "~/components/capy/Minicart";
+import SizeFinder from "~/components/capy/SizeFinder";
 import type { Cta } from "~/components/capy/types";
 
 export interface SizeInfo {
@@ -122,6 +123,7 @@ export default function ProductDetails({
   const [sizeName, setSize] = useState(
     sizeNames.includes(defaultSize) ? defaultSize : (sizeNames[0] ?? ""),
   );
+  const [recommended, setRecommended] = useState<string | null>(null);
   const variant = color?.sizes.find((s) => s.name === sizeName) ?? color?.sizes[0];
   const variantId = variant?.variantId ?? color?.variantId;
   const canBuy = Boolean(variantId && (variant ? variant.available : true));
@@ -319,6 +321,7 @@ export default function ProductDetails({
                       <label htmlFor={id} className={s.available ? undefined : "out"}>
                         <span className="n">{s.name}</span>
                         <span className="k">{s.available ? (info?.range ?? "") : "Sold out"}</span>
+                        {s.name === recommended && <span className="rec">Your size</span>}
                         <i
                           className="bar"
                           style={{ "--w": info?.bar ?? 1 } as React.CSSProperties}
@@ -329,6 +332,15 @@ export default function ProductDetails({
                   );
                 })}
               </div>
+              <details className="sf-open">
+                <summary className="ulink small">Not sure? Find your size</summary>
+                <SizeFinder
+                  compact
+                  chosen={sizeName}
+                  onAdvice={setRecommended}
+                  onChoose={setSize}
+                />
+              </details>
               {product.modelNote && <p className="model-note">{product.modelNote}</p>}
             </div>
           )}
