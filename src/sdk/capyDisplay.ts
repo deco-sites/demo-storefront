@@ -76,3 +76,20 @@ export function displayImage(url: string): string {
 
 /** True for the lifestyle shots uploaded with the products (landscape `l-pdp-*` files). */
 export const isLifestyle = (url: string | undefined) => /^l-/.test(imageStem(url) ?? "");
+
+/**
+ * Customer reviews per product handle: the average (0–5, in half stars) and how many. Shopify
+ * doesn't carry reviews yet; move these to a reviews app or `deco.*` metafields when it does.
+ */
+const REVIEWS: Record<string, { average: number; count: number }> = {
+  "sol-linen-poncho": { average: 4.5, count: 38 },
+  "yuzu-bucket-hat": { average: 5, count: 21 },
+  "onsen-waffle-robe": { average: 4.5, count: 54 },
+  "largo-sunglasses": { average: 4, count: 17 },
+  "passeio-grazing-vest": { average: 4.5, count: 26 },
+  "boia-swim-vest": { average: 5, count: 43 },
+  "passo-four-paw-sandals": { average: 3.5, count: 12 },
+  "rio-raincoat": { average: 4.5, count: 61 },
+};
+
+export const reviewsOf = (handle: string) => REVIEWS[handle];

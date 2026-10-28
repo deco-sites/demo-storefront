@@ -1,5 +1,6 @@
 import type { CardProduct } from "~/sdk/capyProduct";
 import { money, sized, srcSetOf } from "~/sdk/capyProduct";
+import Stars from "./Stars";
 
 const SIZES = "(max-width: 720px) 76vw, (max-width: 1080px) 40vw, 30vw";
 
@@ -55,6 +56,7 @@ export default function ProductCard({
         <span className="name">{product.title}</span>
         <span className="price">{money(product.price, product.currency)}</span>
         {product.tagline && <p className="line">{product.tagline}</p>}
+        {product.rating && <Stars rating={product.rating} />}
         {product.colors.length > 0 && (
           <span className="dots" aria-label={`${product.colors.length} colours`}>
             {product.colors.map((c) => (

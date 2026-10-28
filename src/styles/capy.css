@@ -298,6 +298,12 @@ p { text-wrap: pretty; }
 .pcard .meta .name { font-size: 15px; line-height: 20px; font-weight: 480; }
 .pcard .meta .price { font-size: 15px; line-height: 20px; font-weight: 400; font-variant-numeric: tabular-nums; }
 .pcard .meta .line { grid-column: 1 / -1; font-size: 14px; line-height: 20px; color: var(--muted); }
+.stars { display: inline-flex; align-items: center; gap: 6px; grid-column: 1 / -1; margin-top: 4px; font-size: 13px; line-height: 18px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.stars .row { position: relative; letter-spacing: 1px; color: var(--hair-2); }
+.stars .row::before { content: "★★★★★"; position: absolute; inset: 0; width: var(--fill); overflow: hidden; color: var(--sol); white-space: nowrap; }
+.stars .num { color: var(--ink); }
+.stars .count { color: var(--muted); }
+.stars-pdp { display: flex; margin-top: 8px; font-size: 14px; }
 .dots { display: flex; gap: 6px; grid-column: 1 / -1; margin-top: 10px; }
 .dots i { width: 12px; height: 12px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(28, 25, 23, .2); }
 

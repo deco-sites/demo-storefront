@@ -6,7 +6,7 @@
  */
 import type { Product, PropertyValue } from "../vendor/commerce/types";
 import type { Metafield } from "../vendor/shopify/utils/types";
-import { backdrop, cardScale, displayImage, isLifestyle } from "./capyDisplay";
+import { backdrop, cardScale, displayImage, isLifestyle, reviewsOf } from "./capyDisplay";
 
 /** The `deco.*` product metafields the redesign reads (tagline, badge, swatches, facts, …). */
 export const DECO_METAFIELDS: Metafield[] = [
@@ -48,6 +48,8 @@ export interface CardProduct {
   badge?: string;
   /** Packshot height as a fraction of the card height. */
   scale: number;
+  /** Average review score (half stars) and how many reviews. */
+  rating?: { average: number; count: number };
   colors: CardColor[];
   /** Sizes with at least one variant in stock. */
   sizes: string[];
@@ -151,6 +153,7 @@ export function toCard(product: Product): CardProduct {
     tagline: prop(product.additionalProperty, "tagline") || undefined,
     badge: prop(product.additionalProperty, "badge") || undefined,
     scale: cardScale(handle),
+    rating: reviewsOf(handle),
     colors: colors.map(({ sizes: _sizes, ...color }) => color),
     sizes: [
       ...new Set(colors.flatMap((c) => c.sizes.filter((x) => x.available).map((x) => x.name))),

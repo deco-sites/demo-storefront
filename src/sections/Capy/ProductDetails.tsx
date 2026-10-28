@@ -15,6 +15,7 @@ import { money, sized, srcSetOf, toPdp } from "~/sdk/capyProduct";
 import { Ico } from "~/components/capy/Icons";
 import { openMinicart } from "~/components/capy/Minicart";
 import type { Cta } from "~/components/capy/types";
+import Stars from "~/components/capy/Stars";
 
 export interface SizeInfo {
   /** @title Size name (as in Shopify) */
@@ -246,6 +247,7 @@ export default function ProductDetails({
           <h1 className="h1">{product.title}</h1>
           {product.tagline && <p className="line">{product.tagline}</p>}
           <p className="price">{price}</p>
+          {product.rating && <Stars rating={product.rating} className="stars stars-pdp" />}
           {(product.descriptionHtml || product.facts.length > 0) && (
             <div className="about-p">
               {product.descriptionHtml && (
