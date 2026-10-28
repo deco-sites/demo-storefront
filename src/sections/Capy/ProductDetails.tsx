@@ -11,7 +11,7 @@ import type { ProductDetailsPage } from "~/vendor/commerce/types";
 import { mapProductToAnalyticsItem } from "~/vendor/commerce/utils/productToAnalyticsItem";
 import { useAddToCart } from "~/platform/cart";
 import { useSendEvent } from "~/sdk/useSendEvent";
-import { money, sized, srcSetOf, toPdp } from "~/sdk/capyProduct";
+import { discountOf, money, sized, srcSetOf, toPdp } from "~/sdk/capyProduct";
 import { Ico } from "~/components/capy/Icons";
 import { openMinicart } from "~/components/capy/Minicart";
 import type { Cta } from "~/components/capy/types";
@@ -176,6 +176,7 @@ export default function ProductDetails({
   }
 
   const price = money(product.price, product.currency);
+  const off = discountOf(product.price, product.listPrice);
   const addToBag = () => {
     if (!variantId) return;
     add.mutate({ merchandiseId: variantId, quantity: 1 }, { onSuccess: () => openMinicart() });
@@ -245,7 +246,15 @@ export default function ProductDetails({
           </nav>
           <h1 className="h1">{product.title}</h1>
           {product.tagline && <p className="line">{product.tagline}</p>}
-          <p className="price">{price}</p>
+          <p className="price">
+            {off > 0 && (
+              <s className="was" aria-label={`Was ${money(product.listPrice!, product.currency)}`}>
+                {money(product.listPrice!, product.currency)}
+              </s>
+            )}
+            {price}
+            {off > 0 && <span className="tag tag-sol">-{off}%</span>}
+          </p>
           {(product.descriptionHtml || product.facts.length > 0) && (
             <div className="about-p">
               {product.descriptionHtml && (
