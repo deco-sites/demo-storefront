@@ -11,6 +11,7 @@ import { useCart } from "~/platform/cart";
 import { MINICART_DRAWER_ID } from "~/constants";
 import { type CardProduct, toCards } from "~/sdk/capyProduct";
 import { IconSprite, Ico } from "~/components/capy/Icons";
+import SearchBox from "~/components/capy/SearchBox";
 import Minicart, { type MinicartSettings } from "~/components/capy/Minicart";
 
 export interface NavLink {
@@ -137,10 +138,11 @@ export default function Header({
           ))}
         </nav>
         <div className="nav-actions">
+          {showSearch && <SearchBox className="nav-pill-search" placeholder={searchPlaceholder} />}
           {showSearch && (
             <button
               type="button"
-              className="icon-btn"
+              className="icon-btn search-btn"
               aria-label="Search"
               aria-expanded={search}
               onClick={() => {
@@ -171,31 +173,22 @@ export default function Header({
           </button>
         </div>
         {search && (
-          <form className="nav-panel nav-search" action="/s" method="get" role="search">
-            <label className="sr" htmlFor="capy-search">
-              Search
-            </label>
-            <Ico name="search" />
-            <input
-              id="capy-search"
-              name="q"
-              type="search"
-              placeholder={searchPlaceholder}
-              autoComplete="off"
-              autoFocus
-            />
-            <button className="pill pill-lime pill-sm" type="submit">
-              Search
-            </button>
-          </form>
+          <SearchBox
+            className="nav-panel"
+            placeholder={searchPlaceholder}
+            autoFocus
+            showSubmit
+            onClose={() => setSearch(false)}
+          />
         )}
         {menu && (
           <nav className="nav-panel nav-menu" aria-label="Menu">
             {showSearch && (
-              <form className="nav-search" action="/s" method="get" role="search">
-                <Ico name="search" />
-                <input name="q" type="search" placeholder={searchPlaceholder} aria-label="Search" />
-              </form>
+              <SearchBox
+                className=""
+                placeholder={searchPlaceholder}
+                onClose={() => setMenu(false)}
+              />
             )}
             {links.map((l) => (
               <a key={l.href + l.label} href={l.href} onClick={() => setMenu(false)}>

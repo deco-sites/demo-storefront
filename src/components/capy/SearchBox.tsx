@@ -17,7 +17,13 @@ interface Props {
   showSubmit?: boolean;
 }
 
-export default function SearchBox({ className, placeholder, autoFocus, onClose, showSubmit }: Props) {
+export default function SearchBox({
+  className,
+  placeholder,
+  autoFocus,
+  onClose,
+  showSubmit,
+}: Props) {
   const id = useId();
   const [q, setQ] = useState("");
   const [items, setItems] = useState<Suggestion[]>([]);
@@ -114,7 +120,9 @@ export default function SearchBox({ className, placeholder, autoFocus, onClose, 
                   onMouseEnter={() => setActive(i)}
                 >
                   <span className="ss-img" style={{ background: p.bg }}>
-                    {p.image && <img src={sized(p.image, 120)} alt="" width={56} height={56} loading="lazy" />}
+                    {p.image && (
+                      <img src={sized(p.image, 120)} alt="" width={56} height={56} loading="lazy" />
+                    )}
                   </span>
                   <span className="ss-name">{p.title}</span>
                   <span className="ss-price">{money(p.price, p.currency)}</span>
@@ -126,7 +134,9 @@ export default function SearchBox({ className, placeholder, autoFocus, onClose, 
             </>
           ) : (
             <p className="ss-empty">
-              {loading ? "Wading through the herd…" : `Nothing by the river for “${term}” yet. Try another word.`}
+              {loading
+                ? "Wading through the herd…"
+                : `Nothing by the river for “${term}” yet. Try another word.`}
             </p>
           )}
         </div>
