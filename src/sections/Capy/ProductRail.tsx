@@ -1,9 +1,10 @@
 /** ProductRail (capybara redesign): a horizontal rail of product cards with a scroll-driven progress line. */
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import type { Product } from "~/vendor/commerce/types";
-import { type CardProduct, toCards } from "~/sdk/capyProduct";
+import { type QuickProduct, toQuickCards } from "~/sdk/capyProduct";
 import { Ico } from "~/components/capy/Icons";
 import ProductCard from "~/components/capy/ProductCard";
+import QuickView from "~/components/capy/QuickView";
 import type { Cta } from "~/components/capy/types";
 
 export interface Props {
@@ -22,13 +23,14 @@ export interface Props {
 
 export const loader = (props: Props) => ({
   ...props,
-  products: toCards(props.products, props.order),
+  products: toQuickCards(props.products, props.order),
 });
 
-type ViewProps = Omit<Props, "products"> & { products: CardProduct[] };
+type ViewProps = Omit<Props, "products"> & { products: QuickProduct[] };
 
 export default function ProductRail({ title, products = [], link }: ViewProps) {
   const rail = useRef<HTMLDivElement>(null);
+  const [quick, setQuick] = useState<QuickProduct | null>(null);
   const scroll = (dir: 1 | -1) =>
     rail.current?.scrollBy({ left: dir * rail.current.clientWidth * 0.6, behavior: "smooth" });
   if (!products.length) return null;
@@ -57,7 +59,7 @@ export default function ProductRail({ title, products = [], link }: ViewProps) {
       </div>
       <div className="rail" ref={rail}>
         {products.map((p) => (
-          <ProductCard key={p.handle} product={p} />
+          <ProductCard key={p.handle} product={p} onQuickView={() => setQuick(p)} />
         ))}
       </div>
       <div className="wrap">
@@ -65,6 +67,7 @@ export default function ProductRail({ title, products = [], link }: ViewProps) {
           <span />
         </div>
       </div>
+      <QuickView product={quick} onClose={() => setQuick(null)} />
     </div>
   );
 }

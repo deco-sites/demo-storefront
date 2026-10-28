@@ -226,3 +226,47 @@ export function srcSetOf(url: string | undefined, widths = [480, 800, 1064]): st
   if (local) return `${url} 1344w, ${local[1]}@2x.webp 2688w`;
   return undefined;
 }
+
+/** A card plus what the quick view needs: every colour with its sizes, and a short description. */
+export interface QuickProduct extends CardProduct {
+  colors: PdpColor[];
+  summary?: string;
+}
+
+/** The first sentence or two of the description, as plain text. */
+function summaryOf(html: string | undefined): string | undefined {
+  const text = html
+    ?.replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (!text) return undefined;
+  const sentences = text.match(/[^.!?]+[.!?]+/g) ?? [text];
+  let out = "";
+  for (const s of sentences) {
+    if (out && out.length + s.length > 220) break;
+    out += s;
+  }
+  return out.trim();
+}
+
+/** Quick view cards for a product list, in the saved order. */
+export function toQuickCards(
+  products: Product[] | null | undefined,
+  order?: string[],
+): QuickProduct[] {
+  const byHandle = new Map((products ?? []).map((p) => [handleOf(p), p]));
+  return toCards(products, order).map((card) => {
+    const product = byHandle.get(card.handle)!;
+    const swatches = parseJson<Record<string, string>>(
+      prop(product.additionalProperty, "swatches"),
+      {},
+    );
+    return {
+      ...card,
+      colors: colorsOf(product, swatches),
+      summary: summaryOf(prop(product.additionalProperty, "descriptionHtml")) ?? card.tagline,
+    };
+  });
+}
