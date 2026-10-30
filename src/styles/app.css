@@ -13,10 +13,16 @@
 @source not "../blocks";
 @source not "../../.deco/index.ts";
 @source not "../../.deco/schema.gen.json";
-/* Utilities no current markup uses, kept so the stylesheet stays exactly what production ships
-   (removing them changes the CSS bundle, a product-owner decision). */
-@source inline("lowercase normal-case text-4xl text-base-content/40 mt-2 tooltip h-[120px] sm:h-[200px] sm:min-h-[600px] hero stack");
-@plugin "daisyui";
+/* Only the daisyUI components the markup uses (btn, input, loading, card, link, carousel, modal,
+   label, checkbox, badge, tab). daisyUI emits a component whenever its name shows up anywhere in
+   the scanned code, so common words ("menu", "list", "filter", "status") pulled in unused CSS. */
+@plugin "daisyui" {
+  exclude: alert, avatar, breadcrumbs, calendar, chat, collapse, countdown, diff, divider, dock,
+    drawer, dropdown, fab, fieldset, fileinput, filter, footer, hero, hover3d, hovergallery,
+    indicator, kbd, list, mask, menu, mockup, navbar, progress, radialprogress, radio, range,
+    rating, select, skeleton, stack, stat, status, steps, swap, table, textarea, textrotate,
+    timeline, toast, toggle, tooltip, validator, glass;
+}
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
