@@ -59,7 +59,29 @@ export async function loadPageAt(
   return { ...page, blocks };
 }
 
+/** Query params that make a distinct page worth indexing; every other one (`?color=`, filters,
+ * sort, tracking) is a variation of the same page. */
+const CANONICAL_SEARCH_PARAMS = ["q", "page"];
+
+/** The page's URL without the params that only vary it, e.g. `/products/x?color=Red` → `/products/x`. */
+function canonicalUrl(href: string): string {
+  const url = new URL(href);
+  const kept = new URLSearchParams();
+  for (const key of CANONICAL_SEARCH_PARAMS) {
+    const value = url.searchParams.get(key);
+    if (value) kept.set(key, value);
+  }
+  url.search = kept.toString();
+  url.hash = "";
+  return url.href;
+}
+
 export function pageHead(page: LoadedPage | undefined) {
+  // A page whose SEO block sets no canonical points to itself without its variation params, so
+  // `?color=` and friends don't each become a separate page for search engines.
+  if (page && !page.seo?.canonical && page.url) {
+    return buildHead({ ...page, seo: { ...page.seo, canonical: canonicalUrl(page.url) } });
+  }
   return buildHead(page);
 }
 
