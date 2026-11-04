@@ -61,7 +61,7 @@ export default function ProductRail({ title, products = [], link }: ViewProps) {
       </div>
       <div className="rail" ref={rail}>
         {products.map((p) => (
-          <ProductCard key={p.handle} product={p} />
+          <ProductCard key={p.handle} product={p} showRating />
         ))}
       </div>
       <div className="wrap">

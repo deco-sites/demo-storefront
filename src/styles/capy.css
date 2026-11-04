@@ -760,3 +760,13 @@ body:has(.cart-toggle:checked) { overflow: hidden; }
 .swatches button { border: 0; padding: 0; }
 .sizes-pick label.out .n { color: var(--muted); }
 .desc p + p { margin-top: 12px; }
+
+/* review stars: cards in the herd rail and the PDP buy column */
+.stars { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; line-height: 18px; color: var(--ink); font-variant-numeric: tabular-nums; }
+.stars-row { display: inline-flex; gap: 1px; color: var(--sol); }
+.stars-row svg { display: block; fill: currentColor; }
+.stars-row .stars-empty { fill: var(--hair-2); }
+.stars-count { color: var(--muted); }
+.pcard .meta .stars { grid-column: 1 / -1; margin-top: 2px; }
+.buy .stars { margin-top: 10px; font-size: 14px; }
+.buy .stars + .price { margin-top: 8px; }

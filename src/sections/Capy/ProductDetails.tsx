@@ -7,6 +7,7 @@
  * add to bag goes through the site's cart and opens the bag drawer.
  */
 import { useEffect, useRef, useState } from "react";
+import Stars from "~/components/capy/Stars";
 import type { ProductDetailsPage } from "~/vendor/commerce/types";
 import { mapProductToAnalyticsItem } from "~/vendor/commerce/utils/productToAnalyticsItem";
 import { useAddToCart } from "~/platform/cart";
@@ -245,6 +246,7 @@ export default function ProductDetails({
           </nav>
           <h1 className="h1">{product.title}</h1>
           {product.tagline && <p className="line">{product.tagline}</p>}
+          <Stars handle={product.handle} />
           <p className="price">{price}</p>
           {(product.descriptionHtml || product.facts.length > 0) && (
             <div className="about-p">

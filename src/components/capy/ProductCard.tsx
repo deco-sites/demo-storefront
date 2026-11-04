@@ -1,5 +1,6 @@
 import type { CardProduct } from "~/sdk/capyProduct";
 import { money, sized, srcSetOf } from "~/sdk/capyProduct";
+import Stars from "./Stars";
 
 const SIZES = "(max-width: 720px) 76vw, (max-width: 1080px) 40vw, 30vw";
 
@@ -12,10 +13,13 @@ export default function ProductCard({
   product,
   sizes = SIZES,
   eager = false,
+  showRating = false,
 }: {
   product: CardProduct;
   sizes?: string;
   eager?: boolean;
+  /** Show the review stars under the name (the "Meet the herd" rail). */
+  showRating?: boolean;
 }) {
   const [first, second] = product.colors;
   const scale = { "--s": product.scale } as React.CSSProperties;
@@ -54,6 +58,7 @@ export default function ProductCard({
       <div className="meta">
         <span className="name">{product.title}</span>
         <span className="price">{money(product.price, product.currency)}</span>
+        {showRating && <Stars handle={product.handle} />}
         {product.tagline && <p className="line">{product.tagline}</p>}
         {product.colors.length > 0 && (
           <span className="dots" aria-label={`${product.colors.length} colours`}>
