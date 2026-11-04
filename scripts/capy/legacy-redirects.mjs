@@ -6,7 +6,8 @@
  * everything else in the store is legacy.
  *
  * Read-only: it reads the Storefront API with the site's public token (wrangler.jsonc vars) and
- * writes files in this repo. Re-run it after the catalog changes, then `deco content && deco check`.
+ * writes files in .deco/blocks. Re-run it after the catalog changes, on a fresh `deco pull`, then
+ * `deco check` and `deco push --draft=<name>` (publish the draft in Studio or with `deco publish`).
  *
  *   node scripts/capy/legacy-redirects.mjs           # write the blocks
  *   node scripts/capy/legacy-redirects.mjs --dry-run # list what it would write
