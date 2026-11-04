@@ -14,7 +14,6 @@ const config: KnipConfig = {
   project: ["src/**/*.{ts,tsx}", ".deco/index.ts"],
   ignore: [
     "src/routeTree.gen.ts",
-    ".deco/blocks.gen.ts",
   ],
   ignoreDependencies: [
     "babel-plugin-react-compiler",

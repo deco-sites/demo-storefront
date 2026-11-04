@@ -35,9 +35,9 @@ Open `http://localhost:5173`.
 |---|---|
 | `npm run dev` | Start Vite dev server |
 | `npm run dev:clean` | Wipe Vite/Wrangler/TanStack caches and start fresh |
-| `npm run build` | `prebuild` (`deco schema && deco content && deco check`), then routes and `vite build` |
+| `npm run build` | `prebuild` (`deco schema`), then routes and `vite build` |
 | `npm run preview` | Preview the production build locally |
-| `npm run deploy` | `npm run build` then `wrangler deploy` |
+| `npm run deploy` | `npm run build`, `deco check` and `deco schema push` (a Studio API key as `DECO_TOKEN`), then `wrangler deploy` |
 | `npm run typecheck` | `tsr generate && tsc --noEmit` |
 | `npm test` | Unit tests (`src/**/*.test.ts`) |
 | `npm run format` / `format:check` | Prettier on `src/**/*.{ts,tsx}` |
@@ -50,9 +50,10 @@ Open `http://localhost:5173`.
 
 ```
 .deco/
-├── blocks/               # Saved content, one JSON file per block (source of truth)
+├── blocks/               # Saved content, one JSON file per block (`deco pull`; gitignored, Studio is the source of truth)
+├── link.json             # The Studio org and site (`deco link`; committed)
 ├── index.ts              # The block map: every type content can name
-└── schema.gen.json       # Editor forms (`deco schema`; committed). blocks.gen.ts is generated and gitignored
+└── schema.gen.json       # Editor forms (`deco schema`; committed; `deco schema push` sends it to Studio)
 src/
 ├── cms.ts                # createCMS (explicit params; the site reads its own env)
 ├── views.ts              # View registry: section type → component
@@ -128,8 +129,11 @@ CI/CD is automatic (see [`.github/workflows/README.md`](./.github/workflows/READ
 
 Required repo secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
 
-The build runs `deco check` (`prebuild`): content it rejects fails the build, and with it the deploy.
-Worker secrets: `DECO_SITE_TOKEN` (with the `DECO_SITE` var, Studio releases go live without a deploy)
+Content isn't bundled: the worker reads the release published in Studio for the `DECO_SITE` var from the
+delivery CDN at runtime, so a publish goes live without a deploy. A production deploy runs `deco check`
+(production content against this build's schema; content it rejects fails the deploy) and
+`deco schema push` (Studio's forms follow the deployed code), with a Studio API key as `DECO_TOKEN`.
+Worker secrets: `DECO_SITE_TOKEN` (telemetry to the hosted collector)
 and `OTEL_EXPORTER_OTLP_HEADERS` (the collector's auth header); see `wrangler.jsonc`.
 
 To deploy manually from your machine:

@@ -55,8 +55,7 @@ export default defineConfig({
       },
     }),
     tailwindcss(),
-    // `__BUILD_HASH__` (the commit: Workers Builds' sha, else git's) for the edge cache, and
-    // decoContent(): in `vite dev`, a block saved in the site editor reloads open pages.
+    // `__BUILD_HASH__` (the commit: Workers Builds' sha, else git's) for the edge cache.
     decoTanstack({ buildHash: process.env.WORKERS_CI_COMMIT_SHA }),
     {
       name: "site-manual-chunks",
