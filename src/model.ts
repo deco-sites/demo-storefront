@@ -28,7 +28,7 @@ export interface PageSeo {
   type?: string;
 }
 
-/** A saved page, as `client.list` returns it: `seo` and `sections` are still JSON. */
+/** A saved page, as `client.resolve(name, { run: false })` returns it: `seo` and `sections` are still JSON. */
 export interface StoredPage extends Route {
   seo?: PageSeo | Block;
   /** A list of blocks, or one multivariate block that picks a whole list. */
