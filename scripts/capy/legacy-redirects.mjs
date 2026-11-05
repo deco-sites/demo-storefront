@@ -1,19 +1,22 @@
 #!/usr/bin/env node
 /**
- * Writes a redirect block (.deco/blocks/redirect-legacy-*.json) for every product and collection
- * of the old demo catalog, so their pages send visitors to /collections/the-herd. The capybara
- * catalog is everything tagged `capy-2026` and the collections the-herd, sol, rio and onsen;
- * everything else in the store is legacy.
+ * Writes the site's redirects block (.deco/blocks/Redirects.json, one block holding every rule) with
+ * a rule for every product and collection of the old demo catalog, so their pages send visitors to
+ * /collections/the-herd. The capybara catalog is everything tagged `capy-2026` and the collections
+ * the-herd, sol, rio and onsen; everything else in the store is legacy. Rules in the block that send
+ * anywhere else are kept; the per-rule redirect-legacy-*.json files older runs wrote are removed.
  *
  * Read-only: it reads the Storefront API with the site's public token (wrangler.jsonc vars) and
  * writes files in .deco/blocks. Re-run it after the catalog changes, on a fresh `deco pull`, then
- * `deco check` and `deco push --draft=<name>` (publish the draft in Studio or with `deco publish`).
+ * `deco check` and `deco push --draft=<name>` (with `--prune` the first time, so the removed
+ * per-rule blocks are deleted too; publish the draft in Studio or with `deco publish`).
  *
- *   node scripts/capy/legacy-redirects.mjs           # write the blocks
+ *   node scripts/capy/legacy-redirects.mjs           # write the block
  *   node scripts/capy/legacy-redirects.mjs --dry-run # list what it would write
  */
-import { readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { REDIRECTS_FILE, isLegacyRuleFile, withLegacyRules } from "./redirects-block.mjs";
 
 const ROOT = new URL("../..", import.meta.url).pathname;
 const BLOCKS = join(ROOT, ".deco/blocks");
@@ -62,20 +65,23 @@ const froms = [
   ...collections.flatMap((c) => [`/collections/${c.handle}`, `/${c.handle}`]),
   ...OLD_PATHS,
 ];
-const unique = [...new Set(froms)].sort();
 
-const fileOf = (from) =>
-  `redirect-legacy${from.replace(/[^a-zA-Z0-9]+/g, "-").replace(/-$/, "")}.json`;
+const file = join(BLOCKS, REDIRECTS_FILE);
+const existing = existsSync(file) ? JSON.parse(readFileSync(file, "utf8")) : undefined;
+const block = withLegacyRules(existing, froms, TARGET);
+const legacyFiles = existsSync(BLOCKS) ? readdirSync(BLOCKS).filter(isLegacyRuleFile) : [];
+const added = block.redirects.filter((rule) => rule.to === TARGET).length;
+const summary = `${block.redirects.length} rules, ${added} legacy (${products.length} products, ${collections.length} collections)`;
 
 if (dryRun) {
-  for (const from of unique) console.log(`${from} -> ${TARGET}  (${fileOf(from)})`);
-  console.log(`${unique.length} redirects (${products.length} products, ${collections.length} collections)`);
+  for (const rule of block.redirects.filter((r) => r.to === TARGET)) console.log(`${rule.from} -> ${rule.to}`);
+  console.log(`would write .deco/blocks/${REDIRECTS_FILE}: ${summary}`);
+  if (legacyFiles.length > 0) console.log(`would remove ${legacyFiles.length} per-rule redirect-legacy-*.json files`);
   process.exit(0);
 }
 
-for (const f of readdirSync(BLOCKS)) if (f.startsWith("redirect-legacy-")) rmSync(join(BLOCKS, f));
-for (const from of unique) {
-  const block = { __resolveType: "redirect", from, to: TARGET, permanent: false };
-  writeFileSync(join(BLOCKS, fileOf(from)), `${JSON.stringify(block, null, 2)}\n`);
-}
-console.log(`wrote ${unique.length} redirect blocks (${products.length} products, ${collections.length} collections)`);
+mkdirSync(BLOCKS, { recursive: true });
+for (const f of legacyFiles) rmSync(join(BLOCKS, f));
+writeFileSync(file, `${JSON.stringify(block, null, 2)}\n`);
+console.log(`wrote .deco/blocks/${REDIRECTS_FILE}: ${summary}`);
+if (legacyFiles.length > 0) console.log(`removed ${legacyFiles.length} per-rule redirect-legacy-*.json files`);

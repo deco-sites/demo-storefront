@@ -14,7 +14,7 @@
     "deploy": "npm run build && deco check && deco schema push && wrangler deploy",
     "types": "wrangler types",
     "typecheck": "tsr generate && tsc --noEmit",
-    "test": "tsx --test \"src/**/*.test.ts\"",
+    "test": "tsx --test \"src/**/*.test.ts\" \"scripts/**/*.test.mjs\"",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx}\"",
     "knip": "knip",
