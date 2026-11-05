@@ -25,7 +25,7 @@ vite.config.timestamp_*
 .DS_Store
 
 # Deco CMS: content lives in Studio and is read at runtime; `deco pull` fills .deco/blocks for local
-# edits (/next/cli). .deco/link.json is committed.
+# edits (/next/cli). The site is the DECO_SITE var in wrangler.jsonc.
 .deco/blocks/
 .deco/pull.json
 

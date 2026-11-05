@@ -51,7 +51,6 @@ Open `http://localhost:5173`.
 ```
 .deco/
 ├── blocks/               # Saved content, one JSON file per block (`deco pull`; gitignored, Studio is the source of truth)
-├── link.json             # The Studio org and site (`deco link`; committed)
 ├── index.ts              # The block map: every type content can name
 └── schema.gen.json       # Editor forms (`deco schema`; committed; `deco schema push` sends it to Studio)
 src/

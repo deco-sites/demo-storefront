@@ -13,7 +13,8 @@ resolves each section, `src/views.ts` maps each section to its component.
 
 ## Deco CMS content (`.deco/`) — read before editing content
 
-**Source of truth: the site in Studio** (`.deco/link.json` names it). The site
+**Source of truth: the site in Studio** (the `DECO_SITE` var in `wrangler.jsonc`
+names it; the `deco` CLI reads it from there). The site
 reads the published release from the delivery CDN at runtime; nothing is bundled.
 `.deco/blocks/` is git-ignored: `deco pull` fills it with one JSON file per saved
 block (pages, sections, redirects, matchers, site settings), named by the
