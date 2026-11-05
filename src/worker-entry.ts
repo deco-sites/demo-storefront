@@ -26,6 +26,7 @@ import {
   serverFnPagePath,
 } from "@decocms/tanstack/worker";
 import handler, { createServerEntry } from "@tanstack/react-start/server-entry";
+import { purgeVersions } from "./cache-purge";
 import { purgeSegments, segmentOf } from "./cache-segment";
 import { cms } from "./cms";
 // @ts-ignore Vite ?url import
@@ -395,7 +396,8 @@ function sameString(a: string, b: string): boolean {
 
 /**
  * Drops each exact path (`/shoes` never drops `/shoes?page=2`) under the
- * current version, for every segment (the body's own, else both devices:
+ * version its page renders and the current one (src/cache-purge.ts), for
+ * every segment (the body's own, else both devices:
  * src/cache-segment.ts),
  * every assignments key a visitor can carry now (each subset of the saved
  * tests, with the running campaigns and with none), as a navigation and a
@@ -427,12 +429,15 @@ async function purge(request: Request, env: Env): Promise<Response> {
   const cache = edgeCache();
   if (!cache) return Response.json({ purged: [], total: 0, note: "Cache storage unavailable" });
   const origin = new URL(request.url).origin;
-  const version = await cacheVersion(cms, __BUILD_HASH__);
   const assignments = await liveAssignmentKeys(cms);
   const purged: string[] = [];
   for (const [i, path] of paths.entries()) {
     const url = new URL(path, origin);
-    for (const segment of segments) {
+    // Under the revision the page pins as well as the current one: they differ right after a publish.
+    const versions = await purgeVersions(cms, __BUILD_HASH__, url);
+    for (const [version, segment] of versions.flatMap((v) =>
+      segments.map((s) => [v, s] as const),
+    )) {
       for (const assigned of assignments) {
         for (const fetch of [false, true]) {
           let gone: boolean;
