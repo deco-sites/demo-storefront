@@ -56,7 +56,7 @@ Open `http://localhost:5173`.
 src/
 ├── cms.ts                # createCMS (explicit params; the site reads its own env)
 ├── views.ts              # View registry: section type → component
-├── open-page.server.ts   # matchRoute + one promise per block
+├── open-page.server.ts   # routes() → matchRoute → redirects(), then one promise per block
 ├── page.functions.ts     # The page loader as a server function
 ├── page-route.tsx        # Route options shared by `/` and `/$`
 ├── head.ts               # <head> from the page SEO and the site-wide SEO defaults
@@ -83,7 +83,7 @@ src/
 
 1. A request hits `src/worker-entry.ts` → `createDecoWorker` (`@decocms/tanstack/worker`) with the CMS from `src/cms.ts`: security headers, CSP, drafts, CMS redirects, the site's own edge cache (in the same file: assignments, cache profiles, the purge route; the device/sign-in segmentation is in `src/cache-segment.ts`), and `http.server.request.duration` for every request in the CMS's telemetry (what Studio's Monitor shows; nothing in `vite dev`, where telemetry is off).
 2. The request goes on to the TanStack Start server entry (`src/server.ts`).
-3. The catch-all route (`src/routes/$.tsx`) and the home route call `loadPage`, which finds the page with `matchRoute` (`src/open-page.server.ts`) and starts every block on it.
+3. The catch-all route (`src/routes/$.tsx`) and the home route call `loadPage`, which finds the page with `matchRoute` over `client.routes()` (every page's path, read from the release index), checks the rules of the one redirects block (`client.redirects()`, fetched in the same wave as the page's blocks) and starts every block on it (`src/open-page.server.ts`).
 4. Each section block returns a descriptor; `src/runtime/PageView.tsx` renders it through `src/views.ts`.
 5. Commerce data (Shopify PDP, PLP, search, cart) comes from the loaders in `src/vendor/shopify`, sent through the Shopify upstream client. Saved content holds no data blocks: each section that shows products fetches them in its own block function (`src/loaders/capyProducts.ts`), from the page being rendered (the product of `/products/:slug`, the listing of `/collections/:handle` or `/s`) or from the collection or search saved in its settings.
 

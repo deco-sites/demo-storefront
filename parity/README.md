@@ -58,7 +58,7 @@ Facts about production that the cases pin down:
 
 - The `/*` catch-all page (Not Found Page) answers **200** for any unknown path, including `/products/does-not-exist-1` and `/collections/does-not-exist`. There is no 404 status.
 - There is **no sitemap**: `/sitemap.xml` is that same catch-all page (200 HTML), so the `sitemap-xml-page` case screenshots it.
-- The URLs of the design before the capybara one (`/shirts`, `/products/t-shirt`, …) are CMS redirects (`redirect-legacy-*`, 302). The other redirect is the trailing-slash 307.
+- The URLs of the design before the capybara one (`/shirts`, `/products/t-shirt`, …) are CMS redirects (rules of the `Redirects` block, written by `scripts/capy/legacy-redirects.mjs`; 302). The other redirect is the trailing-slash 307.
 - Every response carries an **enforced** `Content-Security-Policy` (`src/worker-entry.ts`), which is snapshotted with the other headers.
 
 The app origin is replaced with `{origin}` in every snapshot, so a target on another host/port compares cleanly.

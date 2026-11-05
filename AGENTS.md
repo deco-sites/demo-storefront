@@ -8,8 +8,9 @@ TanStack Start (React) storefront on the next major of Deco CMS
 (`@decocms/blocks`), deployed to Cloudflare Workers via wrangler. Dev server:
 `npm run dev` (Vite). Build: `npm run build`. Type-check: `npm run typecheck`.
 Pages are rendered as described in the TanStack Start guide of the Deco docs
-(descriptors): `src/open-page.server.ts` finds the page with `matchRoute` and
-resolves each section, `src/views.ts` maps each section to its component.
+(descriptors): `src/open-page.server.ts` routes on the release index
+(`routes()` → `matchRoute`, then the redirects block via `redirects()`; never
+`list("page")`) and resolves each section, `src/views.ts` maps each section to its component.
 
 ## Deco CMS content (`.deco/`) — read before editing content
 
@@ -17,8 +18,8 @@ resolves each section, `src/views.ts` maps each section to its component.
 names it; the `deco` CLI reads it from there). The site
 reads the published release from the delivery CDN at runtime; nothing is bundled.
 `.deco/blocks/` is git-ignored: `deco pull` fills it with one JSON file per saved
-block (pages, sections, redirects, matchers, site settings), named by the
-URI-encoded block name. For ANY content change: `deco pull`, edit only the
+block (pages, sections, matchers, site settings, and `Redirects`, the one
+block holding every redirect rule), named by the URI-encoded block name. For ANY content change: `deco pull`, edit only the
 matching `.deco/blocks/*.json` file(s), run `deco schema && deco check` (0 errors),
 `deco diff`, then `deco push --draft=<name>`. A push never goes live; only
 `deco publish --draft=<name>` (or Studio) does.
