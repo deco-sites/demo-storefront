@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 /**
- * Writes the site's redirects block (.deco/blocks/Redirects.json, one block holding every rule) with
- * a rule for every product and collection of the old demo catalog, so their pages send visitors to
+ * Writes the site's redirects block (one block holding every rule: the .deco/blocks file whose type
+ * is `redirects` or `website/loaders/redirects.ts`, else a new Redirects.json) with a rule for every
+ * product and collection of the old demo catalog, so their pages send visitors to
  * /collections/the-herd. The capybara catalog is everything tagged `capy-2026` and the collections
- * the-herd, sol, rio and onsen; everything else in the store is legacy. Rules in the block that send
- * anywhere else are kept; the per-rule redirect-legacy-*.json files older runs wrote are removed.
+ * the-herd, sol, rio and onsen; everything else in the store is legacy. The block's other rules are
+ * kept, and a legacy path one of them already redirects is skipped (redirects-block.mjs); the
+ * per-rule redirect-legacy-*.json files older runs wrote are removed.
  *
  * Read-only: it reads the Storefront API with the site's public token (wrangler.jsonc vars) and
  * writes files in .deco/blocks. Re-run it after the catalog changes, on a fresh `deco pull`, then
@@ -16,7 +18,7 @@
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { REDIRECTS_FILE, isLegacyRuleFile, withLegacyRules } from "./redirects-block.mjs";
+import { isLegacyRuleFile, redirectsBlockFile, withLegacyRules } from "./redirects-block.mjs";
 
 const ROOT = new URL("../..", import.meta.url).pathname;
 const BLOCKS = join(ROOT, ".deco/blocks");
@@ -57,25 +59,34 @@ async function all(field, nodeFields) {
   return out;
 }
 
-const products = (await all("products", "handle tags")).filter((p) => !p.tags.includes(NEW_TAG));
-const collections = (await all("collections", "handle")).filter((c) => !NEW_COLLECTIONS.has(c.handle));
-
-const froms = [
-  ...products.map((p) => `/products/${p.handle}`),
-  ...collections.flatMap((c) => [`/collections/${c.handle}`, `/${c.handle}`]),
-  ...OLD_PATHS,
+const allProducts = await all("products", "handle tags");
+const allCollections = await all("collections", "handle");
+const isNew = { product: (p) => p.tags.includes(NEW_TAG), collection: (c) => NEW_COLLECTIONS.has(c.handle) };
+const products = allProducts.filter((p) => !isNew.product(p));
+const collections = allCollections.filter((c) => !isNew.collection(c));
+const pathsOf = (ps, cs) => [
+  ...ps.map((p) => `/products/${p.handle}`),
+  ...cs.flatMap((c) => [`/collections/${c.handle}`, `/${c.handle}`]),
 ];
 
-const file = join(BLOCKS, REDIRECTS_FILE);
+const froms = [...pathsOf(products, collections), ...OLD_PATHS];
+// The live catalog's pages: a rule sending one to the target is left from a run when it was legacy.
+const live = pathsOf(allProducts.filter(isNew.product), allCollections.filter(isNew.collection));
+
+const blockFiles = existsSync(BLOCKS) ? readdirSync(BLOCKS).filter((f) => f.endsWith(".json")) : [];
+const name = redirectsBlockFile(
+  blockFiles.map((f) => [f, JSON.parse(readFileSync(join(BLOCKS, f), "utf8"))]),
+);
+const file = join(BLOCKS, name);
 const existing = existsSync(file) ? JSON.parse(readFileSync(file, "utf8")) : undefined;
-const block = withLegacyRules(existing, froms, TARGET);
-const legacyFiles = existsSync(BLOCKS) ? readdirSync(BLOCKS).filter(isLegacyRuleFile) : [];
-const added = block.redirects.filter((rule) => rule.to === TARGET).length;
-const summary = `${block.redirects.length} rules, ${added} legacy (${products.length} products, ${collections.length} collections)`;
+const { block, rules, skipped } = withLegacyRules(existing, froms, TARGET, live);
+const legacyFiles = blockFiles.filter(isLegacyRuleFile);
+const summary = `${block.redirects.length} rules, ${rules.length} legacy (${products.length} products, ${collections.length} collections)`;
 
 if (dryRun) {
-  for (const rule of block.redirects.filter((r) => r.to === TARGET)) console.log(`${rule.from} -> ${rule.to}`);
-  console.log(`would write .deco/blocks/${REDIRECTS_FILE}: ${summary}`);
+  for (const rule of rules) console.log(`${rule.from} -> ${rule.to}`);
+  for (const from of skipped) console.log(`skipped ${from}: another rule in the block redirects it`);
+  console.log(`would write .deco/blocks/${name}: ${summary}`);
   if (legacyFiles.length > 0) console.log(`would remove ${legacyFiles.length} per-rule redirect-legacy-*.json files`);
   process.exit(0);
 }
@@ -83,5 +94,6 @@ if (dryRun) {
 mkdirSync(BLOCKS, { recursive: true });
 for (const f of legacyFiles) rmSync(join(BLOCKS, f));
 writeFileSync(file, `${JSON.stringify(block, null, 2)}\n`);
-console.log(`wrote .deco/blocks/${REDIRECTS_FILE}: ${summary}`);
+if (skipped.length > 0) console.log(`skipped ${skipped.length} legacy paths another rule already redirects`);
+console.log(`wrote .deco/blocks/${name}: ${summary}`);
 if (legacyFiles.length > 0) console.log(`removed ${legacyFiles.length} per-rule redirect-legacy-*.json files`);
