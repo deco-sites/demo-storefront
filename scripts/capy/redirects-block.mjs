@@ -13,21 +13,28 @@ const REDIRECTS_TYPES = new Set(["redirects", "website/loaders/redirects.ts"]);
 /** Old per-rule redirect blocks this script used to write, one file per rule. */
 export const isLegacyRuleFile = (file) => file.startsWith("redirect-legacy-");
 
+const isRedirectsBlock = (body) =>
+  body && typeof body === "object" && REDIRECTS_TYPES.has(body.__resolveType);
+
 /**
  * The file of the site's redirects block among `blocks` (`[file, parsed body]` of each file in
  * .deco/blocks), `REDIRECTS_FILE` when there is none. Throws when there are several: the SDK
- * routes only the first by name, so the rules must be merged by hand first.
+ * routes only the first by name, so the rules must be merged by hand first. Throws too when there
+ * is none and `REDIRECTS_FILE` holds a block of another type, which writing the rules would break.
  */
 export function redirectsBlockFile(blocks) {
   const found = blocks
-    .filter(
-      ([, body]) => body && typeof body === "object" && REDIRECTS_TYPES.has(body.__resolveType),
-    )
+    .filter(([, body]) => isRedirectsBlock(body))
     .map(([file]) => file)
     .sort();
   if (found.length > 1) {
     throw new Error(
       `several redirects blocks in .deco/blocks (${found.join(", ")}): merge their rules into one`,
+    );
+  }
+  if (found.length === 0 && blocks.some(([file]) => file === REDIRECTS_FILE)) {
+    throw new Error(
+      `.deco/blocks/${REDIRECTS_FILE} is not a redirects block: rename it, or create the redirects block`,
     );
   }
   return found[0] ?? REDIRECTS_FILE;

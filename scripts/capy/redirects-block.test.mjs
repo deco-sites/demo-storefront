@@ -107,6 +107,21 @@ test("the site's redirects block is found by its type, under any name", () => {
   );
 });
 
+test("a block of another type saved as Redirects is never written over", () => {
+  assert.throws(
+    () => redirectsBlockFile([["Redirects.json", { __resolveType: "website/pages/Page.tsx" }]]),
+    /Redirects.json is not a redirects block/,
+  );
+  // The site's redirects block under another name is still the one written.
+  assert.equal(
+    redirectsBlockFile([
+      ["Redirects.json", { __resolveType: "website/pages/Page.tsx" }],
+      ["site-redirects.json", { __resolveType: "redirects", redirects: [] }],
+    ]),
+    "site-redirects.json",
+  );
+});
+
 test("only the old per-rule files are legacy", () => {
   assert.equal(isLegacyRuleFile("redirect-legacy-shirts.json"), true);
   assert.equal(isLegacyRuleFile("Redirects.json"), false);
