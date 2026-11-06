@@ -1,5 +1,3 @@
-import { studioOrigin } from "@decocms/tanstack";
-
 // Enforced Content-Security-Policy.
 //
 // Hosts included here are the ones actually referenced by the rendered
@@ -16,25 +14,23 @@ import { studioOrigin } from "@decocms/tanstack";
 // `default-src` is intentionally broad (https:) so resource types with no
 // explicit directive — media, manifest, prefetch — keep working; the XSS
 // hardening comes from `script-src`, `object-src`, `base-uri` and
-// `form-action`. The worker adds `frame-ancestors` (Studio and the site).
+// `form-action`.
 //
-// Studio's origin is in `script-src` too (`studioOrigin()`: `DECO_STUDIO_ORIGIN`, else Studio's
-// production origin). Framed by Studio's site editor, the page imports the editor's modules from
-// it (the section outlines, the HTML swap after a save) through the Studio channel `DecoPreview`
-// mounts. Without it the page still renders, but the editor can't outline its sections, and a
-// save reloads the frame.
-export function cspDirectives(studio: string = studioOrigin()): string[] {
-  return [
-    "default-src 'self' https: data: blob:",
-    `script-src 'self' 'unsafe-inline' 'unsafe-eval' cdn.shopify.com *.shopify.com analytics.decocdn.com ${studio}`,
-    "img-src 'self' data: blob: decoims.com cdn.shopify.com *.shopify.com *.myshopify.com *.fbcdn.net",
-    "connect-src 'self' *.myshopify.com cdn.shopify.com decoims.com graph.instagram.com analytics.decocdn.com",
-    "frame-src 'self' *.shopify.com",
-    "style-src 'self' 'unsafe-inline' api.fontshare.com fonts.googleapis.com",
-    "font-src 'self' data: cdn.fontshare.com api.fontshare.com fonts.gstatic.com",
-    "worker-src 'self' blob:",
-    "object-src 'none'",
-    "base-uri 'self'",
-    "form-action 'self' *.myshopify.com *.shopify.com",
-  ];
-}
+// Studio needs nothing here: the worker (`createDecoWorker`) adds Studio's
+// origins to `script-src` (the editor's modules the Studio channel imports)
+// and `frame-ancestors` (Studio and the site): the same list the page's
+// Studio channel trusts (`DECO_STUDIO_ORIGIN`, else Studio's production and
+// staging origins).
+export const CSP_DIRECTIVES: readonly string[] = [
+  "default-src 'self' https: data: blob:",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' cdn.shopify.com *.shopify.com analytics.decocdn.com",
+  "img-src 'self' data: blob: decoims.com cdn.shopify.com *.shopify.com *.myshopify.com *.fbcdn.net",
+  "connect-src 'self' *.myshopify.com cdn.shopify.com decoims.com graph.instagram.com analytics.decocdn.com",
+  "frame-src 'self' *.shopify.com",
+  "style-src 'self' 'unsafe-inline' api.fontshare.com fonts.googleapis.com",
+  "font-src 'self' data: cdn.fontshare.com api.fontshare.com fonts.gstatic.com",
+  "worker-src 'self' blob:",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self' *.myshopify.com *.shopify.com",
+];

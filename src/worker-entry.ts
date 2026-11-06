@@ -29,7 +29,7 @@ import handler, { createServerEntry } from "@tanstack/react-start/server-entry";
 import { purgeVersions } from "./cache-purge";
 import { purgeSegments, segmentOf } from "./cache-segment";
 import { cms } from "./cms";
-import { cspDirectives } from "./csp";
+import { CSP_DIRECTIVES } from "./csp";
 // @ts-ignore Vite ?url import
 import appCss from "./styles/app.css?url";
 
@@ -444,7 +444,7 @@ const worker = createDecoWorker<Env>({
   serverEntry: createServerEntry({ fetch: handler.fetch }),
   cms,
   dev: import.meta.env.DEV,
-  csp: { enforce: cspDirectives() },
+  csp: { enforce: CSP_DIRECTIVES },
   preload: { styles: [appCss] },
   pageCache,
 });
