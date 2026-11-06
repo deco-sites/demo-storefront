@@ -2772,7 +2772,7 @@
           "permanent": {
             "type": "boolean",
             "title": "Permanent",
-            "description": "301 when true, 302 otherwise"
+            "description": "301 when true, 307 otherwise"
           },
           "status": {
             "type": "number",
@@ -2827,7 +2827,7 @@
                 "permanent": {
                   "type": "boolean",
                   "title": "Permanent",
-                  "description": "301 when true, 302 otherwise"
+                  "description": "301 when true, 307 otherwise"
                 },
                 "status": {
                   "type": "number",
@@ -3486,7 +3486,7 @@
                 "permanent": {
                   "type": "boolean",
                   "title": "Permanent",
-                  "description": "301 when true, 302 otherwise"
+                  "description": "301 when true, 307 otherwise"
                 },
                 "status": {
                   "type": "number",

@@ -126,7 +126,7 @@ test("a redirect wins: the routed page is prefetched with the redirects block bu
     (error: unknown) => {
       assert.ok(isRedirect(error));
       assert.equal(error.options.href, "/collections/the-herd");
-      assert.equal(error.status, 302);
+      assert.equal(error.status, 307);
       return true;
     },
   );

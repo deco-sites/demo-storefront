@@ -135,6 +135,11 @@ delivery CDN at runtime, so a publish goes live without a deploy. A production d
 Worker secrets: `DECO_SITE_TOKEN` (telemetry to the hosted collector)
 and `OTEL_EXPORTER_OTLP_HEADERS` (the collector's auth header); see `wrangler.jsonc`.
 
+Cutover to a Studio with the "Blocks v8 site" switch: before the first `deco schema push`, an organization
+owner or admin turns on **Blocks v8 site** for `demo-storefront` in its Studio project settings (CMS tab).
+While it is off, Studio refuses the schema push (`409 not_blocks_v8_site`), so `npm run deploy` fails,
+and Studio opens the site with the v7 editor.
+
 To deploy manually from your machine:
 
 ```sh

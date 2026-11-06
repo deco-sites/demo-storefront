@@ -348,14 +348,18 @@ test("rules that answer with another status are a conflict, not merged silently"
     ["redirect-legacy-a.json", { __resolveType: "redirect", from: "/a", to: TARGET, status: 308 }],
     [
       "redirect-legacy-b.json",
-      { __resolveType: "redirect", from: "/b", to: TARGET, permanent: false, status: 302 },
+      { __resolveType: "redirect", from: "/b", to: TARGET, permanent: false, status: 307 },
+    ],
+    [
+      "redirect-legacy-c.json",
+      { __resolveType: "redirect", from: "/c", to: TARGET, permanent: false, status: 302 },
     ],
   ]);
-  const { conflicts } = withLegacyRules(undefined, ["/a", "/b"], TARGET, [], files);
-  // 308 is not the catalog's 302; an explicit 302 is.
+  const { conflicts } = withLegacyRules(undefined, ["/a", "/b", "/c"], TARGET, [], files);
+  // The catalog's rules are temporary (307): an explicit 307 is the same redirect, 308 and 302 are not.
   assert.deepEqual(
     conflicts.map((c) => c.file),
-    ["redirect-legacy-a.json"],
+    ["redirect-legacy-a.json", "redirect-legacy-c.json"],
   );
 });
 

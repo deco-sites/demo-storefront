@@ -52,7 +52,7 @@ const statusOf = (rule) => {
   }
   const flat = ruleOf(rule);
   if (STATUSES.has(flat.status)) return flat.status;
-  return flat.permanent === true ? 301 : 302;
+  return flat.permanent === true ? 301 : 307;
 };
 
 const safeDecode = (segment) => {
