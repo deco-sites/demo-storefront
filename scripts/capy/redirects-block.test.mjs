@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
   isLegacyRuleFile,
+  routeKey,
   legacyFileRules,
   REDIRECTS_FILE,
   redirectsBlockFile,
@@ -188,7 +189,11 @@ test("folded rules are deduped by path, and keep their fields but the type", () 
     { from: "/old", to: "/new", permanent: true, discardQueryParameters: true },
   ]);
   assert.equal(folded.length, 1);
-  assert.deepEqual(conflicts, []);
+  // b keeps the query string a discards: not the same redirect, so reported.
+  assert.deepEqual(
+    conflicts.map((c) => c.file),
+    ["redirect-legacy-b.json"],
+  );
 });
 
 test("on a conflict the catalog's rule is kept and the old file's is reported", () => {
@@ -294,4 +299,86 @@ test("the old files never make a block of another type the redirects block", () 
   ];
   assert.throws(() => redirectsBlockFile(blocks), /Redirects.json is not a redirects block/);
   assert.equal(redirectsBlockFile([ruleFile("/shirts")]), REDIRECTS_FILE);
+});
+
+test("paths are compared as routing does: trailing slash and encoding, not case or query", () => {
+  assert.equal(routeKey("/products/x/"), routeKey("/products/x"));
+  assert.equal(routeKey("//products//x"), routeKey("/products/x"));
+  assert.equal(routeKey("/caf%C3%A9"), routeKey("/café"));
+  assert.equal(routeKey("/p/:id"), routeKey("/p/:slug"));
+  assert.notEqual(routeKey("/Products/x"), routeKey("/products/x"));
+  assert.notEqual(routeKey("/x?a=1"), routeKey("/x"));
+  // An old file for /shirts/ is the catalog's /shirts: it never lands before it and wins.
+  const slash = withLegacyRules(
+    undefined,
+    ["/shirts"],
+    TARGET,
+    [],
+    legacyFileRules([ruleFile("/shirts/", "/collections/sol")]),
+  );
+  assert.deepEqual(slash.block.redirects, [{ from: "/shirts", to: TARGET, permanent: false }]);
+  assert.deepEqual(
+    slash.conflicts.map((c) => c.rule.from),
+    ["/shirts/"],
+  );
+  // Another case, or a query scope, is another redirect: folded next to the catalog's.
+  const other = withLegacyRules(
+    undefined,
+    ["/shirts"],
+    TARGET,
+    [],
+    legacyFileRules([ruleFile("/Shirts"), ruleFile("/shirts?color=red")]),
+  );
+  assert.deepEqual(other.folded.map((r) => r.from).sort(), ["/Shirts", "/shirts?color=red"]);
+  assert.deepEqual(other.conflicts, []);
+  // A live page under another spelling is still live.
+  const live = withLegacyRules(
+    undefined,
+    [],
+    TARGET,
+    ["/products/capy-tee"],
+    legacyFileRules([ruleFile("/products/capy-tee/")]),
+  );
+  assert.deepEqual(live.block.redirects, []);
+  assert.equal(live.dropped.length, 1);
+});
+
+test("rules that answer with another status are a conflict, not merged silently", () => {
+  const files = legacyFileRules([
+    ["redirect-legacy-a.json", { __resolveType: "redirect", from: "/a", to: TARGET, status: 308 }],
+    [
+      "redirect-legacy-b.json",
+      { __resolveType: "redirect", from: "/b", to: TARGET, permanent: false, status: 302 },
+    ],
+  ]);
+  const { conflicts } = withLegacyRules(undefined, ["/a", "/b"], TARGET, [], files);
+  // 308 is not the catalog's 302; an explicit 302 is.
+  assert.deepEqual(
+    conflicts.map((c) => c.file),
+    ["redirect-legacy-a.json"],
+  );
+});
+
+test("an old file in the v7 nested shape is folded as it is", () => {
+  const files = legacyFileRules([
+    [
+      "redirect-legacy-v7.json",
+      {
+        __resolveType: "website/loaders/redirect.ts",
+        redirect: { from: "/v7", to: "/new", type: "permanent" },
+      },
+    ],
+  ]);
+  const { block, folded } = withLegacyRules(undefined, [], TARGET, [], files);
+  assert.deepEqual(block.redirects, [{ redirect: { from: "/v7", to: "/new", type: "permanent" } }]);
+  assert.equal(folded.length, 1);
+});
+
+test("a re-run that still sees the old files reports nothing for rules already folded", () => {
+  const files = legacyFileRules([ruleFile("/products/mug"), ruleFile("/legacy", "/about", true)]);
+  const first = withLegacyRules(undefined, [], TARGET, [], files);
+  const again = withLegacyRules(structuredClone(first.block), [], TARGET, [], files);
+  assert.deepEqual(again.block, first.block);
+  assert.deepEqual(again.dropped, []);
+  assert.deepEqual(again.conflicts, []);
 });
