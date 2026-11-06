@@ -5,8 +5,10 @@
  * product and collection of the old demo catalog, so their pages send visitors to
  * /collections/the-herd. The capybara catalog is everything tagged `capy-2026` and the collections
  * the-herd, sol, rio and onsen; everything else in the store is legacy. The block's other rules are
- * kept, and a legacy path one of them already redirects is skipped (redirects-block.mjs); the
- * per-rule redirect-legacy-*.json files older runs wrote are removed.
+ * kept, and a legacy path one of them already redirects is skipped (redirects-block.mjs). The rules
+ * of the per-rule redirect-legacy-*.json files older runs wrote are folded into the block first, one
+ * per path (the catalog's rule wins a conflict, which is reported), so no live redirect is lost;
+ * only once the block is written are those files removed. A re-run writes the same block.
  *
  * Read-only: it reads the Storefront API with the site's public token (wrangler.jsonc vars) and
  * writes files in .deco/blocks. Re-run it after the catalog changes, on a fresh `deco pull`, then
@@ -18,7 +20,12 @@
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { isLegacyRuleFile, redirectsBlockFile, withLegacyRules } from "./redirects-block.mjs";
+import {
+  isLegacyRuleFile,
+  legacyFileRules,
+  redirectsBlockFile,
+  withLegacyRules,
+} from "./redirects-block.mjs";
 
 const ROOT = new URL("../..", import.meta.url).pathname;
 const BLOCKS = join(ROOT, ".deco/blocks");
@@ -32,7 +39,10 @@ const dryRun = process.argv.includes("--dry-run");
 const wrangler = readFileSync(join(ROOT, "wrangler.jsonc"), "utf8");
 const store = wrangler.match(/"SHOPIFY_STORE_NAME":\s*"([^"]+)"/)?.[1];
 const token = wrangler.match(/"SHOPIFY_STOREFRONT_ACCESS_TOKEN":\s*"([^"]+)"/)?.[1];
-if (!store || !token) throw new Error("SHOPIFY_STORE_NAME / SHOPIFY_STOREFRONT_ACCESS_TOKEN not found in wrangler.jsonc");
+if (!store || !token)
+  throw new Error(
+    "SHOPIFY_STORE_NAME / SHOPIFY_STOREFRONT_ACCESS_TOKEN not found in wrangler.jsonc",
+  );
 
 async function query(q, variables) {
   const res = await fetch(`https://${store}.myshopify.com/api/2025-04/graphql.json`, {
@@ -61,7 +71,10 @@ async function all(field, nodeFields) {
 
 const allProducts = await all("products", "handle tags");
 const allCollections = await all("collections", "handle");
-const isNew = { product: (p) => p.tags.includes(NEW_TAG), collection: (c) => NEW_COLLECTIONS.has(c.handle) };
+const isNew = {
+  product: (p) => p.tags.includes(NEW_TAG),
+  collection: (c) => NEW_COLLECTIONS.has(c.handle),
+};
 const products = allProducts.filter((p) => !isNew.product(p));
 const collections = allCollections.filter((c) => !isNew.collection(c));
 const pathsOf = (ps, cs) => [
@@ -74,26 +87,45 @@ const froms = [...pathsOf(products, collections), ...OLD_PATHS];
 const live = pathsOf(allProducts.filter(isNew.product), allCollections.filter(isNew.collection));
 
 const blockFiles = existsSync(BLOCKS) ? readdirSync(BLOCKS).filter((f) => f.endsWith(".json")) : [];
-const name = redirectsBlockFile(
-  blockFiles.map((f) => [f, JSON.parse(readFileSync(join(BLOCKS, f), "utf8"))]),
-);
+const blocks = blockFiles.map((f) => [f, JSON.parse(readFileSync(join(BLOCKS, f), "utf8"))]);
+const name = redirectsBlockFile(blocks);
 const file = join(BLOCKS, name);
 const existing = existsSync(file) ? JSON.parse(readFileSync(file, "utf8")) : undefined;
-const { block, rules, skipped } = withLegacyRules(existing, froms, TARGET, live);
-const legacyFiles = blockFiles.filter(isLegacyRuleFile);
-const summary = `${block.redirects.length} rules, ${rules.length} legacy (${products.length} products, ${collections.length} collections)`;
+const legacyBlocks = blocks.filter(([f]) => isLegacyRuleFile(f));
+const { block, rules, skipped, folded, conflicts, dropped } = withLegacyRules(
+  existing,
+  froms,
+  TARGET,
+  live,
+  legacyFileRules(legacyBlocks),
+);
+const legacyFiles = legacyBlocks.map(([f]) => f);
+const summary = `${block.redirects.length} rules, ${rules.length} legacy (${products.length} products, ${collections.length} collections), ${folded.length} folded from per-rule files`;
+
+const show = (rule) => `${rule.from} -> ${rule.to}${rule.permanent ? " (permanent)" : ""}`;
+for (const { file: f, rule, kept } of conflicts) {
+  console.log(`conflict ${f}: ${show(rule)}; kept ${show(kept)}`);
+}
+for (const { file: f, rule, reason } of dropped)
+  console.log(`not folded ${f}: ${show(rule)}: ${reason}`);
 
 if (dryRun) {
-  for (const rule of rules) console.log(`${rule.from} -> ${rule.to}`);
-  for (const from of skipped) console.log(`skipped ${from}: another rule in the block redirects it`);
+  for (const rule of folded) console.log(`folded ${show(rule)}`);
+  for (const rule of rules) console.log(show(rule));
+  for (const from of skipped)
+    console.log(`skipped ${from}: another rule in the block redirects it`);
   console.log(`would write .deco/blocks/${name}: ${summary}`);
-  if (legacyFiles.length > 0) console.log(`would remove ${legacyFiles.length} per-rule redirect-legacy-*.json files`);
+  if (legacyFiles.length > 0)
+    console.log(`would remove ${legacyFiles.length} per-rule redirect-legacy-*.json files`);
   process.exit(0);
 }
 
 mkdirSync(BLOCKS, { recursive: true });
-for (const f of legacyFiles) rmSync(join(BLOCKS, f));
+// The block first, so the per-rule files' rules are in it before the files go.
 writeFileSync(file, `${JSON.stringify(block, null, 2)}\n`);
-if (skipped.length > 0) console.log(`skipped ${skipped.length} legacy paths another rule already redirects`);
+for (const f of legacyFiles) rmSync(join(BLOCKS, f));
+if (skipped.length > 0)
+  console.log(`skipped ${skipped.length} legacy paths another rule already redirects`);
 console.log(`wrote .deco/blocks/${name}: ${summary}`);
-if (legacyFiles.length > 0) console.log(`removed ${legacyFiles.length} per-rule redirect-legacy-*.json files`);
+if (legacyFiles.length > 0)
+  console.log(`removed ${legacyFiles.length} per-rule redirect-legacy-*.json files`);
