@@ -33,9 +33,9 @@
     // The Storefront API token is a public, read-scoped token: Shopify serves it to browsers by design.
     "SHOPIFY_STORE_NAME": "gimenesdevstore",
     "SHOPIFY_STOREFRONT_ACCESS_TOKEN": "71f2c3da0dab3b4eee7dce35eb8c6113",
-    // Hosted Deco CMS (/next/hosted#cloudflare-workers): content published in Studio goes live
-    // without a deploy. It stays
-    // off until the token is set as a secret too:
+    // Hosted Deco CMS (/next/hosted#cloudflare-workers): the Studio site whose published release the
+    // worker reads from the delivery CDN at runtime (content is never bundled), so a publish goes
+    // live without a deploy. The token (a secret) only authenticates telemetry:
     //   wrangler secret put DECO_SITE_TOKEN
     "DECO_SITE": "demo-storefront"
   }

@@ -5,6 +5,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { getRequest } from "@tanstack/react-start/server";
 import { z } from "zod";
+import { client } from "./cms";
 import { openPage } from "./open-page.server";
 
 export const loadPage = createServerFn({ method: "GET" })
@@ -20,7 +21,7 @@ export const loadPage = createServerFn({ method: "GET" })
   .handler(async ({ data }) => {
     const request = getRequest();
     const clientNavigation = new URL(request.url).pathname.startsWith("/_serverFn/");
-    const page = await openPage(data.href, request);
+    const page = await openPage(data.href, request, client);
     // While the server renders a document, block promises stay unawaited so each block streams.
     // A client-side navigation answers once every block is ready: the router swaps pages at once,
     // and the response carries data, not promises.

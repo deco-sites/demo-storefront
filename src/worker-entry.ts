@@ -26,41 +26,12 @@ import {
   serverFnPagePath,
 } from "@decocms/tanstack/worker";
 import handler, { createServerEntry } from "@tanstack/react-start/server-entry";
+import { purgeVersions } from "./cache-purge";
 import { purgeSegments, segmentOf } from "./cache-segment";
 import { cms } from "./cms";
+import { CSP_DIRECTIVES } from "./csp";
 // @ts-ignore Vite ?url import
 import appCss from "./styles/app.css?url";
-
-// Enforced Content-Security-Policy.
-//
-// Hosts included here are the ones actually referenced by the rendered
-// storefront: decoims.com (deco image CDN), cdn.shopify.com / *.shopify.com /
-// *.myshopify.com (Shopify assets + Storefront API), api/cdn.fontshare.com
-// (webfonts), fbcdn/graph.instagram.com (Instagram feed section) and
-// analytics.decocdn.com (Deco Analytics — see src/runtime/RootDocument.tsx).
-//
-// analytics.decocdn.com needs BOTH `script-src` and `connect-src`: the first
-// serves `/_dq/a.js`, the second receives the `/_dq/e` beacon. Allowing only
-// the script is the quiet failure here — the tag loads, the page looks
-// instrumented, and every event is blocked on its way out.
-//
-// `default-src` is intentionally broad (https:) so resource types with no
-// explicit directive — media, manifest, prefetch — keep working; the XSS
-// hardening comes from `script-src`, `object-src`, `base-uri` and
-// `form-action`. The worker adds `frame-ancestors` (Studio and the site).
-const CSP_DIRECTIVES = [
-  "default-src 'self' https: data: blob:",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' cdn.shopify.com *.shopify.com analytics.decocdn.com",
-  "img-src 'self' data: blob: decoims.com cdn.shopify.com *.shopify.com *.myshopify.com *.fbcdn.net",
-  "connect-src 'self' *.myshopify.com cdn.shopify.com decoims.com graph.instagram.com analytics.decocdn.com",
-  "frame-src 'self' *.shopify.com",
-  "style-src 'self' 'unsafe-inline' api.fontshare.com fonts.googleapis.com",
-  "font-src 'self' data: cdn.fontshare.com api.fontshare.com fonts.gstatic.com",
-  "worker-src 'self' blob:",
-  "object-src 'none'",
-  "base-uri 'self'",
-  "form-action 'self' *.myshopify.com *.shopify.com",
-];
 
 interface Env {
   /** The purge route's token (a Worker secret: `wrangler secret put PURGE_TOKEN`). */
@@ -266,7 +237,8 @@ async function pageCache(page: PageRequest<Env>): Promise<Response> {
     });
   }
 
-  const version = await cacheVersion(cms, __BUILD_HASH__);
+  // The revision the page renders: on the previous index while a publish's new blocks load.
+  const version = await cacheVersion(cms, __BUILD_HASH__, url);
   // What the worker decided and the page renders: two visitors on the same side of every test share an entry.
   const assigned = assignmentsKey(page.assignments);
   const key = cacheKey(url, {
@@ -394,7 +366,8 @@ function sameString(a: string, b: string): boolean {
 
 /**
  * Drops each exact path (`/shoes` never drops `/shoes?page=2`) under the
- * current version, for every segment (the body's own, else both devices:
+ * version its page renders and the current one (src/cache-purge.ts), for
+ * every segment (the body's own, else both devices:
  * src/cache-segment.ts),
  * every assignments key a visitor can carry now (each subset of the saved
  * tests, with the running campaigns and with none), as a navigation and a
@@ -426,12 +399,15 @@ async function purge(request: Request, env: Env): Promise<Response> {
   const cache = edgeCache();
   if (!cache) return Response.json({ purged: [], total: 0, note: "Cache storage unavailable" });
   const origin = new URL(request.url).origin;
-  const version = await cacheVersion(cms, __BUILD_HASH__);
   const assignments = await liveAssignmentKeys(cms);
   const purged: string[] = [];
   for (const [i, path] of paths.entries()) {
     const url = new URL(path, origin);
-    for (const segment of segments) {
+    // Under the revision the page pins as well as the current one: they differ right after a publish.
+    const versions = await purgeVersions(cms, __BUILD_HASH__, url);
+    for (const [version, segment] of versions.flatMap((v) =>
+      segments.map((s) => [v, s] as const),
+    )) {
       for (const assigned of assignments) {
         for (const fetch of [false, true]) {
           let gone: boolean;

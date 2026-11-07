@@ -35,9 +35,9 @@ Open `http://localhost:5173`.
 |---|---|
 | `npm run dev` | Start Vite dev server |
 | `npm run dev:clean` | Wipe Vite/Wrangler/TanStack caches and start fresh |
-| `npm run build` | `prebuild` (`deco schema && deco content && deco check`), then routes and `vite build` |
+| `npm run build` | `prebuild` (`deco schema`), then routes and `vite build` |
 | `npm run preview` | Preview the production build locally |
-| `npm run deploy` | `npm run build` then `wrangler deploy` |
+| `npm run deploy` | `npm run build`, `deco check` and `deco schema push` (a Studio API key as `DECO_TOKEN`), then `wrangler deploy` |
 | `npm run typecheck` | `tsr generate && tsc --noEmit` |
 | `npm test` | Unit tests (`src/**/*.test.ts`) |
 | `npm run format` / `format:check` | Prettier on `src/**/*.{ts,tsx}` |
@@ -50,13 +50,13 @@ Open `http://localhost:5173`.
 
 ```
 .deco/
-├── blocks/               # Saved content, one JSON file per block (source of truth)
+├── blocks/               # Saved content, one JSON file per block (`deco pull`; gitignored, Studio is the source of truth)
 ├── index.ts              # The block map: every type content can name
-└── schema.gen.json       # Editor forms (`deco schema`; committed). blocks.gen.ts is generated and gitignored
+└── schema.gen.json       # Editor forms (`deco schema`; committed; `deco schema push` sends it to Studio)
 src/
 ├── cms.ts                # createCMS (explicit params; the site reads its own env)
 ├── views.ts              # View registry: section type → component
-├── open-page.server.ts   # matchRoute + one promise per block
+├── open-page.server.ts   # routes() → matchRoute → redirects(), then one promise per block
 ├── page.functions.ts     # The page loader as a server function
 ├── page-route.tsx        # Route options shared by `/` and `/$`
 ├── head.ts               # <head> from the page SEO and the site-wide SEO defaults
@@ -83,7 +83,7 @@ src/
 
 1. A request hits `src/worker-entry.ts` → `createDecoWorker` (`@decocms/tanstack/worker`) with the CMS from `src/cms.ts`: security headers, CSP, drafts, CMS redirects, the site's own edge cache (in the same file: assignments, cache profiles, the purge route; the device/sign-in segmentation is in `src/cache-segment.ts`), and `http.server.request.duration` for every request in the CMS's telemetry (what Studio's Monitor shows; nothing in `vite dev`, where telemetry is off).
 2. The request goes on to the TanStack Start server entry (`src/server.ts`).
-3. The catch-all route (`src/routes/$.tsx`) and the home route call `loadPage`, which finds the page with `matchRoute` (`src/open-page.server.ts`) and starts every block on it.
+3. The catch-all route (`src/routes/$.tsx`) and the home route call `loadPage`, which finds the page with `matchRoute` over `client.routes()` (every page's path, read from the release index), checks the rules of the one redirects block (`client.redirects()`, fetched in the same wave as the page's blocks) and starts every block on it (`src/open-page.server.ts`).
 4. Each section block returns a descriptor; `src/runtime/PageView.tsx` renders it through `src/views.ts`.
 5. Commerce data (Shopify PDP, PLP, search, cart) comes from the loaders in `src/vendor/shopify`, sent through the Shopify upstream client. Saved content holds no data blocks: each section that shows products fetches them in its own block function (`src/loaders/capyProducts.ts`), from the page being rendered (the product of `/products/:slug`, the listing of `/collections/:handle` or `/s`) or from the collection or search saved in its settings.
 
@@ -128,9 +128,17 @@ CI/CD is automatic (see [`.github/workflows/README.md`](./.github/workflows/READ
 
 Required repo secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
 
-The build runs `deco check` (`prebuild`): content it rejects fails the build, and with it the deploy.
-Worker secrets: `DECO_SITE_TOKEN` (with the `DECO_SITE` var, Studio releases go live without a deploy)
+Content isn't bundled: the worker reads the release published in Studio for the `DECO_SITE` var from the
+delivery CDN at runtime, so a publish goes live without a deploy. A production deploy runs `deco check`
+(production content against this build's schema; content it rejects fails the deploy) and
+`deco schema push` (Studio's forms follow the deployed code), with a Studio API key as `DECO_TOKEN`.
+Worker secrets: `DECO_SITE_TOKEN` (telemetry to the hosted collector)
 and `OTEL_EXPORTER_OTLP_HEADERS` (the collector's auth header); see `wrangler.jsonc`.
+
+Cutover to a Studio with the "Blocks v8 site" switch: before the first `deco schema push`, an organization
+owner or admin turns on **Blocks v8 site** for `demo-storefront` in its Studio project settings (CMS tab).
+While it is off, Studio refuses the schema push (`409 not_blocks_v8_site`), so `npm run deploy` fails,
+and Studio opens the site with the v7 editor.
 
 To deploy manually from your machine:
 

@@ -1,15 +1,20 @@
 /**
  * Finds the page for a URL and starts every block on it (/next/tanstack-start-descriptors#3-match-the-url-to-a-page).
- * Each block resolves on its own, so its promise streams to the browser when it's ready, and the
- * page's SEO is awaited only after every block has started.
+ * Routing reads only the release index: the pages' paths (`routes()`), then the one redirects block.
+ * The page's blocks start downloading with the redirects block, in one wave (`prefetch`), so a
+ * redirect costs nothing extra and a page costs no extra round trip. Each block then resolves on its
+ * own, so its promise streams to the browser when it's ready, and the page's SEO is awaited only
+ * after every block has started.
  */
 import { notFound, redirect } from "@tanstack/react-router";
-import { type Block, matchRoute, type Redirect } from "@decocms/blocks";
-import { client } from "./cms";
+import { type Block, type Client, matchRoute } from "@decocms/blocks";
 import type { BlockDescriptor, PageSeo, StoredPage } from "./model";
 import { withPage } from "./request-state.server";
 import { detectDevice, deviceClass } from "./sdk/device";
 import { type CacheProfileName, detectCacheProfile } from "./server/cache-profiles";
+
+/** What the page loader reads content with: the request's client (`client` in src/cms.ts). */
+export type PageClient = Pick<Client, "routes" | "prefetch" | "redirects" | "resolve">;
 
 /** The section type saved, read before the block resolves, when the block is a section. */
 function componentOf(stored: unknown): string | undefined {
@@ -17,22 +22,33 @@ function componentOf(stored: unknown): string | undefined {
   return (stored as Block).__resolveType;
 }
 
-/** Opens the page at `href` for `request`. */
-export async function openPage(href: string, request: Request) {
+/** Opens the page at `href` for `request`, reading content with the client `clientFor` returns. */
+export async function openPage(
+  href: string,
+  request: Request,
+  clientFor: (request: Request) => Promise<PageClient>,
+) {
   const url = new URL(href, request.url);
   // Blocks read the page URL (pageState().url) and its request: it must stay on this site's origin.
   if (url.origin !== new URL(request.url).origin) throw notFound();
-  const c = await client(request);
-  const [pages, pagesError] = await c.list<StoredPage>("page");
-  if (pagesError) throw pagesError;
-  const [redirects, redirectsError] = await c.list<Redirect>("redirect");
+  const c = await clientFor(request);
+
+  // Pages only: the index holds every page's path, so routing fetches no page body.
+  const [routes, routesError] = await c.routes();
+  if (routesError) throw routesError;
+  const match = matchRoute(url, { routes });
+  // The page's blocks start downloading with the redirects block, in one wave.
+  if (match.kind === "match") c.prefetch(match.entry.name);
+  const [redirects, redirectsError] = await c.redirects();
   if (redirectsError) throw redirectsError;
+  // A redirect wins over a page with the same path, as it did when both were matched together.
+  const moved = matchRoute(url, { routes: [], redirects });
+  if (moved.kind === "redirect") throw redirect({ href: moved.location, statusCode: moved.status });
+  if (match.kind !== "match") throw notFound();
 
-  const match = matchRoute(url, { routes: pages, redirects });
-  if (match.kind === "not-found") throw notFound();
-  if (match.kind === "redirect") throw redirect({ href: match.location, statusCode: match.status });
-
-  const page = match.entry;
+  // The saved page, its saved blocks expanded, nothing run.
+  const [page, pageError] = await c.resolve<StoredPage>(match.entry.name, { run: false });
+  if (pageError) throw pageError;
   // Folded to mobile or desktop here, at the source, as the page cache key folds it (src/cache-segment.ts):
   // the page data, useDevice() and the `device` rule can't tell a tablet from a phone, so they can't
   // disagree with the cached copy.
