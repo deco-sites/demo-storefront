@@ -42,7 +42,8 @@ test("a re-run replaces only its own rules and keeps every other rule, in order"
     ],
   };
   const { block } = withLegacyRules(existing, ["/shirts", "/hats"], TARGET);
-  assert.equal(block.__resolveType, "website/loaders/redirects.ts");
+  // v8 routes only a block typed `redirects`: the v7 list type is rewritten.
+  assert.equal(block.__resolveType, "redirects");
   assert.deepEqual(block.redirects, [
     { from: "/old-sale", to: "/sale", permanent: true },
     { from: "/gone", to: TARGET, permanent: false },

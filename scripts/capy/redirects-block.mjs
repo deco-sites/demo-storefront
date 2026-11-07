@@ -8,7 +8,10 @@
 /** The block's file, under .deco/blocks, when the site has none yet: it is saved as `Redirects`. */
 export const REDIRECTS_FILE = "Redirects.json";
 
-/** The block types that are the redirects built-in: its name and its legacy alias. */
+/**
+ * The block types of a redirects block: the `redirects` built-in, and v7's list type, which
+ * @decocms/blocks 8.10 no longer routes (no alias), so the block is rewritten as `redirects`.
+ */
 const REDIRECTS_TYPES = new Set(["redirects", "website/loaders/redirects.ts"]);
 
 /** Old per-rule redirect blocks this script used to write, one file per rule. */
@@ -123,7 +126,8 @@ export function legacyFileRules(files) {
  *   (a `conflicts` entry when they differ in target, status or query handling), as does a second
  *   one for the same path; one for a path another rule of the block redirects, or from a live page
  *   to `target`, is `dropped` (silently when that other rule is the same: an earlier fold);
- * - the legacy rules (sorted, unique) are added last. Other fields of the block are kept.
+ * - the legacy rules (sorted, unique) are added last. Other fields of the block are kept, and its
+ *   type is `redirects` (v8 does not route a v7 `website/loaders/redirects.ts` block).
  * Folded rules are the block's own on the next run, so a re-run writes the same block.
  * Returns the block, the legacy rules it holds, the legacy paths it skipped, the rules it folded,
  * and the old files' rules it did not fold, with the rule kept (`conflicts`) or why (`dropped`).
@@ -172,7 +176,7 @@ export function withLegacyRules(existing, froms, target, live = [], folded = [])
   return {
     block: {
       ...block,
-      __resolveType: block.__resolveType ?? "redirects",
+      __resolveType: "redirects",
       redirects: [...others, ...kept.values(), ...rules],
     },
     rules,

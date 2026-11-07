@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
  * Writes the site's redirects block (one block holding every rule: the .deco/blocks file whose type
- * is `redirects` or `website/loaders/redirects.ts`, else a new Redirects.json) with a rule for every
+ * is `redirects` or v7's `website/loaders/redirects.ts`, rewritten as `redirects`, else a new
+ * Redirects.json) with a rule for every
  * product and collection of the old demo catalog, so their pages send visitors to
  * /collections/the-herd. The capybara catalog is everything tagged `capy-2026` and the collections
  * the-herd, sol, rio and onsen; everything else in the store is legacy. The block's other rules are
