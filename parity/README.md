@@ -51,14 +51,14 @@ Compare exits non-zero on any pixel difference, any size difference, any snapsho
 - **flows × viewports.** A small step language: `goto`, `click`, `fill`, `type`, `press`, `select`, `check`, `hover`, `scrollIntoView`, `waitFor`, `waitForURL`, `settle`, `capture`, `url`, `attr`, `text`, `count`. Steps can be limited with `viewports`. Each `capture` writes a PNG, and `url`/`attr`/`text` values go into the snapshot. Two examples:
   - The checkout handoff URL is snapshotted as the minicart's Begin Checkout `href`.
   - SPA navigations are covered too, so data loading on client-side navigation is exercised.
-- **texts.** Raw responses fetched without following redirects: `robots.txt`, `sitemap.xml`, the trailing-slash redirects (`/collections/the-herd/` answers 307 to `/collections/the-herd`), the legacy URL redirects (`/shirts` answers 302 to `/collections/the-herd`), the unknown paths and the favicon. Status, headers and body are stored, except that HTML bodies are omitted and `binary` bodies are stored as size + sha256.
+- **texts.** Raw responses fetched without following redirects: `robots.txt`, `sitemap.xml`, the trailing-slash redirects (`/collections/the-herd/` answers 307 to `/collections/the-herd`), the legacy URL redirects (`/shirts` answers 307 to `/collections/the-herd`; a baseline recorded before `@decocms/blocks` answered temporary redirects with 307 has 302 there), the unknown paths and the favicon. Status, headers and body are stored, except that HTML bodies are omitted and `binary` bodies are stored as size + sha256.
 - **editor forms.** `record` also copies the baseline build's `.deco/schema.gen.json` to `parity/baseline/forms/schema.gen.json`. It is not part of `compare`: it is the reference for reviewing a change's editor forms.
 
 Facts about production that the cases pin down:
 
 - The `/*` catch-all page (Not Found Page) answers **200** for any unknown path, including `/products/does-not-exist-1` and `/collections/does-not-exist`. There is no 404 status.
 - There is **no sitemap**: `/sitemap.xml` is that same catch-all page (200 HTML), so the `sitemap-xml-page` case screenshots it.
-- The URLs of the design before the capybara one (`/shirts`, `/products/t-shirt`, …) are CMS redirects (`redirect-legacy-*`, 302). The other redirect is the trailing-slash 307.
+- The URLs of the design before the capybara one (`/shirts`, `/products/t-shirt`, …) are CMS redirects (rules of the `Redirects` block, written by `scripts/capy/legacy-redirects.mjs`, which also folds in the rules of the old per-rule `redirect-legacy-*` blocks before it removes them). They are temporary rules, so they answer 307 (302 before `@decocms/blocks` made 307 the temporary status), like the trailing-slash redirect.
 - Every response carries an **enforced** `Content-Security-Policy` (`src/worker-entry.ts`), which is snapshotted with the other headers.
 
 The app origin is replaced with `{origin}` in every snapshot, so a target on another host/port compares cleanly.
