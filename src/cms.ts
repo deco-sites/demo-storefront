@@ -29,6 +29,13 @@ const resource = Object.fromEntries(
   }).filter((entry): entry is [string, string] => typeof entry[1] === "string" && entry[1] !== ""),
 );
 
+/**
+ * The sample rates when the `CMS` block's telemetry section saves none (/next/telemetry#sampling):
+ * every CMS error log, so Studio's Monitor › Logs lists each one instead of 5%. Traces stay off (the
+ * built-in 0). A rate saved in the `CMS` block in Studio wins over these.
+ */
+const defaults = { errorSampleRate: 1 };
+
 const options = {
   blocks,
   site,
@@ -36,7 +43,7 @@ const options = {
   // Telemetry goes to the hosted Deco CMS collector, which the token authenticates
   // (/next/telemetry#choose-where-telemetry-goes); without a token it goes nowhere. `vite dev` sends
   // nothing.
-  telemetry: import.meta.env.DEV ? (false as const) : { resource },
+  telemetry: import.meta.env.DEV ? (false as const) : { resource, defaults },
 };
 
 export const cms = createCMS(options);
