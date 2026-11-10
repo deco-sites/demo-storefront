@@ -55,7 +55,15 @@ export async function loadPageAt(
   // script, and on this site (TanStack Start 1.166, block promises returned through the page server
   // function) the browser's copy of that promise never settled: the section's markup came from the
   // server but never hydrated (no reveal, no handlers).
-  await Promise.all(blocks.map((block) => block.value));
+  const settled = await Promise.all(blocks.map((block) => block.value));
+  // <Await> reads a block with React's use(): a promise React hasn't seen suspends once, even settled,
+  // and outside a transition (a router reload, such as Studio's save refresh) React then hides every
+  // section behind its fallback until the next tick. The page shrank to a few hundred pixels and the
+  // browser dropped the scroll to the top. Marking each promise the way React marks a settled one
+  // makes use() return its value at once.
+  blocks.forEach((block, index) =>
+    Object.assign(block.value, { status: "fulfilled", value: settled[index] }),
+  );
   return { ...page, blocks };
 }
 
