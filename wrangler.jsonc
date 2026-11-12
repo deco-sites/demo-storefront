@@ -26,13 +26,14 @@
   // token and stamps every signal with the site. There is no other destination. `vite dev` sends
   // nothing (src/cms.ts); the parity harness turns it off. The tail worker above keeps capturing
   // uncaught errors.
+  // Keep the rotated Shopify credential in the managed Worker secret.
+  "secrets": { "required": ["SHOPIFY_STOREFRONT_ACCESS_TOKEN"] },
   "vars": {
     "DECO_SITE_NAME": "demo-storefront",
     "DECO_ENV_NAME": "production",
     // The Shopify store (/next/upstream-clients#call-a-client).
     // The Storefront API token is a public, read-scoped token: Shopify serves it to browsers by design.
     "SHOPIFY_STORE_NAME": "gimenesdevstore",
-    "SHOPIFY_STOREFRONT_ACCESS_TOKEN": "71f2c3da0dab3b4eee7dce35eb8c6113",
     // Hosted Deco CMS (/next/hosted#cloudflare-workers): the Studio site whose published release the
     // worker reads from the delivery CDN at runtime (content is never bundled), so a publish goes
     // live without a deploy. The token (a secret) only authenticates telemetry:
