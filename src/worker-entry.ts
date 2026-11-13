@@ -25,10 +25,10 @@ import {
   segmentToken,
   serverFnPagePath,
 } from "@decocms/tanstack/worker";
-import handler, { createServerEntry } from "@tanstack/react-start/server-entry";
 import { purgeVersions } from "./cache-purge";
 import { purgeSegments, segmentOf } from "./cache-segment";
 import { cms } from "./cms";
+import serverEntry from "./server";
 import { CSP_DIRECTIVES } from "./csp";
 // @ts-ignore Vite ?url import
 import appCss from "./styles/app.css?url";
@@ -441,7 +441,7 @@ async function purge(request: Request, env: Env): Promise<Response> {
 // ---------------------------------------------------------------------------
 
 const worker = createDecoWorker<Env>({
-  serverEntry: createServerEntry({ fetch: handler.fetch }),
+  serverEntry,
   cms,
   dev: import.meta.env.DEV,
   csp: { enforce: CSP_DIRECTIVES },
