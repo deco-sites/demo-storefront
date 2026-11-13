@@ -32,9 +32,9 @@
   "author": "deco.cx",
   "license": "MIT",
   "dependencies": {
-    "@decocms/apps-shopify": "^8.20.1",
-    "@decocms/blocks": "^8.20.1",
-    "@decocms/tanstack": "^8.20.1",
+    "@decocms/apps-shopify": "^8.20.2",
+    "@decocms/blocks": "^8.20.2",
+    "@decocms/tanstack": "^8.20.2",
     "@tanstack/react-query": "5.90.21",
     "@tanstack/react-router": "1.166.7",
     "@tanstack/react-start": "1.166.8",
